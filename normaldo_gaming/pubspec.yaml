@@ -1,0 +1,26 @@
+name: normaldo_gaming
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core
+  flame: ^1.7.3
+  flame_bloc: ^1.8.4
+
+  # DI
+  flutter_simple_dependency_injection: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
