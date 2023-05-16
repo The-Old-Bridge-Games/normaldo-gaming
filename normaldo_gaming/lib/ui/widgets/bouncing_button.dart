@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+
+class BounceScale {
+  final double value;
+
+  const BounceScale(this.value)
+      : assert(
+          value > 0 && value <= 1,
+        );
+
+  const BounceScale.iconButton() : value = 0.05;
+  const BounceScale.wideWidget() : value = 0.02;
+}
+
+class BouncingButton extends StatefulWidget {
+  final Widget child;
+  final VoidCallback? onPressed;
+  final BounceScale scale;
+
+  const BouncingButton({
+    Key? key,
+    required this.child,
+    this.scale = const BounceScale.wideWidget(),
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  _BouncingButtonState createState() => _BouncingButtonState();
+}
+
+class _BouncingButtonState extends State<BouncingButton>
+    with SingleTickerProviderStateMixin {
+  late double _scale;
+  late AnimationController _controller;
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 200,
+      ),
+      upperBound: widget.scale.value,
+    )..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _scale = 1 - _controller.value;
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: Listener(
+        onPointerDown: (_) => _tapDown(),
+        onPointerUp: (_) => _tapUp(),
+        child: Transform.scale(
+          scale: _scale,
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+
+  void _tapDown() {
+    _controller.forward();
+  }
+
+  void _tapUp() {
+    _controller.reverse();
+  }
+}
