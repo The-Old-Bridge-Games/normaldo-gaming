@@ -14,6 +14,9 @@ dependencies:
   flame: ^1.7.3
   flame_bloc: ^1.8.4
 
+  # Routing
+  go_router: ^7.0.1
+
   # DI
   flutter_simple_dependency_injection: ^2.0.0
 

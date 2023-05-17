@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
-import 'package:normaldo_gaming/ui/main_screen.dart';
+import 'package:normaldo_gaming/routing/ng_router.dart';
 
 class NGAppImpl implements NGApp {
   @override
@@ -18,10 +18,10 @@ class NGAppImpl implements NGApp {
     ]);
 
     initializeInjector();
-    runApp(MaterialApp(
+    runApp(MaterialApp.router(
+      routerConfig: NGRouter.router,
       debugShowCheckedModeBanner: false,
       theme: _theme,
-      home: const MainScreen(),
     ));
   }
 }
