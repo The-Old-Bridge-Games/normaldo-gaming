@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NGAppImpl implements NGApp {
   @override
@@ -17,11 +21,19 @@ class NGAppImpl implements NGApp {
       DeviceOrientation.landscapeRight,
     ]);
 
+    HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: await getApplicationDocumentsDirectory());
+
     initializeInjector();
-    runApp(MaterialApp.router(
-      routerConfig: NGRouter.router,
-      debugShowCheckedModeBanner: false,
-      theme: _theme,
+    runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<UserCubit>(create: (context) => injector.get()),
+      ],
+      child: MaterialApp.router(
+        routerConfig: NGRouter.router,
+        debugShowCheckedModeBanner: false,
+        theme: _theme,
+      ),
     ));
   }
 }
@@ -35,4 +47,6 @@ final _theme = ThemeData(
     )),
     textTheme: const TextTheme(
       displayLarge: NGTheme.displayLarge,
+      displayMedium: NGTheme.displayMedium,
+      bodySmall: NGTheme.bodySmall,
     ));

@@ -1,7 +1,8 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 
 final injector = Injector();
 
 void initializeInjector() {
-  // injector.map<Type>((injector) => null);
+  injector.map<UserCubit>((injector) => UserCubit());
 }
