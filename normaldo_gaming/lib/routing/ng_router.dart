@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
@@ -20,7 +21,10 @@ abstract class NGRouter {
       ),
       GoRoute(
         path: NGRoutes.main.path,
-        builder: (context, state) => const MainScreen(),
+        builder: (context, state) => const BlocListener<UserCubit, UserState>(
+          listener: _userBlocListener,
+          child: MainScreen(),
+        ),
       ),
       GoRoute(
         path: NGRoutes.createUser.path,
@@ -35,4 +39,10 @@ abstract class NGRouter {
       ),
     ],
   );
+
+  static void _userBlocListener(BuildContext context, UserState state) {
+    if (state.name.isEmpty) {
+      context.goRoute(NGRoutes.createUser);
+    }
+  }
 }

@@ -61,7 +61,7 @@ class MainScreen extends StatelessWidget {
                     ActionChip(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        BlocProvider.of<UserCubit>(context).reset();
+                        context.read<UserCubit>().reset();
                       },
                       label: const Text('Yep',
                           style: TextStyle(color: Colors.red)),

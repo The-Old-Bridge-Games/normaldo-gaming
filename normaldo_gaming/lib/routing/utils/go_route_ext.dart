@@ -1,4 +1,3 @@
-
 part of '../ng_router.dart';
 
 extension GoRouteExt on BuildContext {
