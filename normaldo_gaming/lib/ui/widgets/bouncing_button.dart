@@ -25,7 +25,7 @@ class BouncingButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BouncingButtonState createState() => _BouncingButtonState();
+  State createState() => _BouncingButtonState();
 }
 
 class _BouncingButtonState extends State<BouncingButton>

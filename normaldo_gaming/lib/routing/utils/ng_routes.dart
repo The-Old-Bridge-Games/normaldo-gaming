@@ -3,7 +3,8 @@ part of '../ng_router.dart';
 enum NGRoutes {
   root('/'),
   main('/main'),
-  createUser('/createUser');
+  createUser('/createUser'),
+  pullUpGame('/main/pullUpGame');
 
   const NGRoutes(this.path);
 
