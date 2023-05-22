@@ -48,8 +48,9 @@ class _BouncingButtonState extends State<BouncingButton>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+
+    super.dispose();
   }
 
   @override

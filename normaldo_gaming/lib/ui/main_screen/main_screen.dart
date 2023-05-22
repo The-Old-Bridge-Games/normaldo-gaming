@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_info.dart';
@@ -9,7 +10,7 @@ class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   void _onStartPressed(BuildContext context) {
-    context.goRoute(NGRoutes.pullUpGame);
+    context.push(NGRoutes.pullUpGame.path);
   }
 
   @override

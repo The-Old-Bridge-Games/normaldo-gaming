@@ -19,6 +19,12 @@ abstract class NGTheme {
     color: Colors.white,
   );
 
+  static const displaySmall = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 15,
+    color: Colors.white,
+  );
+
   static const bodySmall = TextStyle(
     fontFamily: _fontFamily,
     fontSize: 14,

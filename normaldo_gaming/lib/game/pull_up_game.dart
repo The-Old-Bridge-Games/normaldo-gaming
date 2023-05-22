@@ -1,10 +1,11 @@
 import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:normaldo_gaming/game/components/pause_button.dart';
 
 import 'components/components.dart';
 
-class PullUpGame extends FlameGame {
+class PullUpGame extends FlameGame with HasTappables {
   PullUpGame({required this.gameSessionCubit});
 
   final GameSessionCubit gameSessionCubit;
@@ -14,6 +15,7 @@ class PullUpGame extends FlameGame {
   final scoreLabel = ScoreLabel();
   final hungerBar = HungerBar();
   final balance = Balance();
+  final pauseButton = PauseButton();
 
   @override
   Future<void> onLoad() async {
@@ -41,6 +43,7 @@ class PullUpGame extends FlameGame {
           scoreLabel,
           hungerBar,
           balance,
+          pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),
         ],
       ),
     );

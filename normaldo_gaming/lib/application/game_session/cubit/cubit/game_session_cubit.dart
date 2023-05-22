@@ -26,6 +26,10 @@ class GameSessionCubit extends Cubit<GameSessionState> {
     emit(state.copyWith(dollars: state.dollars + 1));
   }
 
+  void togglePause() {
+    emit(state.copyWith(paused: !state.paused));
+  }
+
   void die() {
     emit(state.copyWith(
       isDead: true,

@@ -7,6 +7,7 @@ class GameSessionState with _$GameSessionState {
     required bool isDead,
     required int lives,
     required int dollars,
+    required bool paused,
   }) = _GameSessionState;
 
   factory GameSessionState.initial() => const GameSessionState(
@@ -14,5 +15,6 @@ class GameSessionState with _$GameSessionState {
         isDead: false,
         lives: GameSessionCubit.initialLivesCount,
         dollars: 0,
+        paused: false,
       );
 }

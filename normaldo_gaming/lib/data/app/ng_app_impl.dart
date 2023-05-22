@@ -48,5 +48,6 @@ final _theme = ThemeData(
     textTheme: const TextTheme(
       displayLarge: NGTheme.displayLarge,
       displayMedium: NGTheme.displayMedium,
+      displaySmall: NGTheme.displaySmall,
       bodySmall: NGTheme.bodySmall,
     ));
