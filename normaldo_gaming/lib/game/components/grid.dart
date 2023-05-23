@@ -27,7 +27,6 @@ class Grid extends PositionComponent with Draggable {
         paint: Paint()..color = BasicPalette.yellow.color,
       ));
     }
-    add(ScreenHitbox()..size = size);
     add(normaldo);
   }
 
