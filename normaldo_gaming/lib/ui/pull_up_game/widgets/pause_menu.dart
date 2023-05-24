@@ -97,44 +97,53 @@ class _PauseMenuState extends State<PauseMenu> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: () {
-        if (!_unpausing) _unpause();
-      },
-      child: Scaffold(
-        backgroundColor: Colors.black38,
-        body: Center(
-          child: _unpausing
-              ? Text((3 - _timer!.tick).toString(),
-                  style: textTheme.displayLarge?.copyWith(fontSize: 32))
-              : Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: NGTheme.green1, width: 3),
+    return Scaffold(
+      backgroundColor: NGTheme.bgSemiBlack,
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (!_unpausing) _unpause();
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: Colors.transparent,
+            ),
+          ),
+          Center(
+            child: _unpausing
+                ? Text((3 - _timer!.tick).toString(),
+                    style: textTheme.displayLarge?.copyWith(fontSize: 32))
+                : Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: NGTheme.green1, width: 3),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Paused',
+                            style: textTheme.displayLarge
+                                ?.copyWith(color: NGTheme.green1)),
+                        const SizedBox(height: 32),
+                        BouncingButton(
+                          onPressed: _onMenuPressed,
+                          child: Text('Menu', style: textTheme.displayMedium),
+                        ),
+                        const SizedBox(height: 8),
+                        BouncingButton(
+                          onPressed: _unpause,
+                          child: Text('Back to gaaaame',
+                              style: textTheme.displayMedium),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Paused',
-                          style: textTheme.displayLarge
-                              ?.copyWith(color: NGTheme.green1)),
-                      const SizedBox(height: 32),
-                      BouncingButton(
-                        onPressed: _onMenuPressed,
-                        child: Text('Menu', style: textTheme.displayMedium),
-                      ),
-                      const SizedBox(height: 8),
-                      BouncingButton(
-                        onPressed: _unpause,
-                        child: Text('Back to gaaaame',
-                            style: textTheme.displayMedium),
-                      ),
-                    ],
-                  ),
-                ),
-        ),
+          ),
+        ],
       ),
     );
   }
