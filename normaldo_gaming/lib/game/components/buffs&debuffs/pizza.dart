@@ -14,7 +14,9 @@ class Pizza extends SpriteComponent with CollisionCallbacks, HasGameRef {
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
     if (other is Normaldo) {
       cubit.eatPizza();
       removeFromParent();

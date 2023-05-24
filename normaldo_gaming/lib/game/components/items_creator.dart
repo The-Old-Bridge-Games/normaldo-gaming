@@ -25,12 +25,9 @@ class ItemsCreator extends TimerComponent
 
   ItemsCreator({required this.grid}) : super(period: 0.5, repeat: true);
 
-  final _items = [];
-
   @override
   void onTick() {
     gameRef.add(_getNextItem()
-      ..size = Vector2(grid.lineSize / 2 * 4 / 3, grid.lineSize / 2)
       ..position = Vector2(
         gameRef.size.x + (grid.lineSize * 4 / 3) / 2,
         grid.linesCentersY[random.nextInt(grid.linesCentersY.length)],
@@ -40,9 +37,11 @@ class ItemsCreator extends TimerComponent
   PositionComponent _getNextItem() {
     final chance = random.nextInt(101) / 100;
     if (chance <= Items.trashBin.chance) {
-      return TrashBin(cubit: bloc);
+      return TrashBin(cubit: bloc)
+        ..size = Vector2(grid.lineSize / 2 * 4 / 3, grid.lineSize / 2);
     } else {
-      return Pizza(cubit: bloc);
+      return Pizza(cubit: bloc)
+        ..size = Vector2(grid.lineSize / 2, grid.lineSize / 2);
     }
   }
 }

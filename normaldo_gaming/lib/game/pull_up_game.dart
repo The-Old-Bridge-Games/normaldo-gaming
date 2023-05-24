@@ -2,9 +2,8 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
+import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
@@ -41,6 +40,13 @@ class PullUpGame extends FlameGame
   }
 
   Future<void> _initBloc() async {
+    gameSessionCubit.stream.listen((state) {
+      if (state.isDead) {
+        pauseEngine();
+        overlays.add(Overlays.deathScreen.name);
+      }
+    });
+
     await add(
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,

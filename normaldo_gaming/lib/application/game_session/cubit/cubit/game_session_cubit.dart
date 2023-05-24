@@ -22,15 +22,15 @@ class GameSessionCubit extends Cubit<GameSessionState> {
     }
   }
 
-  void takeHit() async {
+  Future<void> takeHit() async {
     if (state.hit) return;
     final newLives = state.lives - 1;
     emit(state.copyWith(lives: newLives, hit: true));
     if (newLives == 0) {
       die();
     }
-    Future.delayed(hitRevival)
-        .whenComplete(() => emit(state.copyWith(hit: false)));
+    await Future.delayed(hitRevival);
+    emit(state.copyWith(hit: false));
   }
 
   void resetHit() {
@@ -49,8 +49,7 @@ class GameSessionCubit extends Cubit<GameSessionState> {
   void die() {
     emit(state.copyWith(
       isDead: true,
-      // TODO: – Remove later
-      lives: initialLivesCount,
+      lives: 0,
     ));
   }
 }

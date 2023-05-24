@@ -7,6 +7,8 @@ abstract class NGTheme {
 
   static final green1 = Colors.green[800]!;
 
+  static final bgSemiBlack = Colors.black38;
+
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,
     fontSize: 24,

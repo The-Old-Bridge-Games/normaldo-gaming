@@ -13,11 +13,11 @@ class TrashBin extends SpriteComponent with HasGameRef, CollisionCallbacks {
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+      Set<Vector2> intersectionPoints, PositionComponent other) async {
     if (other is Normaldo) {
       if (cubit.state.hit) return;
-      cubit.takeHit();
       removeFromParent();
+      await cubit.takeHit();
     }
 
     super.onCollisionStart(intersectionPoints, other);

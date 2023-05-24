@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserState {
   int get score => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  int get dollars => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({int score, String name});
+  $Res call({int score, String name, int dollars});
 }
 
 /// @nodoc
@@ -47,6 +48,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   $Res call({
     Object? score = null,
     Object? name = null,
+    Object? dollars = null,
   }) {
     return _then(_value.copyWith(
       score: null == score
@@ -57,6 +59,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      dollars: null == dollars
+          ? _value.dollars
+          : dollars // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -68,7 +74,7 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       __$$_UserStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int score, String name});
+  $Res call({int score, String name, int dollars});
 }
 
 /// @nodoc
@@ -84,6 +90,7 @@ class __$$_UserStateCopyWithImpl<$Res>
   $Res call({
     Object? score = null,
     Object? name = null,
+    Object? dollars = null,
   }) {
     return _then(_$_UserState(
       score: null == score
@@ -94,6 +101,10 @@ class __$$_UserStateCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      dollars: null == dollars
+          ? _value.dollars
+          : dollars // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -101,16 +112,19 @@ class __$$_UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState({required this.score, required this.name});
+  const _$_UserState(
+      {required this.score, required this.name, required this.dollars});
 
   @override
   final int score;
   @override
   final String name;
+  @override
+  final int dollars;
 
   @override
   String toString() {
-    return 'UserState(score: $score, name: $name)';
+    return 'UserState(score: $score, name: $name, dollars: $dollars)';
   }
 
   @override
@@ -119,11 +133,12 @@ class _$_UserState implements _UserState {
         (other.runtimeType == runtimeType &&
             other is _$_UserState &&
             (identical(other.score, score) || other.score == score) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.dollars, dollars) || other.dollars == dollars));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, score, name);
+  int get hashCode => Object.hash(runtimeType, score, name, dollars);
 
   @JsonKey(ignore: true)
   @override
@@ -134,12 +149,16 @@ class _$_UserState implements _UserState {
 
 abstract class _UserState implements UserState {
   const factory _UserState(
-      {required final int score, required final String name}) = _$_UserState;
+      {required final int score,
+      required final String name,
+      required final int dollars}) = _$_UserState;
 
   @override
   int get score;
   @override
   String get name;
+  @override
+  int get dollars;
   @override
   @JsonKey(ignore: true)
   _$$_UserStateCopyWith<_$_UserState> get copyWith =>

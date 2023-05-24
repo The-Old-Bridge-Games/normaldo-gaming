@@ -6,6 +6,8 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
 
+import 'widgets/death_screen.dart';
+
 class PullUpGameWidget extends StatelessWidget {
   const PullUpGameWidget({super.key});
 
@@ -21,6 +23,7 @@ class PullUpGameWidget extends StatelessWidget {
         ),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
+          Overlays.deathScreen.name: (context, game) => const DeathScreen(),
         },
       ),
     );

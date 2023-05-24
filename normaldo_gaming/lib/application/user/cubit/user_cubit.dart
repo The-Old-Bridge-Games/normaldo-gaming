@@ -14,6 +14,11 @@ class UserCubit extends HydratedCubit<UserState> {
     ));
   }
 
+  void addDollars(int dollars) {
+    assert(dollars >= 0, "dollars amount must be greater than 0");
+    emit(state.copyWith(dollars: state.dollars + dollars));
+  }
+
   void changeName(String name) {
     assert(name.length >= 3, "too short name");
     emit(state.copyWith(name: name));
@@ -28,6 +33,7 @@ class UserCubit extends HydratedCubit<UserState> {
     return UserState(
       score: json['score'] ?? 0,
       name: json['name'] ?? '',
+      dollars: json['dollars'],
     );
   }
 
@@ -36,6 +42,7 @@ class UserCubit extends HydratedCubit<UserState> {
     return {
       'score': state.score,
       'name': state.name,
+      'dollars': state.dollars,
     };
   }
 }
