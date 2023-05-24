@@ -20,6 +20,11 @@ class HungerBar extends PositionComponent
           ..color = BasicPalette.black.color
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50.0),
       )));
+  late final _Bar _bar;
+
+  void restoreBar() {
+    _bar.size.x = 200;
+  }
 
   @override
   void onNewState(GameSessionState state) {
@@ -28,19 +33,20 @@ class HungerBar extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    _bar = _Bar(
+      onHungerDropped: () => bloc.decreaseHunger(),
+    );
     final pizzaSprite = SpriteComponent(
       sprite: await Sprite.load('pizza_lives.png'),
       size: Vector2.all(30),
     );
+
     add(pizzaSprite..y = livesComponent.y + 4);
     add(livesComponent
       ..position = Vector2(pizzaSprite.width + 16, livesComponent.y));
-    add(_Bar(
-      onHungerDropped: () {
-        bloc.takeLife();
-      },
-    )..position = Vector2(
-        livesComponent.x + livesComponent.size.x + 8, livesComponent.y + 12));
+    add(_bar
+      ..position = Vector2(
+          livesComponent.x + livesComponent.size.x + 8, livesComponent.y + 12));
     return super.onLoad();
   }
 }
