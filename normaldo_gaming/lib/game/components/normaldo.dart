@@ -53,11 +53,11 @@ class Normaldo extends SpriteComponent
 mixin _StateActions on SpriteComponent {
   Future<void> _startFlick() async {
     final controller = EffectController(
-      duration: 0.5,
-      reverseDuration: 0.5,
+      duration: 0.1,
+      reverseDuration: 0.1,
       infinite: true,
     );
-    add(OpacityEffect.to(0.4, controller));
+    add(OpacityEffect.to(0, controller));
   }
 
   Future<void> _stopFlick() async {
