@@ -5,10 +5,12 @@ class UserInfo extends StatelessWidget {
     super.key,
     required this.username,
     required this.highScore,
+    required this.dollars,
   });
 
   final String username;
   final int highScore;
+  final int dollars;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,10 @@ class UserInfo extends StatelessWidget {
         ),
         Text(
           'high score: $highScore',
+          style: textTheme.displayMedium,
+        ),
+        Text(
+          'dollars: $dollars',
           style: textTheme.displayMedium,
         ),
       ],

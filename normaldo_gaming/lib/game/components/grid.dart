@@ -5,15 +5,15 @@ import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_configurator.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/game/components/items_creator.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'normaldo.dart';
 
-class Grid extends PositionComponent with Draggable, HasGameRef {
+class Grid extends PositionComponent
+    with Draggable, HasGameRef, HasLevelConfigurator {
   static const linesCount = 5;
 
   Grid({required this.gameSessionCubit});
@@ -23,8 +23,6 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
   late final Normaldo normaldo;
   late ItemsCreator _itemsCreator;
   final _levels = Levels();
-
-  final _levelConfigurator = injector.get<LevelConfigurator>();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
@@ -53,7 +51,7 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
         children: [
           _levels,
           _itemsCreator = ItemsCreator(
-              grid: this, period: _levelConfigurator.itemCreationPeriod(0)),
+              grid: this, period: levelConfigurator.itemCreationPeriod(0)),
           normaldo,
         ]));
 
@@ -68,7 +66,7 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
             children: [
               _itemsCreator = ItemsCreator(
                   grid: this,
-                  period: _levelConfigurator.itemCreationPeriod(state.level)),
+                  period: levelConfigurator.itemCreationPeriod(state.level)),
             ]));
       },
     ));

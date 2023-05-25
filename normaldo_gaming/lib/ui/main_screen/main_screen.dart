@@ -31,11 +31,12 @@ class MainScreen extends StatelessWidget {
               child: _buildButtons(context),
             ),
             Positioned(
-                left: 24,
-                top: 54,
+                left: 48,
+                top: 16,
                 child: UserInfo(
                   username: state.name,
                   highScore: state.score,
+                  dollars: state.dollars,
                 )),
             Positioned(
                 bottom: 64,
