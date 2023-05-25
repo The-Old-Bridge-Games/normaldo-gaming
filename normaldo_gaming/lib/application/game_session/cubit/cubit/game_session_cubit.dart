@@ -23,6 +23,16 @@ class GameSessionCubit extends Cubit<GameSessionState> {
     }
   }
 
+  void addLives(int count) {
+    int lives;
+    if (state.lives + count > 5) {
+      lives = 5;
+    } else {
+      lives = state.lives + count;
+    }
+    emit(state.copyWith(lives: lives));
+  }
+
   Future<void> takeHit() async {
     if (state.hit) return;
     final newLives = state.lives - 1;

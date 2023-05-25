@@ -37,7 +37,7 @@ class HungerBar extends PositionComponent
       onHungerDropped: () => bloc.decreaseHunger(),
     );
     final pizzaSprite = SpriteComponent(
-      sprite: await Sprite.load('pizza_lives.png'),
+      sprite: await Sprite.load('heart.png'),
       size: Vector2.all(30),
     );
 
@@ -47,30 +47,41 @@ class HungerBar extends PositionComponent
     add(_bar
       ..position = Vector2(
           livesComponent.x + livesComponent.size.x + 8, livesComponent.y + 12));
+
+    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+      listenWhen: (previousState, newState) =>
+          previousState.lives < newState.lives,
+      onNewState: (_) {
+        restoreBar();
+      },
+    ));
     return super.onLoad();
   }
 }
 
 class _Bar extends RoundedRectangleComponent {
+  final _color = BasicPalette.red.color.brighten(0.2);
+
   _Bar({
     required this.onHungerDropped,
   }) : super(
           radius: const Radius.circular(3),
           size: Vector2(200, 16),
-          paint: Paint()..color = BasicPalette.orange.color,
         );
 
   final VoidCallback onHungerDropped;
 
   @override
   FutureOr<void> onLoad() {
+    paint = Paint()..color = _color;
+
     add(RoundedRectangleComponent(
       radius: const Radius.circular(3),
       size: size,
       paint: Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.4
-        ..color = BasicPalette.orange.color,
+        ..color = _color,
     ));
     add(TimerComponent(
         period: 0.04,

@@ -51,6 +51,8 @@ class ItemsCreator extends TimerComponent
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
       case Items.dollar:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
+      case Items.heart:
+        return Vector2(grid.lineSize / 2 * 0.8, grid.lineSize / 2 * 0.8);
     }
   }
 }

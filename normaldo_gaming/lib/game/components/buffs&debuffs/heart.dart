@@ -4,9 +4,9 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
-class Dollar extends SpriteComponent
+class Heart extends SpriteComponent
     with CollisionCallbacks, HasGameRef, HasLevelConfigurator {
-  Dollar({required this.cubit}) : super(anchor: Anchor.center);
+  Heart({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
 
@@ -16,7 +16,7 @@ class Dollar extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      cubit.addDollars(1);
+      cubit.addLives(1);
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
@@ -24,7 +24,7 @@ class Dollar extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('dollar.png');
+    sprite = await Sprite.load('heart.png');
     add(RectangleHitbox()..collisionType = CollisionType.passive);
 
     return super.onLoad();
