@@ -3,27 +3,28 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 import 'buffs&debuffs/pizza.dart';
 import 'buffs&debuffs/trash_bin.dart';
 import 'grid.dart';
 
-enum Items {
-  trashBin(0.8),
-  pizza(0.2);
-
-  const Items(this.chance);
-
-  final double chance;
-}
-
 class ItemsCreator extends TimerComponent
-    with HasGameRef, FlameBlocReader<GameSessionCubit, GameSessionState> {
+    with
+        HasGameRef,
+        FlameBlocReader<GameSessionCubit, GameSessionState>,
+        FlameBlocListenable<GameSessionCubit, GameSessionState> {
   final Random random = Random();
+
+  ItemsCreator({
+    required this.grid,
+    required double period,
+  }) : super(period: period, repeat: true);
 
   final Grid grid;
 
-  ItemsCreator({required this.grid}) : super(period: 0.5, repeat: true);
+  @override
+  void onNewState(GameSessionState state) {}
 
   @override
   void onTick() {

@@ -73,7 +73,7 @@ class _Bar extends RoundedRectangleComponent {
         ..color = BasicPalette.orange.color,
     ));
     add(TimerComponent(
-        period: 0.02,
+        period: 0.04,
         autoStart: true,
         repeat: true,
         onTick: () {

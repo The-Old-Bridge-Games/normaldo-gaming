@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -14,7 +15,7 @@ class PullUpGame extends FlameGame
 
   final GameSessionCubit gameSessionCubit;
   // Components
-  final scene = Scene();
+  late final Scene scene;
   final topBar = TopBar();
   final scoreLabel = ScoreLabel();
   final hungerBar = HungerBar();
@@ -33,6 +34,7 @@ class PullUpGame extends FlameGame
   }
 
   void _initializeComponents() {
+    scene = Scene(initialSize: size);
     scene.size = size;
     balance.position = Vector2(48 + scoreLabel.size.x + 96, scoreLabel.y);
     hungerBar.position = Vector2(
@@ -60,8 +62,28 @@ class PullUpGame extends FlameGame
           grid = Grid(gameSessionCubit: gameSessionCubit)
             ..size = Vector2(size.x, size.y - topBar.height)
             ..position = Vector2(0, topBar.height),
+
+          // 4DEV
+          // LevelLabel()..position = Vector2(size.x / 2 - 100, 16),
         ],
       ),
     );
+  }
+}
+
+class LevelLabel extends TextComponent {
+  LevelLabel();
+
+  @override
+  FutureOr<void> onLoad() async {
+    text = 'Level 1';
+
+    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+      listenWhen: (previousState, newState) =>
+          previousState.level != newState.level,
+      onNewState: (state) {
+        text = 'Level ${state.level + 1}';
+      },
+    ));
   }
 }
