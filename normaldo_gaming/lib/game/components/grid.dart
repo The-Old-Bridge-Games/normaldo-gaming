@@ -96,8 +96,23 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateInfo info) {
-    normaldo.position += info.delta.game;
+    normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
     return super.onDragUpdate(info);
+  }
+
+  double _getFatMultiplier(Normaldo normaldo) {
+    switch (normaldo.current) {
+      case NormaldoFatState.skinny:
+        return 1;
+      case NormaldoFatState.slim:
+        return 0.7;
+      case NormaldoFatState.fat:
+        return 0.5;
+      case NormaldoFatState.uberFat:
+        return 0.3;
+      default:
+        throw UnexpectedError();
+    }
   }
 
   double _getCenterOfLine(int line) {
