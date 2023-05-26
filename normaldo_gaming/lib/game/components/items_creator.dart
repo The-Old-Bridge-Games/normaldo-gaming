@@ -35,9 +35,9 @@ class ItemsCreator extends TimerComponent
 
   PositionComponent _getNextItem() {
     final List<Items> itemsPool = [];
-    Items.values.forEach((item) {
+    for (var item in Items.values) {
       itemsPool.addAll(List<Items>.generate(item.chance, (_) => item));
-    });
+    }
     itemsPool.shuffle(random);
     final nextItem = itemsPool[random.nextInt(itemsPool.length)];
     return nextItem.component(cubit: bloc)..size = _getSizeFromItem(nextItem);
@@ -51,8 +51,8 @@ class ItemsCreator extends TimerComponent
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
       case Items.dollar:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
-      case Items.heart:
-        return Vector2(grid.lineSize / 2 * 0.8, grid.lineSize / 2 * 0.8);
+      case Items.fatPizza:
+        return Vector2(grid.lineSize / 2, grid.lineSize / 2);
     }
   }
 }

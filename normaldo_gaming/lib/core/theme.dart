@@ -6,8 +6,8 @@ abstract class NGTheme {
   static const _fontFamily = 'HyperStiffRoundBootiedOpossumRegular';
 
   static final green1 = Colors.green[800]!;
-
-  static final bgSemiBlack = Colors.black38;
+  static const bgSemiBlack = Colors.black38;
+  static const heartRed = Color(0xffDC0000);
 
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,

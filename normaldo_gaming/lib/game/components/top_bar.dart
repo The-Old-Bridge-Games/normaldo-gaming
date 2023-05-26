@@ -5,7 +5,8 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 
 class TopBar extends RectangleComponent with HasGameRef {
-  final double height = 58;
+  @override
+  double get height => 58;
 
   @override
   FutureOr<void> onLoad() {

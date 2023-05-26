@@ -36,7 +36,7 @@ class PullUpGame extends FlameGame
   void _initializeComponents() {
     scene = Scene(initialSize: size);
     scene.size = size;
-    balance.position = Vector2(48 + scoreLabel.size.x + 96, scoreLabel.y);
+    balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
     hungerBar.position = Vector2(
         48 + scoreLabel.size.x + 96 + balance.size.x + 148, scoreLabel.y);
   }

@@ -1,12 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level.dart';
 
 part 'game_session_state.dart';
 part 'game_session_cubit.freezed.dart';
 
 class GameSessionCubit extends Cubit<GameSessionState> {
-  static const hitRevival = Duration(seconds: 3);
+  static const hitRevival = Duration(seconds: 2);
   static const initialLivesCount = 5;
 
   GameSessionCubit() : super(GameSessionState.initial());
