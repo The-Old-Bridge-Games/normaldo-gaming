@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/fat_pizza.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/gunt.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
@@ -10,11 +11,12 @@ enum Items {
   // trashBin(500),
   // pizza(400),
   // dollar(0),
-  // fatPizza(100); // chance – 0.005
-  trashBin(695), // chance – 0.625
-  pizza(250), // chance – 0.25
-  dollar(50), // chance – 0.05
-  fatPizza(5); // chance – 0.005
+  // fatPizza(100);
+  trashBin(690),
+  pizza(251),
+  dollar(50),
+  fatPizza(6),
+  dumbbell(3);
 
   const Items(this.chance);
 
@@ -30,6 +32,8 @@ enum Items {
         return Dollar(cubit: cubit);
       case Items.fatPizza:
         return FatPizza(cubit: cubit);
+      case Items.dumbbell:
+        return Dumbbell(cubit: cubit);
     }
   }
 }

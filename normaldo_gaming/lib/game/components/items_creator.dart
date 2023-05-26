@@ -53,6 +53,8 @@ class ItemsCreator extends TimerComponent
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
       case Items.fatPizza:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
+      case Items.dumbbell:
+        return Vector2(grid.lineSize / 2, grid.lineSize / 2);
     }
   }
 }
