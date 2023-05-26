@@ -1,6 +1,8 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -12,7 +14,14 @@ import 'package:path_provider/path_provider.dart';
 class NGAppImpl implements NGApp {
   @override
   Future<void> run() async {
-    WidgetsFlutterBinding.ensureInitialized();
+    final binding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: binding);
+    FlameAudio.bgm.initialize();
+    await FlameAudio.audioCache.loadAll([
+      'main_theme.mp3',
+      'club_track.mp3',
+      'hard_track.mp3',
+    ]);
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,
     );

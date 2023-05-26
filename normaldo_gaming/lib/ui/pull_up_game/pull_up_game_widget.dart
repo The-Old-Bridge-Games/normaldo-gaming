@@ -8,8 +8,41 @@ import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
 
 import 'widgets/death_screen.dart';
 
-class PullUpGameWidget extends StatelessWidget {
+class PullUpGameWidget extends StatefulWidget {
   const PullUpGameWidget({super.key});
+
+  @override
+  State<PullUpGameWidget> createState() => _PullUpGameWidgetState();
+}
+
+class _PullUpGameWidgetState extends State<PullUpGameWidget>
+    with WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final cubit = context.read<GameSessionCubit>();
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        cubit.togglePause();
+        break;
+      case AppLifecycleState.resumed:
+        break;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

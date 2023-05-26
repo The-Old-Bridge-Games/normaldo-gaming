@@ -66,8 +66,9 @@ class _DeathScreenState extends State<DeathScreen> {
               ),
               const SizedBox(height: 8),
               BouncingButton(
-                onPressed: () =>
-                    context.pushReplacement(NGRoutes.pullUpGame.path),
+                onPressed: () {
+                  context.pop('try again');
+                },
                 child: Text('Try again', style: textTheme.displayMedium),
               ),
             ],

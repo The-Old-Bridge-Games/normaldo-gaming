@@ -4,7 +4,7 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 
 class Levels extends TimerComponent
     with FlameBlocReader<GameSessionCubit, GameSessionState> {
-  static const double levelChangeSeconds = 30.0;
+  static const double levelChangeSeconds = 20.0;
 
   Levels() : super(period: levelChangeSeconds, repeat: true);
 

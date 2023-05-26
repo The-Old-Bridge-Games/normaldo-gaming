@@ -1,16 +1,71 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_info.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
+  AudioPlayer? _player;
+  bool _isInGame = false;
+
   void _onStartPressed(BuildContext context) {
-    context.push(NGRoutes.pullUpGame.path);
+    _player?.stop();
+    context.push(NGRoutes.pullUpGame.path).then((value) {
+      if (value == 'try again') {
+        _onStartPressed(context);
+        return;
+      }
+      _isInGame = false;
+      _startBgMusic();
+    });
+    _isInGame = true;
+  }
+
+  Future<void> _startBgMusic() async {
+    _player = await FlameAudio.loopLongAudio('main_theme.mp3');
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        _player?.pause();
+        break;
+      case AppLifecycleState.resumed:
+        if (!_isInGame) {
+          _player?.resume();
+        }
+        break;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+    FlutterNativeSplash.remove();
+    _startBgMusic();
+  }
+
+  @override
+  void dispose() {
+    _player?.stop();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -61,9 +116,10 @@ class MainScreen extends StatelessWidget {
                   content: const Text('This operation is irreversible!'),
                   actions: [
                     ActionChip(
-                      onPressed: () {
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        _player?.stop();
                         context.read<UserCubit>().reset();
+                        context.pop();
                       },
                       label: const Text('Yep',
                           style: TextStyle(color: Colors.red)),

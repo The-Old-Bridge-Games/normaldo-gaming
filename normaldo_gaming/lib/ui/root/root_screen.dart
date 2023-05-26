@@ -26,6 +26,12 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const MainScreen();
+    return BlocListener<UserCubit, UserState>(
+      listenWhen: (_, current) => current.name.isEmpty,
+      listener: (context, state) {
+        context.goRoute(NGRoutes.createUser);
+      },
+      child: const MainScreen(),
+    );
   }
 }
