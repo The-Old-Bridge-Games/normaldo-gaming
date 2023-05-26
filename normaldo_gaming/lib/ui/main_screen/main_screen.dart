@@ -117,9 +117,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   actions: [
                     ActionChip(
                       onPressed: () async {
-                        _player?.stop();
-                        context.read<UserCubit>().reset();
                         context.pop();
+                        context.read<UserCubit>().reset();
                       },
                       label: const Text('Yep',
                           style: TextStyle(color: Colors.red)),
