@@ -161,12 +161,12 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
             nextFatState();
           }
         }));
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) =>
-            prevState.lives < newState.lives && newState.lives > 3,
-        onNewState: (_) {
-          nextFatState();
-        }));
+    // await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+    //     listenWhen: (prevState, newState) =>
+    //         prevState.lives < newState.lives && newState.lives > 3,
+    //     onNewState: (_) {
+    //       nextFatState();
+    //     }));
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
         listenWhen: (prevState, newState) =>
             prevState.lives > newState.lives && newState.lives < 3,

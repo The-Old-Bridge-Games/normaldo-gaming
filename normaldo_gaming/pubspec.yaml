@@ -18,8 +18,9 @@ dependencies:
   freezed_annotation: ^2.2.0
   path_provider: ^2.0.15
 
-  # Splash
+  # Splash&Icon
   flutter_native_splash: ^2.2.19
+  flutter_launcher_icons: ^0.13.1
 
   # Audio
   flame_audio: ^2.0.2
@@ -36,6 +37,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.3.3
   freezed: ^2.3.4
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/app_icon.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter_native_splash:
   background_image: assets/images/splash.png
