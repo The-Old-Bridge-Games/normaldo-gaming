@@ -9,11 +9,14 @@ import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/components/rounded_rectangle_component.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class HungerBar extends PositionComponent
     with
         FlameBlocListenable<GameSessionCubit, GameSessionState>,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
+        FlameBlocReader<GameSessionCubit, GameSessionState>,
+        HasGameRef {
   /// in seconds
   static const shakeDuration = 0.01;
 
@@ -61,6 +64,8 @@ class HungerBar extends PositionComponent
           _hurryingUp = true;
           _shake(infinite: true);
           _bar.startHurryingUp();
+          (gameRef as PullUpGame).grid.normaldo.current =
+              NormaldoFatState.skinny;
         } else if (state.lives == 1 && !value && _hurryingUp) {
           _hurryingUp = false;
           _bar.stopHurryingUp();

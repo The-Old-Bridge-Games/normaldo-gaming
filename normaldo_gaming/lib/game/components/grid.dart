@@ -51,7 +51,9 @@ class Grid extends PositionComponent
         children: [
           _levels,
           _itemsCreator = ItemsCreator(
-              grid: this, period: levelConfigurator.itemCreationPeriod(0)),
+            grid: this,
+            period: levelConfigurator.itemCreationPeriod(0),
+          ),
           normaldo,
         ]));
 
@@ -103,12 +105,16 @@ class Grid extends PositionComponent
   double _getFatMultiplier(Normaldo normaldo) {
     switch (normaldo.current) {
       case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyEat:
         return 1;
       case NormaldoFatState.slim:
+      case NormaldoFatState.slimEat:
         return 0.7;
       case NormaldoFatState.fat:
+      case NormaldoFatState.fatEat:
         return 0.5;
       case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatEat:
         return 0.3;
       default:
         throw UnexpectedError();

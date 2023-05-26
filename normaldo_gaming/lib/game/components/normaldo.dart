@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 
 enum NormaldoHitState {
   idle,
@@ -16,11 +17,34 @@ enum NormaldoFatState {
   slim,
   fat,
   uberFat,
+
+  // eating states
+  skinnyEat,
+  slimEat,
+  fatEat,
+  uberFatEat;
+
+  static List<NormaldoFatState> get onlyIdle => [
+        skinny,
+        slim,
+        fat,
+        uberFat,
+      ];
+
+  static List<NormaldoFatState> get onlyEating => [
+        skinnyEat,
+        slimEat,
+        fatEat,
+        uberFatEat,
+      ];
 }
 
 class Normaldo extends SpriteGroupComponent<NormaldoFatState>
-    with FlameBlocReader<GameSessionCubit, GameSessionState>, _StateActions {
-  static const pizzaToGetFatter = 30;
+    with
+        FlameBlocReader<GameSessionCubit, GameSessionState>,
+        _StateActions,
+        CollisionCallbacks {
+  static const pizzaToGetFatter = 20;
 
   Normaldo({
     required Vector2 size,
@@ -31,6 +55,18 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   var _state = NormaldoHitState.idle;
 
   var _pizzaEaten = 0;
+
+  bool get isPreEating {
+    switch (current) {
+      case NormaldoFatState.skinny:
+      case NormaldoFatState.slim:
+      case NormaldoFatState.fat:
+      case NormaldoFatState.uberFat:
+        return false;
+      default:
+        return true;
+    }
+  }
 
   set state(NormaldoHitState newState) {
     switch (newState) {
@@ -45,26 +81,30 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
   }
 
-  void nextFatState() {
+  Future<void> nextFatState() async {
     NormaldoFatState state;
-    final indexOfCurrent = NormaldoFatState.values.indexOf(current!);
-    if (indexOfCurrent + 1 == NormaldoFatState.values.length) {
+    await Future.delayed(const Duration(milliseconds: 200));
+    toIdleFatState();
+    final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current!);
+    if (indexOfCurrent + 1 == NormaldoFatState.onlyIdle.length) {
       state = current!;
     } else {
-      state = NormaldoFatState.values[indexOfCurrent + 1];
+      state = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
     if (current != state) {
       current = state;
     }
   }
 
-  void prevFatState() {
+  Future<void> prevFatState() async {
     NormaldoFatState state;
-    final indexOfCurrent = NormaldoFatState.values.indexOf(current!);
+    await Future.delayed(const Duration(milliseconds: 200));
+    toIdleFatState();
+    final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current!);
     if (indexOfCurrent - 1 < 0) {
       state = current!;
     } else {
-      state = NormaldoFatState.values[indexOfCurrent - 1];
+      state = NormaldoFatState.onlyIdle[indexOfCurrent - 1];
     }
     if (current != state) {
       current = state;
@@ -89,6 +129,12 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       NormaldoFatState.slim: slimSprite,
       NormaldoFatState.fat: fatSprite,
       NormaldoFatState.uberFat: uberFatSprite,
+
+      // eating
+      NormaldoFatState.skinnyEat: skinnyEatSprite,
+      NormaldoFatState.slimEat: slimEatSprite,
+      NormaldoFatState.fatEat: fatEatSprite,
+      NormaldoFatState.uberFatEat: uberEatFatSprite,
     };
 
     current = NormaldoFatState.slim;
@@ -123,10 +169,59 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         }));
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
         listenWhen: (prevState, newState) =>
-            prevState.lives > newState.lives && newState.lives <= 3,
+            prevState.lives > newState.lives && newState.lives < 3,
         onNewState: (_) {
           prevFatState();
         }));
+  }
+
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Eatable && !isPreEating) {
+      toEatingState();
+      Future.delayed(const Duration(milliseconds: 200))
+          .whenComplete(() => toIdleFatState());
+    }
+    super.onCollisionStart(intersectionPoints, other);
+  }
+
+  void toEatingState() {
+    switch (current) {
+      case NormaldoFatState.skinny:
+        current = NormaldoFatState.skinnyEat;
+        break;
+      case NormaldoFatState.slim:
+        current = NormaldoFatState.slimEat;
+        break;
+      case NormaldoFatState.fat:
+        current = NormaldoFatState.fatEat;
+        break;
+      case NormaldoFatState.uberFat:
+        current = NormaldoFatState.uberFatEat;
+        break;
+      default:
+        break;
+    }
+  }
+
+  void toIdleFatState() {
+    switch (current) {
+      case NormaldoFatState.skinnyEat:
+        current = NormaldoFatState.skinny;
+        break;
+      case NormaldoFatState.slimEat:
+        current = NormaldoFatState.slim;
+        break;
+      case NormaldoFatState.fatEat:
+        current = NormaldoFatState.fat;
+        break;
+      case NormaldoFatState.uberFatEat:
+        current = NormaldoFatState.uberFat;
+        break;
+      default:
+        break;
+    }
   }
 }
 

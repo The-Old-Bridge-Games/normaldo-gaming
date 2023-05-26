@@ -3,11 +3,12 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class FatPizza extends SpriteComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator {
+    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, Eatable {
   FatPizza({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
@@ -23,6 +24,9 @@ class FatPizza extends SpriteComponent
       // when lives are 5 and we try to add 1 more listeners will not work
       // because lives will also be 5
       (gameRef as PullUpGame).hungerBar.restoreBar();
+      if (cubit.state.lives == 5) {
+        other.nextFatState();
+      }
     }
     super.onCollisionStart(intersectionPoints, other);
   }
