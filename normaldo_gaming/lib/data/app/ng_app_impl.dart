@@ -22,6 +22,10 @@ class NGAppImpl implements NGApp {
       'club_track.mp3',
       'hard_track.mp3',
     ]);
+    await AudioPlayer.global.setAudioContext(AudioContextConfig(
+      forceSpeaker: false,
+      duckAudio: true,
+    ).build());
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,
     );

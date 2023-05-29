@@ -4,12 +4,11 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Dumbbell extends SpriteComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, Eatable {
+    with CollisionCallbacks, HasGameRef, HasLevelConfigurator {
   Dumbbell({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;

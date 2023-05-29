@@ -66,6 +66,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
       _startMainScreenBgm();
       GoRouter.of(context).addListener(() async {
         final location = GoRouter.of(context).location;
+        print(location);
         switch (location) {
           case '/main/pullUpGame':
             _audio.stopBgm();

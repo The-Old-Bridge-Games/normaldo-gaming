@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/dumbbell.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/fat_pizza.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/gunt.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 

@@ -3,14 +3,17 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
 
 class PullUpGame extends FlameGame
-    with HasTappables, HasDraggables, HasCollisionDetection {
+    with HasTappables, HasDraggables, HasCollisionDetection, HasNgAudio {
   PullUpGame({required this.gameSessionCubit});
 
   final GameSessionCubit gameSessionCubit;
@@ -42,8 +45,9 @@ class PullUpGame extends FlameGame
   }
 
   Future<void> _initBloc() async {
-    gameSessionCubit.stream.listen((state) {
+    gameSessionCubit.stream.listen((state) async {
       if (state.isDead) {
+        await audio.stopBgm();
         pauseEngine();
         overlays.add(Overlays.deathScreen.name);
       }

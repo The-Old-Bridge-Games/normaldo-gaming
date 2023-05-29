@@ -14,11 +14,11 @@ class TrashBin extends SpriteComponent
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) async {
+      Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Normaldo) {
-      if (cubit.state.hit) return;
+      if (cubit.state.hit || cubit.state.isDead) return;
       removeFromParent();
-      await cubit.takeHit();
+      cubit.takeHit();
     }
 
     super.onCollisionStart(intersectionPoints, other);

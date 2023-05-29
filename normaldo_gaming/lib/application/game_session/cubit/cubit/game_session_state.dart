@@ -5,7 +5,7 @@ class GameSessionState with _$GameSessionState {
   const factory GameSessionState({
     required int score,
     required bool isDead,
-    required int lives,
+    @Assert('lives >= 0') required int lives,
     required int dollars,
     required bool paused,
     required bool hit,

@@ -17,12 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   void _onStartPressed(BuildContext context) {
-    context.push(NGRoutes.pullUpGame.path).then((value) {
-      if (value == 'try again') {
-        _onStartPressed(context);
-        return;
-      }
-    });
+    context.push(NGRoutes.pullUpGame.path);
   }
 
   @override

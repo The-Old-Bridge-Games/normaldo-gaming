@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameSessionState {
   int get score => throw _privateConstructorUsedError;
   bool get isDead => throw _privateConstructorUsedError;
+  @Assert('lives >= 0')
   int get lives => throw _privateConstructorUsedError;
   int get dollars => throw _privateConstructorUsedError;
   bool get paused => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $GameSessionStateCopyWith<$Res> {
   $Res call(
       {int score,
       bool isDead,
-      int lives,
+      @Assert('lives >= 0') int lives,
       int dollars,
       bool paused,
       bool hit,
@@ -111,7 +112,7 @@ abstract class _$$_GameSessionStateCopyWith<$Res>
   $Res call(
       {int score,
       bool isDead,
-      int lives,
+      @Assert('lives >= 0') int lives,
       int dollars,
       bool paused,
       bool hit,
@@ -176,7 +177,7 @@ class _$_GameSessionState implements _GameSessionState {
   const _$_GameSessionState(
       {required this.score,
       required this.isDead,
-      required this.lives,
+      @Assert('lives >= 0') required this.lives,
       required this.dollars,
       required this.paused,
       required this.hit,
@@ -187,6 +188,7 @@ class _$_GameSessionState implements _GameSessionState {
   @override
   final bool isDead;
   @override
+  @Assert('lives >= 0')
   final int lives;
   @override
   final int dollars;
@@ -232,7 +234,7 @@ abstract class _GameSessionState implements GameSessionState {
   const factory _GameSessionState(
       {required final int score,
       required final bool isDead,
-      required final int lives,
+      @Assert('lives >= 0') required final int lives,
       required final int dollars,
       required final bool paused,
       required final bool hit,
@@ -243,6 +245,7 @@ abstract class _GameSessionState implements GameSessionState {
   @override
   bool get isDead;
   @override
+  @Assert('lives >= 0')
   int get lives;
   @override
   int get dollars;
