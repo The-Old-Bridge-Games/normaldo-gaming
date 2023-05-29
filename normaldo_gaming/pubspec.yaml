@@ -74,6 +74,7 @@ flutter:
     - assets/images/normaldo/3.0x/
 
     - assets/audio/
+    - assets/audio/sfx/
 
   fonts:
     - family: HyperStiffRoundBootiedOpossumRegular

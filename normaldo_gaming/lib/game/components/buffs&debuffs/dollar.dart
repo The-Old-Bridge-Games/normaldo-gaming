@@ -1,11 +1,13 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
 class Dollar extends SpriteComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator {
+    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, HasNgAudio {
   Dollar({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
@@ -17,6 +19,7 @@ class Dollar extends SpriteComponent
   ) {
     if (other is Normaldo) {
       cubit.addDollars(1);
+      audio.playSfx(Sfx.dollarCatch);
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);

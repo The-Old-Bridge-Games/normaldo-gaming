@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
 class TrashBin extends SpriteComponent
-    with HasGameRef, CollisionCallbacks, HasLevelConfigurator {
+    with HasGameRef, CollisionCallbacks, HasLevelConfigurator, HasNgAudio {
   TrashBin({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
@@ -18,6 +20,7 @@ class TrashBin extends SpriteComponent
     if (other is Normaldo) {
       if (cubit.state.hit || cubit.state.isDead) return;
       removeFromParent();
+      audio.playSfx(Sfx.binCrash);
       cubit.takeHit();
     }
 

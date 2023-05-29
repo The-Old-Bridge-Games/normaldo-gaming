@@ -4,13 +4,16 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 class PauseButton extends SpriteComponent
     with
         Tappable,
         FlameBlocReader<GameSessionCubit, GameSessionState>,
-        HasGameRef {
+        HasGameRef,
+        HasNgAudio {
   PauseButton() : super(size: Vector2(70, 70));
   @override
   Future<void> onLoad() async {
@@ -36,6 +39,7 @@ class PauseButton extends SpriteComponent
 
   @override
   bool onTapDown(TapDownInfo info) {
+    audio.playSfx(Sfx.buttonPressed);
     bloc.togglePause();
     return true;
   }
