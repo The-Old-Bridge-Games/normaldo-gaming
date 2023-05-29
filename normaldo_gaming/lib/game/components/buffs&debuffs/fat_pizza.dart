@@ -21,12 +21,10 @@ class FatPizza extends SpriteComponent
     if (other is Normaldo) {
       cubit.addLives(1);
       removeFromParent();
+      other.increaseFatPoints(10);
       // when lives are 5 and we try to add 1 more listeners will not work
       // because lives will also be 5
       (gameRef as PullUpGame).hungerBar.restoreBar();
-      if (cubit.state.lives == 5) {
-        other.nextFatState();
-      }
     }
     super.onCollisionStart(intersectionPoints, other);
   }

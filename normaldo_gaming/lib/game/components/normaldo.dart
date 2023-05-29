@@ -55,6 +55,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   var _state = NormaldoHitState.idle;
 
   var _pizzaEaten = 0;
+  int get fatPoints => _pizzaEaten;
 
   bool get isPreEating {
     switch (current) {
@@ -78,6 +79,24 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         _immortal = true;
         _startFlick();
         break;
+    }
+  }
+
+  void increaseFatPoints(int by) {
+    assert(by > 0);
+    _pizzaEaten += by;
+    if (_pizzaEaten >= pizzaToGetFatter) {
+      _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
+      nextFatState();
+    }
+  }
+
+  void decreaseFatPoints(int by) {
+    assert(by > 0);
+    _pizzaEaten -= by;
+    if (_pizzaEaten <= 0) {
+      _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
+      prevFatState();
     }
   }
 
@@ -145,27 +164,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         listenWhen: (prevState, newState) => prevState.hit != newState.hit,
         onNewState: (cState) {
           if (cState.hit) {
-            _pizzaEaten = 0;
             state = NormaldoHitState.hit;
           } else {
             state = NormaldoHitState.idle;
           }
-        }));
-
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) => prevState.score < newState.score,
-        onNewState: (_) {
-          _pizzaEaten++;
-          if (_pizzaEaten == pizzaToGetFatter) {
-            _pizzaEaten = 0;
-            nextFatState();
-          }
-        }));
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) =>
-            prevState.lives > newState.lives && newState.lives < 3,
-        onNewState: (_) {
-          prevFatState();
         }));
   }
 

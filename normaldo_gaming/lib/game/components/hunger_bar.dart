@@ -21,7 +21,7 @@ class HungerBar extends PositionComponent
   static const shakeDuration = 0.01;
 
   final livesComponent = TextComponent(
-      text: GameSessionCubit.initialLivesCount.toString(),
+      text: GameSessionCubit.maxLivesCount.toString(),
       textRenderer: TextPaint(
           style: NGTheme.displayMedium.copyWith(
         background: Paint()

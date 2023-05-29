@@ -4,10 +4,9 @@ import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/audio.dart';
+import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
@@ -24,6 +23,7 @@ class PullUpGame extends FlameGame
   final hungerBar = HungerBar();
   final balance = Balance();
   final pauseButton = PauseButton();
+  final fatCounter = FatCounter();
 
   late final Grid grid;
 
@@ -42,6 +42,8 @@ class PullUpGame extends FlameGame
     balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
     hungerBar.position = Vector2(
         48 + scoreLabel.size.x + 96 + balance.size.x + 148, scoreLabel.y);
+    fatCounter.position.x = hungerBar.position.x + 250;
+    fatCounter.position.y = scoreLabel.y;
   }
 
   Future<void> _initBloc() async {
@@ -61,6 +63,7 @@ class PullUpGame extends FlameGame
           topBar,
           scoreLabel,
           hungerBar,
+          fatCounter,
           balance,
           pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),
           grid = Grid(gameSessionCubit: gameSessionCubit)

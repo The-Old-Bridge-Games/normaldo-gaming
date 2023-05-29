@@ -8,12 +8,14 @@ part 'game_session_cubit.freezed.dart';
 
 class GameSessionCubit extends Cubit<GameSessionState> {
   static const hitRevival = Duration(seconds: 2);
-  static const initialLivesCount = 5;
+  static const maxLivesCount = 5;
 
   GameSessionCubit() : super(GameSessionState.initial());
 
   void eatPizza() {
-    emit(state.copyWith(score: state.score + 1));
+    emit(state.copyWith(
+      score: state.score + 1,
+    ));
   }
 
   void decreaseHunger() {
@@ -28,8 +30,8 @@ class GameSessionCubit extends Cubit<GameSessionState> {
 
   void addLives(int count) {
     int lives;
-    if (state.lives + count > 5) {
-      lives = 5;
+    if (state.lives + count > maxLivesCount) {
+      lives = maxLivesCount;
     } else {
       lives = state.lives + count;
     }

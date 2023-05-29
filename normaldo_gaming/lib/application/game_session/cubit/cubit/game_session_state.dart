@@ -15,7 +15,7 @@ class GameSessionState with _$GameSessionState {
   factory GameSessionState.initial() => const GameSessionState(
         score: 0,
         isDead: false,
-        lives: GameSessionCubit.initialLivesCount,
+        lives: GameSessionCubit.maxLivesCount,
         dollars: 0,
         paused: false,
         hit: false,

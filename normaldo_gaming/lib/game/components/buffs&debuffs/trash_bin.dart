@@ -18,6 +18,7 @@ class TrashBin extends SpriteComponent
     if (other is Normaldo) {
       if (cubit.state.hit || cubit.state.isDead) return;
       removeFromParent();
+      other.decreaseFatPoints(5);
       cubit.takeHit();
     }
 

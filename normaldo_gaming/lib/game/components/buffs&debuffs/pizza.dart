@@ -24,6 +24,7 @@ class Pizza extends SpriteComponent
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
       cubit.eatPizza();
+      other.increaseFatPoints(1);
       removeFromParent();
       (gameRef as PullUpGame).hungerBar.restoreBar();
     }
