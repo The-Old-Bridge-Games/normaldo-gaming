@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 
 class RootScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _RootScreenState extends State<RootScreen> {
       listener: (context, state) {
         context.push(NGRoutes.createUser.path);
       },
-      child: const MainScreen(),
+      child: const NgAudioWidget(child: MainScreen()),
     );
   }
 }

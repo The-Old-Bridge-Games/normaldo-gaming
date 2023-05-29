@@ -3,7 +3,6 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/game/components/background_music.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
@@ -54,7 +53,6 @@ class PullUpGame extends FlameGame
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
         children: [
-          BackgroundMusic(),
           scene,
           topBar,
           scoreLabel,
