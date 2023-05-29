@@ -6,13 +6,29 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
-class TrashBin extends SpriteComponent
-    with HasGameRef, CollisionCallbacks, HasLevelConfigurator, HasNgAudio {
+class TrashBin extends PositionComponent
+    with
+        HasGameRef,
+        CollisionCallbacks,
+        HasLevelConfigurator,
+        HasNgAudio,
+        HasAura {
   TrashBin({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
+
+  @override
+  Aura get aura => Aura.red;
+
+  @override
+  Component get auraComponent => RectangleComponent(
+        size: size,
+        paint: auraPaint,
+      );
 
   @override
   void onCollisionStart(
@@ -29,7 +45,11 @@ class TrashBin extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('trash_bin.png');
+    add(auraComponent);
+    add(SpriteComponent(
+      size: size,
+      sprite: await Sprite.load('trash_bin.png'),
+    ));
     add(RectangleHitbox()..collisionType = CollisionType.passive);
 
     return super.onLoad();

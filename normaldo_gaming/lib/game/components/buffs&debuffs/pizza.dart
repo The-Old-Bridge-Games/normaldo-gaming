@@ -6,23 +6,39 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
+import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
-class Pizza extends SpriteComponent
+class Pizza extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
         HasLevelConfigurator,
         Eatable,
-        HasNgAudio {
+        HasNgAudio,
+        HasAura {
   Pizza({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
 
   final _eatingHitbox = RectangleHitbox()
     ..collisionType = CollisionType.passive;
+
+  @override
+  Aura get aura => Aura.blue;
+
+  @override
+  Component get auraComponent => PolygonComponent(
+        [
+          Vector2(0, size.y / 2),
+          Vector2(size.x, 0),
+          Vector2(size.x, size.y),
+        ],
+        paint: auraPaint,
+      );
 
   @override
   void onCollisionStart(
@@ -40,7 +56,11 @@ class Pizza extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('pizza1.png');
+    add(auraComponent);
+    add(SpriteComponent(
+      size: size,
+      sprite: await Sprite.load('pizza1.png'),
+    ));
     add(_eatingHitbox..anchor = anchor);
 
     return super.onLoad();

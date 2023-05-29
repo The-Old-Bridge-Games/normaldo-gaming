@@ -9,6 +9,10 @@ abstract class NGTheme {
   static const bgSemiBlack = Colors.black38;
   static const heartRed = Color(0xffDC0000);
 
+  static final auraGreen = green1;
+  static const auraRed = Color(0xffDC0000);
+  static final auraBlue = Colors.blue[700]!;
+
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,
     fontSize: 24,
