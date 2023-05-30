@@ -8,10 +8,10 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
 enum Items {
   // CHECK THAT SUM OF CHANCES MUST ALWAYS BE == 1000 (or refactor it)
-  trashBin(550),
-  pizza(350),
+  trashBin(590),
+  pizza(330),
   dollar(50),
-  fatPizza(30),
+  fatPizza(10),
   dumbbell(20);
   // trashBin(715),
   // pizza(210),

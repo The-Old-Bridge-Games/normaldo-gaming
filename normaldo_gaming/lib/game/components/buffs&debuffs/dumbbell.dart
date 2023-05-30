@@ -38,7 +38,7 @@ class Dumbbell extends PositionComponent
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
       removeFromParent();
-      other.prevFatState();
+      other.decreaseFatPoints(20);
     }
     super.onCollisionStart(intersectionPoints, other);
   }

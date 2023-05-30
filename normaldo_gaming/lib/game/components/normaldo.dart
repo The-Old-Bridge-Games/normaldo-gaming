@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
+import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
 enum NormaldoHitState {
   idle,
@@ -60,12 +61,18 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   var _pizzaEaten = 0;
   int get fatPoints => _pizzaEaten;
 
-  bool get isMaxFat =>
+  bool get isUberFat =>
       current == NormaldoFatState.uberFat ||
       current == NormaldoFatState.uberFatEat;
-  bool get isMinFat =>
+  bool get isSkinny =>
       current == NormaldoFatState.skinny ||
       current == NormaldoFatState.skinnyEat;
+
+  bool get isSlim =>
+      current == NormaldoFatState.slim || current == NormaldoFatState.slimEat;
+
+  bool get isFat =>
+      current == NormaldoFatState.fat || current == NormaldoFatState.fatEat;
 
   bool get isPreEating {
     switch (current) {
@@ -94,22 +101,27 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void increaseFatPoints(int by) {
     assert(by > 0);
+    if (isUberFat) return;
     _pizzaEaten += by;
-    if (_pizzaEaten >= pizzaToGetFatter && !isMaxFat) {
+    if (_pizzaEaten >= pizzaToGetFatter && !isFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       nextFatState();
-    } else if (_pizzaEaten >= pizzaToGetFatter && isMaxFat) {
+    } else if (_pizzaEaten >= pizzaToGetFatter && isFat) {
       _pizzaEaten = pizzaToGetFatter;
+      nextFatState();
     }
   }
 
   void decreaseFatPoints(int by) {
     assert(by > 0);
     _pizzaEaten -= by;
-    if (_pizzaEaten <= 0 && !isMinFat) {
+    if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       prevFatState();
-    } else if (_pizzaEaten <= 0 && isMinFat) {
+    } else if (_pizzaEaten <= 0 && isSlim) {
+      _pizzaEaten = 0;
+      prevFatState();
+    } else if (_pizzaEaten <= 0 && isSkinny) {
       _pizzaEaten = 0;
     }
   }
@@ -149,28 +161,8 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    final skinnySprite = await Sprite.load('normaldo/normaldo1.png');
-    final slimSprite = await Sprite.load('normaldo/normaldo2.png');
-    final fatSprite = await Sprite.load('normaldo/normaldo3.png');
-    final uberFatSprite = await Sprite.load('normaldo/normaldo4.png');
 
-    final skinnyEatSprite = await Sprite.load('normaldo/normaldo1_eat.png');
-    final slimEatSprite = await Sprite.load('normaldo/normaldo2_eat.png');
-    final fatEatSprite = await Sprite.load('normaldo/normaldo3_eat.png');
-    final uberEatFatSprite = await Sprite.load('normaldo/normaldo4_eat.png');
-
-    sprites = {
-      NormaldoFatState.skinny: skinnySprite,
-      NormaldoFatState.slim: slimSprite,
-      NormaldoFatState.fat: fatSprite,
-      NormaldoFatState.uberFat: uberFatSprite,
-
-      // eating
-      NormaldoFatState.skinnyEat: skinnyEatSprite,
-      NormaldoFatState.slimEat: slimEatSprite,
-      NormaldoFatState.fatEat: fatEatSprite,
-      NormaldoFatState.uberFatEat: uberEatFatSprite,
-    };
+    sprites = await normaldoSprites();
 
     current = NormaldoFatState.slim;
 

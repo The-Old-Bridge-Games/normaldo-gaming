@@ -42,9 +42,9 @@ class PullUpGame extends FlameGame
     scene.size = size;
     balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
     hpPizzas.position.x = size.x / 2 - hpPizzas.size.x - 16;
-    hpPizzas.position.y = 16;
+    hpPizzas.position.y = 12;
     fatCounter.position.x = size.x / 2 + 40;
-    fatCounter.position.y = scoreLabel.y + 4;
+    fatCounter.position.y = 12;
   }
 
   Future<void> _initBloc() async {

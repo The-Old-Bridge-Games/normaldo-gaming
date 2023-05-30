@@ -36,7 +36,7 @@ class TrashBin extends PositionComponent
     if (other is Normaldo) {
       if (cubit.state.hit || cubit.state.isDead) return;
       removeFromParent();
-      other.decreaseFatPoints(5);
+      other.decreaseFatPoints(10);
       audio.playSfx(Sfx.binCrash);
       cubit.takeHit();
     }

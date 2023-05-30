@@ -115,7 +115,7 @@ class Grid extends PositionComponent
         return 0.5;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
-        return 0.3;
+        return 0.4;
       default:
         throw UnexpectedError();
     }
