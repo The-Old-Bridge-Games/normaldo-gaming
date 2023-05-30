@@ -8,7 +8,9 @@ part 'game_session_cubit.freezed.dart';
 
 class GameSessionCubit extends Cubit<GameSessionState> {
   static const hitRevival = Duration(seconds: 2);
-  static const maxLivesCount = 5;
+
+  /// 3 extra lives by pizza packs and 1 initial life
+  static const maxLivesCount = 4;
 
   GameSessionCubit() : super(GameSessionState.initial());
 

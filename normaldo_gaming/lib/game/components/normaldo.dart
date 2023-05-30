@@ -60,6 +60,13 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   var _pizzaEaten = 0;
   int get fatPoints => _pizzaEaten;
 
+  bool get isMaxFat =>
+      current == NormaldoFatState.uberFat ||
+      current == NormaldoFatState.uberFatEat;
+  bool get isMinFat =>
+      current == NormaldoFatState.skinny ||
+      current == NormaldoFatState.skinnyEat;
+
   bool get isPreEating {
     switch (current) {
       case NormaldoFatState.skinny:
@@ -88,18 +95,22 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   void increaseFatPoints(int by) {
     assert(by > 0);
     _pizzaEaten += by;
-    if (_pizzaEaten >= pizzaToGetFatter) {
+    if (_pizzaEaten >= pizzaToGetFatter && !isMaxFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       nextFatState();
+    } else if (_pizzaEaten >= pizzaToGetFatter && isMaxFat) {
+      _pizzaEaten = pizzaToGetFatter;
     }
   }
 
   void decreaseFatPoints(int by) {
     assert(by > 0);
     _pizzaEaten -= by;
-    if (_pizzaEaten <= 0) {
+    if (_pizzaEaten <= 0 && !isMinFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       prevFatState();
+    } else if (_pizzaEaten <= 0 && isMinFat) {
+      _pizzaEaten = 0;
     }
   }
 

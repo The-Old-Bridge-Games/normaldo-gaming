@@ -50,7 +50,6 @@ class Pizza extends PositionComponent
       other.increaseFatPoints(1);
       audio.playSfx(Sfx.eatPizza);
       removeFromParent();
-      (gameRef as PullUpGame).hungerBar.restoreBar();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -60,7 +59,7 @@ class Pizza extends PositionComponent
     add(auraComponent);
     add(SpriteComponent(
       size: size,
-      sprite: await Sprite.load('pizza1.png'),
+      sprite: await Sprite.load('pizza.png'),
     ));
     add(_eatingHitbox..anchor = anchor);
 

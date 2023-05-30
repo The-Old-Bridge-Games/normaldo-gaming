@@ -26,8 +26,8 @@ class ScoreLabel extends PositionComponent
   @override
   FutureOr<void> onLoad() async {
     final pizzaSprite = SpriteComponent(
-      sprite: await Sprite.load('pizza1.png'),
-      size: Vector2.all(25),
+      sprite: await Sprite.load('pizza.png'),
+      size: Vector2.all(30),
     );
     add(pizzaSprite..position.y = 4);
     _text.text = '0';

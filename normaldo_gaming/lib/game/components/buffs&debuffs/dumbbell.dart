@@ -7,7 +7,6 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
 class Dumbbell extends PositionComponent
@@ -39,8 +38,6 @@ class Dumbbell extends PositionComponent
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
       removeFromParent();
-      final game = (gameRef as PullUpGame);
-      game.hungerBar.restoreBar();
       other.prevFatState();
     }
     super.onCollisionStart(intersectionPoints, other);

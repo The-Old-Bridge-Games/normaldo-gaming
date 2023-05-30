@@ -99,7 +99,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Image.asset(
-          'assets/images/pizza1.png',
+          'assets/images/pizza.png',
           height: 20,
           width: 20,
         ),

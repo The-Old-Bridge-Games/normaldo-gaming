@@ -48,11 +48,11 @@ class ItemsCreator extends TimerComponent
       case Items.trashBin:
         return Vector2(grid.lineSize / 2 * 4 / 3, grid.lineSize / 2);
       case Items.pizza:
-        return Vector2(grid.lineSize / 2, grid.lineSize / 2);
+        return Vector2(grid.lineSize * 0.6, grid.lineSize * 0.6);
       case Items.dollar:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
       case Items.fatPizza:
-        return Vector2(grid.lineSize / 2, grid.lineSize / 2);
+        return Vector2(grid.lineSize * 0.7, grid.lineSize * 0.7);
       case Items.dumbbell:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
     }

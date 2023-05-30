@@ -5,6 +5,7 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
+import 'package:normaldo_gaming/game/components/hp_pizzas.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
@@ -20,9 +21,9 @@ class PullUpGame extends FlameGame
   late final Scene scene;
   final topBar = TopBar();
   final scoreLabel = ScoreLabel();
-  final hungerBar = HungerBar();
   final balance = Balance();
   final pauseButton = PauseButton();
+  final hpPizzas = HpPizzas();
   final fatCounter = FatCounter();
 
   late final Grid grid;
@@ -40,10 +41,10 @@ class PullUpGame extends FlameGame
     scene = Scene(initialSize: size);
     scene.size = size;
     balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
-    hungerBar.position = Vector2(
-        48 + scoreLabel.size.x + 96 + balance.size.x + 148, scoreLabel.y);
-    fatCounter.position.x = hungerBar.position.x + 250;
-    fatCounter.position.y = scoreLabel.y;
+    hpPizzas.position.x = size.x / 2 - hpPizzas.size.x - 16;
+    hpPizzas.position.y = 16;
+    fatCounter.position.x = size.x / 2 + 40;
+    fatCounter.position.y = scoreLabel.y + 4;
   }
 
   Future<void> _initBloc() async {
@@ -62,7 +63,7 @@ class PullUpGame extends FlameGame
           scene,
           topBar,
           scoreLabel,
-          hungerBar,
+          hpPizzas,
           fatCounter,
           balance,
           pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),

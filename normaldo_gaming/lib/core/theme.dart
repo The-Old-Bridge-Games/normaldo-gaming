@@ -11,7 +11,7 @@ abstract class NGTheme {
 
   static final auraGreen = green1;
   static const auraRed = Color(0xffDC0000);
-  static final auraBlue = Colors.blue[700]!;
+  static const auraBlue = Color.fromARGB(255, 103, 179, 254);
 
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,

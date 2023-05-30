@@ -8,7 +8,6 @@ import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
 class FatPizza extends PositionComponent
@@ -46,9 +45,6 @@ class FatPizza extends PositionComponent
       removeFromParent();
       other.increaseFatPoints(10);
       audio.playSfx(Sfx.eatFatPizza);
-      // when lives are 5 and we try to add 1 more listeners will not work
-      // because lives will also be 5
-      (gameRef as PullUpGame).hungerBar.restoreBar();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -58,7 +54,7 @@ class FatPizza extends PositionComponent
     add(auraComponent);
     add(SpriteComponent(
       size: size,
-      sprite: await Sprite.load('fat_pizza.png'),
+      sprite: await Sprite.load('pizza_pack1.png'),
     ));
     add(RectangleHitbox()..collisionType = CollisionType.passive);
     add(ScaleEffect.to(
