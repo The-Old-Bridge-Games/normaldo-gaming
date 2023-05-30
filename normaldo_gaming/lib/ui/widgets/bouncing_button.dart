@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 
 class BounceScale {
   final double value;
@@ -29,7 +31,7 @@ class BouncingButton extends StatefulWidget {
 }
 
 class _BouncingButtonState extends State<BouncingButton>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, HasNgAudio {
   late double _scale;
   late AnimationController _controller;
   @override
@@ -57,7 +59,10 @@ class _BouncingButtonState extends State<BouncingButton>
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
     return GestureDetector(
-      onTap: widget.onPressed,
+      onTap: () {
+        audio.playSfx(Sfx.buttonPressed);
+        widget.onPressed?.call();
+      },
       child: Listener(
         onPointerDown: (_) => _tapDown(),
         onPointerUp: (_) => _tapUp(),

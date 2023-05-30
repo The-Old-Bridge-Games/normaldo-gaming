@@ -17,6 +17,8 @@ class NoAudio implements Exception {
 }
 
 class NgAudioImpl implements NgAudio {
+  double _bgmVolume = 0.05;
+
   final _bgm = <String>[];
   String _currentBgmPath = '';
   AudioPlayer? _currentBgmPlayer;
@@ -52,7 +54,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<int> playAudio(String path) async {
-    final player = await FlameAudio.playLongAudio(path);
+    final player = await FlameAudio.playLongAudio(path, volume: _bgmVolume);
     int id;
     if (_players.entries.isNotEmpty) {
       id = _players.entries.last.key + 1;
@@ -73,7 +75,8 @@ class NgAudioImpl implements NgAudio {
     await _currentBgmPlayer?.stop();
     _currentBgmStreamSub?.cancel();
     _currentBgmStreamSub = null;
-    final player = await FlameAudio.playLongAudio(_currentBgmPath);
+    final player =
+        await FlameAudio.playLongAudio(_currentBgmPath, volume: _bgmVolume);
     _currentBgmPlayer = player;
     final nextIndex = _bgm.indexOf(_currentBgmPath) + 1;
     if (nextIndex < _bgm.length) {
@@ -88,7 +91,8 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> playSfx(Sfx sfx) async {
-    await FlameAudio.play(sfx.paths[Random().nextInt(sfx.paths.length)]);
+    await FlameAudio.play(
+        'sfx/${sfx.paths[Random().nextInt(sfx.paths.length)]}');
   }
 
   @override
@@ -138,7 +142,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<int> loopAudio(String path) async {
-    final player = await FlameAudio.loopLongAudio(path);
+    final player = await FlameAudio.loopLongAudio(path, volume: _bgmVolume);
     int id;
     if (_players.entries.isNotEmpty) {
       id = _players.entries.last.key + 1;
@@ -161,8 +165,8 @@ extension on Sfx {
     switch (this) {
       case Sfx.eatPizza:
         return [
-          'sfx/eaat.mp3',
-          'sfx/eat_pizza.mp3',
+          'eaat.mp3',
+          'eat_pizza.mp3',
         ];
       case Sfx.binCrash:
         return ['bla.mp3'];

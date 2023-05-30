@@ -5,6 +5,8 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 
 enum NormaldoHitState {
@@ -43,7 +45,8 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     with
         FlameBlocReader<GameSessionCubit, GameSessionState>,
         _StateActions,
-        CollisionCallbacks {
+        CollisionCallbacks,
+        HasNgAudio {
   static const pizzaToGetFatter = 20;
 
   Normaldo({
@@ -111,6 +114,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       state = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
     if (current != state) {
+      audio.playSfx(Sfx.weightIncreased);
       current = state;
     }
   }
@@ -126,6 +130,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       state = NormaldoFatState.onlyIdle[indexOfCurrent - 1];
     }
     if (current != state) {
+      audio.playSfx(Sfx.weightLoosed);
       current = state;
     }
   }
