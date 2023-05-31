@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 
 import 'grid.dart';
 
@@ -34,12 +35,21 @@ class ItemsCreator extends TimerComponent
   }
 
   PositionComponent _getNextItem() {
+    Items getNextItem(List<Items> itemsPool) {
+      final item = itemsPool[random.nextInt(itemsPool.length)];
+      if (item.component(cubit: bloc) is SoloSpawn &&
+          gameRef.children.any((element) => element is SoloSpawn)) {
+        return getNextItem(itemsPool);
+      }
+      return item;
+    }
+
     final List<Items> itemsPool = [];
     for (var item in Items.values) {
       itemsPool.addAll(List<Items>.generate(item.chance, (_) => item));
     }
     itemsPool.shuffle(random);
-    final nextItem = itemsPool[random.nextInt(itemsPool.length)];
+    final nextItem = getNextItem(itemsPool);
     return nextItem.component(cubit: bloc)..size = _getSizeFromItem(nextItem);
   }
 

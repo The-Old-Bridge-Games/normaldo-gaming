@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
+import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 
 class FatPizza extends PositionComponent
     with
@@ -17,7 +18,8 @@ class FatPizza extends PositionComponent
         HasLevelConfigurator,
         Eatable,
         HasNgAudio,
-        HasAura {
+        HasAura,
+        SoloSpawn {
   FatPizza({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;

@@ -5,7 +5,10 @@ import 'package:normaldo_gaming/domain/pull_up_game/level_configurator.dart';
 class LevelConfiguratorImpl implements LevelConfigurator {
   @override
   double itemSpeed(int level) {
-    final speed = (200 + (20 * level)).toDouble();
+    final speed = (200 + (10 * level)).toDouble();
+    if (level > 20) {
+      return (200 + (10 * 20)).toDouble();
+    }
     return speed;
   }
 

@@ -101,14 +101,15 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void increaseFatPoints(int by) {
     assert(by > 0);
-    if (isUberFat) return;
     _pizzaEaten += by;
-    if (_pizzaEaten >= pizzaToGetFatter && !isFat) {
+    if (_pizzaEaten >= pizzaToGetFatter && !isFat && !isUberFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       nextFatState();
     } else if (_pizzaEaten >= pizzaToGetFatter && isFat) {
       _pizzaEaten = pizzaToGetFatter;
       nextFatState();
+    } else if (_pizzaEaten >= pizzaToGetFatter && isUberFat) {
+      _pizzaEaten = pizzaToGetFatter;
     }
   }
 
