@@ -28,8 +28,20 @@ class Grid extends PositionComponent
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
+  double? _speedMultiplier;
+
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
+
+  void changeSpeed({
+    required double multiplier,
+    required Duration duration,
+  }) {
+    _speedMultiplier = multiplier;
+    Future.delayed(duration).whenComplete(() {
+      _speedMultiplier = null;
+    });
+  }
 
   @override
   Future<void> onLoad() async {
@@ -102,7 +114,11 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateInfo info) {
-    normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
+    if (_speedMultiplier != null) {
+      normaldo.position += info.delta.game * _speedMultiplier!;
+    } else {
+      normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
+    }
     return super.onDragUpdate(info);
   }
 

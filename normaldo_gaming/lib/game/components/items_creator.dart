@@ -78,7 +78,9 @@ class ItemsCreator extends TimerComponent
       case Items.moneyBag:
         return Vector2(grid.lineSize / 2, grid.lineSize / 2);
       case Items.bomb:
-        return Vector2(grid.lineSize / 2, grid.lineSize / 2);
+        return Vector2(grid.lineSize / 1.5, grid.lineSize / 1.5);
+      case Items.cocktail:
+        return Vector2(grid.lineSize / 1.5, grid.lineSize / 1.5);
     }
   }
 }

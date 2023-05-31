@@ -188,6 +188,8 @@ extension on Sfx {
         return ['BUTTON.mp3'];
       case Sfx.bomb:
         return ['BOMB.mp3'];
+      case Sfx.cocktail:
+        return ['EAT_SUPER_PIZZA.mp3'];
     }
   }
 }
