@@ -190,7 +190,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
     sprites = await normaldoSprites();
 
-    current = NormaldoFatState.slim;
+    current = NormaldoFatState.skinny;
 
     add(RectangleHitbox());
 

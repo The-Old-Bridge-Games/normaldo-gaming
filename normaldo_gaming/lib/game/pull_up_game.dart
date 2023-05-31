@@ -7,6 +7,7 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/hp_pizzas.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
+import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 import 'components/components.dart';
@@ -27,6 +28,10 @@ class PullUpGame extends FlameGame
   final fatCounter = FatCounter();
 
   late final Grid grid;
+
+  void removeAllItems() {
+    removeWhere((component) => component is HasAura);
+  }
 
   @override
   Future<void> onLoad() async {

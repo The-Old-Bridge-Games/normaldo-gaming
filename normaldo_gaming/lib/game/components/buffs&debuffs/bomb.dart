@@ -7,19 +7,18 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
-class Pizza extends PositionComponent
+class Bomb extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
         HasLevelConfigurator,
-        Eatable,
         HasNgAudio,
         HasAura {
-  Pizza({required this.cubit}) : super(anchor: Anchor.center);
+  Bomb({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
 
@@ -30,12 +29,8 @@ class Pizza extends PositionComponent
   Aura get aura => Aura.blue;
 
   @override
-  Component get auraComponent => PolygonComponent(
-        [
-          Vector2(0, size.y / 2),
-          Vector2(size.x, 0),
-          Vector2(size.x, size.y),
-        ],
+  Component get auraComponent => CircleComponent(
+        radius: size.x / 2,
         paint: auraPaint,
       );
 
@@ -45,10 +40,9 @@ class Pizza extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
-      cubit.eatPizza();
-      other.increaseFatPoints(1);
-      audio.playSfx(Sfx.eatPizza);
+      audio.playSfx(Sfx.bomb);
       removeFromParent();
+      (gameRef as PullUpGame).removeAllItems();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -58,7 +52,7 @@ class Pizza extends PositionComponent
     add(auraComponent);
     add(SpriteComponent(
       size: size,
-      sprite: await Sprite.load('pizza.png'),
+      sprite: await Sprite.load('bomb.png'),
     ));
     add(_eatingHitbox..anchor = anchor);
 

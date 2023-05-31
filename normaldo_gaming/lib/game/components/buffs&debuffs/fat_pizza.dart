@@ -6,7 +6,6 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
@@ -16,7 +15,6 @@ class FatPizza extends PositionComponent
         CollisionCallbacks,
         HasGameRef,
         HasLevelConfigurator,
-        Eatable,
         HasNgAudio,
         HasAura,
         SoloSpawn {

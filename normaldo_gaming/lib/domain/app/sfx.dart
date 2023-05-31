@@ -8,7 +8,8 @@ enum Sfx {
   weightLoosed,
   hurryUp,
   gameOver,
-  buttonPressed;
+  buttonPressed,
+  bomb;
 
   const Sfx();
 }

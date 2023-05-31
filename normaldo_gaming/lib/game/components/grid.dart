@@ -76,8 +76,6 @@ class Grid extends PositionComponent
             ]));
       },
     ));
-    Future.delayed(const Duration(seconds: 10))
-        .whenComplete(() => _itemsCreator.forceItem(Items.moneyBag));
     return super.onLoad();
   }
 

@@ -186,6 +186,8 @@ extension on Sfx {
         return ['GAMEOVER.mp3'];
       case Sfx.buttonPressed:
         return ['BUTTON.mp3'];
+      case Sfx.bomb:
+        return ['BOMB.mp3'];
     }
   }
 }

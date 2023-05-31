@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dumbbell.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/fat_pizza.dart';
@@ -9,18 +10,13 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
 enum Items {
   // CHECK THAT SUM OF CHANCES MUST ALWAYS BE == 1000 (or refactor it)
-  trashBin(596, 1),
-  pizza(346, 0),
+  trashBin(586, 1),
+  pizza(336, 0),
   dollar(44, 0),
   fatPizza(4, 3),
   dumbbell(8, 3),
-  moneyBag(2, 0);
-  // trashBin(0),
-  // pizza(200),
-  // dollar(100),
-  // fatPizza(100),
-  // dumbbell(100),
-  // moneyBag(100);
+  moneyBag(2, 0),
+  bomb(20, 5);
 
   const Items(this.chance, this.startLevel);
 
@@ -41,6 +37,8 @@ enum Items {
         return Dumbbell(cubit: cubit);
       case Items.moneyBag:
         return MoneyBag(cubit: cubit);
+      case Items.bomb:
+        return Bomb(cubit: cubit);
     }
   }
 }
