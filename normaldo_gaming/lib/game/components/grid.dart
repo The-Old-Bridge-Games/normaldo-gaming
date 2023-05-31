@@ -106,17 +106,21 @@ class Grid extends PositionComponent
     switch (normaldo.current) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
+      case NormaldoFatState.skinnyDead:
         return 1;
       case NormaldoFatState.slim:
       case NormaldoFatState.slimEat:
+      case NormaldoFatState.slimDead:
         return 0.7;
       case NormaldoFatState.fat:
       case NormaldoFatState.fatEat:
+      case NormaldoFatState.fatDead:
         return 0.5;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
+      case NormaldoFatState.uberFatDead:
         return 0.4;
-      default:
+      case null:
         throw UnexpectedError();
     }
   }

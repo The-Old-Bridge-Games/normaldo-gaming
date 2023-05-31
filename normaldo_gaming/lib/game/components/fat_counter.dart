@@ -93,12 +93,16 @@ extension on NormaldoFatState {
   List<NormaldoFatState> get prevAndNextStates {
     switch (this) {
       case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyDead:
         return [NormaldoFatState.skinny, NormaldoFatState.slim];
       case NormaldoFatState.slim:
+      case NormaldoFatState.slimDead:
         return [NormaldoFatState.skinny, NormaldoFatState.fat];
       case NormaldoFatState.fat:
+      case NormaldoFatState.fatDead:
         return [NormaldoFatState.slim, NormaldoFatState.uberFat];
       case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatDead:
         return [NormaldoFatState.fat, NormaldoFatState.uberFat];
       case NormaldoFatState.skinnyEat:
         return [NormaldoFatState.skinny, NormaldoFatState.slim];

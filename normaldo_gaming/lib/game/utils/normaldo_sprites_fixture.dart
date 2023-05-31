@@ -10,7 +10,12 @@ Future<Map<NormaldoFatState, Sprite>> normaldoSprites() async {
   final skinnyEatSprite = await Sprite.load('normaldo/normaldo1_eat.png');
   final slimEatSprite = await Sprite.load('normaldo/normaldo2_eat.png');
   final fatEatSprite = await Sprite.load('normaldo/normaldo3_eat.png');
-  final uberEatFatSprite = await Sprite.load('normaldo/normaldo4_eat.png');
+  final uberFatEatSprite = await Sprite.load('normaldo/normaldo4_eat.png');
+
+  final skinnyDeadSprite = await Sprite.load('normaldo/normaldo1_dead.png');
+  final slimDeadSprite = await Sprite.load('normaldo/normaldo2_dead.png');
+  final fatDeadSprite = await Sprite.load('normaldo/normaldo3_dead.png');
+  final uberFatDeadSprite = await Sprite.load('normaldo/normaldo4_dead.png');
   return {
     NormaldoFatState.skinny: skinnySprite,
     NormaldoFatState.slim: slimSprite,
@@ -21,6 +26,12 @@ Future<Map<NormaldoFatState, Sprite>> normaldoSprites() async {
     NormaldoFatState.skinnyEat: skinnyEatSprite,
     NormaldoFatState.slimEat: slimEatSprite,
     NormaldoFatState.fatEat: fatEatSprite,
-    NormaldoFatState.uberFatEat: uberEatFatSprite,
+    NormaldoFatState.uberFatEat: uberFatEatSprite,
+
+    // dead
+    NormaldoFatState.skinnyDead: skinnyDeadSprite,
+    NormaldoFatState.slimDead: slimDeadSprite,
+    NormaldoFatState.fatDead: fatDeadSprite,
+    NormaldoFatState.uberFatDead: uberFatDeadSprite,
   };
 }

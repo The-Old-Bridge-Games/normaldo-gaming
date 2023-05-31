@@ -25,7 +25,32 @@ enum NormaldoFatState {
   skinnyEat,
   slimEat,
   fatEat,
-  uberFatEat;
+  uberFatEat,
+
+  // dead states
+  skinnyDead,
+  slimDead,
+  fatDead,
+  uberFatDead;
+
+  NormaldoFatState get dead {
+    switch (this) {
+      case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyEat:
+        return NormaldoFatState.skinnyDead;
+      case NormaldoFatState.slim:
+      case NormaldoFatState.slimEat:
+        return NormaldoFatState.slimDead;
+      case NormaldoFatState.fat:
+      case NormaldoFatState.fatEat:
+        return NormaldoFatState.fatDead;
+      case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatEat:
+        return NormaldoFatState.uberFatDead;
+      default:
+        return this;
+    }
+  }
 
   static List<NormaldoFatState> get onlyIdle => [
         skinny,
@@ -177,6 +202,11 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
           } else {
             state = NormaldoHitState.idle;
           }
+        }));
+    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+        listenWhen: (prevState, newState) => newState.isDead,
+        onNewState: (_) {
+          current = current?.dead;
         }));
   }
 
