@@ -15,6 +15,9 @@ class LevelConfiguratorImpl implements LevelConfigurator {
   @override
   double itemCreationPeriod(int level) {
     final period = pow(0.9, level + 1).toDouble();
+    if (level >= 10) {
+      return pow(0.9, 10).toDouble();
+    }
     return period;
   }
 }

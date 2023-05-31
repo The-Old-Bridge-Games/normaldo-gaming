@@ -9,21 +9,23 @@ import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 import 'grid.dart';
 
 class ItemsCreator extends TimerComponent
-    with
-        HasGameRef,
-        FlameBlocReader<GameSessionCubit, GameSessionState>,
-        FlameBlocListenable<GameSessionCubit, GameSessionState> {
+    with HasGameRef, FlameBlocReader<GameSessionCubit, GameSessionState> {
   final Random random = Random();
 
   ItemsCreator({
     required this.grid,
     required double period,
+    required this.level,
   }) : super(period: period, repeat: true);
 
   final Grid grid;
+  final int level;
 
-  @override
-  void onNewState(GameSessionState state) {}
+  Items? _forcedItem;
+
+  void forceItem(Items item) {
+    _forcedItem = item;
+  }
 
   @override
   void onTick() {
@@ -35,6 +37,12 @@ class ItemsCreator extends TimerComponent
   }
 
   PositionComponent _getNextItem() {
+    if (_forcedItem != null) {
+      final forcedItem = _forcedItem!;
+      _forcedItem = null;
+      return forcedItem.component(cubit: bloc)
+        ..size = _getSizeFromItem(forcedItem);
+    }
     Items getNextItem(List<Items> itemsPool) {
       final item = itemsPool[random.nextInt(itemsPool.length)];
       if (item.component(cubit: bloc) is SoloSpawn &&
@@ -46,7 +54,9 @@ class ItemsCreator extends TimerComponent
 
     final List<Items> itemsPool = [];
     for (var item in Items.values) {
-      itemsPool.addAll(List<Items>.generate(item.chance, (_) => item));
+      if (level >= item.startLevel) {
+        itemsPool.addAll(List<Items>.generate(item.chance, (_) => item));
+      }
     }
     itemsPool.shuffle(random);
     final nextItem = getNextItem(itemsPool);

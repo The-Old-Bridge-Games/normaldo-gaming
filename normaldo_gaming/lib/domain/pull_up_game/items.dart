@@ -9,13 +9,12 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
 enum Items {
   // CHECK THAT SUM OF CHANCES MUST ALWAYS BE == 1000 (or refactor it)
-  trashBin(596),
-  pizza(346),
-  dollar(44),
-  fatPizza(4),
-  dumbbell(8),
-  moneyBag(2),
-  ;
+  trashBin(596, 1),
+  pizza(346, 0),
+  dollar(44, 0),
+  fatPizza(4, 3),
+  dumbbell(8, 3),
+  moneyBag(2, 0);
   // trashBin(0),
   // pizza(200),
   // dollar(100),
@@ -23,9 +22,10 @@ enum Items {
   // dumbbell(100),
   // moneyBag(100);
 
-  const Items(this.chance);
+  const Items(this.chance, this.startLevel);
 
   final int chance;
+  final int startLevel;
 
   PositionComponent component({required GameSessionCubit cubit}) {
     switch (this) {

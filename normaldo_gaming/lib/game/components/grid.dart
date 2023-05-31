@@ -6,6 +6,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/items_creator.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -53,6 +54,7 @@ class Grid extends PositionComponent
           _itemsCreator = ItemsCreator(
             grid: this,
             period: levelConfigurator.itemCreationPeriod(0),
+            level: 0,
           ),
           normaldo,
         ]));
@@ -67,11 +69,15 @@ class Grid extends PositionComponent
             value: gameSessionCubit,
             children: [
               _itemsCreator = ItemsCreator(
-                  grid: this,
-                  period: levelConfigurator.itemCreationPeriod(state.level)),
+                grid: this,
+                period: levelConfigurator.itemCreationPeriod(state.level),
+                level: state.level,
+              ),
             ]));
       },
     ));
+    Future.delayed(const Duration(seconds: 10))
+        .whenComplete(() => _itemsCreator.forceItem(Items.moneyBag));
     return super.onLoad();
   }
 
