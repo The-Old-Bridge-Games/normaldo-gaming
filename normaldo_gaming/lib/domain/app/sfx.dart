@@ -10,7 +10,8 @@ enum Sfx {
   gameOver,
   buttonPressed,
   bomb,
-  cocktail;
+  cocktail,
+  molotov;
 
   const Sfx();
 }

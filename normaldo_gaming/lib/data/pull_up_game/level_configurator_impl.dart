@@ -6,7 +6,7 @@ class LevelConfiguratorImpl implements LevelConfigurator {
   @override
   double itemSpeed(int level) {
     final speed = (200 + (10 * level)).toDouble();
-    if (level > 20) {
+    if (level > 30) {
       return (200 + (10 * 20)).toDouble();
     }
     return speed;

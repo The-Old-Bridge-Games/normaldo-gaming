@@ -29,9 +29,10 @@ class ItemsCreator extends TimerComponent
 
   @override
   void onTick() {
-    gameRef.add(_getNextItem()
+    final itemComponent = _getNextItem();
+    gameRef.add(itemComponent
       ..position = Vector2(
-        gameRef.size.x + (grid.lineSize * 4 / 3) / 2,
+        gameRef.size.x + itemComponent.size.x,
         grid.linesCentersY[random.nextInt(grid.linesCentersY.length)],
       ));
   }
@@ -81,6 +82,8 @@ class ItemsCreator extends TimerComponent
         return Vector2(grid.lineSize / 1.5, grid.lineSize / 1.5);
       case Items.cocktail:
         return Vector2(grid.lineSize / 1.5, grid.lineSize / 1.5);
+      case Items.molotov:
+        return Vector2(grid.lineSize * 0.8, grid.lineSize * 0.7);
     }
   }
 }

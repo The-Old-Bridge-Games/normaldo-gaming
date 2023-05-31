@@ -11,6 +11,7 @@ import 'package:normaldo_gaming/game/components/items_creator.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
+import 'buffs&debuffs/molotov.dart';
 import 'normaldo.dart';
 
 class Grid extends PositionComponent

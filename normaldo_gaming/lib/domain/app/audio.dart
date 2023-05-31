@@ -21,11 +21,11 @@ abstract class NgAudio {
 
   /// Plays audio and returns an identifier of audio player that
   /// handles this audio.
-  Future<int> playAudio(String path);
+  Future<int> playAudio(String path, {double? volume});
 
   /// Loops an audio and returns an identifier of audio player that
   /// handles this audio.
-  Future<int> loopAudio(String path);
+  Future<int> loopAudio(String path, {double? volume});
 
   /// Pauses an audio player that handles audio with this identifier.
   Future<void> pause(int id);

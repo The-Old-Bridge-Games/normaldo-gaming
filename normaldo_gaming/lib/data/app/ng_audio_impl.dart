@@ -53,8 +53,9 @@ class NgAudioImpl implements NgAudio {
   }
 
   @override
-  Future<int> playAudio(String path) async {
-    final player = await FlameAudio.playLongAudio(path, volume: _bgmVolume);
+  Future<int> playAudio(String path, {double? volume}) async {
+    final player =
+        await FlameAudio.playLongAudio(path, volume: volume ?? _bgmVolume);
     int id;
     if (_players.entries.isNotEmpty) {
       id = _players.entries.last.key + 1;
@@ -141,8 +142,9 @@ class NgAudioImpl implements NgAudio {
   }
 
   @override
-  Future<int> loopAudio(String path) async {
-    final player = await FlameAudio.loopLongAudio(path, volume: _bgmVolume);
+  Future<int> loopAudio(String path, {double? volume}) async {
+    final player =
+        await FlameAudio.loopLongAudio(path, volume: volume ?? _bgmVolume);
     int id;
     if (_players.entries.isNotEmpty) {
       id = _players.entries.last.key + 1;
@@ -190,6 +192,8 @@ extension on Sfx {
         return ['BOMB.mp3'];
       case Sfx.cocktail:
         return ['EAT_SUPER_PIZZA.mp3'];
+      case Sfx.molotov:
+        return ['MOLOTOV.mp3'];
     }
   }
 }
