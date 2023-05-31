@@ -58,7 +58,7 @@ class GameSessionCubit extends Cubit<GameSessionState> {
 
   void addDollars(int amount) {
     assert(amount > 0);
-    emit(state.copyWith(dollars: state.dollars + 1));
+    emit(state.copyWith(dollars: state.dollars + amount));
   }
 
   void togglePause() {
