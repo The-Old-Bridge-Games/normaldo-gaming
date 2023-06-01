@@ -94,22 +94,18 @@ extension on NormaldoFatState {
     switch (this) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyDead:
+      case NormaldoFatState.skinnyEat:
         return [NormaldoFatState.skinny, NormaldoFatState.slim];
       case NormaldoFatState.slim:
       case NormaldoFatState.slimDead:
+      case NormaldoFatState.slimEat:
         return [NormaldoFatState.skinny, NormaldoFatState.fat];
       case NormaldoFatState.fat:
       case NormaldoFatState.fatDead:
+      case NormaldoFatState.fatEat:
         return [NormaldoFatState.slim, NormaldoFatState.uberFat];
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatDead:
-        return [NormaldoFatState.fat, NormaldoFatState.uberFat];
-      case NormaldoFatState.skinnyEat:
-        return [NormaldoFatState.skinny, NormaldoFatState.slim];
-      case NormaldoFatState.slimEat:
-        return [NormaldoFatState.skinny, NormaldoFatState.fat];
-      case NormaldoFatState.fatEat:
-        return [NormaldoFatState.slim, NormaldoFatState.uberFat];
       case NormaldoFatState.uberFatEat:
         return [NormaldoFatState.fat, NormaldoFatState.uberFat];
     }

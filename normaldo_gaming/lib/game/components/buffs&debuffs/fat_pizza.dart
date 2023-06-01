@@ -28,10 +28,12 @@ class FatPizza extends PositionComponent
   @override
   Component get auraComponent => PolygonComponent(
         [
-          Vector2(0, size.y / 2),
-          Vector2(size.x, 0),
-          Vector2(size.x, size.y),
+          Vector2(size.x * 0.3, 0), // top point
+          Vector2(size.x, size.y * 0.3), // right point
+          Vector2(size.x * 0.7, size.y), // bottom point
+          Vector2(0, size.y * 0.5), // left point
         ],
+        size: size * 1.2,
         paint: auraPaint,
       );
 
