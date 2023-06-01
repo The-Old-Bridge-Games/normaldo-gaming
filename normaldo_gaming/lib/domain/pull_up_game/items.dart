@@ -16,11 +16,11 @@ enum Items {
   pizza(326, 0),
   dollar(44, 0),
   fatPizza(4, 3),
-  dumbbell(8, 3),
+  dumbbell(8, 1),
   moneyBag(2, 2),
   bomb(10, 5),
   cocktail(20, 5),
-  molotov(20, 10); // 15 startLevel
+  molotov(20, 10);
   // trashBin(0, 1),
   // pizza(250, 0),
   // dollar(0, 0),
