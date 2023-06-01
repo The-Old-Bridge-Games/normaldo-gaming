@@ -6,10 +6,12 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/items_creator.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
+import 'buffs&debuffs/molotov.dart';
 import 'normaldo.dart';
 
 class Grid extends PositionComponent
@@ -27,8 +29,20 @@ class Grid extends PositionComponent
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
+  double? _speedMultiplier;
+
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
+
+  void changeSpeed({
+    required double multiplier,
+    required Duration duration,
+  }) {
+    _speedMultiplier = multiplier;
+    Future.delayed(duration).whenComplete(() {
+      _speedMultiplier = null;
+    });
+  }
 
   @override
   Future<void> onLoad() async {
@@ -53,6 +67,7 @@ class Grid extends PositionComponent
           _itemsCreator = ItemsCreator(
             grid: this,
             period: levelConfigurator.itemCreationPeriod(0),
+            level: 0,
           ),
           normaldo,
         ]));
@@ -67,8 +82,10 @@ class Grid extends PositionComponent
             value: gameSessionCubit,
             children: [
               _itemsCreator = ItemsCreator(
-                  grid: this,
-                  period: levelConfigurator.itemCreationPeriod(state.level)),
+                grid: this,
+                period: levelConfigurator.itemCreationPeriod(state.level),
+                level: state.level,
+              ),
             ]));
       },
     ));
@@ -98,7 +115,11 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateInfo info) {
-    normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
+    if (_speedMultiplier != null) {
+      normaldo.position += info.delta.game * _speedMultiplier!;
+    } else {
+      normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
+    }
     return super.onDragUpdate(info);
   }
 
@@ -106,17 +127,21 @@ class Grid extends PositionComponent
     switch (normaldo.current) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
+      case NormaldoFatState.skinnyDead:
         return 1;
       case NormaldoFatState.slim:
       case NormaldoFatState.slimEat:
+      case NormaldoFatState.slimDead:
         return 0.7;
       case NormaldoFatState.fat:
       case NormaldoFatState.fatEat:
+      case NormaldoFatState.fatDead:
         return 0.5;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
-        return 0.3;
-      default:
+      case NormaldoFatState.uberFatDead:
+        return 0.4;
+      case null:
         throw UnexpectedError();
     }
   }

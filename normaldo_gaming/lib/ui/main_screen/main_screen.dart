@@ -1,4 +1,3 @@
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -15,57 +14,16 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
-  AudioPlayer? _player;
-  bool _isInGame = false;
-
+class _MainScreenState extends State<MainScreen> {
   void _onStartPressed(BuildContext context) {
-    _player?.stop();
-    context.push(NGRoutes.pullUpGame.path).then((value) {
-      if (value == 'try again') {
-        _onStartPressed(context);
-        return;
-      }
-      _isInGame = false;
-      _startBgMusic();
-    });
-    _isInGame = true;
-  }
-
-  Future<void> _startBgMusic() async {
-    _player = await FlameAudio.loopLongAudio('main_theme.mp3');
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.detached:
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.paused:
-        _player?.pause();
-        break;
-      case AppLifecycleState.resumed:
-        if (!_isInGame) {
-          _player?.resume();
-        }
-        break;
-    }
+    context.push(NGRoutes.pullUpGame.path);
   }
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(this);
     FlutterNativeSplash.remove();
-    _startBgMusic();
-  }
-
-  @override
-  void dispose() {
-    _player?.stop();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override

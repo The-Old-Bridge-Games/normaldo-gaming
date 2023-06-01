@@ -21,7 +21,7 @@ class HungerBar extends PositionComponent
   static const shakeDuration = 0.01;
 
   final livesComponent = TextComponent(
-      text: GameSessionCubit.initialLivesCount.toString(),
+      text: GameSessionCubit.maxLivesCount.toString(),
       textRenderer: TextPaint(
           style: NGTheme.displayMedium.copyWith(
         background: Paint()
@@ -39,7 +39,6 @@ class HungerBar extends PositionComponent
   @override
   bool listenWhen(GameSessionState previousState, GameSessionState newState) {
     if (previousState.lives > newState.lives && newState.lives > 1) {
-      restoreBar();
       _shake();
     }
     return previousState.lives != newState.lives;
@@ -66,13 +65,10 @@ class HungerBar extends PositionComponent
           _bar.startHurryingUp();
           (gameRef as PullUpGame).grid.normaldo.current =
               NormaldoFatState.skinny;
-        } else if (state.lives == 1 && !value && _hurryingUp) {
+        } else if (state.lives >= 1 && !value && _hurryingUp) {
           _hurryingUp = false;
           _bar.stopHurryingUp();
           stopShaking();
-        }
-        if (state.lives == 0) {
-          _bar.setBarSize(0);
         }
       },
     );

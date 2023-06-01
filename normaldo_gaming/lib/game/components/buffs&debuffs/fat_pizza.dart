@@ -2,16 +2,40 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
+import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
+import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 
-class FatPizza extends SpriteComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, Eatable {
+class FatPizza extends PositionComponent
+    with
+        CollisionCallbacks,
+        HasGameRef,
+        HasLevelConfigurator,
+        HasNgAudio,
+        HasAura,
+        SoloSpawn {
   FatPizza({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
+
+  @override
+  Aura get aura => Aura.green;
+
+  @override
+  Component get auraComponent => PolygonComponent(
+        [
+          Vector2(size.x * 0.3, 0), // top point
+          Vector2(size.x, size.y * 0.3), // right point
+          Vector2(size.x * 0.7, size.y), // bottom point
+          Vector2(0, size.y * 0.5), // left point
+        ],
+        size: size * 1.2,
+        paint: auraPaint,
+      );
 
   @override
   void onCollisionStart(
@@ -21,19 +45,19 @@ class FatPizza extends SpriteComponent
     if (other is Normaldo) {
       cubit.addLives(1);
       removeFromParent();
-      // when lives are 5 and we try to add 1 more listeners will not work
-      // because lives will also be 5
-      (gameRef as PullUpGame).hungerBar.restoreBar();
-      if (cubit.state.lives == 5) {
-        other.nextFatState();
-      }
+      other.increaseFatPoints(10);
+      audio.playSfx(Sfx.eatFatPizza);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('fat_pizza.png');
+    add(auraComponent);
+    add(SpriteComponent(
+      size: size,
+      sprite: await Sprite.load('pizza_pack1.png'),
+    ));
     add(RectangleHitbox()..collisionType = CollisionType.passive);
     add(ScaleEffect.to(
         Vector2.all(1.2),

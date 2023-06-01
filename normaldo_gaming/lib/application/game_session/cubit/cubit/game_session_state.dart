@@ -5,7 +5,7 @@ class GameSessionState with _$GameSessionState {
   const factory GameSessionState({
     required int score,
     required bool isDead,
-    required int lives,
+    @Assert('lives >= 0') required int lives,
     required int dollars,
     required bool paused,
     required bool hit,
@@ -15,7 +15,7 @@ class GameSessionState with _$GameSessionState {
   factory GameSessionState.initial() => const GameSessionState(
         score: 0,
         isDead: false,
-        lives: GameSessionCubit.initialLivesCount,
+        lives: 1,
         dollars: 0,
         paused: false,
         hit: false,

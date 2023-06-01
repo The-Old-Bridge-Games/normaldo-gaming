@@ -5,7 +5,10 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
+import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
 enum NormaldoHitState {
   idle,
@@ -22,7 +25,32 @@ enum NormaldoFatState {
   skinnyEat,
   slimEat,
   fatEat,
-  uberFatEat;
+  uberFatEat,
+
+  // dead states
+  skinnyDead,
+  slimDead,
+  fatDead,
+  uberFatDead;
+
+  NormaldoFatState get dead {
+    switch (this) {
+      case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyEat:
+        return NormaldoFatState.skinnyDead;
+      case NormaldoFatState.slim:
+      case NormaldoFatState.slimEat:
+        return NormaldoFatState.slimDead;
+      case NormaldoFatState.fat:
+      case NormaldoFatState.fatEat:
+        return NormaldoFatState.fatDead;
+      case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatEat:
+        return NormaldoFatState.uberFatDead;
+      default:
+        return this;
+    }
+  }
 
   static List<NormaldoFatState> get onlyIdle => [
         skinny,
@@ -43,7 +71,8 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     with
         FlameBlocReader<GameSessionCubit, GameSessionState>,
         _StateActions,
-        CollisionCallbacks {
+        CollisionCallbacks,
+        HasNgAudio {
   static const pizzaToGetFatter = 20;
 
   Normaldo({
@@ -55,6 +84,20 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   var _state = NormaldoHitState.idle;
 
   var _pizzaEaten = 0;
+  int get fatPoints => _pizzaEaten;
+
+  bool get isUberFat =>
+      current == NormaldoFatState.uberFat ||
+      current == NormaldoFatState.uberFatEat;
+  bool get isSkinny =>
+      current == NormaldoFatState.skinny ||
+      current == NormaldoFatState.skinnyEat;
+
+  bool get isSlim =>
+      current == NormaldoFatState.slim || current == NormaldoFatState.slimEat;
+
+  bool get isFat =>
+      current == NormaldoFatState.fat || current == NormaldoFatState.fatEat;
 
   bool get isPreEating {
     switch (current) {
@@ -81,6 +124,34 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
   }
 
+  void increaseFatPoints(int by) {
+    assert(by > 0);
+    _pizzaEaten += by;
+    if (_pizzaEaten >= pizzaToGetFatter && !isFat && !isUberFat) {
+      _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
+      nextFatState();
+    } else if (_pizzaEaten >= pizzaToGetFatter && isFat) {
+      _pizzaEaten = pizzaToGetFatter;
+      nextFatState();
+    } else if (_pizzaEaten >= pizzaToGetFatter && isUberFat) {
+      _pizzaEaten = pizzaToGetFatter;
+    }
+  }
+
+  void decreaseFatPoints(int by) {
+    assert(by > 0);
+    _pizzaEaten -= by;
+    if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
+      _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
+      prevFatState();
+    } else if (_pizzaEaten <= 0 && isSlim) {
+      _pizzaEaten = 0;
+      prevFatState();
+    } else if (_pizzaEaten <= 0 && isSkinny) {
+      _pizzaEaten = 0;
+    }
+  }
+
   Future<void> nextFatState() async {
     NormaldoFatState state;
     await Future.delayed(const Duration(milliseconds: 200));
@@ -92,6 +163,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       state = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
     if (current != state) {
+      audio.playSfx(Sfx.weightIncreased);
       current = state;
     }
   }
@@ -107,6 +179,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       state = NormaldoFatState.onlyIdle[indexOfCurrent - 1];
     }
     if (current != state) {
+      audio.playSfx(Sfx.weightLoosed);
       current = state;
     }
   }
@@ -114,30 +187,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    final skinnySprite = await Sprite.load('normaldo/normaldo1.png');
-    final slimSprite = await Sprite.load('normaldo/normaldo2.png');
-    final fatSprite = await Sprite.load('normaldo/normaldo3.png');
-    final uberFatSprite = await Sprite.load('normaldo/normaldo4.png');
 
-    final skinnyEatSprite = await Sprite.load('normaldo/normaldo1_eat.png');
-    final slimEatSprite = await Sprite.load('normaldo/normaldo2_eat.png');
-    final fatEatSprite = await Sprite.load('normaldo/normaldo3_eat.png');
-    final uberEatFatSprite = await Sprite.load('normaldo/normaldo4_eat.png');
+    sprites = await normaldoSprites();
 
-    sprites = {
-      NormaldoFatState.skinny: skinnySprite,
-      NormaldoFatState.slim: slimSprite,
-      NormaldoFatState.fat: fatSprite,
-      NormaldoFatState.uberFat: uberFatSprite,
-
-      // eating
-      NormaldoFatState.skinnyEat: skinnyEatSprite,
-      NormaldoFatState.slimEat: slimEatSprite,
-      NormaldoFatState.fatEat: fatEatSprite,
-      NormaldoFatState.uberFatEat: uberEatFatSprite,
-    };
-
-    current = NormaldoFatState.slim;
+    current = NormaldoFatState.skinny;
 
     add(RectangleHitbox());
 
@@ -145,33 +198,15 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         listenWhen: (prevState, newState) => prevState.hit != newState.hit,
         onNewState: (cState) {
           if (cState.hit) {
-            _pizzaEaten = 0;
             state = NormaldoHitState.hit;
           } else {
             state = NormaldoHitState.idle;
           }
         }));
-
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) => prevState.score < newState.score,
+        listenWhen: (prevState, newState) => newState.isDead,
         onNewState: (_) {
-          _pizzaEaten++;
-          if (_pizzaEaten == pizzaToGetFatter) {
-            _pizzaEaten = 0;
-            nextFatState();
-          }
-        }));
-    // await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-    //     listenWhen: (prevState, newState) =>
-    //         prevState.lives < newState.lives && newState.lives > 3,
-    //     onNewState: (_) {
-    //       nextFatState();
-    //     }));
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) =>
-            prevState.lives > newState.lives && newState.lives < 3,
-        onNewState: (_) {
-          prevFatState();
+          current = current?.dead;
         }));
   }
 

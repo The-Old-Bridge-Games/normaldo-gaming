@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
@@ -14,10 +15,14 @@ class DeathScreen extends StatefulWidget {
   State<DeathScreen> createState() => _DeathScreenState();
 }
 
-class _DeathScreenState extends State<DeathScreen> {
+class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
+  late final int _audioId;
+
   @override
   void initState() {
     super.initState();
+
+    audio.loopAudio('death_audio.mp3').then((id) => _audioId = id);
 
     final gameCubit = context.read<GameSessionCubit>();
     final userCubit = context.read<UserCubit>();
@@ -26,6 +31,12 @@ class _DeathScreenState extends State<DeathScreen> {
       userCubit.changeHighScore(gameCubit.state.score);
     }
     userCubit.addDollars(gameCubit.state.dollars);
+  }
+
+  @override
+  void dispose() {
+    audio.stopAudio(_audioId);
+    super.dispose();
   }
 
   @override
@@ -66,8 +77,11 @@ class _DeathScreenState extends State<DeathScreen> {
               ),
               const SizedBox(height: 8),
               BouncingButton(
-                onPressed: () {
-                  context.pop('try again');
+                onPressed: () async {
+                  await audio.stopBgm();
+                  await audio.playBgm();
+                  // ignore: use_build_context_synchronously
+                  context.pushReplacement(NGRoutes.pullUpGame.path);
                 },
                 child: Text('Try again', style: textTheme.displayMedium),
               ),
@@ -85,7 +99,7 @@ class _DeathScreenState extends State<DeathScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Image.asset(
-          'assets/images/pizza1.png',
+          'assets/images/pizza.png',
           height: 20,
           width: 20,
         ),

@@ -21,7 +21,27 @@ class NGAppImpl implements NGApp {
       'main_theme.mp3',
       'club_track.mp3',
       'hard_track.mp3',
+      'sfx/BEER.mp3',
+      'sfx/bla.mp3',
+      'sfx/BOMB.mp3',
+      'sfx/BOX.mp3',
+      'sfx/BUTTON.mp3',
+      'sfx/casey.mp3',
+      'sfx/eaat.mp3',
+      'sfx/eat_pizza.mp3',
+      'sfx/EAT_SUPER_PIZZA.mp3',
+      'sfx/FATTNESS.mp3',
+      'sfx/GAMEOVER.mp3',
+      'sfx/GANTELYA.mp3',
+      'sfx/HURRY_UP.mp3',
+      'sfx/MOLOTOV.mp3',
+      'sfx/pizza_new_target.mp3',
+      'sfx/SUB.mp3',
     ]);
+    await AudioPlayer.global.setAudioContext(AudioContextConfig(
+      forceSpeaker: false,
+      duckAudio: true,
+    ).build());
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,
     );
