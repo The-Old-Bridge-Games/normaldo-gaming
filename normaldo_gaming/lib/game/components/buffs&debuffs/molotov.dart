@@ -22,7 +22,7 @@ class Molotov extends PositionComponent
         HasNgAudio,
         HasAura,
         SoloSpawn {
-  Molotov({required this.cubit}) : super(anchor: Anchor.bottomCenter);
+  Molotov({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
 
@@ -37,8 +37,8 @@ class Molotov extends PositionComponent
 
   @override
   PositionComponent get auraComponent => RectangleComponent(
-        anchor: Anchor.center,
-        size: Vector2(size.x, size.y / 3),
+        anchor: anchor,
+        size: size,
         paint: auraPaint,
       );
 
@@ -61,10 +61,17 @@ class Molotov extends PositionComponent
   @override
   Future<void> onLoad() async {
     audio.playSfx(Sfx.molotov);
-    add(auraComponent..position = Vector2(size.x / 2, size.y - size.y / 3));
-    add(SpriteComponent(
+    add(auraComponent);
+    add(SpriteAnimationComponent(
+      anchor: anchor,
+      animation: SpriteAnimation.spriteList(
+        [
+          await Sprite.load('molotov1.png'),
+          await Sprite.load('molotov2.png'),
+        ],
+        stepTime: 0.5,
+      ),
       size: size,
-      sprite: await Sprite.load('molotov.png'),
     ));
     add(RectangleHitbox(
       anchor: Anchor.center,
@@ -96,6 +103,7 @@ class Molotov extends PositionComponent
 
   @override
   void update(double dt) {
+    super.update(dt);
     position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();

@@ -83,7 +83,7 @@ class ItemsCreator extends TimerComponent
       case Items.cocktail:
         return Vector2(grid.lineSize / 1.5, grid.lineSize / 1.5);
       case Items.molotov:
-        return Vector2(grid.lineSize * 0.8, grid.lineSize * 0.7);
+        return Vector2(grid.lineSize, grid.lineSize / 3);
     }
   }
 }
