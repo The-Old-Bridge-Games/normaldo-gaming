@@ -23,8 +23,10 @@ class Pizza extends PositionComponent
 
   final GameSessionCubit cubit;
 
-  final _eatingHitbox = RectangleHitbox()
-    ..collisionType = CollisionType.passive;
+  late final _eatingHitbox = RectangleHitbox.relative(
+    Vector2.all(0.9),
+    parentSize: size,
+  )..collisionType = CollisionType.passive;
 
   @override
   Aura get aura => Aura.blue;
@@ -60,7 +62,8 @@ class Pizza extends PositionComponent
       size: size,
       sprite: await Sprite.load('pizza.png'),
     ));
-    add(_eatingHitbox..anchor = anchor);
+
+    add(_eatingHitbox);
 
     return super.onLoad();
   }

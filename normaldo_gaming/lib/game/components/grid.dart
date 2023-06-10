@@ -1,17 +1,17 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/items_creator.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-import 'buffs&debuffs/molotov.dart';
 import 'normaldo.dart';
 
 class Grid extends PositionComponent
@@ -48,17 +48,16 @@ class Grid extends PositionComponent
   Future<void> onLoad() async {
     _lineSize = size.y / linesCount;
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
-      ..position = Vector2(size.x / 2, size.y / 2)
-      ..anchor = Anchor.center;
+      ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
       _linesCentersY.add(_getCenterOfLine(i));
 
       // 4DEV
-      // add(RectangleComponent(
-      //   position: Vector2(0, i * lineSize),
-      //   size: Vector2(size.x, 1),
-      //   paint: Paint()..color = BasicPalette.yellow.color,
-      // ));
+      add(RectangleComponent(
+        position: Vector2(0, i * lineSize),
+        size: Vector2(size.x, 1),
+        paint: Paint()..color = BasicPalette.yellow.color,
+      ));
     }
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,

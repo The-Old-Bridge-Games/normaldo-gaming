@@ -51,7 +51,11 @@ class TrashBin extends PositionComponent
       size: size,
       sprite: await Sprite.load('trash_bin.png'),
     ));
-    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    add(RectangleHitbox.relative(
+      Vector2(0.9, 0.8),
+      parentSize: size,
+    ));
+    // ..collisionType = CollisionType.passive);
 
     return super.onLoad();
   }

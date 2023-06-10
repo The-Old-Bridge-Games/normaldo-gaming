@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
@@ -23,8 +25,10 @@ class Cocktail extends PositionComponent
 
   final GameSessionCubit cubit;
 
-  final _eatingHitbox = RectangleHitbox()
-    ..collisionType = CollisionType.passive;
+  late final _eatingHitbox = CircleHitbox(
+    radius: size.x / 2.7,
+    position: Vector2(2, size.y / 3 - 2),
+  )..collisionType = CollisionType.passive;
 
   @override
   Aura get aura => Aura.blue;
@@ -57,7 +61,14 @@ class Cocktail extends PositionComponent
       size: size,
       sprite: await Sprite.load('cocktail.png'),
     ));
-    add(_eatingHitbox..anchor = anchor);
+    add(_eatingHitbox);
+
+    // 4DEV
+    // add(CircleComponent(
+    //   radius: size.x / 2.7,
+    //   position: Vector2(2, size.y / 3 - 2),
+    //   paint: Paint()..color = Colors.white.withOpacity(0.7),
+    // ));
 
     return super.onLoad();
   }

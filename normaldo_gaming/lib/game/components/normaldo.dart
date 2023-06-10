@@ -4,7 +4,9 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
@@ -77,11 +79,37 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   Normaldo({
     required Vector2 size,
-  }) : super(size: size);
+  }) : super(size: size, anchor: Anchor.center);
 
   bool _immortal = false;
 
   var _state = NormaldoHitState.idle;
+
+  // 4DEV
+  late final _circle = CircleComponent.relative(
+    0.7,
+    parentSize: size,
+    anchor: anchor,
+    position: Vector2(size.x / 2 + 10, size.y / 2),
+    paint: Paint()..color = Colors.white.withOpacity(0.7),
+  );
+  late final _hitbox = CircleHitbox.relative(
+    0.7,
+    parentSize: size,
+    anchor: anchor,
+    position: Vector2(size.x / 2 + 10, size.y / 2),
+  );
+
+  void setHitboxPositionAndSize({Vector2? position, Vector2? size}) {
+    if (position != null) {
+      _hitbox.position = position;
+      _circle.position = position;
+    }
+    if (size != null) {
+      _hitbox.size = size;
+      _circle.size = size;
+    }
+  }
 
   var _pizzaEaten = 0;
   int get fatPoints => _pizzaEaten;
@@ -165,6 +193,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     if (current != state) {
       audio.playSfx(Sfx.weightIncreased);
       current = state;
+      _updateHitbox();
     }
   }
 
@@ -181,6 +210,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     if (current != state) {
       audio.playSfx(Sfx.weightLoosed);
       current = state;
+      _updateHitbox();
     }
   }
 
@@ -192,7 +222,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
     current = NormaldoFatState.skinny;
 
-    add(RectangleHitbox());
+    // 4DEV
+    // add(_circle);
+
+    add(_hitbox);
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
         listenWhen: (prevState, newState) => prevState.hit != newState.hit,
@@ -256,6 +289,34 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         break;
       default:
         break;
+    }
+  }
+
+  void _updateHitbox() {
+    switch (current) {
+      case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyEat:
+      case NormaldoFatState.skinnyDead:
+        setHitboxPositionAndSize(
+            position: Vector2(size.x / 2 + 10, size.y / 2));
+        break;
+      case NormaldoFatState.slim:
+      case NormaldoFatState.slimEat:
+      case NormaldoFatState.slimDead:
+        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
+        break;
+      case NormaldoFatState.fat:
+      case NormaldoFatState.fatEat:
+      case NormaldoFatState.fatDead:
+        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
+        break;
+      case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatEat:
+      case NormaldoFatState.uberFatDead:
+        setHitboxPositionAndSize(position: Vector2(size.x / 2, size.y / 2));
+        break;
+      default:
+        throw UnexpectedError();
     }
   }
 }

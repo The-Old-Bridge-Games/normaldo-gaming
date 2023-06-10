@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
@@ -50,7 +51,14 @@ class MoneyBag extends PositionComponent
       size: size,
       sprite: await Sprite.load('money_bag.png'),
     ));
-    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    add(CircleHitbox(
+      radius: size.x / 2,
+    )..collisionType = CollisionType.passive);
+    // 4DEV
+    // add(CircleComponent(
+    //   radius: size.x / 2,
+    //   paint: Paint()..color = Colors.white.withOpacity(0.7),
+    // ));
     add(ScaleEffect.to(
         Vector2.all(1.2),
         EffectController(

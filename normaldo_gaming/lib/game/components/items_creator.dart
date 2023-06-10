@@ -30,6 +30,14 @@ class ItemsCreator extends TimerComponent
   @override
   void onTick() {
     final itemComponent = _getNextItem();
+    // gameRef.add(
+    //   TrashBin(cubit: bloc)
+    //     ..size = _getSizeFromItem(Items.trashBin)
+    //     ..position = Vector2(
+    //       gameRef.size.x + 100,
+    //       grid.linesCentersY[2],
+    //     ),
+    // );
     gameRef.add(itemComponent
       ..position = Vector2(
         gameRef.size.x + itemComponent.size.x,
@@ -67,7 +75,7 @@ class ItemsCreator extends TimerComponent
   Vector2 _getSizeFromItem(Items item) {
     switch (item) {
       case Items.trashBin:
-        return Vector2(grid.lineSize / 2 * 4 / 3, grid.lineSize / 2);
+        return Vector2(grid.lineSize / 1.5, grid.lineSize / 2);
       case Items.pizza:
         return Vector2(grid.lineSize * 0.6, grid.lineSize * 0.6);
       case Items.dollar:

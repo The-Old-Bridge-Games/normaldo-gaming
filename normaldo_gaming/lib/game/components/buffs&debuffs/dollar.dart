@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
@@ -47,7 +50,15 @@ class Dollar extends PositionComponent
       size: size,
       sprite: await Sprite.load('dollar.png'),
     ));
-    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    add(CircleHitbox(
+      radius: size.x / 2,
+    )..collisionType = CollisionType.passive);
+
+    // 4DEV
+    // add(CircleComponent(
+    //   radius: size.x / 2,
+    //   paint: Paint()..color = Colors.white.withOpacity(0.7),
+    // ));
 
     return super.onLoad();
   }
