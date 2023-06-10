@@ -53,11 +53,11 @@ class Grid extends PositionComponent
       _linesCentersY.add(_getCenterOfLine(i));
 
       // 4DEV
-      add(RectangleComponent(
-        position: Vector2(0, i * lineSize),
-        size: Vector2(size.x, 1),
-        paint: Paint()..color = BasicPalette.yellow.color,
-      ));
+      // add(RectangleComponent(
+      //   position: Vector2(0, i * lineSize),
+      //   size: Vector2(size.x, 1),
+      //   paint: Paint()..color = BasicPalette.yellow.color,
+      // ));
     }
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
