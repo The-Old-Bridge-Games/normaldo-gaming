@@ -31,7 +31,7 @@ enum Items {
   // cocktail(0, 10),
   // molotov(500, 0); // 15 startLevel
 
-  PositionComponent component({required GameSessionCubit cubit}) {
+  PositionComponent component() {
     switch (this) {
       case Items.trashBin:
         return TrashBin();
@@ -46,11 +46,11 @@ enum Items {
       case Items.moneyBag:
         return MoneyBag();
       case Items.bomb:
-        return Bomb(cubit: cubit);
+        return Bomb();
       case Items.cocktail:
-        return Cocktail(cubit: cubit);
+        return Cocktail();
       case Items.molotov:
-        return Molotov(cubit: cubit);
+        return Molotov();
     }
   }
 }

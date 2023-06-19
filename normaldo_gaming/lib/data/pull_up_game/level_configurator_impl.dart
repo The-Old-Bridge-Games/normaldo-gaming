@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_configurator.dart';
 
@@ -25,8 +26,10 @@ class LevelConfiguratorImpl implements LevelConfigurator {
 
 class LevelController {
   Level get firstLevel => LinearLevel(
-        cubit: cubit,
         frequency: 0.5,
-        itemsChances: itemsChances,
+        itemsChances: {
+          Items.trashBin: 0.5,
+          Items.pizza: 0.5,
+        },
       );
 }

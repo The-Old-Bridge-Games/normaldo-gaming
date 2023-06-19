@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -7,6 +8,7 @@ import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/data/pull_up_game/level_configurator_impl.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
@@ -24,6 +26,7 @@ class Grid extends PositionComponent
 
   late final Normaldo normaldo;
   final _levels = Levels();
+  final _levelController = LevelController();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
@@ -48,6 +51,7 @@ class Grid extends PositionComponent
   @override
   Future<void> onLoad() async {
     _lineSize = size.y / linesCount;
+    currentLevel = _levelController.firstLevel;
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
@@ -64,8 +68,22 @@ class Grid extends PositionComponent
         value: gameSessionCubit,
         children: [
           _levels,
-          currentLevel = levelConfigurator.fi
           normaldo,
+          TimerComponent(
+            period: currentLevel.frequency,
+            onTick: () {
+              gameRef.add(
+                  FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+                      value: gameSessionCubit,
+                      children: [
+                    ...currentLevel.next().map((e) => e.component
+                      ..position = Vector2(
+                          gameRef.size.x + e.component.size.x * 2,
+                          _linesCentersY[e.line ??
+                              Random().nextInt(_linesCentersY.length)]))
+                  ]));
+            },
+          ),
         ]));
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
@@ -73,16 +91,7 @@ class Grid extends PositionComponent
       listenWhen: (previousState, newState) =>
           previousState.level != newState.level,
       onNewState: (state) async {
-        _itemsCreator.removeFromParent();
-        await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-            value: gameSessionCubit,
-            children: [
-              _itemsCreator = ItemsCreator(
-                grid: this,
-                period: levelConfigurator.itemCreationPeriod(state.level),
-                level: state.level,
-              ),
-            ]));
+        // currentLevel = _levelController
       },
     ));
     return super.onLoad();

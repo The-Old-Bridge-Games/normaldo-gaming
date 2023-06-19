@@ -1,12 +1,11 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 
 class Item {
-  final Component component;
+  final PositionComponent component;
 
   /// null means that line should be randomized
   final int? line;
@@ -48,7 +47,7 @@ class LinearLevel implements Level {
     if (_itemsPool.isNotEmpty) {
       final nextItem = _itemsPool.removeAt(_random.nextInt(_itemsPool.length));
       return [
-        Item(component: nextItem.component(cubit: cubit)
+        Item(component: nextItem.component()
             // ..size = _getSizeFromItem(nextItem),
             )
       ];

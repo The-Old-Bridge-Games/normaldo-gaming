@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -13,10 +14,13 @@ import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Molotov extends PositionComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, GameObject {
-  Molotov({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+    with
+        CollisionCallbacks,
+        HasGameRef,
+        HasLevelConfigurator,
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  Molotov() : super(anchor: Anchor.center);
 
   final _random = Random();
 
@@ -41,7 +45,7 @@ class Molotov extends PositionComponent
   ) {
     if (other is Normaldo) {
       audio.playSfx(Sfx.bomb);
-      cubit.takeHit();
+      bloc.takeHit();
       removeFromParent();
     }
     if (other is! Normaldo) {
@@ -96,7 +100,7 @@ class Molotov extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
@@ -124,7 +128,7 @@ class Molotov extends PositionComponent
     add(MoveEffect.to(
         Vector2(x - 100, _nextY),
         EffectController(
-            speed: levelConfigurator.itemSpeed(cubit.state.level))));
+            speed: levelConfigurator.itemSpeed(bloc.state.level))));
   }
 
   @override
