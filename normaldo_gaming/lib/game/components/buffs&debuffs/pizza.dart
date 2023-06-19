@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -16,10 +17,9 @@ class Pizza extends PositionComponent
         HasGameRef,
         HasLevelConfigurator,
         Eatable,
-        GameObject {
-  Pizza({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  Pizza() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = RectangleHitbox.relative(
     Vector2.all(0.9),
@@ -45,7 +45,7 @@ class Pizza extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
-      cubit.eatPizza();
+      bloc.eatPizza();
       other.increaseFatPoints(1);
       audio.playSfx(Sfx.eatPizza);
       removeFromParent();
@@ -68,7 +68,7 @@ class Pizza extends PositionComponent
 
   @override
   void update(double dt) {
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }

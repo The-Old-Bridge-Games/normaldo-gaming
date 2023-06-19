@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
@@ -9,10 +10,13 @@ import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
 class Dumbbell extends PositionComponent
-    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, GameObject {
-  Dumbbell({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+    with
+        CollisionCallbacks,
+        HasGameRef,
+        HasLevelConfigurator,
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  Dumbbell() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = CircleHitbox(
     radius: size.x / 2.2,
@@ -60,7 +64,7 @@ class Dumbbell extends PositionComponent
 
   @override
   void update(double dt) {
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }

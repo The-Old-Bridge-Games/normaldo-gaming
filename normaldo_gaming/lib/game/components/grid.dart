@@ -8,7 +8,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
-import 'package:normaldo_gaming/game/components/items_creator.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/game/components/levels.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
@@ -23,13 +23,14 @@ class Grid extends PositionComponent
   final GameSessionCubit gameSessionCubit;
 
   late final Normaldo normaldo;
-  late ItemsCreator _itemsCreator;
   final _levels = Levels();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
   double? _speedMultiplier;
+
+  late Level currentLevel;
 
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
@@ -63,11 +64,7 @@ class Grid extends PositionComponent
         value: gameSessionCubit,
         children: [
           _levels,
-          _itemsCreator = ItemsCreator(
-            grid: this,
-            period: levelConfigurator.itemCreationPeriod(0),
-            level: 0,
-          ),
+          currentLevel = levelConfigurator.fi
           normaldo,
         ]));
 

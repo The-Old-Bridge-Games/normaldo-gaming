@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -10,10 +11,13 @@ import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
 class TrashBin extends PositionComponent
-    with HasGameRef, CollisionCallbacks, HasLevelConfigurator, GameObject {
-  TrashBin({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+    with
+        HasGameRef,
+        CollisionCallbacks,
+        HasLevelConfigurator,
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  TrashBin() : super(anchor: Anchor.center);
 
   @override
   Aura get aura => Aura.red;
@@ -28,11 +32,11 @@ class TrashBin extends PositionComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Normaldo) {
-      if (cubit.state.hit || cubit.state.isDead) return;
+      if (bloc.state.hit || bloc.state.isDead) return;
       removeFromParent();
       other.decreaseFatPoints(10);
       audio.playSfx(Sfx.binCrash);
-      cubit.takeHit();
+      bloc.takeHit();
     }
 
     super.onCollisionStart(intersectionPoints, other);
@@ -56,7 +60,7 @@ class TrashBin extends PositionComponent
 
   @override
   void update(double dt) {
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
