@@ -5,9 +5,9 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/hp_pizzas.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
-import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 import 'components/components.dart';
@@ -30,7 +30,7 @@ class PullUpGame extends FlameGame
   late final Grid grid;
 
   void removeAllItems() {
-    removeWhere((component) => component is HasAura);
+    removeWhere((component) => component is GameObject);
   }
 
   @override

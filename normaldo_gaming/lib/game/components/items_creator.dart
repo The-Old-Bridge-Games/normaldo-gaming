@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 
 import 'grid.dart';
 
@@ -54,8 +54,10 @@ class ItemsCreator extends TimerComponent
     }
     Items getNextItem(List<Items> itemsPool) {
       final item = itemsPool[random.nextInt(itemsPool.length)];
-      if (item.component(cubit: bloc) is SoloSpawn &&
-          gameRef.children.any((element) => element is SoloSpawn)) {
+      if (((item.component(cubit: bloc) is GameObject) &&
+              (item.component(cubit: bloc) as GameObject).isSoloSpawn) &&
+          gameRef.children.any((element) =>
+              element is GameObject && ((element as GameObject).isSoloSpawn))) {
         return getNextItem(itemsPool);
       }
       return item;

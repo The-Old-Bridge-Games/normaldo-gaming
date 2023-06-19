@@ -3,21 +3,13 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
-import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
-import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 
 class Dumbbell extends PositionComponent
-    with
-        CollisionCallbacks,
-        HasGameRef,
-        HasLevelConfigurator,
-        HasNgAudio,
-        HasAura,
-        SoloSpawn {
+    with CollisionCallbacks, HasGameRef, HasLevelConfigurator, GameObject {
   Dumbbell({required this.cubit}) : super(anchor: Anchor.center);
 
   final GameSessionCubit cubit;
@@ -73,4 +65,7 @@ class Dumbbell extends PositionComponent
       removeFromParent();
     }
   }
+
+  @override
+  bool get isSoloSpawn => true;
 }
