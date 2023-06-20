@@ -4,7 +4,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -14,10 +13,11 @@ class TrashBin extends PositionComponent
     with
         HasGameRef,
         CollisionCallbacks,
-        HasLevelConfigurator,
         GameObject,
         FlameBlocReader<GameSessionCubit, GameSessionState> {
-  TrashBin() : super(anchor: Anchor.center);
+  TrashBin({double speed = 0}) : super(anchor: Anchor.center) {
+    this.speed = speed;
+  }
 
   @override
   Aura get aura => Aura.red;
@@ -60,7 +60,7 @@ class TrashBin extends PositionComponent
 
   @override
   void update(double dt) {
-    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
+    position.x -= speed * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }

@@ -27,6 +27,7 @@ class LevelConfiguratorImpl implements LevelConfigurator {
 class LevelController {
   Level get firstLevel => LinearLevel(
         frequency: 0.5,
+        speed: 200,
         itemsChances: {
           Items.trashBin: 0.5,
           Items.pizza: 0.5,

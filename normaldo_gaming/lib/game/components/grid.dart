@@ -38,6 +38,8 @@ class Grid extends PositionComponent
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
+  TimerComponent? _itemsCreator;
+
   void changeSpeed({
     required double multiplier,
     required Duration duration,
@@ -69,18 +71,21 @@ class Grid extends PositionComponent
         children: [
           _levels,
           normaldo,
-          TimerComponent(
+          _itemsCreator = TimerComponent(
             period: currentLevel.frequency,
+            repeat: true,
             onTick: () {
               gameRef.add(
                   FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
                       value: gameSessionCubit,
                       children: [
-                    ...currentLevel.next().map((e) => e.component
-                      ..position = Vector2(
-                          gameRef.size.x + e.component.size.x * 2,
-                          _linesCentersY[e.line ??
-                              Random().nextInt(_linesCentersY.length)]))
+                    ...currentLevel.next().map((e) =>
+                        e.item.component(speed: currentLevel.speed)
+                          ..size = e.item.getSize(lineSize)
+                          ..position = Vector2(
+                              gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                              _linesCentersY[e.line ??
+                                  Random().nextInt(_linesCentersY.length)]))
                   ]));
             },
           ),

@@ -6,6 +6,8 @@ import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 mixin GameObject {
+  double speed = 0.0;
+
   Aura get aura;
   Paint get auraPaint => Paint()
     ..color = aura.color

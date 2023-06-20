@@ -6,7 +6,6 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -17,10 +16,11 @@ class Molotov extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
-        HasLevelConfigurator,
         GameObject,
         FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Molotov() : super(anchor: Anchor.center);
+  Molotov({double speed = 0}) : super(anchor: Anchor.center) {
+    this.speed = speed;
+  }
 
   final _random = Random();
 
@@ -100,7 +100,7 @@ class Molotov extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= levelConfigurator.itemSpeed(bloc.state.level) * dt;
+    position.x -= speed * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
@@ -128,7 +128,8 @@ class Molotov extends PositionComponent
     add(MoveEffect.to(
         Vector2(x - 100, _nextY),
         EffectController(
-            speed: levelConfigurator.itemSpeed(bloc.state.level))));
+          speed: speed,
+        )));
   }
 
   @override
