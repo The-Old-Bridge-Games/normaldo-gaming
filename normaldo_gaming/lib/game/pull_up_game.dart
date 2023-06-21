@@ -30,7 +30,9 @@ class PullUpGame extends FlameGame
   late final Grid grid;
 
   void removeAllItems() {
-    removeWhere((component) => component is GameObject);
+    removeWhere((component) =>
+        component is FlameBlocProvider &&
+        component.children.every((element) => element is GameObject));
   }
 
   @override

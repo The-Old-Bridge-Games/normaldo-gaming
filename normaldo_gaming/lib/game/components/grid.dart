@@ -8,16 +8,14 @@ import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
-import 'package:normaldo_gaming/data/pull_up_game/level_configurator_impl.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
+import 'package:normaldo_gaming/data/pull_up_game/level_controller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
-import 'package:normaldo_gaming/game/components/levels.dart';
+import 'package:normaldo_gaming/game/components/level_iterator.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
-class Grid extends PositionComponent
-    with Draggable, HasGameRef, HasLevelConfigurator {
+class Grid extends PositionComponent with Draggable, HasGameRef {
   static const linesCount = 5;
 
   Grid({required this.gameSessionCubit});
@@ -25,7 +23,7 @@ class Grid extends PositionComponent
   final GameSessionCubit gameSessionCubit;
 
   late final Normaldo normaldo;
-  final _levels = Levels();
+  final _levelIterator = LevelIterator();
   final _levelController = LevelController();
 
   double _lineSize = 0;
@@ -53,23 +51,23 @@ class Grid extends PositionComponent
   @override
   Future<void> onLoad() async {
     _lineSize = size.y / linesCount;
-    currentLevel = _levelController.firstLevel;
+    currentLevel = _levelController.linearLevel;
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
       _linesCentersY.add(_getCenterOfLine(i));
 
       // 4DEV
-      add(RectangleComponent(
-        position: Vector2(0, i * lineSize),
-        size: Vector2(size.x, 1),
-        paint: Paint()..color = BasicPalette.yellow.color,
-      ));
+      // add(RectangleComponent(
+      //   position: Vector2(0, i * lineSize),
+      //   size: Vector2(size.x, 1),
+      //   paint: Paint()..color = BasicPalette.yellow.color,
+      // ));
     }
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
         children: [
-          _levels,
+          _levelIterator,
           normaldo,
           _itemsCreator = TimerComponent(
             period: currentLevel.frequency,
@@ -92,13 +90,18 @@ class Grid extends PositionComponent
         ]));
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-      bloc: gameSessionCubit,
-      listenWhen: (previousState, newState) =>
-          previousState.level != newState.level,
-      onNewState: (state) async {
-        // currentLevel = _levelController
-      },
-    ));
+        bloc: gameSessionCubit,
+        listenWhen: (previousState, newState) =>
+            previousState.level != newState.level,
+        onNewState: (state) async {
+          currentLevel = _levelController.changeLevel(state.level);
+          await Future.delayed(Duration(
+              seconds: Random()
+                  .nextInt(LevelIterator.levelChangeSeconds.toInt() - 3)));
+          currentLevel = _levelController.getRandomEvent(onFinish: () {
+            currentLevel = _levelController.linearLevel;
+          });
+        }));
     return super.onLoad();
   }
 
