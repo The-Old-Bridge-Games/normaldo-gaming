@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -38,6 +39,7 @@ class Dumbbell extends PositionComponent
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
       removeFromParent();
+      audio.playSfx(Sfx.dumbbellCatch);
       other.decreaseFatPoints(20);
     }
     super.onCollisionStart(intersectionPoints, other);
