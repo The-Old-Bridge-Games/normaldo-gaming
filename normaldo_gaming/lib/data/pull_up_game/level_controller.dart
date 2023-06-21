@@ -83,13 +83,11 @@ class LevelController {
       case Events.cursedPath:
         return EventLevel.cursedPath(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
       case Events.guardedPizza:
         return EventLevel.guardedPizza(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
       case Events.trashWall:
@@ -108,13 +106,11 @@ class LevelController {
       case Events.cursedPath:
         return EventLevel.cursedPath(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
       case Events.guardedPizza:
         return EventLevel.guardedPizza(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
       case Events.trashWall:

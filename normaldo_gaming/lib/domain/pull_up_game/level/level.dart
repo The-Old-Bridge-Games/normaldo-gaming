@@ -91,9 +91,8 @@ class EventLevel implements Level {
 
   EventLevel.guardedPizza({
     required this.speed,
-    required this.frequency,
     required this.onFinish,
-  }) {
+  }) : frequency = 200 {
     final firstLine = Random().nextInt(3) + 1;
     _items = [
       [Item(item: Items.trashBin, line: firstLine)],
@@ -110,9 +109,8 @@ class EventLevel implements Level {
 
   EventLevel.cursedPath({
     required this.speed,
-    required this.frequency,
     required this.onFinish,
-  }) {
+  }) : frequency = 200 {
     final random = Random();
     final eventLength = random.nextInt(7) + 8;
     var livingIndex = random.nextInt(Grid.linesCount);

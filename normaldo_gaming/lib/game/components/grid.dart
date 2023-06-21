@@ -64,6 +64,8 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
       //   paint: Paint()..color = BasicPalette.yellow.color,
       // ));
     }
+    // itemCreator заменяется только после смены уровня, то есть когда
+    // добавляем ивент уровень, то значение frequency не работает
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
         children: [
