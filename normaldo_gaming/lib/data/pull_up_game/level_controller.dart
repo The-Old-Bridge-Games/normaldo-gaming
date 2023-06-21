@@ -12,7 +12,7 @@ enum Events {
 }
 
 class LevelController {
-  final _itemsAppearingByLevel = {
+  static const _itemsAppearingByLevel = {
     0: {
       Items.trashBin: 0.5,
       Items.pizza: 0.5,
@@ -64,10 +64,7 @@ class LevelController {
   var _linearLevel = LinearLevel(
     frequency: 0.5,
     speed: 200,
-    itemsChances: {
-      Items.trashBin: 0.5,
-      Items.pizza: 0.5,
-    },
+    itemsChances: _itemsAppearingByLevel[0]!,
   );
 
   Level changeLevel(int level) {

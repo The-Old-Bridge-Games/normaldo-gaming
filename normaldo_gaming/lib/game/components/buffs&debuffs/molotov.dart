@@ -74,17 +74,6 @@ class Molotov extends PositionComponent
       size: Vector2(size.x, size.y / 3),
     ));
 
-    add(TimerComponent(
-      period: _changeLineTime,
-      onTick: _changeLine,
-      removeOnFinish: true,
-    ));
-
-    add(TimerComponent(
-      period: _changeLineTime,
-      onTick: () => audio.playSfx(Sfx.molotov),
-    ));
-
     _nextY = _getNextY();
 
     add(RotateEffect.to(
@@ -104,7 +93,16 @@ class Molotov extends PositionComponent
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
+    if (position.x <
+            gameRef.size.x -
+                (Random().nextInt(gameRef.size.x ~/ 2) + size.x * 2) &&
+        !_lineChanged) {
+      _lineChanged = true;
+      _changeLine();
+    }
   }
+
+  bool _lineChanged = false;
 
   double _getNextY() {
     final linesCentersY = (gameRef as PullUpGame).grid.linesCentersY;
