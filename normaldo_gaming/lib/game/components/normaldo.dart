@@ -75,7 +75,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         _StateActions,
         CollisionCallbacks,
         HasNgAudio {
-  static const pizzaToGetFatter = 1;
+  static const pizzaToGetFatter = 30;
 
   Normaldo({
     required Vector2 size,
