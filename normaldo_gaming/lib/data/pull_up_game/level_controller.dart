@@ -49,9 +49,9 @@ class LevelController {
     5: {
       Items.trashBin: 0.412,
       Items.pizza: 0.370,
-      Items.dollar: 0.046,
+      Items.dollar: 0.044,
       Items.moneyBag: 0.002,
-      Items.dumbbell: 0.008,
+      Items.dumbbell: 0.010,
       Items.fatPizza: 0.002,
       Items.cocktail: 0.050,
       Items.bomb: 0.050,
@@ -68,8 +68,12 @@ class LevelController {
   );
 
   Level changeLevel(int level) {
-    final frequency = pow(0.9, level + 1).toDouble();
-    final speed = (200 + (15 * level)).toDouble();
+    var frequency = pow(0.9, level + 1).toDouble();
+    var speed = (200 + (15 * level)).toDouble();
+    if (level > 7) {
+      frequency = pow(0.9, 7 + 1).toDouble();
+      speed = (200 + (15 * 7)).toDouble();
+    }
     _linearLevel = LinearLevel(
       itemsChances: _itemsAppearingByLevel[level] ?? linearLevel.itemsChances,
       frequency: frequency,
@@ -93,7 +97,6 @@ class LevelController {
       case Events.trashWall:
         return EventLevel.trashWall(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
     }
@@ -116,7 +119,6 @@ class LevelController {
       case Events.trashWall:
         return EventLevel.trashWall(
           speed: linearLevel.speed,
-          frequency: linearLevel.frequency,
           onFinish: onFinish,
         );
     }

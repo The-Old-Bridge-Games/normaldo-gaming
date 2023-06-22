@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
@@ -31,12 +30,36 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
 
   double? _speedMultiplier;
 
-  late Level currentLevel;
+  late Level _currentLevel;
+
+  late final FlameBlocProvider _blocProviderComponent;
 
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
   TimerComponent? _itemsCreator;
+
+  set currentLevel(Level level) {
+    _currentLevel = level;
+    if (_itemsCreator != null) _blocProviderComponent.remove(_itemsCreator!);
+    _itemsCreator = TimerComponent(
+      period: level.frequency,
+      repeat: true,
+      onTick: () {
+        gameRef.add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+            value: gameSessionCubit,
+            children: [
+              ...level.next().map((e) => e.item.component(speed: level.speed)
+                ..size = e.item.getSize(lineSize)
+                ..position = Vector2(
+                    gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                    _linesCentersY[
+                        e.line ?? Random().nextInt(_linesCentersY.length)]))
+            ]));
+      },
+    );
+    _blocProviderComponent.add(_itemsCreator!);
+  }
 
   void changeSpeed({
     required double multiplier,
@@ -51,7 +74,6 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
   @override
   Future<void> onLoad() async {
     _lineSize = size.y / linesCount;
-    currentLevel = _levelController.linearLevel;
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
@@ -64,32 +86,15 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
       //   paint: Paint()..color = BasicPalette.yellow.color,
       // ));
     }
-    // itemCreator заменяется только после смены уровня, то есть когда
-    // добавляем ивент уровень, то значение frequency не работает
-    await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-        value: gameSessionCubit,
-        children: [
+    _blocProviderComponent =
+        FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+            value: gameSessionCubit,
+            children: [
           _levelIterator,
           normaldo,
-          _itemsCreator = TimerComponent(
-            period: currentLevel.frequency,
-            repeat: true,
-            onTick: () {
-              gameRef.add(
-                  FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-                      value: gameSessionCubit,
-                      children: [
-                    ...currentLevel.next().map((e) =>
-                        e.item.component(speed: currentLevel.speed)
-                          ..size = e.item.getSize(lineSize)
-                          ..position = Vector2(
-                              gameRef.size.x + e.item.getSize(lineSize).x * 2,
-                              _linesCentersY[e.line ??
-                                  Random().nextInt(_linesCentersY.length)]))
-                  ]));
-            },
-          ),
-        ]));
+        ]);
+    currentLevel = _levelController.linearLevel;
+    await add(_blocProviderComponent);
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
         bloc: gameSessionCubit,

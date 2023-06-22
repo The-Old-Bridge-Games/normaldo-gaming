@@ -75,9 +75,9 @@ class EventLevel implements Level {
 
   EventLevel.trashWall({
     required this.speed,
-    required this.frequency,
     required this.onFinish,
-  }) : _items = [
+  })  : frequency = 1 - (0.3 + Random().nextInt(speed.toInt()) / 1000 * 2),
+        _items = [
           [Item(item: Items.bomb, line: Random().nextInt(Grid.linesCount))],
           [],
           [
@@ -92,7 +92,7 @@ class EventLevel implements Level {
   EventLevel.guardedPizza({
     required this.speed,
     required this.onFinish,
-  }) : frequency = 200 {
+  }) : frequency = 1 - (speed / 1000 * 2.3) {
     final firstLine = Random().nextInt(3) + 1;
     _items = [
       [Item(item: Items.trashBin, line: firstLine)],
@@ -110,7 +110,7 @@ class EventLevel implements Level {
   EventLevel.cursedPath({
     required this.speed,
     required this.onFinish,
-  }) : frequency = 200 {
+  }) : frequency = 1 - (speed / 1000 * 1.5) {
     final random = Random();
     final eventLength = random.nextInt(7) + 8;
     var livingIndex = random.nextInt(Grid.linesCount);
@@ -128,8 +128,7 @@ class EventLevel implements Level {
         return livingIndex;
       }
     });
-    _items = [];
-    final items = List.generate(
+    _items = List.generate(
         livingPath.length,
         (columnIndex) => List.generate(Grid.linesCount, (index) {
               if (index != livingPath[columnIndex]) {
@@ -141,12 +140,6 @@ class EventLevel implements Level {
                 return Item(item: Items.cocktail, line: index);
               }
             }));
-    for (var i = 0; i < items.length; i++) {
-      _items.addAll([
-        items[i],
-        [],
-      ]);
-    }
   }
 
   final void Function() onFinish;
