@@ -179,9 +179,9 @@ extension on Sfx {
       case Sfx.dumbbellCatch:
         return ['gantelya1.mp3'];
       case Sfx.weightIncreased:
-        return ['yyyyyyy.mp3', 'eeeeee.mp3'];
+        return ['eeeeee.mp3'];
       case Sfx.weightLoosed:
-        return ['gantelya1.mp3'];
+        return ['yyyyyyy.mp3'];
       case Sfx.hurryUp:
         return ['HURRY_UP.mp3'];
       case Sfx.gameOver:
