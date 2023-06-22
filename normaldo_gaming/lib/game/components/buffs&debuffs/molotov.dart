@@ -4,27 +4,23 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
-import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
-import 'package:normaldo_gaming/game/utils/solo_spawn.dart';
 
 class Molotov extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
-        HasLevelConfigurator,
-        HasNgAudio,
-        HasAura,
-        SoloSpawn {
-  Molotov({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  Molotov({double speed = 0}) : super(anchor: Anchor.center) {
+    this.speed = speed;
+  }
 
   final _random = Random();
 
@@ -49,7 +45,7 @@ class Molotov extends PositionComponent
   ) {
     if (other is Normaldo) {
       audio.playSfx(Sfx.bomb);
-      cubit.takeHit();
+      bloc.takeHit();
       removeFromParent();
     }
     if (other is! Normaldo) {
@@ -78,17 +74,6 @@ class Molotov extends PositionComponent
       size: Vector2(size.x, size.y / 3),
     ));
 
-    add(TimerComponent(
-      period: _changeLineTime,
-      onTick: _changeLine,
-      removeOnFinish: true,
-    ));
-
-    add(TimerComponent(
-      period: _changeLineTime,
-      onTick: () => audio.playSfx(Sfx.molotov),
-    ));
-
     _nextY = _getNextY();
 
     add(RotateEffect.to(
@@ -104,11 +89,20 @@ class Molotov extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= speed * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
+    if (position.x <
+            gameRef.size.x -
+                (Random().nextInt(gameRef.size.x ~/ 2) + size.x * 2) &&
+        !_lineChanged) {
+      _lineChanged = true;
+      _changeLine();
+    }
   }
+
+  bool _lineChanged = false;
 
   double _getNextY() {
     final linesCentersY = (gameRef as PullUpGame).grid.linesCentersY;
@@ -132,6 +126,10 @@ class Molotov extends PositionComponent
     add(MoveEffect.to(
         Vector2(x - 100, _nextY),
         EffectController(
-            speed: levelConfigurator.itemSpeed(cubit.state.level))));
+          speed: speed,
+        )));
   }
+
+  @override
+  bool get isSoloSpawn => false;
 }

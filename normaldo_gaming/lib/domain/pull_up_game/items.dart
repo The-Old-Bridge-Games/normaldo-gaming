@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/cocktail.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
@@ -12,15 +11,15 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
 enum Items {
   // CHECK THAT SUM OF CHANCES MUST ALWAYS BE == 1000 (or refactor it)
-  trashBin(566, 0),
-  pizza(326, 0),
-  dollar(44, 0),
-  fatPizza(4, 3),
-  dumbbell(8, 1),
-  moneyBag(2, 2),
-  bomb(10, 5),
-  cocktail(20, 5),
-  molotov(20, 10);
+  trashBin,
+  pizza,
+  dollar,
+  fatPizza,
+  dumbbell,
+  moneyBag,
+  bomb,
+  cocktail,
+  molotov;
   // trashBin(0, 1),
   // pizza(250, 0),
   // dollar(0, 0),
@@ -31,31 +30,49 @@ enum Items {
   // cocktail(0, 10),
   // molotov(500, 0); // 15 startLevel
 
-  const Items(this.chance, this.startLevel);
-
-  final int chance;
-  final int startLevel;
-
-  PositionComponent component({required GameSessionCubit cubit}) {
+  PositionComponent component({double? speed}) {
     switch (this) {
       case Items.trashBin:
-        return TrashBin(cubit: cubit);
+        return TrashBin(speed: speed ?? 0);
       case Items.pizza:
-        return Pizza(cubit: cubit);
+        return Pizza(speed: speed ?? 0);
       case Items.dollar:
-        return Dollar(cubit: cubit);
+        return Dollar(speed: speed ?? 0);
       case Items.fatPizza:
-        return FatPizza(cubit: cubit);
+        return FatPizza(speed: speed ?? 0);
       case Items.dumbbell:
-        return Dumbbell(cubit: cubit);
+        return Dumbbell(speed: speed ?? 0);
       case Items.moneyBag:
-        return MoneyBag(cubit: cubit);
+        return MoneyBag(speed: speed ?? 0);
       case Items.bomb:
-        return Bomb(cubit: cubit);
+        return Bomb(speed: speed ?? 0);
       case Items.cocktail:
-        return Cocktail(cubit: cubit);
+        return Cocktail(speed: speed ?? 0);
       case Items.molotov:
-        return Molotov(cubit: cubit);
+        return Molotov(speed: speed ?? 0);
+    }
+  }
+
+  Vector2 getSize(double lineSize) {
+    switch (this) {
+      case Items.trashBin:
+        return Vector2(lineSize / 1.5, lineSize / 2);
+      case Items.pizza:
+        return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.dollar:
+        return Vector2(lineSize / 2, lineSize / 2);
+      case Items.fatPizza:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.dumbbell:
+        return Vector2(lineSize / 2, lineSize / 2);
+      case Items.moneyBag:
+        return Vector2(lineSize / 2, lineSize / 2);
+      case Items.bomb:
+        return Vector2(lineSize / 1.5, lineSize / 1.5);
+      case Items.cocktail:
+        return Vector2(lineSize / 1.5, lineSize / 1.5);
+      case Items.molotov:
+        return Vector2(lineSize, lineSize / 3);
     }
   }
 }

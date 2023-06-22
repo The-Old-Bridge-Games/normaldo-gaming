@@ -1,23 +1,21 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
-import 'package:normaldo_gaming/game/utils/has_aura_mixin.dart';
 
 class Dollar extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
-        HasLevelConfigurator,
-        HasNgAudio,
-        HasAura {
-  Dollar({required this.cubit}) : super(anchor: Anchor.center);
-
-  final GameSessionCubit cubit;
+        GameObject,
+        FlameBlocReader<GameSessionCubit, GameSessionState> {
+  Dollar({double speed = 0}) : super(anchor: Anchor.center) {
+    this.speed = speed;
+  }
 
   @override
   Aura get aura => Aura.blue;
@@ -33,7 +31,7 @@ class Dollar extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      cubit.addDollars(1);
+      bloc.addDollars(1);
       audio.playSfx(Sfx.dollarCatch);
       removeFromParent();
     }
@@ -62,9 +60,12 @@ class Dollar extends PositionComponent
 
   @override
   void update(double dt) {
-    position.x -= levelConfigurator.itemSpeed(cubit.state.level) * dt;
+    position.x -= speed * dt;
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
   }
+
+  @override
+  bool get isSoloSpawn => false;
 }

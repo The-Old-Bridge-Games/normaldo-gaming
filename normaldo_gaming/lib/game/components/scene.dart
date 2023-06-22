@@ -3,7 +3,7 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/game/components/levels.dart';
+import 'package:normaldo_gaming/game/components/level_iterator.dart';
 
 class Scene extends PositionComponent with HasGameRef {
   Scene({required this.initialSize});
@@ -59,7 +59,7 @@ class Scene extends PositionComponent with HasGameRef {
     add(MoveToEffect(
         Vector2(-initialSize.x * (level + 1), 0),
         EffectController(
-          duration: Levels.levelChangeSeconds,
+          duration: LevelIterator.levelChangeSeconds,
         )));
   }
 }

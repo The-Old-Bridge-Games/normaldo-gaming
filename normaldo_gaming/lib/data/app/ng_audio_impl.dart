@@ -167,33 +167,33 @@ extension on Sfx {
     switch (this) {
       case Sfx.eatPizza:
         return [
-          'eaat.mp3',
-          'eat_pizza.mp3',
+          'havaet.mp3',
+          'havaet2.mp3',
         ];
       case Sfx.binCrash:
-        return ['bla.mp3'];
+        return ['ydar.mp3'];
       case Sfx.dollarCatch:
-        return ['pizza_new_target.mp3'];
+        return ['dollars.mp3'];
       case Sfx.eatFatPizza:
-        return ['EAT_SUPER_PIZZA.mp3'];
+        return ['super_pizza.mp3'];
       case Sfx.dumbbellCatch:
-        return ['GANTELYA.mp3'];
+        return ['gantelya1.mp3'];
       case Sfx.weightIncreased:
-        return ['FATTNESS.mp3'];
+        return ['eeeeee.mp3'];
       case Sfx.weightLoosed:
-        return ['GANTELYA.mp3'];
+        return ['yyyyyyy.mp3'];
       case Sfx.hurryUp:
         return ['HURRY_UP.mp3'];
       case Sfx.gameOver:
-        return ['GAMEOVER.mp3'];
+        return ['game_over.mp3'];
       case Sfx.buttonPressed:
-        return ['BUTTON.mp3'];
+        return ['button1.mp3'];
       case Sfx.bomb:
-        return ['BOMB.mp3'];
+        return ['bomb1.mp3'];
       case Sfx.cocktail:
-        return ['EAT_SUPER_PIZZA.mp3'];
+        return ['super_pizza.mp3'];
       case Sfx.molotov:
-        return ['MOLOTOV.mp3'];
+        return ['molotov1.mp3'];
     }
   }
 }

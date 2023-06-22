@@ -1,21 +1,20 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
-import 'package:normaldo_gaming/data/pull_up_game/mixins/has_level_configurator.dart';
-import 'package:normaldo_gaming/game/components/items_creator.dart';
-import 'package:normaldo_gaming/game/components/levels.dart';
+import 'package:normaldo_gaming/data/pull_up_game/level_controller.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
+import 'package:normaldo_gaming/game/components/level_iterator.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
-class Grid extends PositionComponent
-    with Draggable, HasGameRef, HasLevelConfigurator {
+class Grid extends PositionComponent with Draggable, HasGameRef {
   static const linesCount = 5;
 
   Grid({required this.gameSessionCubit});
@@ -23,16 +22,44 @@ class Grid extends PositionComponent
   final GameSessionCubit gameSessionCubit;
 
   late final Normaldo normaldo;
-  late ItemsCreator _itemsCreator;
-  final _levels = Levels();
+  final _levelIterator = LevelIterator();
+  final _levelController = LevelController();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
   double? _speedMultiplier;
 
+  late Level _currentLevel;
+
+  late final FlameBlocProvider _blocProviderComponent;
+
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
+
+  TimerComponent? _itemsCreator;
+
+  set currentLevel(Level level) {
+    _currentLevel = level;
+    if (_itemsCreator != null) _blocProviderComponent.remove(_itemsCreator!);
+    _itemsCreator = TimerComponent(
+      period: level.frequency,
+      repeat: true,
+      onTick: () {
+        gameRef.add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+            value: gameSessionCubit,
+            children: [
+              ...level.next().map((e) => e.item.component(speed: level.speed)
+                ..size = e.item.getSize(lineSize)
+                ..position = Vector2(
+                    gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                    _linesCentersY[
+                        e.line ?? Random().nextInt(_linesCentersY.length)]))
+            ]));
+      },
+    );
+    _blocProviderComponent.add(_itemsCreator!);
+  }
 
   void changeSpeed({
     required double multiplier,
@@ -59,35 +86,29 @@ class Grid extends PositionComponent
       //   paint: Paint()..color = BasicPalette.yellow.color,
       // ));
     }
-    await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-        value: gameSessionCubit,
-        children: [
-          _levels,
-          _itemsCreator = ItemsCreator(
-            grid: this,
-            period: levelConfigurator.itemCreationPeriod(0),
-            level: 0,
-          ),
-          normaldo,
-        ]));
-
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-      bloc: gameSessionCubit,
-      listenWhen: (previousState, newState) =>
-          previousState.level != newState.level,
-      onNewState: (state) async {
-        _itemsCreator.removeFromParent();
-        await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+    _blocProviderComponent =
+        FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
             value: gameSessionCubit,
             children: [
-              _itemsCreator = ItemsCreator(
-                grid: this,
-                period: levelConfigurator.itemCreationPeriod(state.level),
-                level: state.level,
-              ),
-            ]));
-      },
-    ));
+          _levelIterator,
+          normaldo,
+        ]);
+    currentLevel = _levelController.linearLevel;
+    await add(_blocProviderComponent);
+
+    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+        bloc: gameSessionCubit,
+        listenWhen: (previousState, newState) =>
+            previousState.level != newState.level,
+        onNewState: (state) async {
+          currentLevel = _levelController.changeLevel(state.level);
+          await Future.delayed(Duration(
+              seconds: Random()
+                  .nextInt(LevelIterator.levelChangeSeconds.toInt() - 3)));
+          currentLevel = _levelController.getRandomEvent(onFinish: () {
+            currentLevel = _levelController.linearLevel;
+          });
+        }));
     return super.onLoad();
   }
 
