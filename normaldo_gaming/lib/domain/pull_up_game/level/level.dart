@@ -120,7 +120,7 @@ class EventLevel implements Level {
   EventLevel.cursedPath({
     required this.speed,
     required this.onFinish,
-  }) : frequency = 1 - (speed / 1000 * 1.5) {
+  }) : frequency = 1 - (speed / 1000 * 1.2) {
     final random = Random();
     final eventLength = random.nextInt(7) + 8;
     var livingIndex = random.nextInt(Grid.linesCount);
