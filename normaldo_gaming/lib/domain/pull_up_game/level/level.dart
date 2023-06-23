@@ -92,7 +92,7 @@ class EventLevel implements Level {
   EventLevel.guardedPizza({
     required this.speed,
     required this.onFinish,
-  }) : frequency = 1 - (speed / 1000 * 2.3) {
+  }) : frequency = 1 - (speed / 1000 * 2.2) {
     final firstLine = Random().nextInt(3) + 1;
     _items = [
       [Item(item: Items.trashBin, line: firstLine)],
