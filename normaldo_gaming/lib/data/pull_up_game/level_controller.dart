@@ -71,8 +71,8 @@ class LevelController {
     var frequency = pow(0.9, level + 1).toDouble();
     var speed = (200 + (15 * level)).toDouble();
     if (level > 7) {
-      frequency = pow(0.9, 7 + 1).toDouble();
-      speed = (200 + (15 * 7)).toDouble();
+      frequency = pow(0.9, 12 + 1).toDouble();
+      speed = (200 + (15 * 12)).toDouble();
     }
     _linearLevel = LinearLevel(
       itemsChances: _itemsAppearingByLevel[level] ?? linearLevel.itemsChances,
