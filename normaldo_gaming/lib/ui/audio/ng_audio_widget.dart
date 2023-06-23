@@ -48,13 +48,13 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
       'hard_track.mp3',
       'club_track.mp3',
     ]);
-    await _audio.playBgm();
+    _audio.playBgm();
   }
 
   Future<void> _startMainScreenBgm() async {
     _audio.clearBgm();
     _audio.addToBgm('main_theme.mp3');
-    await _audio.playBgm();
+    _audio.playBgm();
   }
 
   @override
