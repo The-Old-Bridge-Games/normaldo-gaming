@@ -4,6 +4,7 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/cocktail.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dumbbell.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/fat_pizza.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/hourglass.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/molotov.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/money_bag.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
@@ -19,7 +20,8 @@ enum Items {
   moneyBag,
   bomb,
   cocktail,
-  molotov;
+  molotov,
+  hourglass;
   // trashBin(0, 1),
   // pizza(250, 0),
   // dollar(0, 0),
@@ -50,6 +52,8 @@ enum Items {
         return Cocktail(speed: speed ?? 0);
       case Items.molotov:
         return Molotov(speed: speed ?? 0);
+      case Items.hourglass:
+        return Hourglass(speed: speed ?? 0);
     }
   }
 
@@ -73,6 +77,8 @@ enum Items {
         return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.molotov:
         return Vector2(lineSize, lineSize / 3);
+      case Items.hourglass:
+        return Vector2(lineSize / 1.5, lineSize / 1.5);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:normaldo_gaming/data/pull_up_game/level_controller.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -27,13 +28,47 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   final hpPizzas = HpPizzas();
   final fatCounter = FatCounter();
-
   late final Grid grid;
+
+  final _levelController = LevelController();
 
   void removeAllItems() {
     removeWhere((component) =>
         component is FlameBlocProvider &&
         component.children.every((element) => element is GameObject));
+  }
+
+  void changeItemsSpeed({required double speed, required double duration}) {
+    assert(duration >= 0, 'duration must be greater or equal to 0');
+    final oldSpeed = _levelController.linearLevel.speed;
+    if (duration != 0) {
+      _levelController.changeLevelSpeed(
+          speed: speed, duration: duration.toInt());
+    }
+    final gameObjectsProviders = children.where((component) =>
+        component is FlameBlocProvider &&
+        component.children.every((element) => element is GameObject));
+    final List<GameObject> gameObjects = [];
+
+    for (final provider in gameObjectsProviders) {
+      gameObjects.addAll((provider as FlameBlocProvider).children.whereType());
+    }
+
+    for (final gameObject in gameObjects) {
+      gameObject.speed = speed;
+    }
+
+    if (duration > 0) {
+      add(TimerComponent(
+          period: duration,
+          removeOnFinish: true,
+          onTick: () {
+            changeItemsSpeed(
+              speed: oldSpeed,
+              duration: 0,
+            );
+          }));
+    }
   }
 
   @override
@@ -77,7 +112,10 @@ class PullUpGame extends FlameGame
           fatCounter,
           balance,
           pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),
-          grid = Grid(gameSessionCubit: gameSessionCubit)
+          grid = Grid(
+            gameSessionCubit: gameSessionCubit,
+            levelController: _levelController,
+          )
             ..size = Vector2(size.x, size.y - topBar.height)
             ..position = Vector2(0, topBar.height),
 

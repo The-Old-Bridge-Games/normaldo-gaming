@@ -63,6 +63,16 @@ class LinearLevel implements Level {
 
     return next();
   }
+
+  LinearLevel copyWith({
+    double? frequency,
+    double? speed,
+  }) =>
+      LinearLevel(
+        itemsChances: itemsChances,
+        frequency: frequency ?? this.frequency,
+        speed: speed ?? this.speed,
+      );
 }
 
 class EventLevel implements Level {

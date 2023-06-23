@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -17,13 +16,13 @@ import 'normaldo.dart';
 class Grid extends PositionComponent with Draggable, HasGameRef {
   static const linesCount = 5;
 
-  Grid({required this.gameSessionCubit});
+  Grid({required this.gameSessionCubit, required this.levelController});
 
   final GameSessionCubit gameSessionCubit;
+  final LevelController levelController;
 
   late final Normaldo normaldo;
   final _levelIterator = LevelIterator();
-  final _levelController = LevelController();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
@@ -74,6 +73,9 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
   @override
   Future<void> onLoad() async {
     _lineSize = size.y / linesCount;
+    levelController.stream.listen((level) {
+      currentLevel = level;
+    });
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
@@ -93,7 +95,7 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
           _levelIterator,
           normaldo,
         ]);
-    currentLevel = _levelController.linearLevel;
+    currentLevel = levelController.linearLevel;
     await add(_blocProviderComponent);
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
@@ -101,12 +103,12 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
         listenWhen: (previousState, newState) =>
             previousState.level != newState.level,
         onNewState: (state) async {
-          currentLevel = _levelController.changeLevel(state.level);
+          currentLevel = levelController.changeLevel(state.level);
           await Future.delayed(Duration(
               seconds: Random()
                   .nextInt(LevelIterator.levelChangeSeconds.toInt() - 3)));
-          currentLevel = _levelController.getRandomEvent(onFinish: () {
-            currentLevel = _levelController.linearLevel;
+          currentLevel = levelController.getRandomEvent(onFinish: () {
+            currentLevel = levelController.linearLevel;
           });
         }));
     return super.onLoad();

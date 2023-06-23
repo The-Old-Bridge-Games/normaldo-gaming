@@ -11,7 +11,8 @@ enum Sfx {
   buttonPressed,
   bomb,
   cocktail,
-  molotov;
+  molotov,
+  hourglass;
 
   const Sfx();
 }

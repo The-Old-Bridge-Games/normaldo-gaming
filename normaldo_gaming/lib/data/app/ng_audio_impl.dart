@@ -194,6 +194,8 @@ extension on Sfx {
         return ['super_pizza.mp3'];
       case Sfx.molotov:
         return ['molotov1.mp3'];
+      case Sfx.hourglass:
+        return ['magic_sound_longer.mp3'];
     }
   }
 }
