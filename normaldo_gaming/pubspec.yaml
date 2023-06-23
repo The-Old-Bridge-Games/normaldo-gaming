@@ -31,6 +31,9 @@ dependencies:
   # DI
   flutter_simple_dependency_injection: ^2.0.0
 
+  # Others
+  home_indicator: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

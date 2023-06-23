@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
@@ -37,6 +38,8 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    await HomeIndicator.hide();
+
     _initializeComponents();
 
     await _initBloc();
