@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
@@ -57,8 +58,8 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
       },
       child: GameWidget(
         game: PullUpGame(
-          gameSessionCubit: context.read<GameSessionCubit>(),
-        ),
+            gameSessionCubit: context.read<GameSessionCubit>(),
+            levelBloc: context.read<LevelBloc>()),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
           Overlays.deathScreen.name: (context, game) => const DeathScreen(),

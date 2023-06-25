@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Pizza extends PositionComponent
     with
@@ -16,10 +17,8 @@ class Pizza extends PositionComponent
         HasGameRef,
         Eatable,
         GameObject,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Pizza({double speed = 0}) : super(anchor: Anchor.center) {
-    this.speed = speed;
-  }
+        FlameBlocListenable<LevelBloc, LevelState> {
+  Pizza() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = RectangleHitbox.relative(
     Vector2.all(0.9),
@@ -40,12 +39,22 @@ class Pizza extends PositionComponent
       );
 
   @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) {
+    speed = state.level.speed;
+  }
+
+  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
-      bloc.eatPizza();
+      (gameRef as PullUpGame).gameSessionCubit.eatPizza();
       other.increaseFatPoints(1);
       audio.playSfx(Sfx.eatPizza);
       removeFromParent();
@@ -55,6 +64,7 @@ class Pizza extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(auraComponent);
     add(SpriteComponent(
       size: size,

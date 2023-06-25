@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
@@ -32,8 +33,11 @@ abstract class NGRouter {
       ),
       GoRoute(
         path: NGRoutes.pullUpGame.path,
-        builder: (context, state) => BlocProvider<GameSessionCubit>(
-          create: (context) => injector.get(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<GameSessionCubit>(create: (context) => injector.get()),
+            BlocProvider<LevelBloc>(create: (context) => injector.get()),
+          ],
           child: const PullUpGameWidget(),
         ),
       ),

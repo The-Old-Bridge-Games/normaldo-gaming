@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/data/pull_up_game/level_controller.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
-import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/hp_pizzas.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
@@ -17,9 +15,14 @@ import 'components/grid.dart';
 
 class PullUpGame extends FlameGame
     with HasTappables, HasDraggables, HasCollisionDetection, HasNgAudio {
-  PullUpGame({required this.gameSessionCubit});
+  PullUpGame({
+    required this.gameSessionCubit,
+    required this.levelBloc,
+  });
 
   final GameSessionCubit gameSessionCubit;
+  final LevelBloc levelBloc;
+
   // Components
   late final Scene scene;
   final topBar = TopBar();
@@ -29,47 +32,6 @@ class PullUpGame extends FlameGame
   final hpPizzas = HpPizzas();
   final fatCounter = FatCounter();
   late final Grid grid;
-
-  final _levelController = LevelController();
-
-  void removeAllItems() {
-    removeWhere((component) =>
-        component is FlameBlocProvider &&
-        component.children.every((element) => element is GameObject));
-  }
-
-  void changeItemsSpeed({required double speed, required double duration}) {
-    assert(duration >= 0, 'duration must be greater or equal to 0');
-    final oldSpeed = _levelController.linearLevel.speed;
-    if (duration != 0) {
-      _levelController.changeLevelSpeed(
-          speed: speed, duration: duration.toInt());
-    }
-    final gameObjectsProviders = children.where((component) =>
-        component is FlameBlocProvider &&
-        component.children.every((element) => element is GameObject));
-    final List<GameObject> gameObjects = [];
-
-    for (final provider in gameObjectsProviders) {
-      gameObjects.addAll((provider as FlameBlocProvider).children.whereType());
-    }
-
-    for (final gameObject in gameObjects) {
-      gameObject.speed = speed;
-    }
-
-    if (duration > 0) {
-      add(TimerComponent(
-          period: duration,
-          removeOnFinish: true,
-          onTick: () {
-            changeItemsSpeed(
-              speed: oldSpeed,
-              duration: 0,
-            );
-          }));
-    }
-  }
 
   @override
   Future<void> onLoad() async {
@@ -83,7 +45,7 @@ class PullUpGame extends FlameGame
   }
 
   void _initializeComponents() {
-    scene = Scene(initialSize: size);
+    scene = Scene(initialSize: Vector2(size.x, size.x - topBar.height));
     scene.size = size;
     balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
     hpPizzas.position.x = size.x / 2 - hpPizzas.size.x - 16;
@@ -101,45 +63,29 @@ class PullUpGame extends FlameGame
       }
     });
 
+    await add(FlameBlocProvider<LevelBloc, LevelState>.value(
+        value: levelBloc,
+        children: [
+          scene,
+          grid = Grid(
+            gameSessionCubit: gameSessionCubit,
+            levelBloc: levelBloc,
+          )
+            ..size = Vector2(size.x, size.y - topBar.height)
+            ..position = Vector2(0, topBar.height),
+        ]));
     await add(
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
         children: [
-          scene,
           topBar,
           scoreLabel,
           hpPizzas,
           fatCounter,
           balance,
           pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),
-          grid = Grid(
-            gameSessionCubit: gameSessionCubit,
-            levelController: _levelController,
-          )
-            ..size = Vector2(size.x, size.y - topBar.height)
-            ..position = Vector2(0, topBar.height),
-
-          // 4DEV
-          // LevelLabel()..position = Vector2(size.x / 2 - 100, 16),
         ],
       ),
     );
-  }
-}
-
-class LevelLabel extends TextComponent {
-  LevelLabel();
-
-  @override
-  FutureOr<void> onLoad() async {
-    text = 'Level 1';
-
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-      listenWhen: (previousState, newState) =>
-          previousState.level != newState.level,
-      onNewState: (state) {
-        text = 'Level ${state.level + 1}';
-      },
-    ));
   }
 }

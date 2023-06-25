@@ -23,8 +23,6 @@ mixin _$GameSessionState {
   int get dollars => throw _privateConstructorUsedError;
   bool get paused => throw _privateConstructorUsedError;
   bool get hit => throw _privateConstructorUsedError;
-  @Assert('level >= 0')
-  int get level => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameSessionStateCopyWith<GameSessionState> get copyWith =>
@@ -43,8 +41,7 @@ abstract class $GameSessionStateCopyWith<$Res> {
       @Assert('lives >= 0') int lives,
       int dollars,
       bool paused,
-      bool hit,
-      @Assert('level >= 0') int level});
+      bool hit});
 }
 
 /// @nodoc
@@ -66,7 +63,6 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
-    Object? level = null,
   }) {
     return _then(_value.copyWith(
       score: null == score
@@ -93,10 +89,6 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
           ? _value.hit
           : hit // ignore: cast_nullable_to_non_nullable
               as bool,
-      level: null == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 }
@@ -115,8 +107,7 @@ abstract class _$$_GameSessionStateCopyWith<$Res>
       @Assert('lives >= 0') int lives,
       int dollars,
       bool paused,
-      bool hit,
-      @Assert('level >= 0') int level});
+      bool hit});
 }
 
 /// @nodoc
@@ -136,7 +127,6 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
-    Object? level = null,
   }) {
     return _then(_$_GameSessionState(
       score: null == score
@@ -163,10 +153,6 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
           ? _value.hit
           : hit // ignore: cast_nullable_to_non_nullable
               as bool,
-      level: null == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -180,8 +166,7 @@ class _$_GameSessionState implements _GameSessionState {
       @Assert('lives >= 0') required this.lives,
       required this.dollars,
       required this.paused,
-      required this.hit,
-      @Assert('level >= 0') required this.level});
+      required this.hit});
 
   @override
   final int score;
@@ -196,13 +181,10 @@ class _$_GameSessionState implements _GameSessionState {
   final bool paused;
   @override
   final bool hit;
-  @override
-  @Assert('level >= 0')
-  final int level;
 
   @override
   String toString() {
-    return 'GameSessionState(score: $score, isDead: $isDead, lives: $lives, dollars: $dollars, paused: $paused, hit: $hit, level: $level)';
+    return 'GameSessionState(score: $score, isDead: $isDead, lives: $lives, dollars: $dollars, paused: $paused, hit: $hit)';
   }
 
   @override
@@ -215,13 +197,12 @@ class _$_GameSessionState implements _GameSessionState {
             (identical(other.lives, lives) || other.lives == lives) &&
             (identical(other.dollars, dollars) || other.dollars == dollars) &&
             (identical(other.paused, paused) || other.paused == paused) &&
-            (identical(other.hit, hit) || other.hit == hit) &&
-            (identical(other.level, level) || other.level == level));
+            (identical(other.hit, hit) || other.hit == hit));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, score, isDead, lives, dollars, paused, hit, level);
+  int get hashCode =>
+      Object.hash(runtimeType, score, isDead, lives, dollars, paused, hit);
 
   @JsonKey(ignore: true)
   @override
@@ -237,8 +218,7 @@ abstract class _GameSessionState implements GameSessionState {
       @Assert('lives >= 0') required final int lives,
       required final int dollars,
       required final bool paused,
-      required final bool hit,
-      @Assert('level >= 0') required final int level}) = _$_GameSessionState;
+      required final bool hit}) = _$_GameSessionState;
 
   @override
   int get score;
@@ -253,9 +233,6 @@ abstract class _GameSessionState implements GameSessionState {
   bool get paused;
   @override
   bool get hit;
-  @override
-  @Assert('level >= 0')
-  int get level;
   @override
   @JsonKey(ignore: true)
   _$$_GameSessionStateCopyWith<_$_GameSessionState> get copyWith =>

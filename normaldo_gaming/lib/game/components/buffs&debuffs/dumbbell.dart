@@ -3,21 +3,20 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Dumbbell extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
         GameObject,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Dumbbell({double speed = 0}) : super(anchor: Anchor.center) {
-    this.speed = speed;
-  }
+        FlameBlocListenable<LevelBloc, LevelState> {
+  Dumbbell() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = CircleHitbox(
     radius: size.x / 2.2,
@@ -31,6 +30,16 @@ class Dumbbell extends PositionComponent
   Component get auraComponent => CircleComponent()
     ..size = size
     ..paint = auraPaint;
+
+  @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) {
+    speed = state.level.speed;
+  }
 
   @override
   void onCollisionStart(
@@ -47,6 +56,7 @@ class Dumbbell extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(auraComponent);
     add(SpriteComponent(
       size: size,

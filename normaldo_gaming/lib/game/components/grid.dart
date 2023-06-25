@@ -5,50 +5,54 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
-import 'package:normaldo_gaming/data/pull_up_game/level_controller.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
-import 'package:normaldo_gaming/game/components/level_iterator.dart';
+import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
-class Grid extends PositionComponent with Draggable, HasGameRef {
+class Grid extends PositionComponent
+    with
+        Draggable,
+        HasGameRef,
+        FlameBlocReader<LevelBloc, LevelState>,
+        FlameBlocListenable<LevelBloc, LevelState> {
   static const linesCount = 5;
 
-  Grid({required this.gameSessionCubit, required this.levelController});
+  Grid({required this.gameSessionCubit, required this.levelBloc});
 
   final GameSessionCubit gameSessionCubit;
-  final LevelController levelController;
+  final LevelBloc levelBloc;
 
   late final Normaldo normaldo;
-  final _levelIterator = LevelIterator();
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
   double? _speedMultiplier;
 
-  late Level _currentLevel;
-
-  late final FlameBlocProvider _blocProviderComponent;
-
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
   TimerComponent? _itemsCreator;
 
-  set currentLevel(Level level) {
-    _currentLevel = level;
-    if (_itemsCreator != null) _blocProviderComponent.remove(_itemsCreator!);
+  @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) async {
+    if (_itemsCreator != null) remove(_itemsCreator!);
     _itemsCreator = TimerComponent(
-      period: level.frequency,
+      period: state.level.frequency,
       repeat: true,
       onTick: () {
-        gameRef.add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-            value: gameSessionCubit,
+        add(FlameBlocProvider<LevelBloc, LevelState>.value(
+            value: levelBloc,
             children: [
-              ...level.next().map((e) => e.item.component(speed: level.speed)
+              ...state.level.next().map((e) => e.item.component()
                 ..size = e.item.getSize(lineSize)
                 ..position = Vector2(
                     gameRef.size.x + e.item.getSize(lineSize).x * 2,
@@ -57,7 +61,13 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
             ]));
       },
     );
-    _blocProviderComponent.add(_itemsCreator!);
+    add(_itemsCreator!);
+  }
+
+  void removeAllItems() {
+    removeWhere((component) =>
+        component is FlameBlocProvider &&
+        component.children.every((element) => element is GameObject));
   }
 
   void changeSpeed({
@@ -72,10 +82,9 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
 
   @override
   Future<void> onLoad() async {
+    size = Vector2(
+        gameRef.size.x, gameRef.size.y - (gameRef as PullUpGame).topBar.height);
     _lineSize = size.y / linesCount;
-    levelController.stream.listen((level) {
-      currentLevel = level;
-    });
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
@@ -88,29 +97,27 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
       //   paint: Paint()..color = BasicPalette.yellow.color,
       // ));
     }
-    _blocProviderComponent =
-        FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
-            value: gameSessionCubit,
-            children: [
-          _levelIterator,
+    _itemsCreator = TimerComponent(
+        period: levelBloc.state.level.frequency,
+        repeat: true,
+        onTick: () {
+          add(FlameBlocProvider<LevelBloc, LevelState>.value(
+              value: levelBloc,
+              children: [
+                ...levelBloc.state.level.next().map((e) => e.item.component()
+                  ..size = e.item.getSize(lineSize)
+                  ..position = Vector2(
+                      size.x + e.item.getSize(lineSize).x * 2,
+                      _linesCentersY[
+                          e.line ?? Random().nextInt(_linesCentersY.length)]))
+              ]));
+        });
+    add(_itemsCreator!);
+    await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
+        value: gameSessionCubit,
+        children: [
           normaldo,
-        ]);
-    currentLevel = levelController.linearLevel;
-    await add(_blocProviderComponent);
-
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        bloc: gameSessionCubit,
-        listenWhen: (previousState, newState) =>
-            previousState.level != newState.level,
-        onNewState: (state) async {
-          currentLevel = levelController.changeLevel(state.level);
-          await Future.delayed(Duration(
-              seconds: Random()
-                  .nextInt(LevelIterator.levelChangeSeconds.toInt() - 3)));
-          currentLevel = levelController.getRandomEvent(onFinish: () {
-            currentLevel = levelController.linearLevel;
-          });
-        }));
+        ]));
     return super.onLoad();
   }
 
@@ -189,7 +196,6 @@ class Grid extends PositionComponent with Draggable, HasGameRef {
       default:
         throw UnexpectedError();
     }
-    return (size.y / linesCount / 2 * multiplier +
-        (gameRef as PullUpGame).topBar.height);
+    return (size.y / linesCount / 2 * multiplier);
   }
 }

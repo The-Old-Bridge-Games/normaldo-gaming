@@ -76,8 +76,4 @@ class GameSessionCubit extends Cubit<GameSessionState> {
       lives: 0,
     ));
   }
-
-  void setLevel(int level) {
-    emit(state.copyWith(level: level));
-  }
 }

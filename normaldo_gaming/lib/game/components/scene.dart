@@ -1,8 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/game/components/level_iterator.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 
 class Scene extends PositionComponent with HasGameRef {
   Scene({required this.initialSize});
@@ -25,19 +24,18 @@ class Scene extends PositionComponent with HasGameRef {
         ..size = size,
     ]);
     addAll(_currentBackgrounds);
-    await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
+    await add(FlameBlocListener<LevelBloc, LevelState>(
       listenWhen: (previousState, newState) =>
-          previousState.level != newState.level,
+          previousState.level.index != newState.level.index,
       onNewState: (state) async {
         _currentBackgrounds.add(SpriteComponent(
-          sprite:
-              await Sprite.load('backgrounds/bg${(state.level + 1) % 22}.png'),
+          sprite: await Sprite.load(
+              'backgrounds/bg${(state.level.index + 1) % 22}.png'),
         )
           ..position = Vector2(initialSize.x, y)
           ..size = size);
         add(_currentBackgrounds.last);
         _move();
-        print(children.length);
       },
     ));
 
@@ -50,9 +48,9 @@ class Scene extends PositionComponent with HasGameRef {
       bg.add(MoveByEffect(
           Vector2(-initialSize.x, 0),
           EffectController(
-              duration: LevelIterator.levelChangeSeconds,
+              duration: LevelBloc.levelChangeDuration.toDouble(),
               onMax: () {
-                if (bg.position.x < 0) {
+                if (bg.position.x <= -initialSize.x) {
                   _currentBackgrounds.remove(bg);
                   bg.removeFromParent();
                 }
