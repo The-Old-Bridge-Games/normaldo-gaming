@@ -51,6 +51,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     if (level > limitProgressingLevel) {
       speed = (200 + (15 * 12)).toDouble();
     }
+    if (_forcedSpeedDuration != 0) {
+      return state.level.speed;
+    }
     return speed;
   }
 
@@ -67,25 +70,25 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     )));
   }
 
-  void _onChangeSpeed(
+  Future<void> _onChangeSpeed(
     int speed,
     int duration,
     Emitter<LevelState> emit,
-  ) {
-    _forcedSpeedDuration += speed;
+  ) async {
+    _forcedSpeedDuration += duration;
     emit(state.copyWith(
       level: state.level.copyWith(speed: speed.toDouble()),
     ));
     // just first initiation of temporary speed
-    if (_forcedSpeedDuration == speed && _forcedSpeedDuration != 0) {
+    if (_forcedSpeedDuration == duration && _forcedSpeedDuration != 0) {
       Timer.periodic(const Duration(seconds: 1), (timer) {
         _forcedSpeedDuration--;
         if (_forcedSpeedDuration == 0) {
-          timer.cancel();
           add(LevelEvent.changeSpeed(
             speed: this.speed(state.level.index).toInt(),
             seconds: 0,
           ));
+          timer.cancel();
         }
       });
     }
