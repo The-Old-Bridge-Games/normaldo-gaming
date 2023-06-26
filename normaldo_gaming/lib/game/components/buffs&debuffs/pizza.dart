@@ -77,13 +77,5 @@ class Pizza extends PositionComponent
   }
 
   @override
-  void update(double dt) {
-    position.x -= speed * dt;
-    if (position.x < -size.x / 2) {
-      removeFromParent();
-    }
-  }
-
-  @override
   bool get isSoloSpawn => false;
 }

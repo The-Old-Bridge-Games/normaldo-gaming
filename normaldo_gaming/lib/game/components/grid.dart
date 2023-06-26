@@ -7,6 +7,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
@@ -65,9 +66,9 @@ class Grid extends PositionComponent
   }
 
   void removeAllItems() {
-    removeWhere((component) =>
-        component is FlameBlocProvider &&
-        component.children.every((element) => element is GameObject));
+    removeWhere((component) => (component is FlameBlocProvider &&
+            component.children.every((element) => element is GameObject) ||
+        component is FigureEventComponent));
   }
 
   void changeSpeed({
@@ -118,6 +119,29 @@ class Grid extends PositionComponent
         children: [
           normaldo,
         ]));
+    await add(FlameBlocListener<LevelBloc, LevelState>(
+      listenWhen: (previousState, newState) =>
+          previousState.figure != newState.figure,
+      onNewState: (state) async {
+        if (state.figure != null) {
+          _itemsCreator?.timer.pause();
+          await Future.delayed(
+              Duration(milliseconds: state.level.frequency.toInt()));
+          add(FigureEventComponent(
+            figure: state.figure!,
+            lineSize: lineSize,
+            linesCentersY: linesCentersY,
+            onFinish: () {
+              bloc.add(const LevelEvent.finishFigure());
+            },
+          )
+            ..position = Vector2(0, 0)
+            ..size = size);
+        } else {
+          _itemsCreator?.timer.resume();
+        }
+      },
+    ));
     return super.onLoad();
   }
 

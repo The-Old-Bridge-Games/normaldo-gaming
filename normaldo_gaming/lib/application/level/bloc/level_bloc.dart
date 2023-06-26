@@ -17,8 +17,14 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
 
   LevelBloc() : super(LevelState.initial()) {
     _levelChangeTimer =
-        Timer.periodic(const Duration(seconds: levelChangeDuration), (timer) {
-      add(LevelEvent.changeLevel(level: state.level.index + 1));
+        Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (timer.tick % levelChangeDuration == 0) {
+        add(LevelEvent.changeLevel(level: state.level.index + 1));
+      }
+      if (timer.tick % (levelChangeDuration / 2) == 0) {
+        final figureEvents = FigureEvent.values;
+        add(const LevelEvent.startFigure(figure: FigureEvent.trashWall()));
+      }
     });
 
     on<LevelEvent>((event, emit) => event.when(

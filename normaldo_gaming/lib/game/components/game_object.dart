@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
-mixin GameObject {
+mixin GameObject on PositionComponent, HasGameRef {
   double speed = 0.0;
 
   Aura get aura;
@@ -18,6 +19,15 @@ mixin GameObject {
   bool get isSoloSpawn;
 
   NgAudio get audio => injector.get();
+
+  @override
+  @mustCallSuper
+  void update(double dt) {
+    position.x -= speed * dt;
+    if (position.x < -size.x / 2) {
+      removeFromParent();
+    }
+  }
 }
 
 extension on Aura {

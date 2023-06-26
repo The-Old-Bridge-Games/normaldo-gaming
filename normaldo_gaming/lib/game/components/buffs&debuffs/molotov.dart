@@ -98,10 +98,6 @@ class Molotov extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= speed * dt;
-    if (position.x < -size.x / 2) {
-      removeFromParent();
-    }
     if (position.x <
             gameRef.size.x -
                 (Random().nextInt(gameRef.size.x ~/ 2) + size.x * 2) &&
