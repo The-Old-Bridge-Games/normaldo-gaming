@@ -6,7 +6,6 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
-import 'package:normaldo_gaming/game/components/hp_pizzas.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
@@ -29,7 +28,6 @@ class PullUpGame extends FlameGame
   final scoreLabel = ScoreLabel();
   final balance = Balance();
   final pauseButton = PauseButton();
-  final hpPizzas = HpPizzas();
   final fatCounter = FatCounter();
   late final Grid grid;
 
@@ -48,8 +46,6 @@ class PullUpGame extends FlameGame
     scene = Scene(initialSize: Vector2(size.x, size.x - topBar.height));
     scene.size = size;
     balance.position = Vector2(48 + scoreLabel.size.x + 144, scoreLabel.y);
-    hpPizzas.position.x = size.x / 2 - hpPizzas.size.x - 16;
-    hpPizzas.position.y = 12;
     fatCounter.position.x = size.x / 2 + 40;
     fatCounter.position.y = 12;
   }
@@ -80,7 +76,6 @@ class PullUpGame extends FlameGame
         children: [
           topBar,
           scoreLabel,
-          hpPizzas,
           fatCounter,
           balance,
           pauseButton..position = Vector2(size.x - pauseButton.size.x - 32, -8),

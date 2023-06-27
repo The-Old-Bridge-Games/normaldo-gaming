@@ -53,7 +53,7 @@ class Molotov extends PositionComponent
   ) {
     if (other is Normaldo) {
       audio.playSfx(Sfx.bomb);
-      (gameRef as PullUpGame).gameSessionCubit.takeHit();
+      other.takeHit();
       removeFromParent();
     }
     if (other is! Normaldo) {

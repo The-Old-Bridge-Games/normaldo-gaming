@@ -48,7 +48,7 @@ class FatPizza extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      (gameRef as PullUpGame).gameSessionCubit.addLives(1);
+      (gameRef as PullUpGame).grid.removeAllItems();
       removeFromParent();
       other.increaseFatPoints(10);
       audio.playSfx(Sfx.eatFatPizza);

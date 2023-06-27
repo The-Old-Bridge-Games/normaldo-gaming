@@ -45,9 +45,8 @@ class TrashBin extends PositionComponent
     if (other is Normaldo) {
       if (gameSessionCubit.state.hit || gameSessionCubit.state.isDead) return;
       removeFromParent();
-      other.decreaseFatPoints(10);
+      other.decreaseFatPoints(Normaldo.pizzaToGetFatter);
       audio.playSfx(Sfx.binCrash);
-      gameSessionCubit.takeHit();
     }
 
     super.onCollisionStart(intersectionPoints, other);

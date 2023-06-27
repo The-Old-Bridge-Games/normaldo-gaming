@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameSessionState {
   int get score => throw _privateConstructorUsedError;
   bool get isDead => throw _privateConstructorUsedError;
-  @Assert('lives >= 0')
-  int get lives => throw _privateConstructorUsedError;
   int get dollars => throw _privateConstructorUsedError;
   bool get paused => throw _privateConstructorUsedError;
   bool get hit => throw _privateConstructorUsedError;
@@ -35,13 +33,7 @@ abstract class $GameSessionStateCopyWith<$Res> {
           GameSessionState value, $Res Function(GameSessionState) then) =
       _$GameSessionStateCopyWithImpl<$Res, GameSessionState>;
   @useResult
-  $Res call(
-      {int score,
-      bool isDead,
-      @Assert('lives >= 0') int lives,
-      int dollars,
-      bool paused,
-      bool hit});
+  $Res call({int score, bool isDead, int dollars, bool paused, bool hit});
 }
 
 /// @nodoc
@@ -59,7 +51,6 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
   $Res call({
     Object? score = null,
     Object? isDead = null,
-    Object? lives = null,
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
@@ -73,10 +64,6 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
           ? _value.isDead
           : isDead // ignore: cast_nullable_to_non_nullable
               as bool,
-      lives: null == lives
-          ? _value.lives
-          : lives // ignore: cast_nullable_to_non_nullable
-              as int,
       dollars: null == dollars
           ? _value.dollars
           : dollars // ignore: cast_nullable_to_non_nullable
@@ -101,13 +88,7 @@ abstract class _$$_GameSessionStateCopyWith<$Res>
       __$$_GameSessionStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int score,
-      bool isDead,
-      @Assert('lives >= 0') int lives,
-      int dollars,
-      bool paused,
-      bool hit});
+  $Res call({int score, bool isDead, int dollars, bool paused, bool hit});
 }
 
 /// @nodoc
@@ -123,7 +104,6 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
   $Res call({
     Object? score = null,
     Object? isDead = null,
-    Object? lives = null,
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
@@ -137,10 +117,6 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
           ? _value.isDead
           : isDead // ignore: cast_nullable_to_non_nullable
               as bool,
-      lives: null == lives
-          ? _value.lives
-          : lives // ignore: cast_nullable_to_non_nullable
-              as int,
       dollars: null == dollars
           ? _value.dollars
           : dollars // ignore: cast_nullable_to_non_nullable
@@ -163,7 +139,6 @@ class _$_GameSessionState implements _GameSessionState {
   const _$_GameSessionState(
       {required this.score,
       required this.isDead,
-      @Assert('lives >= 0') required this.lives,
       required this.dollars,
       required this.paused,
       required this.hit});
@@ -173,9 +148,6 @@ class _$_GameSessionState implements _GameSessionState {
   @override
   final bool isDead;
   @override
-  @Assert('lives >= 0')
-  final int lives;
-  @override
   final int dollars;
   @override
   final bool paused;
@@ -184,7 +156,7 @@ class _$_GameSessionState implements _GameSessionState {
 
   @override
   String toString() {
-    return 'GameSessionState(score: $score, isDead: $isDead, lives: $lives, dollars: $dollars, paused: $paused, hit: $hit)';
+    return 'GameSessionState(score: $score, isDead: $isDead, dollars: $dollars, paused: $paused, hit: $hit)';
   }
 
   @override
@@ -194,7 +166,6 @@ class _$_GameSessionState implements _GameSessionState {
             other is _$_GameSessionState &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.isDead, isDead) || other.isDead == isDead) &&
-            (identical(other.lives, lives) || other.lives == lives) &&
             (identical(other.dollars, dollars) || other.dollars == dollars) &&
             (identical(other.paused, paused) || other.paused == paused) &&
             (identical(other.hit, hit) || other.hit == hit));
@@ -202,7 +173,7 @@ class _$_GameSessionState implements _GameSessionState {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, score, isDead, lives, dollars, paused, hit);
+      Object.hash(runtimeType, score, isDead, dollars, paused, hit);
 
   @JsonKey(ignore: true)
   @override
@@ -215,7 +186,6 @@ abstract class _GameSessionState implements GameSessionState {
   const factory _GameSessionState(
       {required final int score,
       required final bool isDead,
-      @Assert('lives >= 0') required final int lives,
       required final int dollars,
       required final bool paused,
       required final bool hit}) = _$_GameSessionState;
@@ -224,9 +194,6 @@ abstract class _GameSessionState implements GameSessionState {
   int get score;
   @override
   bool get isDead;
-  @override
-  @Assert('lives >= 0')
-  int get lives;
   @override
   int get dollars;
   @override
