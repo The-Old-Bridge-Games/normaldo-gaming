@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
+import 'package:normaldo_gaming/game/components/level_timer_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
@@ -62,6 +63,7 @@ class Grid extends PositionComponent
             ]));
       },
     );
+    if (state.figure != null) _itemsCreator?.timer.pause();
     add(_itemsCreator!);
   }
 
@@ -127,21 +129,28 @@ class Grid extends PositionComponent
           _itemsCreator?.timer.pause();
           await Future.delayed(
               Duration(milliseconds: state.level.frequency.toInt()));
-          add(FigureEventComponent(
-            figure: state.figure!,
-            lineSize: lineSize,
-            linesCentersY: linesCentersY,
-            onFinish: () {
-              bloc.add(const LevelEvent.finishFigure());
-            },
-          )
-            ..position = Vector2(0, 0)
-            ..size = size);
+          add(
+            FigureEventComponent(
+              figure: state.figure!,
+              lineSize: lineSize,
+              linesCentersY: linesCentersY,
+              onFinish: () {
+                bloc.add(const LevelEvent.finishFigure());
+              },
+            )
+              ..position = Vector2(0, 0)
+              ..size = size,
+          );
         } else {
           _itemsCreator?.timer.resume();
         }
       },
     ));
+    await add(FlameBlocProvider<LevelBloc, LevelState>.value(
+        value: levelBloc,
+        children: [
+          LevelTimerComponent(),
+        ]));
     return super.onLoad();
   }
 

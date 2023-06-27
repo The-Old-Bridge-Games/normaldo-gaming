@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 mixin GameObject on PositionComponent, HasGameRef {
   double speed = 0.0;
+  void Function() onRemoved = () {};
 
   Aura get aura;
   Paint get auraPaint => Paint()
@@ -27,6 +27,12 @@ mixin GameObject on PositionComponent, HasGameRef {
     if (position.x < -size.x / 2) {
       removeFromParent();
     }
+  }
+
+  @override
+  void onRemove() {
+    onRemoved();
+    super.onRemove();
   }
 }
 

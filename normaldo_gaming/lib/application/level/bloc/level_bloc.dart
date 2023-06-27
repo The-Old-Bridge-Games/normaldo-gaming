@@ -13,20 +13,9 @@ part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   static const int limitProgressingLevel = 12;
-  static const int levelChangeDuration = 20;
+  static const double levelChangeDuration = 20;
 
   LevelBloc() : super(LevelState.initial()) {
-    _levelChangeTimer =
-        Timer.periodic(const Duration(seconds: 1), (timer) async {
-      if (timer.tick % levelChangeDuration == 0) {
-        add(LevelEvent.changeLevel(level: state.level.index + 1));
-      }
-      if (timer.tick % (levelChangeDuration / 2) == 0) {
-        final figureEvents = FigureEvent.values;
-        add(const LevelEvent.startFigure(figure: FigureEvent.trashWall()));
-      }
-    });
-
     on<LevelEvent>((event, emit) => event.when(
         changeLevel: (levelIndex) => _onChangeLevel(levelIndex, emit),
         changeSpeed: (speed, duration) => _onChangeSpeed(speed, duration, emit),
@@ -34,15 +23,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
         startRandomFigure: (_) => _startRandomFigure(emit),
         finishFigure: () => _onFigureFinished(emit)));
   }
-  Timer? _levelChangeTimer;
 
   var _forcedSpeedDuration = 0;
-
-  @override
-  Future<void> close() {
-    _levelChangeTimer?.cancel();
-    return super.close();
-  }
 
   double frequency(int level) {
     var frequency = pow(0.9, level + 1).toDouble();
