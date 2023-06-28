@@ -24,7 +24,7 @@ class Dumbbell extends PositionComponent
   )..collisionType = CollisionType.passive;
 
   @override
-  Aura get aura => Aura.blue;
+  Aura get aura => Aura.red;
 
   @override
   Component get auraComponent => CircleComponent()

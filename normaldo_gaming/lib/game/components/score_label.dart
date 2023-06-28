@@ -11,13 +11,14 @@ class ScoreLabel extends PositionComponent
     with FlameBlocListenable<GameSessionCubit, GameSessionState> {
   ScoreLabel()
       : super(
-          position: Vector2(48, 16),
+          size: Vector2(300, 20),
+          position: Vector2(16, 8),
           anchor: Anchor.topLeft,
         );
 
   final _text = TextComponent(
       textRenderer: TextPaint(
-          style: NGTheme.displayMedium.copyWith(
+          style: NGTheme.displaySmall.copyWith(
     background: Paint()
       ..color = BasicPalette.black.color
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50.0),
@@ -27,7 +28,7 @@ class ScoreLabel extends PositionComponent
   FutureOr<void> onLoad() async {
     final pizzaSprite = SpriteComponent(
       sprite: await Sprite.load('pizza.png'),
-      size: Vector2.all(30),
+      size: Vector2.all(20),
     );
     add(pizzaSprite..position.y = 4);
     _text.text = '0';

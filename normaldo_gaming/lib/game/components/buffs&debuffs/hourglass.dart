@@ -56,7 +56,7 @@ class Hourglass extends PositionComponent
       audio.playSfx(Sfx.hourglass);
       removeFromParent();
       bloc.add(LevelEvent.changeSpeed(
-        speed: speed ~/ 2,
+        speed: bloc.speedIsForced ? speed.toInt() : speed ~/ 2,
         seconds: (Random().nextInt(8).toDouble() + 3).toInt(),
       ));
     }

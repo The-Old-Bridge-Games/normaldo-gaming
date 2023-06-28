@@ -10,7 +10,6 @@ import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
@@ -85,8 +84,7 @@ class Grid extends PositionComponent
 
   @override
   Future<void> onLoad() async {
-    size = Vector2(
-        gameRef.size.x, gameRef.size.y - (gameRef as PullUpGame).topBar.height);
+    size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / linesCount;
     normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
       ..position = Vector2(size.x / 2, size.y / 2);

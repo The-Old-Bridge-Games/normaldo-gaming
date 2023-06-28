@@ -12,7 +12,7 @@ part 'level_state.dart';
 part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
-  static const int limitProgressingLevel = 12;
+  static const int limitProgressingLevel = 20;
   static const double levelChangeDuration = 20;
 
   LevelBloc() : super(LevelState.initial()) {
@@ -25,6 +25,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   }
 
   var _forcedSpeedDuration = 0;
+
+  bool get speedIsForced => _forcedSpeedDuration > 0;
 
   double frequency(int level) {
     var frequency = pow(0.9, level + 1).toDouble();
