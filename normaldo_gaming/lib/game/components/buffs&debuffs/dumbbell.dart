@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/cache.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -58,10 +59,17 @@ class Dumbbell extends PositionComponent
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(auraComponent);
-    add(SpriteComponent(
-      size: size,
-      sprite: await Sprite.load('dumbbell.png'),
-    ));
+    add(
+      SpriteAnimationComponent(
+          size: size,
+          animation: SpriteAnimation.spriteList(
+            [
+              await Sprite.load('dumbbell1.png'),
+              await Sprite.load('dumbbell2.png'),
+            ],
+            stepTime: 0.5,
+          )),
+    );
     add(_eatingHitbox);
 
     // 4DEV
