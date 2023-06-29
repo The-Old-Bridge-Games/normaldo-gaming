@@ -8,12 +8,26 @@ import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
+class _EffectData {
+  _EffectData({
+    required this.item,
+    required this.duration,
+    double? currentDuration,
+  }) : currentDuration = currentDuration ?? duration;
+
+  final Items item;
+  final double duration;
+  double currentDuration;
+}
+
 class EffectsComponent extends PositionComponent
     with
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
-  final Map<int, MapEntry<Items, double>> _effects = {};
-  final Map<int, MapEntry<Items, EffectIndicator>> _indicators = {};
+  final Map<int, _EffectData> _effects = {};
+
+  List<EffectIndicator> get indicators =>
+      children.whereType<EffectIndicator>().toList();
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -23,18 +37,34 @@ class EffectsComponent extends PositionComponent
   @override
   void onNewState(LevelState state) {
     for (final entry in state.effects.entries) {
-      if (_effects.values.map((e) => e.key).contains(entry.value.key)) {
-        _effects.removeWhere((key, value) {
-          if (value.key == entry.value.key) {
-            _removeIndicator(key);
-          }
-          return value.key == entry.value.key;
-        });
-      }
       if (!_effects.containsKey(entry.key)) {
-        _effects[entry.key] = entry.value;
+        if (_effects.values
+            .any((effectData) => effectData.item == entry.value.key)) {
+          final oldEntry = _effects.entries.firstWhere(
+              (innerEntry) => innerEntry.value.item == entry.value.key);
+          _effects[oldEntry.key] = _EffectData(
+            item: oldEntry.value.item,
+            duration: entry.value.value,
+          );
+        } else {
+          _effects[entry.key] = _EffectData(
+            item: entry.value.key,
+            duration: entry.value.value,
+          );
+        }
       }
     }
+
+    final List<int> toRemove = [];
+    for (final timestamp in _effects.keys) {
+      if (!state.effects.keys.contains(timestamp)) {
+        toRemove.add(timestamp);
+      }
+    }
+    for (final removed in toRemove) {
+      _effects.remove(removed);
+    }
+
     _updateIndicators();
   }
 
@@ -47,65 +77,74 @@ class EffectsComponent extends PositionComponent
   void _onTick() {
     final List<int> toRemove = [];
     for (final entry in _effects.entries) {
-      print(
-          'before: ${_indicators[entry.key]?.key} – ${_indicators[entry.key]?.value.value}');
-      var duration = entry.value.value;
-      duration--;
-      if (entry.value.value == 0) {
-        bloc.add(LevelEvent.removeEffect(item: entry.value.key));
+      _effects[entry.key]?.currentDuration--;
+      if (_effects[entry.key]?.currentDuration == 0) {
         toRemove.add(entry.key);
-      } else {
-        _effects[entry.key] = MapEntry(entry.value.key, duration);
       }
-      _updateIndicators();
-      print(
-          'after: ${_effects[entry.key]?.key} – ${_effects[entry.key]?.value}');
     }
-    for (final e in toRemove) {
-      _effects.remove(e);
-      _removeIndicator(e);
+    for (final removed in toRemove) {
+      _removeEffect(removed, _effects[removed]!.item);
     }
+    _updateIndicators();
   }
 
   void _updateIndicators() {
-    void addIndicator(MapEntry<int, MapEntry<Items, double>> entry) {
+    void addIndicator(_EffectData effectData) {
       final indicator = EffectIndicator(
-        item: entry.value.key,
-        duration: entry.value.value,
+        item: effectData.item,
+        duration: effectData.duration,
       );
-      _indicators[entry.key] = MapEntry(entry.value.key, indicator);
-      if (_indicators.length > 1) {
+      if (indicators.isNotEmpty) {
         add(indicator
           ..position = Vector2(
             0,
-            _indicators.entries.last.value.value.position.y +
-                _indicators.entries.last.value.value.size.y +
-                4,
+            indicators.last.position.y + indicators.last.size.y + 4,
           ));
       } else {
         add(indicator);
       }
+      indicators.add(indicator);
     }
 
     for (final entry in _effects.entries) {
-      if (_indicators.containsKey(entry.key)) {
-        // print(
-        //     'before: ${_indicators[entry.key]?.key} – ${_indicators[entry.key]?.value.value}');
-        _indicators[entry.key]?.value.value = entry.value.value;
-        // print(
-        //     'after: ${_indicators[entry.key]?.key} – ${_indicators[entry.key]?.value.value}');
-      } else {
-        addIndicator(entry);
+      final data = entry.value;
+      if (indicators.every((indicator) => indicator.item != data.item)) {
+        addIndicator(entry.value);
       }
+      for (final indicator in indicators) {
+        if (indicator.item == data.item) {
+          indicator.duration = data.duration;
+          indicator.value = data.currentDuration;
+        }
+      }
+    }
+
+    final List<EffectIndicator> toRemove = [];
+    for (final indicator in indicators) {
+      // if effects don't have item as existing indicators do
+      if (_effects.entries
+          .where((entry) => entry.value.item == indicator.item)
+          .isEmpty) {
+        toRemove.add(indicator);
+      }
+    }
+    for (final removed in toRemove) {
+      _removeIndicator(removed);
     }
   }
 
-  void _removeIndicator(int key) {
-    final indicator = _indicators.remove(key)?.value;
-    indicator?.removeFromParent();
-    final components = children.whereType<PositionComponent>();
-    if (components.length > 1) {
-      for (var e in components) {
+  void _removeEffect(int timestamp, Items item) {
+    _effects.remove(timestamp);
+    bloc.add(LevelEvent.removeEffect(item: item));
+  }
+
+  void _removeIndicator(EffectIndicator indicator) {
+    final index = indicators.indexOf(indicator);
+    indicator.removeFromParent();
+    indicators.remove(indicator);
+    final components = children.whereType<PositionComponent>().toList();
+    for (var e in components) {
+      if (components.indexOf(e) >= index) {
         e.position.y -= e.size.y;
       }
     }
@@ -116,15 +155,16 @@ class EffectIndicator extends PositionComponent {
   static final _barSize = Vector2(50, 10);
 
   EffectIndicator({required this.item, required this.duration})
-      : super(size: Vector2(78, 20)) {
+      : _value = duration,
+        super(size: Vector2(78, 20)) {
     _value = duration;
   }
 
   final Items item;
-  final double duration;
 
   late RectangleComponent _barComponent;
-  late double _value;
+  double duration;
+  double _value;
   double get value => _value;
 
   set value(double restDuration) {
