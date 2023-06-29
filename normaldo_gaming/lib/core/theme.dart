@@ -9,6 +9,8 @@ abstract class NGTheme {
   static const green2 = Color(0xffB5E61D);
   static const bgSemiBlack = Colors.black38;
   static const heartRed = Color(0xffDC0000);
+  static const purple1 = Color(0xffA349A4);
+  static const orange1 = Color(0xffFFCC00);
 
   static final auraGreen = green1;
   static const auraRed = Color(0xffDC0000);

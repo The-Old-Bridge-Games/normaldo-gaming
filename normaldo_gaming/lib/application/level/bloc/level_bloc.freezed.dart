@@ -19,56 +19,63 @@ mixin _$LevelEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_StartFigure value) startFigure,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_StartFigure value)? startFigure,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_StartFigure value)? startFigure,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -157,10 +164,12 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
   }) {
     return changeLevel(level);
   }
@@ -169,10 +178,11 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
   }) {
     return changeLevel?.call(level);
   }
@@ -181,10 +191,11 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
     required TResult orElse(),
   }) {
     if (changeLevel != null) {
@@ -197,10 +208,11 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_StartFigure value) startFigure,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
   }) {
     return changeLevel(this);
   }
@@ -209,10 +221,11 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_StartFigure value)? startFigure,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
   }) {
     return changeLevel?.call(this);
   }
@@ -221,10 +234,11 @@ class _$_ChangeLevel implements _ChangeLevel {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_StartFigure value)? startFigure,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
     required TResult orElse(),
   }) {
     if (changeLevel != null) {
@@ -240,167 +254,6 @@ abstract class _ChangeLevel implements LevelEvent {
   int get level;
   @JsonKey(ignore: true)
   _$$_ChangeLevelCopyWith<_$_ChangeLevel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_ChangeSpeedCopyWith<$Res> {
-  factory _$$_ChangeSpeedCopyWith(
-          _$_ChangeSpeed value, $Res Function(_$_ChangeSpeed) then) =
-      __$$_ChangeSpeedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int speed, int seconds});
-}
-
-/// @nodoc
-class __$$_ChangeSpeedCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_ChangeSpeed>
-    implements _$$_ChangeSpeedCopyWith<$Res> {
-  __$$_ChangeSpeedCopyWithImpl(
-      _$_ChangeSpeed _value, $Res Function(_$_ChangeSpeed) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? speed = null,
-    Object? seconds = null,
-  }) {
-    return _then(_$_ChangeSpeed(
-      speed: null == speed
-          ? _value.speed
-          : speed // ignore: cast_nullable_to_non_nullable
-              as int,
-      seconds: null == seconds
-          ? _value.seconds
-          : seconds // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ChangeSpeed implements _ChangeSpeed {
-  const _$_ChangeSpeed({required this.speed, required this.seconds});
-
-  @override
-  final int speed;
-  @override
-  final int seconds;
-
-  @override
-  String toString() {
-    return 'LevelEvent.changeSpeed(speed: $speed, seconds: $seconds)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ChangeSpeed &&
-            (identical(other.speed, speed) || other.speed == speed) &&
-            (identical(other.seconds, seconds) || other.seconds == seconds));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, speed, seconds);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ChangeSpeedCopyWith<_$_ChangeSpeed> get copyWith =>
-      __$$_ChangeSpeedCopyWithImpl<_$_ChangeSpeed>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
-    required TResult Function(FigureEvent figure) startFigure,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
-    required TResult Function() finishFigure,
-  }) {
-    return changeSpeed(speed, seconds);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
-    TResult? Function(FigureEvent figure)? startFigure,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
-    TResult? Function()? finishFigure,
-  }) {
-    return changeSpeed?.call(speed, seconds);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
-    TResult Function(FigureEvent figure)? startFigure,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
-    TResult Function()? finishFigure,
-    required TResult orElse(),
-  }) {
-    if (changeSpeed != null) {
-      return changeSpeed(speed, seconds);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
-    required TResult Function(_StartFigure value) startFigure,
-    required TResult Function(_StartRandomFigure value) startRandomFigure,
-    required TResult Function(_FinishFigure value) finishFigure,
-  }) {
-    return changeSpeed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
-    TResult? Function(_StartFigure value)? startFigure,
-    TResult? Function(_StartRandomFigure value)? startRandomFigure,
-    TResult? Function(_FinishFigure value)? finishFigure,
-  }) {
-    return changeSpeed?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
-    TResult Function(_StartFigure value)? startFigure,
-    TResult Function(_StartRandomFigure value)? startRandomFigure,
-    TResult Function(_FinishFigure value)? finishFigure,
-    required TResult orElse(),
-  }) {
-    if (changeSpeed != null) {
-      return changeSpeed(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ChangeSpeed implements LevelEvent {
-  const factory _ChangeSpeed(
-      {required final int speed, required final int seconds}) = _$_ChangeSpeed;
-
-  int get speed;
-  int get seconds;
-  @JsonKey(ignore: true)
-  _$$_ChangeSpeedCopyWith<_$_ChangeSpeed> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -479,10 +332,12 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
   }) {
     return startFigure(figure);
   }
@@ -491,10 +346,11 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
   }) {
     return startFigure?.call(figure);
   }
@@ -503,10 +359,11 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
     required TResult orElse(),
   }) {
     if (startFigure != null) {
@@ -519,10 +376,11 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_StartFigure value) startFigure,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
   }) {
     return startFigure(this);
   }
@@ -531,10 +389,11 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_StartFigure value)? startFigure,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
   }) {
     return startFigure?.call(this);
   }
@@ -543,10 +402,11 @@ class _$_StartFigure implements _StartFigure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_StartFigure value)? startFigure,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
     required TResult orElse(),
   }) {
     if (startFigure != null) {
@@ -641,10 +501,12 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
   }) {
     return startRandomFigure(figures);
   }
@@ -653,10 +515,11 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
   }) {
     return startRandomFigure?.call(figures);
   }
@@ -665,10 +528,11 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
     required TResult orElse(),
   }) {
     if (startRandomFigure != null) {
@@ -681,10 +545,11 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_StartFigure value) startFigure,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
   }) {
     return startRandomFigure(this);
   }
@@ -693,10 +558,11 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_StartFigure value)? startFigure,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
   }) {
     return startRandomFigure?.call(this);
   }
@@ -705,10 +571,11 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_StartFigure value)? startFigure,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
     required TResult orElse(),
   }) {
     if (startRandomFigure != null) {
@@ -767,10 +634,12 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int level) changeLevel,
-    required TResult Function(int speed, int seconds) changeSpeed,
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
   }) {
     return finishFigure();
   }
@@ -779,10 +648,11 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level)? changeLevel,
-    TResult? Function(int speed, int seconds)? changeSpeed,
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
   }) {
     return finishFigure?.call();
   }
@@ -791,10 +661,11 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level)? changeLevel,
-    TResult Function(int speed, int seconds)? changeSpeed,
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
     required TResult orElse(),
   }) {
     if (finishFigure != null) {
@@ -807,10 +678,11 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
-    required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_StartFigure value) startFigure,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
   }) {
     return finishFigure(this);
   }
@@ -819,10 +691,11 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
-    TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_StartFigure value)? startFigure,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
   }) {
     return finishFigure?.call(this);
   }
@@ -831,10 +704,11 @@ class _$_FinishFigure implements _FinishFigure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
-    TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_StartFigure value)? startFigure,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
     required TResult orElse(),
   }) {
     if (finishFigure != null) {
@@ -846,6 +720,346 @@ class _$_FinishFigure implements _FinishFigure {
 
 abstract class _FinishFigure implements LevelEvent {
   const factory _FinishFigure() = _$_FinishFigure;
+}
+
+/// @nodoc
+abstract class _$$_AddEffectCopyWith<$Res> {
+  factory _$$_AddEffectCopyWith(
+          _$_AddEffect value, $Res Function(_$_AddEffect) then) =
+      __$$_AddEffectCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int timestamp, Items item, double duration});
+}
+
+/// @nodoc
+class __$$_AddEffectCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$_AddEffect>
+    implements _$$_AddEffectCopyWith<$Res> {
+  __$$_AddEffectCopyWithImpl(
+      _$_AddEffect _value, $Res Function(_$_AddEffect) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? timestamp = null,
+    Object? item = null,
+    Object? duration = null,
+  }) {
+    return _then(_$_AddEffect(
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as int,
+      item: null == item
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as Items,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddEffect implements _AddEffect {
+  const _$_AddEffect(
+      {required this.timestamp, required this.item, required this.duration});
+
+  @override
+  final int timestamp;
+  @override
+  final Items item;
+  @override
+  final double duration;
+
+  @override
+  String toString() {
+    return 'LevelEvent.addEffect(timestamp: $timestamp, item: $item, duration: $duration)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AddEffect &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.item, item) || other.item == item) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, timestamp, item, duration);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AddEffectCopyWith<_$_AddEffect> get copyWith =>
+      __$$_AddEffectCopyWithImpl<_$_AddEffect>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int level) changeLevel,
+    required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
+  }) {
+    return addEffect(timestamp, item, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int level)? changeLevel,
+    TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
+  }) {
+    return addEffect?.call(timestamp, item, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int level)? changeLevel,
+    TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
+    required TResult orElse(),
+  }) {
+    if (addEffect != null) {
+      return addEffect(timestamp, item, duration);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeLevel value) changeLevel,
+    required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartRandomFigure value) startRandomFigure,
+    required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
+  }) {
+    return addEffect(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeLevel value)? changeLevel,
+    TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartRandomFigure value)? startRandomFigure,
+    TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
+  }) {
+    return addEffect?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeLevel value)? changeLevel,
+    TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartRandomFigure value)? startRandomFigure,
+    TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
+    required TResult orElse(),
+  }) {
+    if (addEffect != null) {
+      return addEffect(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddEffect implements LevelEvent {
+  const factory _AddEffect(
+      {required final int timestamp,
+      required final Items item,
+      required final double duration}) = _$_AddEffect;
+
+  int get timestamp;
+  Items get item;
+  double get duration;
+  @JsonKey(ignore: true)
+  _$$_AddEffectCopyWith<_$_AddEffect> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_RemoveEffectCopyWith<$Res> {
+  factory _$$_RemoveEffectCopyWith(
+          _$_RemoveEffect value, $Res Function(_$_RemoveEffect) then) =
+      __$$_RemoveEffectCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items item});
+}
+
+/// @nodoc
+class __$$_RemoveEffectCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$_RemoveEffect>
+    implements _$$_RemoveEffectCopyWith<$Res> {
+  __$$_RemoveEffectCopyWithImpl(
+      _$_RemoveEffect _value, $Res Function(_$_RemoveEffect) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? item = null,
+  }) {
+    return _then(_$_RemoveEffect(
+      item: null == item
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RemoveEffect implements _RemoveEffect {
+  const _$_RemoveEffect({required this.item});
+
+  @override
+  final Items item;
+
+  @override
+  String toString() {
+    return 'LevelEvent.removeEffect(item: $item)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RemoveEffect &&
+            (identical(other.item, item) || other.item == item));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, item);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RemoveEffectCopyWith<_$_RemoveEffect> get copyWith =>
+      __$$_RemoveEffectCopyWithImpl<_$_RemoveEffect>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int level) changeLevel,
+    required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function() finishFigure,
+    required TResult Function(int timestamp, Items item, double duration)
+        addEffect,
+    required TResult Function(Items item) removeEffect,
+  }) {
+    return removeEffect(item);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int level)? changeLevel,
+    TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function()? finishFigure,
+    TResult? Function(int timestamp, Items item, double duration)? addEffect,
+    TResult? Function(Items item)? removeEffect,
+  }) {
+    return removeEffect?.call(item);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int level)? changeLevel,
+    TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function()? finishFigure,
+    TResult Function(int timestamp, Items item, double duration)? addEffect,
+    TResult Function(Items item)? removeEffect,
+    required TResult orElse(),
+  }) {
+    if (removeEffect != null) {
+      return removeEffect(item);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeLevel value) changeLevel,
+    required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartRandomFigure value) startRandomFigure,
+    required TResult Function(_FinishFigure value) finishFigure,
+    required TResult Function(_AddEffect value) addEffect,
+    required TResult Function(_RemoveEffect value) removeEffect,
+  }) {
+    return removeEffect(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeLevel value)? changeLevel,
+    TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartRandomFigure value)? startRandomFigure,
+    TResult? Function(_FinishFigure value)? finishFigure,
+    TResult? Function(_AddEffect value)? addEffect,
+    TResult? Function(_RemoveEffect value)? removeEffect,
+  }) {
+    return removeEffect?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeLevel value)? changeLevel,
+    TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartRandomFigure value)? startRandomFigure,
+    TResult Function(_FinishFigure value)? finishFigure,
+    TResult Function(_AddEffect value)? addEffect,
+    TResult Function(_RemoveEffect value)? removeEffect,
+    required TResult orElse(),
+  }) {
+    if (removeEffect != null) {
+      return removeEffect(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveEffect implements LevelEvent {
+  const factory _RemoveEffect({required final Items item}) = _$_RemoveEffect;
+
+  Items get item;
+  @JsonKey(ignore: true)
+  _$$_RemoveEffectCopyWith<_$_RemoveEffect> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1241,6 +1455,10 @@ abstract class _CursedPath implements FigureEvent {
 /// @nodoc
 mixin _$LevelState {
   LinearLevel get level => throw _privateConstructorUsedError;
+
+  /// timestamp => (item => duration)
+  Map<int, MapEntry<Items, double>> get effects =>
+      throw _privateConstructorUsedError;
   FigureEvent? get figure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -1254,7 +1472,10 @@ abstract class $LevelStateCopyWith<$Res> {
           LevelState value, $Res Function(LevelState) then) =
       _$LevelStateCopyWithImpl<$Res, LevelState>;
   @useResult
-  $Res call({LinearLevel level, FigureEvent? figure});
+  $Res call(
+      {LinearLevel level,
+      Map<int, MapEntry<Items, double>> effects,
+      FigureEvent? figure});
 
   $FigureEventCopyWith<$Res>? get figure;
 }
@@ -1273,6 +1494,7 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
   @override
   $Res call({
     Object? level = null,
+    Object? effects = null,
     Object? figure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1280,6 +1502,10 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as LinearLevel,
+      effects: null == effects
+          ? _value.effects
+          : effects // ignore: cast_nullable_to_non_nullable
+              as Map<int, MapEntry<Items, double>>,
       figure: freezed == figure
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
@@ -1308,7 +1534,10 @@ abstract class _$$_LevelStateCopyWith<$Res>
       __$$_LevelStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({LinearLevel level, FigureEvent? figure});
+  $Res call(
+      {LinearLevel level,
+      Map<int, MapEntry<Items, double>> effects,
+      FigureEvent? figure});
 
   @override
   $FigureEventCopyWith<$Res>? get figure;
@@ -1326,6 +1555,7 @@ class __$$_LevelStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? level = null,
+    Object? effects = null,
     Object? figure = freezed,
   }) {
     return _then(_$_LevelState(
@@ -1333,6 +1563,10 @@ class __$$_LevelStateCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as LinearLevel,
+      effects: null == effects
+          ? _value._effects
+          : effects // ignore: cast_nullable_to_non_nullable
+              as Map<int, MapEntry<Items, double>>,
       figure: freezed == figure
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
@@ -1344,16 +1578,32 @@ class __$$_LevelStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LevelState implements _LevelState {
-  const _$_LevelState({required this.level, this.figure});
+  const _$_LevelState(
+      {required this.level,
+      required final Map<int, MapEntry<Items, double>> effects,
+      this.figure})
+      : _effects = effects;
 
   @override
   final LinearLevel level;
+
+  /// timestamp => (item => duration)
+  final Map<int, MapEntry<Items, double>> _effects;
+
+  /// timestamp => (item => duration)
+  @override
+  Map<int, MapEntry<Items, double>> get effects {
+    if (_effects is EqualUnmodifiableMapView) return _effects;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_effects);
+  }
+
   @override
   final FigureEvent? figure;
 
   @override
   String toString() {
-    return 'LevelState(level: $level, figure: $figure)';
+    return 'LevelState(level: $level, effects: $effects, figure: $figure)';
   }
 
   @override
@@ -1362,11 +1612,13 @@ class _$_LevelState implements _LevelState {
         (other.runtimeType == runtimeType &&
             other is _$_LevelState &&
             (identical(other.level, level) || other.level == level) &&
+            const DeepCollectionEquality().equals(other._effects, _effects) &&
             (identical(other.figure, figure) || other.figure == figure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, level, figure);
+  int get hashCode => Object.hash(runtimeType, level,
+      const DeepCollectionEquality().hash(_effects), figure);
 
   @JsonKey(ignore: true)
   @override
@@ -1378,10 +1630,15 @@ class _$_LevelState implements _LevelState {
 abstract class _LevelState implements LevelState {
   const factory _LevelState(
       {required final LinearLevel level,
+      required final Map<int, MapEntry<Items, double>> effects,
       final FigureEvent? figure}) = _$_LevelState;
 
   @override
   LinearLevel get level;
+  @override
+
+  /// timestamp => (item => duration)
+  Map<int, MapEntry<Items, double>> get effects;
   @override
   FigureEvent? get figure;
   @override

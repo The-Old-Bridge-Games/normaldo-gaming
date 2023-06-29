@@ -7,6 +7,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
@@ -30,8 +31,6 @@ class Grid extends PositionComponent
 
   double _lineSize = 0;
   double get lineSize => _lineSize;
-
-  double? _speedMultiplier;
 
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
@@ -70,16 +69,6 @@ class Grid extends PositionComponent
     removeWhere((component) => (component is FlameBlocProvider &&
             component.children.every((element) => element is GameObject) ||
         component is FigureEventComponent));
-  }
-
-  void changeSpeed({
-    required double multiplier,
-    required Duration duration,
-  }) {
-    _speedMultiplier = multiplier;
-    Future.delayed(duration).whenComplete(() {
-      _speedMultiplier = null;
-    });
   }
 
   @override
@@ -175,8 +164,9 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateInfo info) {
-    if (_speedMultiplier != null) {
-      normaldo.position += info.delta.game * _speedMultiplier!;
+    if (bloc.state.effects.entries
+        .any((entry) => entry.value.key == Items.cocktail)) {
+      normaldo.position += info.delta.game * 0.3;
     } else {
       normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
     }

@@ -3,10 +3,6 @@ part of 'level_bloc.dart';
 @freezed
 abstract class LevelEvent with _$LevelEvent {
   const factory LevelEvent.changeLevel({required int level}) = _ChangeLevel;
-  const factory LevelEvent.changeSpeed({
-    required int speed,
-    required int seconds,
-  }) = _ChangeSpeed;
   const factory LevelEvent.startFigure({
     required FigureEvent figure,
   }) = _StartFigure;
@@ -14,6 +10,14 @@ abstract class LevelEvent with _$LevelEvent {
     List<FigureEvent>? figures,
   }) = _StartRandomFigure;
   const factory LevelEvent.finishFigure() = _FinishFigure;
+  const factory LevelEvent.addEffect({
+    required int timestamp,
+    required Items item,
+    required double duration,
+  }) = _AddEffect;
+  const factory LevelEvent.removeEffect({
+    required Items item,
+  }) = _RemoveEffect;
 }
 
 @freezed

@@ -8,6 +8,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -55,9 +56,10 @@ class Hourglass extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.hourglass);
       removeFromParent();
-      bloc.add(LevelEvent.changeSpeed(
-        speed: bloc.speedIsForced ? speed.toInt() : speed ~/ 2,
-        seconds: (Random().nextInt(8).toDouble() + 3).toInt(),
+      bloc.add(LevelEvent.addEffect(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        item: Items.hourglass,
+        duration: (Random().nextInt(8).toDouble() + 3),
       ));
     }
     super.onCollisionStart(intersectionPoints, other);

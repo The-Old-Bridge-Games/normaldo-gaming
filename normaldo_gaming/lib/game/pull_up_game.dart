@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/game/components/effects_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
@@ -33,6 +34,7 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   final fatCounter = FatCounter();
   late final Grid grid;
+  late final EffectsComponent effectsComponent;
 
   @override
   Future<void> onLoad() async {
@@ -74,6 +76,9 @@ class PullUpGame extends FlameGame
           )
             ..size = Vector2(size.x, size.y)
             ..position = Vector2(0, 0),
+          effectsComponent = EffectsComponent()
+            ..position = Vector2(
+                scoreLabel.x, fatCounter.position.y + fatCounter.size.y + 8),
         ]));
     await add(
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,15 +17,13 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(
         changeLevel: (levelIndex) => _onChangeLevel(levelIndex, emit),
-        changeSpeed: (speed, duration) => _onChangeSpeed(speed, duration, emit),
+        addEffect: (timestamp, item, duration) =>
+            _onAddEffect(timestamp, item, duration, emit),
+        removeEffect: (item) => _onRemoveEffect(item, emit),
         startFigure: (figure) => _startFigure(figure, emit),
         startRandomFigure: (_) => _startRandomFigure(emit),
         finishFigure: () => _onFigureFinished(emit)));
   }
-
-  var _forcedSpeedDuration = 0;
-
-  bool get speedIsForced => _forcedSpeedDuration > 0;
 
   double frequency(int level) {
     var frequency = pow(0.9, level + 1).toDouble();
@@ -41,7 +38,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     if (level > limitProgressingLevel) {
       speed = (200 + (15 * 12)).toDouble();
     }
-    if (_forcedSpeedDuration != 0) {
+    if (state.effects.values
+        .where((element) => element.key == Items.hourglass)
+        .isNotEmpty) {
       return state.level.speed;
     }
     return speed;
@@ -60,27 +59,52 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     )));
   }
 
-  Future<void> _onChangeSpeed(
-    int speed,
-    int duration,
+  void _onAddEffect(
+    int timestamp,
+    Items item,
+    double duration,
     Emitter<LevelState> emit,
   ) async {
-    _forcedSpeedDuration += duration;
-    emit(state.copyWith(
-      level: state.level.copyWith(speed: speed.toDouble()),
-    ));
-    // just first initiation of temporary speed
-    if (_forcedSpeedDuration == duration && _forcedSpeedDuration != 0) {
-      Timer.periodic(const Duration(seconds: 1), (timer) {
-        _forcedSpeedDuration--;
-        if (_forcedSpeedDuration == 0) {
-          add(LevelEvent.changeSpeed(
-            speed: this.speed(state.level.index).toInt(),
-            seconds: 0,
-          ));
-          timer.cancel();
-        }
-      });
+    final effects = Map<int, MapEntry<Items, double>>.from(state.effects);
+    final same = effects.entries.where((entry) => entry.value.key == item);
+    final List<int> toRemove = [];
+    for (final entry in same) {
+      toRemove.add(entry.key);
+    }
+    for (final removeKey in toRemove) {
+      effects.remove(removeKey);
+    }
+    var newState = state.copyWith(
+        effects: effects..[timestamp] = MapEntry(item, duration));
+
+    if (item == Items.hourglass &&
+        state.effects.values
+            .where((element) => element.key == Items.hourglass)
+            .isEmpty) {
+      newState = newState.copyWith(
+        level: state.level.copyWith(speed: state.level.speed / 2),
+      );
+    }
+
+    emit(newState);
+  }
+
+  void _onRemoveEffect(
+    Items item,
+    Emitter<LevelState> emit,
+  ) {
+    final effects = Map<int, MapEntry<Items, double>>.from(state.effects);
+    final int? removeKey = effects.entries
+        .cast()
+        .firstWhere((element) => element.value.key == item, orElse: () => null)
+        ?.key;
+    var newState = state.copyWith(effects: effects..remove(removeKey));
+
+    emit(newState);
+
+    if (item == Items.hourglass) {
+      emit(newState.copyWith(
+          level: state.level.copyWith(speed: speed(state.level.index))));
     }
   }
 
