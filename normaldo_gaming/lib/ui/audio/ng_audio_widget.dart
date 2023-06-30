@@ -22,7 +22,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
 
   String get location {
     if (!mounted) return '';
-    return GoRouter.of(context).location;
+    return GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
   }
 
   @override
@@ -64,8 +64,9 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     WidgetsBinding.instance.addObserver(this);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _startMainScreenBgm();
-      GoRouter.of(context).addListener(() async {
-        final location = GoRouter.of(context).location;
+      GoRouter.of(context).routerDelegate.addListener(() async {
+        final location =
+            GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
         print(location);
         switch (location) {
           case '/main/pullUpGame':
