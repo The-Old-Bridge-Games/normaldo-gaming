@@ -37,7 +37,7 @@ class Grid extends PositionComponent
 
   List<double> lineXAllocation(double xSize) {
     return List.generate(size.x ~/ (xSize / 2),
-        (index) => (size.x / (xSize / 2) * index) + (xSize / 2));
+        (index) => (size.x / (xSize / 2) * index) + (xSize));
   }
 
   TimerComponent? _itemsCreator;
@@ -83,8 +83,10 @@ class Grid extends PositionComponent
           return false;
         }
         return ((component is FlameBlocProvider &&
-                component.children.every((element) => element is GameObject) ||
-            component is FigureEventComponent));
+                    component.children
+                        .every((element) => element is GameObject) ||
+                component is FigureEventComponent) ||
+            component is GameObject);
       },
     );
   }

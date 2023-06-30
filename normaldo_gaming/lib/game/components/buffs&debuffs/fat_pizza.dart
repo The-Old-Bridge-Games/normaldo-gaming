@@ -83,9 +83,8 @@ class FatPizza extends PositionComponent
                     }
 
                     final pos = getPos();
-                    final pizza = Pizza()
-                      ..eatingHitbox.collisionType = CollisionType.active;
-                    grid.add(pizza
+                    final pizza = Pizza();
+                    parent?.add(pizza
                       ..disabled = true
                       ..size = Items.pizza.getSize(grid.lineSize)
                       ..position = Vector2(
@@ -97,7 +96,9 @@ class FatPizza extends PositionComponent
                         pos,
                         EffectController(
                           speed: 1000,
-                          onMax: () => pizza.disabled = false,
+                          onMax: () {
+                            pizza.disabled = false;
+                          },
                         ),
                       )));
                   }));

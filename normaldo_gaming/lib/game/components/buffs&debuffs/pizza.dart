@@ -23,7 +23,7 @@ class Pizza extends PositionComponent
   late final eatingHitbox = RectangleHitbox.relative(
     Vector2.all(0.9),
     parentSize: size,
-  )..collisionType = CollisionType.passive;
+  )..collisionType = CollisionType.active;
 
   @override
   Aura get aura => Aura.blue;
@@ -53,7 +53,7 @@ class Pizza extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo && eatingHitbox.isColliding && !disabled) {
+    if (other is Normaldo && !disabled) {
       (gameRef as PullUpGame).gameSessionCubit.eatPizza();
       other.increaseFatPoints(1);
       audio.playSfx(Sfx.eatPizza);
