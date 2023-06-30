@@ -5,8 +5,11 @@ import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
-mixin GameObject {
+mixin GameObject on PositionComponent, HasGameRef {
   double speed = 0.0;
+  void Function() onRemoved = () {};
+
+  bool disabled = false;
 
   Aura get aura;
   Paint get auraPaint => Paint()
@@ -18,6 +21,23 @@ mixin GameObject {
   bool get isSoloSpawn;
 
   NgAudio get audio => injector.get();
+
+  @override
+  @mustCallSuper
+  void update(double dt) {
+    if (!disabled) {
+      position.x -= speed * dt;
+    }
+    if (position.x < -size.x / 2) {
+      removeFromParent();
+    }
+  }
+
+  @override
+  void onRemove() {
+    onRemoved();
+    super.onRemove();
+  }
 }
 
 extension on Aura {

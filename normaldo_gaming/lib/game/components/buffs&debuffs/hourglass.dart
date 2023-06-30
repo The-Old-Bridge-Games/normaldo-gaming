@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -19,10 +18,9 @@ class Hourglass extends PositionComponent
         CollisionCallbacks,
         HasGameRef,
         GameObject,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Hourglass({double speed = 0}) : super(anchor: Anchor.center) {
-    this.speed = speed;
-  }
+        FlameBlocReader<LevelBloc, LevelState>,
+        FlameBlocListenable<LevelBloc, LevelState> {
+  Hourglass() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = RectangleHitbox(
     angle: pi * 1.61,
@@ -41,6 +39,16 @@ class Hourglass extends PositionComponent
       );
 
   @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) {
+    speed = state.level.speed;
+  }
+
+  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -48,16 +56,18 @@ class Hourglass extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.hourglass);
       removeFromParent();
-      (gameRef as PullUpGame).changeItemsSpeed(
-        speed: speed / 2,
-        duration: Random().nextInt(8).toDouble() + 3,
-      );
+      bloc.add(LevelEvent.addEffect(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        item: Items.hourglass,
+        duration: (Random().nextInt(8).toDouble() + 3),
+      ));
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
   Future<void> onLoad() async {
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(auraComponent);
     add(SpriteComponent(
       size: size,
@@ -81,14 +91,6 @@ class Hourglass extends PositionComponent
     // ));
 
     return super.onLoad();
-  }
-
-  @override
-  void update(double dt) {
-    position.x -= speed * dt;
-    if (position.x < -size.x / 2) {
-      removeFromParent();
-    }
   }
 
   @override

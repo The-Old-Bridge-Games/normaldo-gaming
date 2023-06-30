@@ -32,28 +32,28 @@ enum Items {
   // cocktail(0, 10),
   // molotov(500, 0); // 15 startLevel
 
-  PositionComponent component({double? speed}) {
+  PositionComponent component() {
     switch (this) {
       case Items.trashBin:
-        return TrashBin(speed: speed ?? 0);
+        return TrashBin();
       case Items.pizza:
-        return Pizza(speed: speed ?? 0);
+        return Pizza();
       case Items.dollar:
-        return Dollar(speed: speed ?? 0);
+        return Dollar();
       case Items.fatPizza:
-        return FatPizza(speed: speed ?? 0);
+        return FatPizza();
       case Items.dumbbell:
-        return Dumbbell(speed: speed ?? 0);
+        return Dumbbell();
       case Items.moneyBag:
-        return MoneyBag(speed: speed ?? 0);
+        return MoneyBag();
       case Items.bomb:
-        return Bomb(speed: speed ?? 0);
+        return Bomb();
       case Items.cocktail:
-        return Cocktail(speed: speed ?? 0);
+        return Cocktail();
       case Items.molotov:
-        return Molotov(speed: speed ?? 0);
+        return Molotov();
       case Items.hourglass:
-        return Hourglass(speed: speed ?? 0);
+        return Hourglass();
     }
   }
 

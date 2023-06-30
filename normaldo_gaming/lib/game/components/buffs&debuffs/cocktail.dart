@@ -4,9 +4,10 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -16,10 +17,8 @@ class Cocktail extends PositionComponent
         CollisionCallbacks,
         HasGameRef,
         GameObject,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Cocktail({double speed = 0}) : super(anchor: Anchor.center) {
-    this.speed = speed;
-  }
+        FlameBlocListenable<LevelBloc, LevelState> {
+  Cocktail() : super(anchor: Anchor.center);
 
   late final _eatingHitbox = CircleHitbox(
     radius: size.x / 2.7,
@@ -36,6 +35,16 @@ class Cocktail extends PositionComponent
       );
 
   @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) {
+    speed = state.level.speed;
+  }
+
+  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -43,15 +52,20 @@ class Cocktail extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.cocktail);
       removeFromParent();
-      (gameRef as PullUpGame).grid.changeSpeed(
-          multiplier: 0.2,
-          duration: Duration(seconds: Random().nextInt(4) + 2));
+      bloc.add(
+        LevelEvent.addEffect(
+          timestamp: DateTime.now().millisecondsSinceEpoch,
+          item: Items.cocktail,
+          duration: Random().nextInt(4) + 2,
+        ),
+      );
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
   Future<void> onLoad() async {
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(auraComponent);
     add(SpriteComponent(
       size: size,
@@ -67,14 +81,6 @@ class Cocktail extends PositionComponent
     // ));
 
     return super.onLoad();
-  }
-
-  @override
-  void update(double dt) {
-    position.x -= speed * dt;
-    if (position.x < -size.x / 2) {
-      removeFromParent();
-    }
   }
 
   @override

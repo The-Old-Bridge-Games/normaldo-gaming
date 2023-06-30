@@ -5,7 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -17,10 +17,8 @@ class Molotov extends PositionComponent
         CollisionCallbacks,
         HasGameRef,
         GameObject,
-        FlameBlocReader<GameSessionCubit, GameSessionState> {
-  Molotov({double speed = 0}) : super(anchor: Anchor.center) {
-    this.speed = speed;
-  }
+        FlameBlocListenable<LevelBloc, LevelState> {
+  Molotov() : super(anchor: Anchor.center);
 
   final _random = Random();
 
@@ -39,13 +37,23 @@ class Molotov extends PositionComponent
       );
 
   @override
+  bool listenWhen(LevelState previousState, LevelState newState) {
+    return previousState.level != newState.level;
+  }
+
+  @override
+  void onNewState(LevelState state) {
+    speed = state.level.speed;
+  }
+
+  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
     if (other is Normaldo) {
       audio.playSfx(Sfx.bomb);
-      bloc.takeHit();
+      other.takeHit();
       removeFromParent();
     }
     if (other is! Normaldo) {
@@ -56,6 +64,7 @@ class Molotov extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     audio.playSfx(Sfx.molotov);
     add(auraComponent);
     add(SpriteAnimationComponent(
@@ -89,10 +98,6 @@ class Molotov extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    position.x -= speed * dt;
-    if (position.x < -size.x / 2) {
-      removeFromParent();
-    }
     if (position.x <
             gameRef.size.x -
                 (Random().nextInt(gameRef.size.x ~/ 2) + size.x * 2) &&

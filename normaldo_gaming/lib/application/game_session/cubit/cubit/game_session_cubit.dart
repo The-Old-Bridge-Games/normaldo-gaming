@@ -20,34 +20,9 @@ class GameSessionCubit extends Cubit<GameSessionState> {
     ));
   }
 
-  void decreaseHunger() {
-    if (state.isDead) return;
-    final newLives = state.lives - 1;
-    if (newLives == 0) {
-      die();
-      return;
-    }
-    emit(state.copyWith(lives: newLives));
-  }
-
-  void addLives(int count) {
-    int lives;
-    if (state.lives + count > maxLivesCount) {
-      lives = maxLivesCount;
-    } else {
-      lives = state.lives + count;
-    }
-    emit(state.copyWith(lives: lives));
-  }
-
   Future<void> takeHit() async {
     if (state.hit || state.isDead) return;
-    final newLives = state.lives - 1;
-    if (newLives <= 0) {
-      die();
-      return;
-    }
-    emit(state.copyWith(lives: newLives, hit: true));
+    emit(state.copyWith(hit: true));
     await Future.delayed(hitRevival);
     emit(state.copyWith(hit: false));
   }
@@ -71,13 +46,6 @@ class GameSessionCubit extends Cubit<GameSessionState> {
   }
 
   void die() {
-    emit(state.copyWith(
-      isDead: true,
-      lives: 0,
-    ));
-  }
-
-  void setLevel(int level) {
-    emit(state.copyWith(level: level));
+    emit(state.copyWith(isDead: true));
   }
 }

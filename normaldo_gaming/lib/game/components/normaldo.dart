@@ -85,6 +85,12 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   var _state = NormaldoHitState.idle;
 
+  void takeHit() {
+    if (_state == NormaldoHitState.idle) {
+      decreaseFatPoints(pizzaToGetFatter);
+    }
+  }
+
   // 4DEV
   late final _circle = CircleComponent.relative(
     0.7,
@@ -169,6 +175,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   void decreaseFatPoints(int by) {
     assert(by > 0);
     _pizzaEaten -= by;
+    bloc.takeHit();
     if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       prevFatState();
@@ -177,6 +184,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       prevFatState();
     } else if (_pizzaEaten <= 0 && isSkinny) {
       _pizzaEaten = 0;
+      bloc.die();
     }
   }
 

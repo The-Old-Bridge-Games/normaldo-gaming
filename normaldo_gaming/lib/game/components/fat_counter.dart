@@ -2,25 +2,26 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:normaldo_gaming/core/components/rounded_rectangle_component.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
 class FatCounter extends PositionComponent with HasGameRef {
-  late final RoundedRectangleComponent _bar;
+  late final RectangleComponent _bar;
   late final Map<NormaldoFatState, Sprite> _normaldoSprites;
 
   late SpriteComponent leftSprite;
   late SpriteComponent rightSprite;
+
+  final barSize = Vector2(50, 10);
 
   var _normaldoFatState = NormaldoFatState.slim;
 
   var _fatPoints = 0;
   set fatPoints(int newValue) {
     _fatPoints = newValue;
-    _bar.size.x = newValue * 100 / Normaldo.pizzaToGetFatter;
+    _bar.size.x = barSize.x / Normaldo.pizzaToGetFatter * newValue;
   }
 
   set normaldoFatState(NormaldoFatState newState) {
@@ -32,47 +33,39 @@ class FatCounter extends PositionComponent with HasGameRef {
 
   @override
   FutureOr<void> onLoad() async {
+    final iconSize = PullUpGame.menuIconSize;
+    final barPosition = Vector2(iconSize.x, barSize.y);
     _normaldoSprites = await normaldoSprites();
-    _bar = RoundedRectangleComponent(
-      radius: const Radius.circular(3),
+    _bar = RectangleComponent(
       paint: Paint()..color = NGTheme.green1,
-    );
-    final border = RoundedRectangleComponent(
-      radius: const Radius.circular(3),
-      paint: Paint()
-        ..style = PaintingStyle.stroke
-        ..color = NGTheme.green1
-        ..strokeWidth = 1.4,
-    );
-
-    final size = Vector2(100, 20);
+    )
+      ..size = Vector2(0, barSize.y)
+      ..position = barPosition;
+    final border = RectangleComponent(
+        paint: Paint()..color = NGTheme.green2.withOpacity(0.5));
 
     leftSprite = SpriteComponent(
       anchor: Anchor.center,
-      sprite: _normaldoSprites[NormaldoFatState.skinny],
-      size: Vector2(30, 30),
-      position: Vector2(12, y + 10),
+      sprite: _normaldoSprites[NormaldoFatState.skinnyDead],
+      size: iconSize,
+      position: Vector2(0, size.y / 2),
     );
 
     rightSprite = SpriteComponent(
       anchor: Anchor.center,
       sprite: _normaldoSprites[NormaldoFatState.fat],
-      size: Vector2(30, 30),
-      position: Vector2(160, y + 10),
+      size: iconSize,
+      position: Vector2((size.x - iconSize.x / 2) + iconSize.x, size.y / 2),
     );
 
     add(leftSprite);
     add(rightSprite);
     add(
       border
-        ..size = size
-        ..position = Vector2(38, y),
+        ..size = barSize
+        ..position = barPosition,
     );
-    add(
-      _bar
-        ..size = Vector2(0, size.y)
-        ..position = Vector2(38, y),
-    );
+    add(_bar);
   }
 
   @override
@@ -95,7 +88,7 @@ extension on NormaldoFatState {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyDead:
       case NormaldoFatState.skinnyEat:
-        return [NormaldoFatState.skinny, NormaldoFatState.slim];
+        return [NormaldoFatState.skinnyDead, NormaldoFatState.slim];
       case NormaldoFatState.slim:
       case NormaldoFatState.slimDead:
       case NormaldoFatState.slimEat:

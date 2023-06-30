@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 
@@ -14,30 +14,37 @@ class Item {
       : assert((line ?? 0) >= 0 && (line ?? 0) < Grid.linesCount);
 }
 
-abstract class Level {
+abstract class Level extends Equatable {
+  int get index;
   double get frequency;
   double get speed;
 
   List<Item> next();
+
+  @override
+  bool? get stringify => true;
 }
 
 class LinearLevel implements Level {
   LinearLevel({
-    // required this.lineSize,
+    required this.index,
     required this.itemsChances,
     required this.frequency,
     required this.speed,
   }) : assert(
             double.parse(itemsChances.values
-                    .fold<double>(
-                        0, (previousValue, element) => previousValue + element)
+                    .fold<double>(0.0,
+                        (previousValue, element) => previousValue + element)
                     .toStringAsFixed(3)) ==
                 1,
-            'Sum of all chances must be equal to 1');
+            'Sum of all chances must be equal to 1, current: ${double.parse(itemsChances.values.fold<double>(0.0, (previousValue, element) => previousValue + element).toStringAsFixed(3))} index: $index');
 
   /// Items => chance
   final Map<Items, double> itemsChances;
   final _random = Random();
+
+  @override
+  final int index;
 
   @override
   final double frequency;
@@ -45,7 +52,7 @@ class LinearLevel implements Level {
   @override
   final double speed;
 
-  List<Items> _itemsPool = [];
+  final List<Items> _itemsPool = [];
 
   @override
   List<Item> next() {
@@ -59,7 +66,8 @@ class LinearLevel implements Level {
           ..addAll(List.generate(
               (element.value * 1000).toInt(), (index) => element.key)));
     pool.shuffle(_random);
-    _itemsPool = pool;
+    _itemsPool.clear();
+    _itemsPool.addAll(pool);
 
     return next();
   }
@@ -69,114 +77,141 @@ class LinearLevel implements Level {
     double? speed,
   }) =>
       LinearLevel(
+        index: index,
         itemsChances: itemsChances,
         frequency: frequency ?? this.frequency,
         speed: speed ?? this.speed,
       );
+
+  @override
+  List<Object?> get props => [speed, frequency, itemsChances, index];
+
+  @override
+  bool? get stringify => true;
 }
 
-class EventLevel implements Level {
-  EventLevel(
-    this._items, {
-    required this.frequency,
-    required this.speed,
-    required this.onFinish,
-  });
+// ignore: must_be_immutable
+// class EventLevel implements Level {
+//   EventLevel(
+//     this._items, {
+//     required this.frequency,
+//     required this.speed,
+//     required this.onFinish,
+//   });
 
-  EventLevel.trashWall({
-    required this.speed,
-    required this.onFinish,
-  })  : frequency = 1 - (0.3 + Random().nextInt(speed.toInt()) / 1000 * 2),
-        _items = [
-          [Item(item: Items.bomb, line: Random().nextInt(Grid.linesCount))],
-          [],
-          [
-            const Item(item: Items.trashBin, line: 0),
-            const Item(item: Items.trashBin, line: 1),
-            const Item(item: Items.trashBin, line: 2),
-            const Item(item: Items.trashBin, line: 3),
-            const Item(item: Items.trashBin, line: 4),
-          ]
-        ];
+//   EventLevel.trashWall({
+//     required this.speed,
+//     required this.onFinish,
+//   })  : frequency = 1 - (0.3 + Random().nextInt(speed.toInt()) / 1000 * 2),
+//         _items = [
+//           [Item(item: Items.bomb, line: Random().nextInt(Grid.linesCount))],
+//           [],
+//           [
+//             const Item(item: Items.trashBin, line: 0),
+//             const Item(item: Items.trashBin, line: 1),
+//             const Item(item: Items.trashBin, line: 2),
+//             const Item(item: Items.trashBin, line: 3),
+//             const Item(item: Items.trashBin, line: 4),
+//           ]
+//         ];
 
-  EventLevel.guardedPizza({
-    required this.speed,
-    required this.onFinish,
-  }) : frequency = 1 - (speed / 1000 * 2.2) {
-    final firstLine = Random().nextInt(3) + 1;
-    _items = [
-      [Item(item: Items.trashBin, line: firstLine)],
-      [
-        Item(item: Items.trashBin, line: firstLine - 1),
-        Item(item: Items.fatPizza, line: firstLine),
-        Item(item: Items.trashBin, line: firstLine + 1),
-      ],
-      [
-        Item(item: Items.trashBin, line: firstLine),
-      ],
-    ];
-  }
+//   EventLevel.guardedPizza({
+//     required this.speed,
+//     required this.onFinish,
+//   }) : frequency = 1 - (speed / 1000 * 2.2) {
+//     final firstLine = Random().nextInt(3) + 1;
+//     _items = [
+//       [Item(item: Items.trashBin, line: firstLine)],
+//       [
+//         Item(item: Items.trashBin, line: firstLine - 1),
+//         Item(item: Items.fatPizza, line: firstLine),
+//         Item(item: Items.trashBin, line: firstLine + 1),
+//       ],
+//       [
+//         Item(item: Items.trashBin, line: firstLine),
+//       ],
+//     ];
+//   }
 
-  EventLevel.cursedPath({
-    required this.speed,
-    required this.onFinish,
-  }) : frequency = 1 - (speed / 1000 * 1.2) {
-    final random = Random();
-    final eventLength = random.nextInt(7) + 8;
-    var livingIndex = random.nextInt(Grid.linesCount);
-    final livingPath = List.generate(eventLength, (index) {
-      if (index == 0) {
-        return livingIndex;
-      } else {
-        if (livingIndex == 0) {
-          livingIndex++;
-        } else if (livingIndex == Grid.linesCount - 1) {
-          livingIndex--;
-        } else {
-          livingIndex = random.nextBool() ? livingIndex + 1 : livingIndex - 1;
-        }
-        return livingIndex;
-      }
-    });
-    _items = List.generate(
-        livingPath.length,
-        (columnIndex) => List.generate(Grid.linesCount, (index) {
-              if (index != livingPath[columnIndex]) {
-                return Item(item: Items.trashBin, line: index);
-              }
-              if (columnIndex != eventLength - 1) {
-                return Item(item: Items.pizza, line: index);
-              } else {
-                return Item(item: Items.cocktail, line: index);
-              }
-            }));
-  }
+//   EventLevel.cursedPath({
+//     required this.speed,
+//     required this.onFinish,
+//   }) : frequency = 1 - (speed / 1000 * 1.2) {
+//     final random = Random();
+//     final eventLength = random.nextInt(7) + 8;
+//     var livingIndex = random.nextInt(Grid.linesCount);
+//     final livingPath = List.generate(eventLength, (index) {
+//       if (index == 0) {
+//         return livingIndex;
+//       } else {
+//         if (livingIndex == 0) {
+//           livingIndex++;
+//         } else if (livingIndex == Grid.linesCount - 1) {
+//           livingIndex--;
+//         } else {
+//           livingIndex = random.nextBool() ? livingIndex + 1 : livingIndex - 1;
+//         }
+//         return livingIndex;
+//       }
+//     });
+//     _items = List.generate(
+//         livingPath.length,
+//         (columnIndex) => List.generate(Grid.linesCount, (index) {
+//               if (index != livingPath[columnIndex]) {
+//                 return Item(item: Items.trashBin, line: index);
+//               }
+//               if (columnIndex != eventLength - 1) {
+//                 return Item(item: Items.pizza, line: index);
+//               } else {
+//                 return Item(item: Items.cocktail, line: index);
+//               }
+//             }));
+//   }
 
-  final void Function() onFinish;
-  late final List<List<Item>> _items;
+//   factory EventLevel.fromFigure(
+//     FigureEvent figure, {
+//     required double speed,
+//     required void Function() onFinish,
+//   }) {
+//     return figure.when(
+//       trashWall: () => EventLevel.trashWall(speed: speed, onFinish: onFinish),
+//       guardedPizza: () =>
+//           EventLevel.guardedPizza(speed: speed, onFinish: onFinish),
+//       cursedPath: () => EventLevel.cursedPath(speed: speed, onFinish: onFinish),
+//     );
+//   }
 
-  @override
-  final double frequency;
+//   final void Function() onFinish;
+//   late final List<List<Item>> _items;
 
-  @override
-  final double speed;
+//   @override
+//   final double frequency;
 
-  int _counter = 0;
+//   @override
+//   final double speed;
 
-  bool _finished = false;
-  bool get finished => _finished;
+//   int _counter = 0;
 
-  @override
-  @mustCallSuper
-  List<Item> next() {
-    if (finished) return [];
-    if (_counter == _items.length) {
-      _finished = true;
-      onFinish();
-      return next();
-    }
-    final item = _items[_counter];
-    _counter++;
-    return item;
-  }
-}
+//   bool _finished = false;
+//   bool get finished => _finished;
+
+//   @override
+//   @mustCallSuper
+//   List<Item> next() {
+//     if (finished) return [];
+//     if (_counter == _items.length) {
+//       _finished = true;
+//       onFinish();
+//       return next();
+//     }
+//     final item = _items[_counter];
+//     _counter++;
+//     return item;
+//   }
+
+//   @override
+//   List<Object?> get props => [speed, frequency, _items];
+
+//   @override
+//   bool? get stringify => true;
+// }
