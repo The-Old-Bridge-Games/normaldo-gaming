@@ -7,6 +7,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class _EffectData {
   _EffectData({
@@ -187,11 +188,11 @@ class EffectIndicator extends PositionComponent {
     final iconComponent = SpriteComponent(
       sprite: await item.sprite,
     )
-      ..size = Vector2(20, 20)
+      ..size = PullUpGame.menuIconSize
       ..position = Vector2(0, 0);
     _barComponent = RectangleComponent(
       size: _barSize,
-      position: Vector2(iconComponent.size.x + 8, 5),
+      position: Vector2(iconComponent.size.x + 8, 8),
       paint: Paint()..color = _barColor,
     );
 

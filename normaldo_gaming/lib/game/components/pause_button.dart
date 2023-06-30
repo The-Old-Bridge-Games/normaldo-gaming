@@ -10,7 +10,7 @@ import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 class PauseButton extends SpriteComponent
     with
-        Tappable,
+        TapCallbacks,
         FlameBlocReader<GameSessionCubit, GameSessionState>,
         HasGameRef,
         HasNgAudio {
@@ -38,7 +38,7 @@ class PauseButton extends SpriteComponent
   }
 
   @override
-  bool onTapDown(TapDownInfo info) {
+  bool onTapDown(TapDownEvent event) {
     audio.playSfx(Sfx.buttonPressed);
     bloc.togglePause();
     return true;

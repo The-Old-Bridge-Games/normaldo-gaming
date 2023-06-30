@@ -6,12 +6,13 @@ import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Balance extends PositionComponent
     with FlameBlocListenable<GameSessionCubit, GameSessionState> {
   Balance()
       : super(
-          size: Vector2(300, 20),
+          size: Vector2(300, PullUpGame.menuIconSize.y),
           position: Vector2(16, 8),
           anchor: Anchor.topLeft,
         );
@@ -19,7 +20,7 @@ class Balance extends PositionComponent
   final _amountLabel = TextComponent(
       text: '0',
       textRenderer: TextPaint(
-          style: NGTheme.displaySmall.copyWith(
+          style: NGTheme.displayMedium.copyWith(
         background: Paint()
           ..color = BasicPalette.black.color
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50.0),
@@ -34,7 +35,7 @@ class Balance extends PositionComponent
   FutureOr<void> onLoad() async {
     final dollarSprite = SpriteComponent(
       sprite: await Sprite.load('dollar.png'),
-      size: Vector2.all(20),
+      size: PullUpGame.menuIconSize,
     );
     add(dollarSprite..position.y = 4);
     _amountLabel.x = dollarSprite.size.x + 12;

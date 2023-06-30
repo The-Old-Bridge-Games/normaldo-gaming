@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,9 @@ import 'components/components.dart';
 import 'components/grid.dart';
 
 class PullUpGame extends FlameGame
-    with HasTappables, HasDraggables, HasCollisionDetection, HasNgAudio {
+    with TapCallbacks, DragCallbacks, HasCollisionDetection, HasNgAudio {
+  static final menuIconSize = Vector2.all(30);
+
   PullUpGame({
     required this.gameSessionCubit,
     required this.levelBloc,
@@ -54,7 +57,7 @@ class PullUpGame extends FlameGame
         Vector2(scoreLabel.x, scoreLabel.y + scoreLabel.size.y + 8);
     fatCounter.position.x = scoreLabel.x + 8;
     fatCounter.position.y = balance.position.y + balance.size.y + 16;
-    fatCounter.size = Vector2(90, 20);
+    fatCounter.size = Vector2(90, menuIconSize.y);
   }
 
   Future<void> _initBloc() async {

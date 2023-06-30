@@ -33,8 +33,8 @@ class FatCounter extends PositionComponent with HasGameRef {
 
   @override
   FutureOr<void> onLoad() async {
-    final iconSize = Vector2.all(20);
-    final barPosition = Vector2(iconSize.x, barSize.y / 2);
+    final iconSize = PullUpGame.menuIconSize;
+    final barPosition = Vector2(iconSize.x, barSize.y);
     _normaldoSprites = await normaldoSprites();
     _bar = RectangleComponent(
       paint: Paint()..color = NGTheme.green1,
@@ -55,7 +55,7 @@ class FatCounter extends PositionComponent with HasGameRef {
       anchor: Anchor.center,
       sprite: _normaldoSprites[NormaldoFatState.fat],
       size: iconSize,
-      position: Vector2(size.x - iconSize.x / 2 + 8, size.y / 2),
+      position: Vector2((size.x - iconSize.x / 2) + iconSize.x, size.y / 2),
     );
 
     add(leftSprite);

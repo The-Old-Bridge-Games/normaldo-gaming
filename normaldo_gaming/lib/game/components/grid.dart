@@ -16,7 +16,7 @@ import 'normaldo.dart';
 
 class Grid extends PositionComponent
     with
-        Draggable,
+        DragCallbacks,
         HasGameRef,
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
@@ -183,14 +183,15 @@ class Grid extends PositionComponent
   }
 
   @override
-  bool onDragUpdate(DragUpdateInfo info) {
+  bool onDragUpdate(DragUpdateEvent event) {
     if (bloc.state.effects.entries
         .any((entry) => entry.value.key == Items.cocktail)) {
-      normaldo.position += info.delta.game * 0.3;
+      normaldo.position += event.delta * 0.3;
     } else {
-      normaldo.position += info.delta.game * _getFatMultiplier(normaldo);
+      normaldo.position += event.delta * _getFatMultiplier(normaldo);
     }
-    return super.onDragUpdate(info);
+    super.onDragUpdate(event);
+    return false;
   }
 
   double _getFatMultiplier(Normaldo normaldo) {
