@@ -143,7 +143,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             final itemSize = item.item.getSize(lineSize);
             add(item.item.component()
               ..size = itemSize
-              ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2),
+              ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.3),
                   linesCentersY[item.line ?? 0]));
           }
         }

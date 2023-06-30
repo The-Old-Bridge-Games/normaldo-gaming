@@ -20,7 +20,7 @@ class Pizza extends PositionComponent
         FlameBlocListenable<LevelBloc, LevelState> {
   Pizza() : super(anchor: Anchor.center);
 
-  late final _eatingHitbox = RectangleHitbox.relative(
+  late final eatingHitbox = RectangleHitbox.relative(
     Vector2.all(0.9),
     parentSize: size,
   )..collisionType = CollisionType.passive;
@@ -53,11 +53,14 @@ class Pizza extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo && _eatingHitbox.isColliding) {
+    if (other is Normaldo && eatingHitbox.isColliding && !disabled) {
       (gameRef as PullUpGame).gameSessionCubit.eatPizza();
       other.increaseFatPoints(1);
       audio.playSfx(Sfx.eatPizza);
       removeFromParent();
+    }
+    if (other is GameObject && !disabled) {
+      other.removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -71,7 +74,7 @@ class Pizza extends PositionComponent
       sprite: await Sprite.load('pizza.png'),
     ));
 
-    add(_eatingHitbox);
+    add(eatingHitbox);
 
     return super.onLoad();
   }

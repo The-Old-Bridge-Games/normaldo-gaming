@@ -9,6 +9,8 @@ mixin GameObject on PositionComponent, HasGameRef {
   double speed = 0.0;
   void Function() onRemoved = () {};
 
+  bool disabled = false;
+
   Aura get aura;
   Paint get auraPaint => Paint()
     ..color = aura.color
@@ -23,7 +25,9 @@ mixin GameObject on PositionComponent, HasGameRef {
   @override
   @mustCallSuper
   void update(double dt) {
-    position.x -= speed * dt;
+    if (!disabled) {
+      position.x -= speed * dt;
+    }
     if (position.x < -size.x / 2) {
       removeFromParent();
     }

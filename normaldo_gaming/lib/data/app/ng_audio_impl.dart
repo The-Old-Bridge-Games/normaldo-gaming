@@ -92,8 +92,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> playSfx(Sfx sfx) async {
-    await FlameAudio.play(
-        'sfx/${sfx.paths[Random().nextInt(sfx.paths.length)]}');
+    FlameAudio.play('sfx/${sfx.paths[Random().nextInt(sfx.paths.length)]}');
   }
 
   @override

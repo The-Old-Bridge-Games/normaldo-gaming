@@ -35,6 +35,11 @@ class Grid extends PositionComponent
   final List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
+  List<double> lineXAllocation(double xSize) {
+    return List.generate(size.x ~/ (xSize / 2),
+        (index) => (size.x / (xSize / 2) * index) + (xSize / 2));
+  }
+
   TimerComponent? _itemsCreator;
 
   @override
@@ -65,10 +70,23 @@ class Grid extends PositionComponent
     add(_itemsCreator!);
   }
 
-  void removeAllItems() {
-    removeWhere((component) => (component is FlameBlocProvider &&
-            component.children.every((element) => element is GameObject) ||
-        component is FigureEventComponent));
+  void removeAllItems({List<Component> exclude = const []}) {
+    removeWhere(
+      (component) {
+        if (component is FigureEventComponent &&
+            exclude.any((element) => component.contains(element))) {
+          for (final exclusion in exclude) {
+            for (final child in component.children) {
+              if (child != exclusion) child.removeFromParent();
+            }
+          }
+          return false;
+        }
+        return ((component is FlameBlocProvider &&
+                component.children.every((element) => element is GameObject) ||
+            component is FigureEventComponent));
+      },
+    );
   }
 
   @override

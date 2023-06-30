@@ -17,7 +17,7 @@ class LevelTimerComponent extends TimerComponent
           if (bloc.state.figure != null) return;
           final figureEvents = FigureEvent.values;
           // bloc.add(
-          //     const LevelEvent.startFigure(figure: FigureEvent.cursedPath()));
+          //     const LevelEvent.startFigure(figure: FigureEvent.guardedPizza()));
           bloc.add(LevelEvent.startFigure(
               figure: figureEvents[Random().nextInt(figureEvents.length)]));
         }));
