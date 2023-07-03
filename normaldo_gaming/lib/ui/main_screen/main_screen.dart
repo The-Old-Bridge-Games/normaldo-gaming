@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   void _onStartPressed(BuildContext context) {
-    context.push(NGRoutes.pullUpGame.path);
+    context.goRoute(NGRoutes.pullUpGame);
   }
 
   @override

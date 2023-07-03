@@ -79,7 +79,6 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
               BouncingButton(
                 onPressed: () async {
                   await audio.stopBgm();
-                  audio.playBgm();
                   // ignore: use_build_context_synchronously
                   context.pushReplacement(NGRoutes.pullUpGame.path);
                 },

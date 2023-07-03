@@ -4,6 +4,64 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
+class AudioObserver extends NavigatorObserver {
+  final audio = injector.get<NgAudio>();
+
+  @override
+  void didPop(Route route, Route? previousRoute) {
+    final previousName = previousRoute?.settings.name;
+    final name = route.settings.name ?? '';
+    print('[POP] PREVIOUS ROUTE NAME: $previousName');
+    print('[POP] ROUTE NAME: $name');
+    check(
+      name,
+      previousName,
+    );
+    super.didPop(route, previousRoute);
+  }
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    final name = route.settings.name ?? '';
+    print('[PUSH] ROUTE NAME: $name');
+    check(name);
+    super.didPush(route, previousRoute);
+  }
+
+  Future<void> _startPullUpGameBgm() async {
+    audio.clearBgm();
+    audio.addAllToBgm(['mix.mp3']);
+    audio.playBgm();
+  }
+
+  Future<void> _startMainScreenBgm() async {
+    audio.clearBgm();
+    audio.addToBgm('main_theme.mp3');
+    audio.playBgm();
+  }
+
+  Future<void> check(String location, [String? previousLocation]) async {
+    final audio = injector.get<NgAudio>();
+    switch (location) {
+      case 'pullUpGame':
+        if (previousLocation == 'main') {
+          await audio.stopBgm();
+          _startMainScreenBgm();
+          break;
+        }
+        audio.stopBgm();
+        _startPullUpGameBgm();
+        break;
+      case 'main':
+        await audio.stopBgm();
+        _startMainScreenBgm();
+        break;
+      default:
+        break;
+    }
+  }
+}
+
 class NgAudioWidget extends StatefulWidget {
   const NgAudioWidget({
     super.key,
@@ -22,7 +80,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
 
   String get location {
     if (!mounted) return '';
-    return GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
+    return GoRouterState.of(context).location;
   }
 
   @override
@@ -41,16 +99,6 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     }
   }
 
-  Future<void> _startPullUpGameBgm() async {
-    _audio.clearBgm();
-    _audio.addAllToBgm([
-      'main_theme.mp3',
-      'hard_track.mp3',
-      'club_track.mp3',
-    ]);
-    _audio.playBgm();
-  }
-
   Future<void> _startMainScreenBgm() async {
     _audio.clearBgm();
     _audio.addToBgm('main_theme.mp3');
@@ -64,23 +112,6 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     WidgetsBinding.instance.addObserver(this);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _startMainScreenBgm();
-      GoRouter.of(context).routerDelegate.addListener(() async {
-        final location =
-            GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
-        print(location);
-        switch (location) {
-          case '/main/pullUpGame':
-            _audio.stopBgm();
-            _startPullUpGameBgm();
-            break;
-          case '/':
-            await _audio.stopBgm();
-            _startMainScreenBgm();
-            break;
-          default:
-            break;
-        }
-      });
     });
   }
 
