@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 
@@ -93,6 +94,9 @@ class NgAudioImpl implements NgAudio {
   @override
   Future<void> playSfx(Sfx sfx) async {
     try {
+      if (sfx == Sfx.buttonPressed) {
+        Vibrate.feedback(FeedbackType.light);
+      }
       await FlameAudio.play(
           'sfx/${sfx.paths[Random().nextInt(sfx.paths.length)]}');
     } catch (e) {

@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
@@ -50,9 +54,12 @@ class Bomb extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
+      final grid = (gameRef as PullUpGame).grid;
       audio.playSfx(Sfx.bomb);
+      Vibrate.vibrate();
       removeFromParent();
-      (gameRef as PullUpGame).grid.removeAllItems();
+      grid.removeAllItems();
+      grid.add(BombExplosionComponent()..size = grid.size);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -79,4 +86,24 @@ class Bomb extends PositionComponent
 
   @override
   bool get isSoloSpawn => true;
+}
+
+class BombExplosionComponent extends PositionComponent {
+  @override
+  FutureOr<void> onLoad() {
+    final screen = RectangleComponent(
+      size: size,
+      paint: Paint()..color = BasicPalette.white.color,
+    )..opacity = 0;
+    add(screen
+      ..add(OpacityEffect.to(
+          0.8,
+          EffectController(
+            duration: 0.2,
+            reverseDuration: 0.2,
+            curve: Curves.linearToEaseOut,
+            onMin: () => screen.removeFromParent(),
+          ))));
+    return super.onLoad();
+  }
 }

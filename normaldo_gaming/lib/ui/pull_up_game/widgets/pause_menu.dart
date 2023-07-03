@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -64,6 +65,7 @@ class _PauseMenuState extends State<PauseMenu> {
                       children: [
                         ActionChip(
                             onPressed: () {
+                              Vibrate.feedback(FeedbackType.light);
                               context.pop();
                               context.pop();
                             },
@@ -74,7 +76,10 @@ class _PauseMenuState extends State<PauseMenu> {
                             )),
                         const SizedBox(width: 8),
                         ActionChip(
-                            onPressed: () => context.pop(),
+                            onPressed: () {
+                              Vibrate.feedback(FeedbackType.light);
+                              context.pop();
+                            },
                             label: Text(
                               "Nope",
                               style: textTheme.bodySmall
