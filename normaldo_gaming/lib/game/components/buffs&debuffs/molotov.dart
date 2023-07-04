@@ -8,6 +8,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -56,7 +57,7 @@ class Molotov extends PositionComponent
       other.takeHit();
       removeFromParent();
     }
-    if (other is! Normaldo) {
+    if (other is! Normaldo && other is! BigBuddyBin) {
       other.removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);

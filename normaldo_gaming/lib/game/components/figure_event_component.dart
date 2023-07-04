@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
@@ -107,7 +108,9 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         });
       },
       bigBuddyBin: () {
-        return [];
+        return [
+          [Item(item: Items.bigBuddyBin, line: Random().nextInt(3))],
+        ];
       },
       only2Lines: () {
         return [];
@@ -220,7 +223,20 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         }
         (gameRef as PullUpGame).grid.resumeLines();
       },
-      bigBuddyBin: () {},
+      bigBuddyBin: () {
+        final item = matrix.first.first;
+        final itemSize = item.item.getSize(lineSize);
+        add((item.item.component() as GameObject)
+          ..anchor = Anchor.topCenter
+          ..size = itemSize
+          ..position = Vector2(
+            size.x + itemSize.x,
+            linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
+          ));
+        (children.firstWhere((element) => element is BigBuddyBin)
+                as BigBuddyBin)
+            .speed *= 1.5;
+      },
       only2Lines: () {},
       slowMo: () {},
       unreachablePizza: () {},

@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/cocktail.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
@@ -24,7 +25,7 @@ enum Items {
   molotov,
   hourglass,
   punch,
-  ;
+  bigBuddyBin;
   // trashBin(0, 1),
   // pizza(250, 0),
   // dollar(0, 0),
@@ -59,6 +60,8 @@ enum Items {
         return Hourglass();
       case Items.punch:
         return Punch();
+      case bigBuddyBin:
+        return BigBuddyBin();
     }
   }
 
@@ -86,6 +89,8 @@ enum Items {
         return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.punch:
         return Vector2(lineSize * 0.7, lineSize / 2);
+      case bigBuddyBin:
+        return Vector2(lineSize * 6 / 1.2, lineSize * 3 * 0.95);
     }
   }
 }

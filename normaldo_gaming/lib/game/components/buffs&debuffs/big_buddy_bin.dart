@@ -6,37 +6,25 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-class Pizza extends PositionComponent
+class BigBuddyBin extends PositionComponent
     with
-        CollisionCallbacks,
         HasGameRef,
-        Eatable,
+        CollisionCallbacks,
         GameObject,
+        FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
-  Pizza() : super(anchor: Anchor.center);
-
-  late final eatingHitbox = RectangleHitbox.relative(
-    Vector2.all(0.9),
-    parentSize: size,
-  )..collisionType = CollisionType.active;
+  BigBuddyBin() : super(anchor: Anchor.center);
 
   @override
-  Aura get aura => Aura.blue;
+  Aura get aura => Aura.red;
 
   @override
-  Component get auraComponent => PolygonComponent(
-        [
-          Vector2(0, size.y / 2),
-          Vector2(size.x, 0),
-          Vector2(size.x, size.y),
-        ],
+  Component get auraComponent => RectangleComponent(
+        size: size,
         paint: auraPaint,
       );
 
@@ -52,21 +40,17 @@ class Pizza extends PositionComponent
 
   @override
   void onCollisionStart(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
-    if (other is Normaldo && !disabled) {
-      (gameRef as PullUpGame).gameSessionCubit.eatPizza();
-      other.increaseFatPoints(1);
-      audio.playSfx(Sfx.eatPizza);
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    final gameSessionCubit = (gameRef as PullUpGame).gameSessionCubit;
+    if (other is Normaldo) {
+      if (gameSessionCubit.state.hit || gameSessionCubit.state.isDead) return;
       removeFromParent();
-    }
-    if (other is GameObject &&
-        !disabled &&
-        other is! Punch &&
-        other is! BigBuddyBin) {
+      other.decreaseFatPoints(other.pizzaToGetFatter ?? 0);
+      audio.playSfx(Sfx.binCrash);
+    } else {
       other.removeFromParent();
     }
+
     super.onCollisionStart(intersectionPoints, other);
   }
 
@@ -76,10 +60,13 @@ class Pizza extends PositionComponent
     add(auraComponent);
     add(SpriteComponent(
       size: size,
-      sprite: await Sprite.load('pizza.png'),
+      sprite: await Sprite.load('trash_bin.png'),
     ));
-
-    add(eatingHitbox);
+    add(RectangleHitbox.relative(
+      Vector2(0.95, 0.95),
+      parentSize: size,
+    ));
+    // ..collisionType = CollisionType.passive);
 
     return super.onLoad();
   }

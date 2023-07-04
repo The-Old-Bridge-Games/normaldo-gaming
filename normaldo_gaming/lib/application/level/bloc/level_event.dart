@@ -36,5 +36,6 @@ class FigureEvent with _$FigureEvent {
         const FigureEvent.guardedPizza(),
         const FigureEvent.cursedPath(),
         const FigureEvent.punchWave(),
+        const FigureEvent.bigBuddyBin(),
       ];
 }
