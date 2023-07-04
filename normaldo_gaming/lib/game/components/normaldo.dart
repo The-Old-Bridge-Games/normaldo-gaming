@@ -35,6 +35,16 @@ enum NormaldoFatState {
   fatDead,
   uberFatDead;
 
+  int get pizzaToFat {
+    return switch (this) {
+      skinny || skinnyEat => 30,
+      slim || slimEat => 40,
+      fat || fatEat => 50,
+      uberFat || uberFatEat => 60,
+      _ => 0
+    };
+  }
+
   NormaldoFatState get dead {
     switch (this) {
       case NormaldoFatState.skinny:
@@ -75,8 +85,6 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         _StateActions,
         CollisionCallbacks,
         HasNgAudio {
-  static const pizzaToGetFatter = 30;
-
   Normaldo({
     required Vector2 size,
   }) : super(size: size, anchor: Anchor.center);
@@ -85,9 +93,11 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   var _state = NormaldoHitState.idle;
 
+  int? get pizzaToGetFatter => current?.pizzaToFat;
+
   void takeHit() {
     if (_state == NormaldoHitState.idle) {
-      decreaseFatPoints(pizzaToGetFatter);
+      decreaseFatPoints(current?.pizzaToFat ?? 0);
     }
   }
 
@@ -160,6 +170,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void increaseFatPoints(int by) {
     assert(by > 0);
+    final pizzaToGetFatter = current!.pizzaToFat;
     _pizzaEaten += by;
     if (_pizzaEaten >= pizzaToGetFatter && !isFat && !isUberFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
@@ -174,6 +185,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void decreaseFatPoints(int by) {
     assert(by > 0);
+    final pizzaToGetFatter = current!.pizzaToFat;
     _pizzaEaten -= by;
     bloc.takeHit();
     if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {

@@ -49,7 +49,7 @@ class Dumbbell extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       removeFromParent();
       audio.playSfx(Sfx.dumbbellCatch);
-      other.decreaseFatPoints(Normaldo.pizzaToGetFatter);
+      other.decreaseFatPoints(other.pizzaToGetFatter ?? 0);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
