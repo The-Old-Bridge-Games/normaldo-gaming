@@ -83,7 +83,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           width: 2.0,
                           color: NGTheme.green1,
                         ),

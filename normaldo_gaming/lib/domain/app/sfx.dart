@@ -12,7 +12,8 @@ enum Sfx {
   bomb,
   cocktail,
   molotov,
-  hourglass;
+  hourglass,
+  roundBox;
 
   const Sfx();
 }

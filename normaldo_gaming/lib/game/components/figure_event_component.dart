@@ -119,6 +119,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   }
 
   void _addItemsFromMatrix(List<List<Item>> matrix) {
+    (gameRef as PullUpGame).grid.resumeLines();
     figure.when(
       trashWall: () {
         for (final column in matrix) {

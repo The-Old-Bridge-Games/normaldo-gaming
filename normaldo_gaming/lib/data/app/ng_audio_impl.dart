@@ -205,6 +205,8 @@ extension on Sfx {
         return ['molotov1.mp3'];
       case Sfx.hourglass:
         return ['magic_sound_longer.mp3'];
+      case Sfx.roundBox:
+        return ['round_box.mp3'];
     }
   }
 }

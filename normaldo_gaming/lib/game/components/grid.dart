@@ -32,7 +32,8 @@ class Grid extends PositionComponent
   double _lineSize = 0;
   double get lineSize => _lineSize;
 
-  final List<double> _linesCentersY = [];
+  Map<int, double> _stoppedLines = {};
+  List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
   List<double> lineXAllocation(double xSize) {
@@ -68,6 +69,24 @@ class Grid extends PositionComponent
     );
     if (state.figure != null) _itemsCreator?.timer.pause();
     add(_itemsCreator!);
+  }
+
+  void stopLine(int index) {
+    assert(index >= 0 && index < 5);
+    if (_stoppedLines.keys.contains(index)) return;
+    _stoppedLines[index] = _linesCentersY.removeAt(index);
+  }
+
+  void resumeLines() {
+    final toRemove = <int>[];
+    for (final entry in _stoppedLines.entries) {
+      _linesCentersY.add(entry.value);
+      toRemove.add(entry.key);
+    }
+    for (final key in toRemove) {
+      _stoppedLines.remove(key);
+    }
+    _linesCentersY.sort();
   }
 
   void removeAllItems({List<Component> exclude = const []}) {

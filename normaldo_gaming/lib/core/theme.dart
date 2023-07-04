@@ -12,7 +12,7 @@ abstract class NGTheme {
   static const purple1 = Color(0xffA349A4);
   static const orange1 = Color(0xffFFCC00);
 
-  static final auraGreen = green1;
+  static const auraGreen = green1;
   static const auraRed = Color(0xffDC0000);
   static const auraBlue = Color.fromARGB(255, 103, 179, 254);
 
