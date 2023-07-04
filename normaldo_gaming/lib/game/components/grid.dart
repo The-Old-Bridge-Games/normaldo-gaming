@@ -55,6 +55,7 @@ class Grid extends PositionComponent
       period: state.level.frequency,
       repeat: true,
       onTick: () {
+        if (state.figure != null) return;
         add(FlameBlocProvider<LevelBloc, LevelState>.value(
             value: levelBloc,
             children: [
@@ -130,6 +131,7 @@ class Grid extends PositionComponent
         period: levelBloc.state.level.frequency,
         repeat: true,
         onTick: () {
+          if (levelBloc.state.figure != null) return;
           add(FlameBlocProvider<LevelBloc, LevelState>.value(
               value: levelBloc,
               children: [
@@ -153,20 +155,23 @@ class Grid extends PositionComponent
       onNewState: (state) async {
         if (state.figure != null) {
           _itemsCreator?.timer.pause();
-          await Future.delayed(
-              Duration(milliseconds: state.level.frequency.toInt()));
-          add(
-            FigureEventComponent(
-              figure: state.figure!,
-              lineSize: lineSize,
-              linesCentersY: linesCentersY,
-              onFinish: () {
-                bloc.add(const LevelEvent.finishFigure());
-              },
-            )
-              ..position = Vector2(0, 0)
-              ..size = size,
-          );
+          add(TimerComponent(
+              period: state.level.frequency,
+              removeOnFinish: true,
+              onTick: () {
+                add(
+                  FigureEventComponent(
+                    figure: state.figure!,
+                    lineSize: lineSize,
+                    linesCentersY: linesCentersY,
+                    onFinish: () {
+                      bloc.add(const LevelEvent.finishFigure());
+                    },
+                  )
+                    ..position = Vector2(0, 0)
+                    ..size = size,
+                );
+              }));
         } else {
           _itemsCreator?.timer.resume();
         }

@@ -8,19 +8,25 @@ class LevelTimerComponent extends TimerComponent
     with FlameBlocReader<LevelBloc, LevelState> {
   LevelTimerComponent() : super(period: 20, repeat: true);
 
+  void _onTick() {
+    if (bloc.state.figure != null) return;
+    // bloc.add(
+    //     const LevelEvent.startFigure(figure: FigureEvent.punchWave()));
+    bloc.add(const LevelEvent.startRandomFigure());
+    add(TimerComponent(
+      period: (15 + Random().nextInt(16)).toDouble(),
+      removeOnFinish: true,
+      onTick: _onTick,
+    ));
+  }
+
   @override
   Future<void> onLoad() {
     add(TimerComponent(
-        period: 15,
-        repeat: true,
-        onTick: () {
-          if (bloc.state.figure != null) return;
-          final figureEvents = FigureEvent.values;
-          // bloc.add(
-          //     const LevelEvent.startFigure(figure: FigureEvent.guardedPizza()));
-          bloc.add(LevelEvent.startFigure(
-              figure: figureEvents[Random().nextInt(figureEvents.length)]));
-        }));
+      period: (15 + Random().nextInt(16)).toDouble(),
+      removeOnFinish: true,
+      onTick: _onTick,
+    ));
     return super.onLoad();
   }
 

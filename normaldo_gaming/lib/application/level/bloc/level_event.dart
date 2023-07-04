@@ -25,10 +25,16 @@ class FigureEvent with _$FigureEvent {
   const factory FigureEvent.trashWall() = _TrashWall;
   const factory FigureEvent.guardedPizza() = _GuardedPizza;
   const factory FigureEvent.cursedPath() = _CursedPath;
+  const factory FigureEvent.punchWave() = _PunchWave;
+  const factory FigureEvent.unreachablePizza() = _UnreachablePizza;
+  const factory FigureEvent.only2Lines() = _Only2Times;
+  const factory FigureEvent.bigBuddyBin() = _BigBuddyBin;
+  const factory FigureEvent.slowMo() = _SlowMo;
 
   static List<FigureEvent> get values => [
         const FigureEvent.trashWall(),
         const FigureEvent.guardedPizza(),
         const FigureEvent.cursedPath(),
+        const FigureEvent.punchWave(),
       ];
 }

@@ -23,8 +23,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   final List<double> linesCentersY;
   final void Function() onFinish;
 
+  var _finished = false;
+
   @override
   Future<void> onLoad() async {
+    // 4DEV
+    // add(RectangleComponent(
+    //     size: size,
+    //     paint: Paint()..color = BasicPalette.blue.color.withOpacity(0.5)));
     final List<List<Item>> matrix = figure.when(
       trashWall: () => [
         [Item(item: Items.bomb, line: Random().nextInt(Grid.linesCount))],
@@ -54,7 +60,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       cursedPath: () {
         final random = Random();
-        final eventLength = random.nextInt(7) + 8;
+        final eventLength = random.nextInt(6) + 5;
         var livingIndex = random.nextInt(Grid.linesCount);
         final livingPath = List.generate(eventLength, (index) {
           if (index == 0) {
@@ -84,6 +90,34 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   }
                 }));
       },
+      punchWave: () {
+        final alreadyUsed = <int>[];
+        return List.generate(3, (index) {
+          var excludedLine = Random().nextInt(Grid.linesCount);
+          while (alreadyUsed.contains(excludedLine)) {
+            excludedLine = Random().nextInt(Grid.linesCount);
+          }
+          alreadyUsed.add(excludedLine);
+          return List.generate(
+              Grid.linesCount - 1,
+              (index) => Item(
+                    item: Items.punch,
+                    line: index >= excludedLine ? index + 1 : index,
+                  ));
+        });
+      },
+      bigBuddyBin: () {
+        return [];
+      },
+      only2Lines: () {
+        return [];
+      },
+      unreachablePizza: () {
+        return [];
+      },
+      slowMo: () {
+        return [];
+      },
     );
 
     _addItemsFromMatrix(matrix);
@@ -93,14 +127,16 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
 
   @override
   void update(double dt) {
-    if (children.isNotEmpty) {
-      if ((children.last as GameObject).position.x <
-          (gameRef as PullUpGame).grid.normaldo.position.x) {
+    final gameObjects = children.where((element) => element is GameObject);
+    if (gameObjects.isEmpty && _finished) removeFromParent();
+    if (gameObjects.isNotEmpty) {
+      if ((gameObjects.every((e) =>
+              (e as GameObject).position.x <
+              (gameRef as PullUpGame).grid.normaldo.position.x)) &&
+          !_finished) {
+        _finished = true;
         onFinish();
       }
-    }
-    if (children.isEmpty) {
-      removeFromParent();
     }
     super.update(dt);
   }
@@ -163,6 +199,31 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           }
         }
       },
+      punchWave: () async {
+        for (final column in matrix) {
+          final xOffset = matrix.indexOf(column);
+          add(TimerComponent(
+            period: (2 * xOffset).toDouble(),
+            removeOnFinish: true,
+            onTick: () {
+              for (final item in column) {
+                final itemSize = item.item.getSize(lineSize);
+                (gameRef as PullUpGame).grid.resumeLines();
+                add(item.item.component()
+                  ..size = itemSize
+                  ..position = Vector2(
+                      (size.x) + Items.punch.getSize(lineSize).x,
+                      linesCentersY[item.line ?? 0]));
+              }
+            },
+          ));
+        }
+        (gameRef as PullUpGame).grid.resumeLines();
+      },
+      bigBuddyBin: () {},
+      only2Lines: () {},
+      slowMo: () {},
+      unreachablePizza: () {},
     );
   }
 }

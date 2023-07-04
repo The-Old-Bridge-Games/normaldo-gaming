@@ -102,13 +102,13 @@ class Punch extends PositionComponent
     if (position.x <= grid.size.x - (size.x / 2)) {
       _activated = true;
       add(TimerComponent(
-          period: 2,
+          period: 1,
           removeOnFinish: true,
           onTick: () {
             audio.playSfx(Sfx.roundBox);
             remove(_shakeEffect);
             add(TimerComponent(
-                period: 1,
+                period: 0.5,
                 removeOnFinish: true,
                 onTick: () {
                   add(MoveToEffect(
