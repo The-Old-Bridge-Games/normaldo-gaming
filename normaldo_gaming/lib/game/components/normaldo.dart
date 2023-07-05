@@ -41,7 +41,7 @@ enum NormaldoFatState {
       slim || slimEat => 40,
       fat || fatEat => 50,
       uberFat || uberFatEat => 60,
-      _ => 0
+      _ => 1
     };
   }
 

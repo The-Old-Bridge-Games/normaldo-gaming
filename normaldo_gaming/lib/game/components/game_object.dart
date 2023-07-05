@@ -28,7 +28,7 @@ mixin GameObject on PositionComponent, HasGameRef {
     if (!disabled) {
       position.x -= speed * dt;
     }
-    if (position.x < -size.x / 2) {
+    if (position.x < -size.x) {
       removeFromParent();
     }
   }

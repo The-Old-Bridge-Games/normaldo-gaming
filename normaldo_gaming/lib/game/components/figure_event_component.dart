@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
@@ -25,6 +26,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   final List<double> linesCentersY;
   final void Function() onFinish;
 
+  var _initiated = false;
   var _finished = false;
 
   @override
@@ -179,15 +181,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
 
   @override
   void update(double dt) {
-    final gameObjects = children.where((element) => element is GameObject);
-    if (gameObjects.isEmpty && _finished) removeFromParent();
-    if (gameObjects.isNotEmpty) {
+    if (!_initiated) return;
+    final gameObjects = children.whereType<GameObject>();
+    if (gameObjects.isEmpty) removeFromParent();
+    if (gameObjects.isNotEmpty && !_finished) {
       if ((gameObjects.every((e) =>
-              (e as GameObject).position.x <
-              (gameRef as PullUpGame).grid.normaldo.position.x)) &&
-          !_finished) {
-        _finished = true;
+          e.position.x < (gameRef as PullUpGame).grid.normaldo.position.x))) {
         onFinish();
+        _finished = true;
       }
     }
     super.update(dt);
@@ -333,5 +334,6 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         }
       },
     );
+    _initiated = true;
   }
 }
