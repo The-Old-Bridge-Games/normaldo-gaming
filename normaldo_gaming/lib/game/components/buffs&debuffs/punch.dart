@@ -49,7 +49,7 @@ class Punch extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      audio.playSfx(Sfx.bomb);
+      audio.playSfx(Sfx.binCrash);
       other.takeHit();
       removeFromParent();
     }
@@ -101,12 +101,12 @@ class Punch extends PositionComponent
     if (_activated) return;
     final grid = (gameRef as PullUpGame).grid;
     if (position.x <= grid.size.x - (size.x / 2)) {
+      audio.playSfx(Sfx.roundBox);
       _activated = true;
       add(TimerComponent(
           period: 1,
           removeOnFinish: true,
           onTick: () {
-            audio.playSfx(Sfx.roundBox);
             remove(_shakeEffect);
             add(TimerComponent(
                 period: 0.5,
