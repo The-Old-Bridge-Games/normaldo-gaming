@@ -6,6 +6,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
@@ -160,7 +161,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         ];
       },
       slowMo: () {
-        return [];
+        return [
+          List.generate(Grid.linesCount,
+              (index) => Item(item: Items.cocktail, line: index)),
+          ...List.generate(
+              Random().nextInt(6) + 5,
+              (index) => List.generate(Grid.linesCount,
+                  (index) => Item(item: Items.pizza, line: index))),
+        ];
       },
     );
 
@@ -295,7 +303,23 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           element.speed *= 2;
         });
       },
-      slowMo: () {},
+      slowMo: () {
+        for (final column in matrix) {
+          final xOffset = matrix.indexOf(column);
+          for (final item in column) {
+            final itemSize = Items.trashBin.getSize(lineSize);
+            add(item.item.component()
+              ..size = itemSize
+              ..position = Vector2(
+                  size.x * (xOffset > 0 ? 2.6 : 1.3) +
+                      (xOffset * Items.trashBin.getSize(lineSize).x * 2),
+                  linesCentersY[item.line ?? 0]));
+          }
+        }
+        children.whereType<Pizza>().forEach((element) {
+          element.speed *= 2;
+        });
+      },
       unreachablePizza: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);

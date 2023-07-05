@@ -39,5 +39,6 @@ class FigureEvent with _$FigureEvent {
         const FigureEvent.bigBuddyBin(),
         const FigureEvent.unreachablePizza(),
         const FigureEvent.only2Lines(),
+        const FigureEvent.slowMo(),
       ];
 }

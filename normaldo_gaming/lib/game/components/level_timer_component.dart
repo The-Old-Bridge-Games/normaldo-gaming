@@ -13,7 +13,7 @@ class LevelTimerComponent extends TimerComponent
 
   void _onTick() {
     if (bloc.state.figure != null) return;
-    // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.only2Lines()));
+    // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.slowMo()));
     bloc.add(const LevelEvent.startRandomFigure());
     add(TimerComponent(
       period: _eventPeriod,
