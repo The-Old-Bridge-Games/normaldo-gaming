@@ -9,11 +9,11 @@ class LevelTimerComponent extends TimerComponent
   LevelTimerComponent() : super(period: 20, repeat: true);
 
   final _eventPeriod = (15 + Random().nextInt(16)).toDouble();
+  // final double _eventPeriod = 15;
 
   void _onTick() {
     if (bloc.state.figure != null) return;
-    // bloc.add(
-    //     const LevelEvent.startFigure(figure: FigureEvent.unreachablePizza()));
+    // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.only2Lines()));
     bloc.add(const LevelEvent.startRandomFigure());
     add(TimerComponent(
       period: _eventPeriod,

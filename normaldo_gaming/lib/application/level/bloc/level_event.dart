@@ -38,5 +38,6 @@ class FigureEvent with _$FigureEvent {
         const FigureEvent.punchWave(),
         const FigureEvent.bigBuddyBin(),
         const FigureEvent.unreachablePizza(),
+        const FigureEvent.only2Lines(),
       ];
 }

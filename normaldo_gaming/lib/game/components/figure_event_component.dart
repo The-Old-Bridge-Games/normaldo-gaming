@@ -113,7 +113,31 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         ];
       },
       only2Lines: () {
-        return [];
+        final List<int> usedIndexes = [];
+        int getLineYIndex() {
+          final index = Random().nextInt(linesCentersY.length);
+          if (usedIndexes
+              .any((e) => index + 1 == e || index - 1 == e || index == e)) {
+            return getLineYIndex();
+          }
+          return index;
+        }
+
+        usedIndexes.add(getLineYIndex());
+        usedIndexes.add(getLineYIndex());
+
+        return List.generate(8, (index) {
+          final list = List.generate(
+              Grid.linesCount,
+              (index) => Item(
+                    item: Items.bigBuddyBin,
+                    line: index,
+                  ));
+          list.removeWhere((e) {
+            return usedIndexes.contains(e.line);
+          });
+          return list;
+        });
       },
       unreachablePizza: () {
         final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
@@ -254,7 +278,23 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                 as BigBuddyBin)
             .speed *= 1.5;
       },
-      only2Lines: () {},
+      only2Lines: () {
+        for (final column in matrix) {
+          final xOffset = matrix.indexOf(column);
+          for (final item in column) {
+            final itemSize = Items.trashBin.getSize(lineSize);
+            add(item.item.component()
+              ..size = itemSize
+              ..position = Vector2(
+                  size.x * 1.3 +
+                      (xOffset * Items.trashBin.getSize(lineSize).x * 2),
+                  linesCentersY[item.line ?? 0]));
+          }
+        }
+        children.whereType<BigBuddyBin>().forEach((element) {
+          element.speed *= 2;
+        });
+      },
       slowMo: () {},
       unreachablePizza: () {
         for (final column in matrix) {
