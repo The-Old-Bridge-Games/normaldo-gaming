@@ -116,7 +116,24 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         return [];
       },
       unreachablePizza: () {
-        return [];
+        final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
+        return [
+          [
+            Item(item: Items.bomb, line: firstLine - 1),
+            Item(item: Items.bomb, line: firstLine),
+            Item(item: Items.bomb, line: firstLine + 1),
+          ],
+          [
+            Item(item: Items.bomb, line: firstLine - 1),
+            Item(item: Items.fatPizza, line: firstLine),
+            Item(item: Items.bomb, line: firstLine + 1),
+          ],
+          [
+            Item(item: Items.bomb, line: firstLine - 1),
+            Item(item: Items.bomb, line: firstLine),
+            Item(item: Items.bomb, line: firstLine + 1),
+          ],
+        ];
       },
       slowMo: () {
         return [];
@@ -239,7 +256,18 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       only2Lines: () {},
       slowMo: () {},
-      unreachablePizza: () {},
+      unreachablePizza: () {
+        for (final column in matrix) {
+          final xOffset = matrix.indexOf(column);
+          for (final item in column) {
+            final itemSize = item.item.getSize(lineSize);
+            add(item.item.component()
+              ..size = itemSize
+              ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
+                  linesCentersY[item.line ?? 0]));
+          }
+        }
+      },
     );
   }
 }
