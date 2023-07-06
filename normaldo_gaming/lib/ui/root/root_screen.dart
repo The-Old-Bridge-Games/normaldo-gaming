@@ -20,7 +20,7 @@ class _RootScreenState extends State<RootScreen> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<UserCubit>().state.name.isEmpty) {
+      if (context.read<UserCubit>().state.user.name.isEmpty) {
         context.push(NGRoutes.createUser.path);
       }
     });
@@ -29,7 +29,7 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserCubit, UserState>(
-      listenWhen: (_, current) => current.name.isEmpty,
+      listenWhen: (_, current) => current.user.name.isEmpty,
       listener: (context, state) {
         context.push(NGRoutes.createUser.path);
       },

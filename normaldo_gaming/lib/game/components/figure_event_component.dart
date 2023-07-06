@@ -343,6 +343,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           }
         }
         children.whereType<Pizza>().forEach((element) {
+          element.hearsBloc = false;
           element.speed *= 2;
         });
       },

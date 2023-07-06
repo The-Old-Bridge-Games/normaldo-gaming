@@ -16,9 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserState {
-  int get score => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get dollars => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -30,7 +28,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({int score, String name, int dollars});
+  $Res call({User user});
 }
 
 /// @nodoc
@@ -46,23 +44,13 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? score = null,
-    Object? name = null,
-    Object? dollars = null,
+    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
-      score: null == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dollars: null == dollars
-          ? _value.dollars
-          : dollars // ignore: cast_nullable_to_non_nullable
-              as int,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ) as $Val);
   }
 }
@@ -74,7 +62,7 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       __$$_UserStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int score, String name, int dollars});
+  $Res call({User user});
 }
 
 /// @nodoc
@@ -88,23 +76,13 @@ class __$$_UserStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? score = null,
-    Object? name = null,
-    Object? dollars = null,
+    Object? user = freezed,
   }) {
     return _then(_$_UserState(
-      score: null == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dollars: null == dollars
-          ? _value.dollars
-          : dollars // ignore: cast_nullable_to_non_nullable
-              as int,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
   }
 }
@@ -112,19 +90,14 @@ class __$$_UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState(
-      {required this.score, required this.name, required this.dollars});
+  const _$_UserState({required this.user});
 
   @override
-  final int score;
-  @override
-  final String name;
-  @override
-  final int dollars;
+  final User user;
 
   @override
   String toString() {
-    return 'UserState(score: $score, name: $name, dollars: $dollars)';
+    return 'UserState(user: $user)';
   }
 
   @override
@@ -132,13 +105,12 @@ class _$_UserState implements _UserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserState &&
-            (identical(other.score, score) || other.score == score) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.dollars, dollars) || other.dollars == dollars));
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, score, name, dollars);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -148,17 +120,10 @@ class _$_UserState implements _UserState {
 }
 
 abstract class _UserState implements UserState {
-  const factory _UserState(
-      {required final int score,
-      required final String name,
-      required final int dollars}) = _$_UserState;
+  const factory _UserState({required final User user}) = _$_UserState;
 
   @override
-  int get score;
-  @override
-  String get name;
-  @override
-  int get dollars;
+  User get user;
   @override
   @JsonKey(ignore: true)
   _$$_UserStateCopyWith<_$_UserState> get copyWith =>

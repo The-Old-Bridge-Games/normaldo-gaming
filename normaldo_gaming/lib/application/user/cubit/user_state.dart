@@ -3,14 +3,14 @@ part of 'user_cubit.dart';
 @freezed
 class UserState with _$UserState {
   const factory UserState({
-    required int score,
-    required String name,
-    required int dollars,
+    required User user,
   }) = _UserState;
 
   factory UserState.initial() => const UserState(
-        score: 0,
+          user: User(
+        id: 'no_user',
         name: '',
+        highScore: 0,
         dollars: 0,
-      );
+      ));
 }

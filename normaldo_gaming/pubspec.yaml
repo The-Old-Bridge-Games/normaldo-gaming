@@ -19,6 +19,9 @@ dependencies:
   path_provider: ^2.0.15
   equatable: ^2.0.5
 
+  # Database
+  hive: ^2.2.3
+
   # Splash&Icon
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1

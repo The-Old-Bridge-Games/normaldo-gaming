@@ -53,7 +53,7 @@ abstract class NGRouter {
   );
 
   static void _userBlocListener(BuildContext context, UserState state) {
-    if (state.name.isEmpty) {
+    if (state.user.name.isEmpty) {
       context.goRoute(NGRoutes.createUser);
     }
   }

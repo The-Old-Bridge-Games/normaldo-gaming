@@ -27,7 +27,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
     final gameCubit = context.read<GameSessionCubit>();
     final userCubit = context.read<UserCubit>();
 
-    if (gameCubit.state.score > userCubit.state.score) {
+    if (gameCubit.state.score > userCubit.state.user.highScore) {
       userCubit.changeHighScore(gameCubit.state.score);
     }
     userCubit.addDollars(gameCubit.state.dollars);

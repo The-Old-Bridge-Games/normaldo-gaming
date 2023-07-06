@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/injection/injection.dart';
 
 mixin GameObject on PositionComponent, HasGameRef {
   double speed = 0.0;
+  bool hearsBloc = true;
   void Function() onRemoved = () {};
 
   bool disabled = false;

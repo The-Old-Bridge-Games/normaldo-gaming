@@ -1070,9 +1070,9 @@ mixin _$FigureEvent {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) =>
       throw _privateConstructorUsedError;
@@ -1082,9 +1082,9 @@ mixin _$FigureEvent {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) =>
       throw _privateConstructorUsedError;
@@ -1094,9 +1094,9 @@ mixin _$FigureEvent {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) =>
@@ -1107,9 +1107,9 @@ mixin _$FigureEvent {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) =>
       throw _privateConstructorUsedError;
@@ -1119,9 +1119,9 @@ mixin _$FigureEvent {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) =>
       throw _privateConstructorUsedError;
@@ -1131,9 +1131,9 @@ mixin _$FigureEvent {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) =>
@@ -1200,9 +1200,9 @@ class _$_TrashWall implements _TrashWall {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return trashWall();
@@ -1215,9 +1215,9 @@ class _$_TrashWall implements _TrashWall {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return trashWall?.call();
@@ -1230,9 +1230,9 @@ class _$_TrashWall implements _TrashWall {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1249,9 +1249,9 @@ class _$_TrashWall implements _TrashWall {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return trashWall(this);
@@ -1264,9 +1264,9 @@ class _$_TrashWall implements _TrashWall {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return trashWall?.call(this);
@@ -1279,9 +1279,9 @@ class _$_TrashWall implements _TrashWall {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1338,9 +1338,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return guardedPizza();
@@ -1353,9 +1353,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return guardedPizza?.call();
@@ -1368,9 +1368,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1387,9 +1387,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return guardedPizza(this);
@@ -1402,9 +1402,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return guardedPizza?.call(this);
@@ -1417,9 +1417,9 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1476,9 +1476,9 @@ class _$_CursedPath implements _CursedPath {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return cursedPath();
@@ -1491,9 +1491,9 @@ class _$_CursedPath implements _CursedPath {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return cursedPath?.call();
@@ -1506,9 +1506,9 @@ class _$_CursedPath implements _CursedPath {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1525,9 +1525,9 @@ class _$_CursedPath implements _CursedPath {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return cursedPath(this);
@@ -1540,9 +1540,9 @@ class _$_CursedPath implements _CursedPath {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return cursedPath?.call(this);
@@ -1555,9 +1555,9 @@ class _$_CursedPath implements _CursedPath {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1614,9 +1614,9 @@ class _$_PunchWave implements _PunchWave {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return punchWave();
@@ -1629,9 +1629,9 @@ class _$_PunchWave implements _PunchWave {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return punchWave?.call();
@@ -1644,9 +1644,9 @@ class _$_PunchWave implements _PunchWave {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1663,9 +1663,9 @@ class _$_PunchWave implements _PunchWave {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return punchWave(this);
@@ -1678,9 +1678,9 @@ class _$_PunchWave implements _PunchWave {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return punchWave?.call(this);
@@ -1693,9 +1693,9 @@ class _$_PunchWave implements _PunchWave {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1708,6 +1708,144 @@ class _$_PunchWave implements _PunchWave {
 
 abstract class _PunchWave implements FigureEvent {
   const factory _PunchWave() = _$_PunchWave;
+}
+
+/// @nodoc
+abstract class _$$_BigBuddyBinCopyWith<$Res> {
+  factory _$$_BigBuddyBinCopyWith(
+          _$_BigBuddyBin value, $Res Function(_$_BigBuddyBin) then) =
+      __$$_BigBuddyBinCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_BigBuddyBinCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$_BigBuddyBin>
+    implements _$$_BigBuddyBinCopyWith<$Res> {
+  __$$_BigBuddyBinCopyWithImpl(
+      _$_BigBuddyBin _value, $Res Function(_$_BigBuddyBin) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_BigBuddyBin implements _BigBuddyBin {
+  const _$_BigBuddyBin();
+
+  @override
+  String toString() {
+    return 'FigureEvent.bigBuddyBin()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_BigBuddyBin);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() trashWall,
+    required TResult Function() guardedPizza,
+    required TResult Function() cursedPath,
+    required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
+    required TResult Function() unreachablePizza,
+    required TResult Function() only2Lines,
+    required TResult Function() slowMo,
+  }) {
+    return bigBuddyBin();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? trashWall,
+    TResult? Function()? guardedPizza,
+    TResult? Function()? cursedPath,
+    TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
+    TResult? Function()? unreachablePizza,
+    TResult? Function()? only2Lines,
+    TResult? Function()? slowMo,
+  }) {
+    return bigBuddyBin?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? trashWall,
+    TResult Function()? guardedPizza,
+    TResult Function()? cursedPath,
+    TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
+    TResult Function()? unreachablePizza,
+    TResult Function()? only2Lines,
+    TResult Function()? slowMo,
+    required TResult orElse(),
+  }) {
+    if (bigBuddyBin != null) {
+      return bigBuddyBin();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TrashWall value) trashWall,
+    required TResult Function(_GuardedPizza value) guardedPizza,
+    required TResult Function(_CursedPath value) cursedPath,
+    required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
+    required TResult Function(_UnreachablePizza value) unreachablePizza,
+    required TResult Function(_Only2Times value) only2Lines,
+    required TResult Function(_SlowMo value) slowMo,
+  }) {
+    return bigBuddyBin(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TrashWall value)? trashWall,
+    TResult? Function(_GuardedPizza value)? guardedPizza,
+    TResult? Function(_CursedPath value)? cursedPath,
+    TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
+    TResult? Function(_UnreachablePizza value)? unreachablePizza,
+    TResult? Function(_Only2Times value)? only2Lines,
+    TResult? Function(_SlowMo value)? slowMo,
+  }) {
+    return bigBuddyBin?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TrashWall value)? trashWall,
+    TResult Function(_GuardedPizza value)? guardedPizza,
+    TResult Function(_CursedPath value)? cursedPath,
+    TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
+    TResult Function(_UnreachablePizza value)? unreachablePizza,
+    TResult Function(_Only2Times value)? only2Lines,
+    TResult Function(_SlowMo value)? slowMo,
+    required TResult orElse(),
+  }) {
+    if (bigBuddyBin != null) {
+      return bigBuddyBin(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BigBuddyBin implements FigureEvent {
+  const factory _BigBuddyBin() = _$_BigBuddyBin;
 }
 
 /// @nodoc
@@ -1752,9 +1890,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return unreachablePizza();
@@ -1767,9 +1905,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return unreachablePizza?.call();
@@ -1782,9 +1920,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1801,9 +1939,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return unreachablePizza(this);
@@ -1816,9 +1954,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return unreachablePizza?.call(this);
@@ -1831,9 +1969,9 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1890,9 +2028,9 @@ class _$_Only2Times implements _Only2Times {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return only2Lines();
@@ -1905,9 +2043,9 @@ class _$_Only2Times implements _Only2Times {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return only2Lines?.call();
@@ -1920,9 +2058,9 @@ class _$_Only2Times implements _Only2Times {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -1939,9 +2077,9 @@ class _$_Only2Times implements _Only2Times {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return only2Lines(this);
@@ -1954,9 +2092,9 @@ class _$_Only2Times implements _Only2Times {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return only2Lines?.call(this);
@@ -1969,9 +2107,9 @@ class _$_Only2Times implements _Only2Times {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {
@@ -1984,144 +2122,6 @@ class _$_Only2Times implements _Only2Times {
 
 abstract class _Only2Times implements FigureEvent {
   const factory _Only2Times() = _$_Only2Times;
-}
-
-/// @nodoc
-abstract class _$$_BigBuddyBinCopyWith<$Res> {
-  factory _$$_BigBuddyBinCopyWith(
-          _$_BigBuddyBin value, $Res Function(_$_BigBuddyBin) then) =
-      __$$_BigBuddyBinCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_BigBuddyBinCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_BigBuddyBin>
-    implements _$$_BigBuddyBinCopyWith<$Res> {
-  __$$_BigBuddyBinCopyWithImpl(
-      _$_BigBuddyBin _value, $Res Function(_$_BigBuddyBin) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_BigBuddyBin implements _BigBuddyBin {
-  const _$_BigBuddyBin();
-
-  @override
-  String toString() {
-    return 'FigureEvent.bigBuddyBin()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_BigBuddyBin);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
-    required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
-    required TResult Function() slowMo,
-  }) {
-    return bigBuddyBin();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
-    TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
-    TResult? Function()? slowMo,
-  }) {
-    return bigBuddyBin?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
-    TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
-    TResult Function()? slowMo,
-    required TResult orElse(),
-  }) {
-    if (bigBuddyBin != null) {
-      return bigBuddyBin();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TrashWall value) trashWall,
-    required TResult Function(_GuardedPizza value) guardedPizza,
-    required TResult Function(_CursedPath value) cursedPath,
-    required TResult Function(_PunchWave value) punchWave,
-    required TResult Function(_UnreachablePizza value) unreachablePizza,
-    required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
-    required TResult Function(_SlowMo value) slowMo,
-  }) {
-    return bigBuddyBin(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TrashWall value)? trashWall,
-    TResult? Function(_GuardedPizza value)? guardedPizza,
-    TResult? Function(_CursedPath value)? cursedPath,
-    TResult? Function(_PunchWave value)? punchWave,
-    TResult? Function(_UnreachablePizza value)? unreachablePizza,
-    TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
-    TResult? Function(_SlowMo value)? slowMo,
-  }) {
-    return bigBuddyBin?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TrashWall value)? trashWall,
-    TResult Function(_GuardedPizza value)? guardedPizza,
-    TResult Function(_CursedPath value)? cursedPath,
-    TResult Function(_PunchWave value)? punchWave,
-    TResult Function(_UnreachablePizza value)? unreachablePizza,
-    TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
-    TResult Function(_SlowMo value)? slowMo,
-    required TResult orElse(),
-  }) {
-    if (bigBuddyBin != null) {
-      return bigBuddyBin(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _BigBuddyBin implements FigureEvent {
-  const factory _BigBuddyBin() = _$_BigBuddyBin;
 }
 
 /// @nodoc
@@ -2164,9 +2164,9 @@ class _$_SlowMo implements _SlowMo {
     required TResult Function() guardedPizza,
     required TResult Function() cursedPath,
     required TResult Function() punchWave,
+    required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
-    required TResult Function() bigBuddyBin,
     required TResult Function() slowMo,
   }) {
     return slowMo();
@@ -2179,9 +2179,9 @@ class _$_SlowMo implements _SlowMo {
     TResult? Function()? guardedPizza,
     TResult? Function()? cursedPath,
     TResult? Function()? punchWave,
+    TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
-    TResult? Function()? bigBuddyBin,
     TResult? Function()? slowMo,
   }) {
     return slowMo?.call();
@@ -2194,9 +2194,9 @@ class _$_SlowMo implements _SlowMo {
     TResult Function()? guardedPizza,
     TResult Function()? cursedPath,
     TResult Function()? punchWave,
+    TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
-    TResult Function()? bigBuddyBin,
     TResult Function()? slowMo,
     required TResult orElse(),
   }) {
@@ -2213,9 +2213,9 @@ class _$_SlowMo implements _SlowMo {
     required TResult Function(_GuardedPizza value) guardedPizza,
     required TResult Function(_CursedPath value) cursedPath,
     required TResult Function(_PunchWave value) punchWave,
+    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
-    required TResult Function(_BigBuddyBin value) bigBuddyBin,
     required TResult Function(_SlowMo value) slowMo,
   }) {
     return slowMo(this);
@@ -2228,9 +2228,9 @@ class _$_SlowMo implements _SlowMo {
     TResult? Function(_GuardedPizza value)? guardedPizza,
     TResult? Function(_CursedPath value)? cursedPath,
     TResult? Function(_PunchWave value)? punchWave,
+    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
-    TResult? Function(_BigBuddyBin value)? bigBuddyBin,
     TResult? Function(_SlowMo value)? slowMo,
   }) {
     return slowMo?.call(this);
@@ -2243,9 +2243,9 @@ class _$_SlowMo implements _SlowMo {
     TResult Function(_GuardedPizza value)? guardedPizza,
     TResult Function(_CursedPath value)? cursedPath,
     TResult Function(_PunchWave value)? punchWave,
+    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
-    TResult Function(_BigBuddyBin value)? bigBuddyBin,
     TResult Function(_SlowMo value)? slowMo,
     required TResult orElse(),
   }) {

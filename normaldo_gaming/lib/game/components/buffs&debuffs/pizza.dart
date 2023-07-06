@@ -47,6 +47,7 @@ class Pizza extends PositionComponent
 
   @override
   void onNewState(LevelState state) {
+    if (!hearsBloc) return;
     speed = state.level.speed;
   }
 

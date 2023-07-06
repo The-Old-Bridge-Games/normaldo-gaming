@@ -47,9 +47,9 @@ class _MainScreenState extends State<MainScreen> {
                 left: 48,
                 top: 16,
                 child: UserInfo(
-                  username: state.name,
-                  highScore: state.score,
-                  dollars: state.dollars,
+                  username: state.user.name,
+                  highScore: state.user.highScore,
+                  dollars: state.user.dollars,
                 )),
             Positioned(
                 bottom: 64,
