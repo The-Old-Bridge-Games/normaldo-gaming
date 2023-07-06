@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
@@ -31,6 +32,14 @@ mixin GameObject on PositionComponent, HasGameRef {
     if (position.x < -size.x) {
       removeFromParent();
     }
+  }
+
+  @override
+  void removeFromParent() {
+    if (parent is FlameBlocProvider) {
+      parent?.removeFromParent();
+    }
+    super.removeFromParent();
   }
 
   @override

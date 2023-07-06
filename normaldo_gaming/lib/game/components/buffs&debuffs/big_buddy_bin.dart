@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
+
+import 'bomb.dart';
 
 class BigBuddyBin extends PositionComponent
     with
@@ -17,7 +20,9 @@ class BigBuddyBin extends PositionComponent
         GameObject,
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
-  BigBuddyBin() : super(anchor: Anchor.center);
+  BigBuddyBin({this.exploding = false}) : super(anchor: Anchor.center);
+
+  bool exploding;
 
   @override
   Aura get aura => Aura.red;
@@ -45,8 +50,15 @@ class BigBuddyBin extends PositionComponent
     if (other is Normaldo) {
       if (gameSessionCubit.state.hit || gameSessionCubit.state.isDead) return;
       removeFromParent();
-      other.decreaseFatPoints(other.pizzaToGetFatter ?? 0);
-      audio.playSfx(Sfx.binCrash);
+      other.takeHit();
+      final grid = (gameRef as PullUpGame).grid;
+      if (exploding) {
+        grid.add(BombExplosionComponent()..size = grid.size);
+        audio.playSfx(Sfx.bomb);
+        Vibrate.vibrate();
+      } else {
+        audio.playSfx(Sfx.binCrash);
+      }
     } else {
       other.removeFromParent();
     }

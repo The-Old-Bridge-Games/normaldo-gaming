@@ -1,6 +1,9 @@
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 
 abstract class NgAudio {
+  /// init audio pools and so on
+  Future<void> init();
+
   /// paths to background audios
   List<String> get bgm;
 

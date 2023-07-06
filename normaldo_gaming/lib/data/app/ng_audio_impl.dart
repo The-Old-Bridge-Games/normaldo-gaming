@@ -27,13 +27,37 @@ class NgAudioImpl implements NgAudio {
 
   final _players = <int, AudioPlayer>{};
 
+  final Map<Sfx, List<AudioPool>> _audioPools = {};
+
+  bool _initialized = false;
+
+  @override
+  Future<void> init() async {
+    for (final sfx in Sfx.values) {
+      for (final path in sfx.paths) {
+        final pool = await FlameAudio.createPool(
+          'sfx/$path',
+          maxPlayers: sfx.maxPlayers,
+        );
+        if (_audioPools[sfx] == null) {
+          _audioPools[sfx] = [pool];
+        } else {
+          _audioPools[sfx]!.add(pool);
+        }
+      }
+    }
+    _initialized = true;
+  }
+
   @override
   void addAllToBgm(List<String> paths) {
+    assert(_initialized);
     _bgm.addAll(paths);
   }
 
   @override
   void addToBgm(String path) {
+    assert(_initialized);
     _bgm.add(path);
   }
 
@@ -42,6 +66,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> pause(int id) {
+    assert(_initialized);
     if (!_players.containsKey(id)) {
       throw NoAudio(id);
     }
@@ -50,11 +75,13 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> pauseBgm() async {
+    assert(_initialized);
     await _currentBgmPlayer?.pause();
   }
 
   @override
   Future<int> playAudio(String path, {double? volume}) async {
+    assert(_initialized);
     final player =
         await FlameAudio.playLongAudio(path, volume: volume ?? _bgmVolume);
     int id;
@@ -70,6 +97,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> playBgm() async {
+    assert(_initialized);
     if (_bgm.isEmpty) return;
     if (_currentBgmPath.isEmpty) {
       _currentBgmPath = _bgm.first;
@@ -93,20 +121,21 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> playSfx(Sfx sfx) async {
+    assert(_initialized);
     try {
       if (sfx == Sfx.buttonPressed) {
         Vibrate.feedback(FeedbackType.light);
       }
-      await FlameAudio.play(
-          'sfx/${sfx.paths[Random().nextInt(sfx.paths.length)]}');
+      final pools = _audioPools[sfx] ?? [];
+      await pools[Random().nextInt(pools.length)].start();
     } catch (e) {
       print(e);
-      await playSfx(sfx);
     }
   }
 
   @override
   void removeAllFromBgm(List<String> paths) {
+    assert(_initialized);
     for (var path in paths) {
       _bgm.remove(path);
     }
@@ -114,11 +143,13 @@ class NgAudioImpl implements NgAudio {
 
   @override
   void removeFromBgm(String path) {
+    assert(_initialized);
     _bgm.remove(path);
   }
 
   @override
   Future<void> resume(int id) {
+    assert(_initialized);
     if (!_players.containsKey(id)) {
       throw NoAudio(id);
     }
@@ -127,11 +158,13 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> resumeBgm() async {
+    assert(_initialized);
     await _currentBgmPlayer?.resume();
   }
 
   @override
   Future<void> stopBgm() async {
+    assert(_initialized);
     if (_currentBgmPlayer != null) {
       await _currentBgmPlayer?.stop();
       _currentBgmPlayer = null;
@@ -143,6 +176,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> stopAudio(int id) async {
+    assert(_initialized);
     if (!_players.containsKey(id)) {
       throw NoAudio(id);
     }
@@ -152,6 +186,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<int> loopAudio(String path, {double? volume}) async {
+    assert(_initialized);
     final player =
         await FlameAudio.loopLongAudio(path, volume: volume ?? _bgmVolume);
     int id;
@@ -167,6 +202,7 @@ class NgAudioImpl implements NgAudio {
 
   @override
   void clearBgm() {
+    assert(_initialized);
     _bgm.clear();
   }
 }
@@ -191,8 +227,6 @@ extension on Sfx {
         return ['eeeeee.mp3'];
       case Sfx.weightLoosed:
         return ['yyyyyyy.mp3'];
-      case Sfx.hurryUp:
-        return ['HURRY_UP.mp3'];
       case Sfx.gameOver:
         return ['game_over.mp3'];
       case Sfx.buttonPressed:
@@ -209,4 +243,21 @@ extension on Sfx {
         return ['round_box.mp3'];
     }
   }
+
+  int get maxPlayers => switch (this) {
+        Sfx.eatPizza => 15,
+        Sfx.binCrash => 3,
+        Sfx.dollarCatch => 5,
+        Sfx.eatFatPizza => 1,
+        Sfx.dumbbellCatch => 3,
+        Sfx.weightIncreased => 1,
+        Sfx.weightLoosed => 1,
+        Sfx.gameOver => 1,
+        Sfx.buttonPressed => 2,
+        Sfx.bomb => 1,
+        Sfx.cocktail => 5,
+        Sfx.molotov => 10,
+        Sfx.hourglass => 5,
+        Sfx.roundBox => 8,
+      };
 }

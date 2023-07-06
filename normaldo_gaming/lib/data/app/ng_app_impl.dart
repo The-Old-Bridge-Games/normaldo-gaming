@@ -7,6 +7,7 @@ import 'package:home_indicator/home_indicator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
@@ -62,6 +63,7 @@ class NGAppImpl implements NGApp {
         storageDirectory: await getApplicationDocumentsDirectory());
 
     initializeInjector();
+    await injector.get<NgAudio>().init();
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider<UserCubit>(create: (context) => injector.get()),

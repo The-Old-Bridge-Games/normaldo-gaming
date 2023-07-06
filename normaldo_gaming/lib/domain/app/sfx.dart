@@ -6,7 +6,6 @@ enum Sfx {
   dumbbellCatch,
   weightIncreased,
   weightLoosed,
-  hurryUp,
   gameOver,
   buttonPressed,
   bomb,

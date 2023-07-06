@@ -6,15 +6,17 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 
 class LevelTimerComponent extends TimerComponent
     with FlameBlocReader<LevelBloc, LevelState> {
-  LevelTimerComponent() : super(period: 20, repeat: true);
+  LevelTimerComponent()
+      : super(period: LevelBloc.levelChangeDuration, repeat: true);
 
   final _eventPeriod = (15 + Random().nextInt(16)).toDouble();
-  // final double _eventPeriod = 15;
+  // final double _eventPeriod = 5;
 
   void _onTick() {
-    if (bloc.state.figure != null) return;
-    // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.slowMo()));
-    bloc.add(const LevelEvent.startRandomFigure());
+    if (bloc.state.figure == null) {
+      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.punchWave()));
+      bloc.add(const LevelEvent.startRandomFigure());
+    }
     add(TimerComponent(
       period: _eventPeriod,
       removeOnFinish: true,

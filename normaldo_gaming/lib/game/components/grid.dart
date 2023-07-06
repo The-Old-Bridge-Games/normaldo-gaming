@@ -173,7 +173,7 @@ class Grid extends PositionComponent
                 );
               }));
         } else {
-          _itemsCreator?.timer.resume();
+          onNewState(state);
         }
       },
     ));

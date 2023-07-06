@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flame/game.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
@@ -117,11 +116,17 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       only2Lines: () {
         final List<int> usedIndexes = [];
-        int getLineYIndex() {
-          final index = Random().nextInt(linesCentersY.length);
+        int getLineYIndex({List<int>? exclude}) {
+          final indexes = List.generate(Grid.linesCount, (index) => index);
+          for (final exclusion in exclude ?? []) {
+            if (indexes.contains(exclusion)) {
+              indexes.remove(exclusion);
+            }
+          }
+          final index = indexes[Random().nextInt(indexes.length)];
           if (usedIndexes
               .any((e) => index + 1 == e || index - 1 == e || index == e)) {
-            return getLineYIndex();
+            return getLineYIndex(exclude: [index, index - 1, index + 1]);
           }
           return index;
         }
@@ -183,27 +188,43 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   void update(double dt) {
     if (!_initiated) return;
     final gameObjects = children.whereType<GameObject>();
-    if (gameObjects.isEmpty) removeFromParent();
-    if (gameObjects.isNotEmpty && !_finished) {
+    if (gameObjects.isEmpty && _finished) removeFromParent();
+    figure.maybeWhen(punchWave: () {
       if ((gameObjects.every((e) =>
-          e.position.x < (gameRef as PullUpGame).grid.normaldo.position.x))) {
+              e.absolutePosition.x <
+              (gameRef as PullUpGame).grid.normaldo.absolutePosition.x)) &&
+          _finished) {
         onFinish();
-        _finished = true;
       }
-    }
+    }, orElse: () {
+      if (gameObjects.isNotEmpty && !_finished) {
+        if ((gameObjects.every((e) =>
+            e.absolutePosition.x <
+            (gameRef as PullUpGame).grid.normaldo.absolutePosition.x))) {
+          onFinish();
+          _finished = true;
+        }
+      }
+    });
     super.update(dt);
   }
 
   @override
   void removeFromParent() {
-    onFinish();
+    if (!_finished) {
+      onFinish();
+      _finished = true;
+    }
     removeAll(children);
     super.removeFromParent();
   }
 
   @override
   void onRemove() {
-    onFinish();
+    if (!_finished) {
+      onFinish();
+      _finished = true;
+    }
     super.onRemove();
   }
 
@@ -267,6 +288,9 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   ..position = Vector2(
                       (size.x) + Items.punch.getSize(lineSize).x,
                       linesCentersY[item.line ?? 0]));
+                if (matrix.indexOf(column) == matrix.length - 1) {
+                  _finished = true;
+                }
               }
             },
           ));
@@ -283,9 +307,10 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             size.x + itemSize.x,
             linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
           ));
-        (children.firstWhere((element) => element is BigBuddyBin)
-                as BigBuddyBin)
-            .speed *= 1.5;
+        final bigBuddy = (children
+            .firstWhere((element) => element is BigBuddyBin) as BigBuddyBin);
+        bigBuddy.speed *= 1.5;
+        bigBuddy.exploding = true;
       },
       only2Lines: () {
         for (final column in matrix) {
@@ -301,7 +326,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           }
         }
         children.whereType<BigBuddyBin>().forEach((element) {
-          element.speed *= 2;
+          element.speed *= 1.5;
         });
       },
       slowMo: () {
