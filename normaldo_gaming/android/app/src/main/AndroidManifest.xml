@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.normaldo_gaming">
+    <uses-permission android:name="android.permission.VIBRATE"/>
    <application
         android:label="normaldo_gaming"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-        <uses-permission android:name="android.permission.VIBRATE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
