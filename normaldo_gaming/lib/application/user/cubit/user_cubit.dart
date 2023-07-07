@@ -1,13 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
 
 part 'user_state.dart';
 part 'user_cubit.freezed.dart';
 
 class UserCubit extends HydratedCubit<UserState> {
   UserCubit() : super(UserState.initial());
+
+  final _levelManager = injector.get<LevelManager>();
 
   void changeHighScore(int highScore) {
     assert(highScore > 0, "high score must be greater than 0");
@@ -34,6 +38,35 @@ class UserCubit extends HydratedCubit<UserState> {
     ));
   }
 
+  void addExp(int exp) {
+    assert(exp > 0);
+    var newExp = state.user.exp + exp;
+    var newLevel = state.user.level;
+    void configureLevel() {
+      if (newExp >= _levelManager.nextLevelExp(state.user)) {
+        final levelsCount = newExp ~/ _levelManager.nextLevelExp(state.user);
+        newExp = newExp % _levelManager.nextLevelExp(state.user);
+        if (levelsCount > 0 || newExp == 0) {
+          newLevel += levelsCount;
+          configureLevel();
+        } else {
+          return;
+        }
+      }
+    }
+
+    configureLevel();
+
+    emit(state.copyWith(
+      user: UserModel.fromEntity(state.user)
+          .copyWith(
+            exp: newExp,
+            level: newLevel,
+          )
+          .toEntity(),
+    ));
+  }
+
   void reset() {
     emit(UserState.initial());
   }
@@ -53,6 +86,8 @@ class UserCubit extends HydratedCubit<UserState> {
       name: user.name,
       dollars: user.dollars,
       highScore: user.highScore,
+      level: state.user.level,
+      exp: state.user.exp,
     ).toJson();
   }
 }

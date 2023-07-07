@@ -4,7 +4,8 @@ enum NGRoutes {
   root('/'),
   main('/main'),
   createUser('/createUser'),
-  pullUpGame('/main/pullUpGame');
+  pullUpGame('/main/pullUpGame'),
+  missions('/main/missions');
 
   const NGRoutes(this.path);
 

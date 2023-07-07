@@ -12,5 +12,7 @@ class UserState with _$UserState {
         name: '',
         highScore: 0,
         dollars: 0,
+        level: 0,
+        exp: 0,
       ));
 }

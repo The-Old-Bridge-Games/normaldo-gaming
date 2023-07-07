@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
 import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
+import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/pull_up_game_widget.dart';
 import 'package:normaldo_gaming/ui/root/root_screen.dart';
 
@@ -21,10 +22,12 @@ abstract class NGRouter {
     routes: [
       GoRoute(
           path: NGRoutes.root.path,
+          name: NGRoutes.root.name,
           builder: (context, state) => const RootScreen(),
           routes: [
             GoRoute(
                 path: NGRoutes.main.name,
+                name: NGRoutes.main.name,
                 builder: (context, state) =>
                     const BlocListener<UserCubit, UserState>(
                       listener: _userBlocListener,
@@ -33,6 +36,7 @@ abstract class NGRouter {
                 routes: [
                   GoRoute(
                     path: NGRoutes.pullUpGame.name,
+                    name: NGRoutes.pullUpGame.name,
                     builder: (context, state) => MultiBlocProvider(
                       providers: [
                         BlocProvider<GameSessionCubit>(
@@ -43,9 +47,37 @@ abstract class NGRouter {
                       child: const PullUpGameWidget(),
                     ),
                   ),
+                  GoRoute(
+                    path: NGRoutes.missions.name,
+                    name: NGRoutes.missions.name,
+                    pageBuilder: (context, state) => CustomTransitionPage(
+                      key: state.pageKey,
+                      child: MissionsScreen(
+                        tag: state.queryParameters['tag'] as String,
+                      ),
+                      transitionDuration: const Duration(milliseconds: 300),
+                      reverseTransitionDuration:
+                          const Duration(milliseconds: 300),
+                      opaque: false,
+                      barrierColor: Colors.transparent,
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(-1.0, 0.0);
+                        const end = Offset.zero;
+                        final tween = Tween(begin: begin, end: end);
+                        final offsetAnimation = animation.drive(tween);
+
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  ),
                 ]),
             GoRoute(
               path: NGRoutes.createUser.name,
+              name: NGRoutes.createUser.name,
               builder: (context, state) => const CreateUserScreen(),
             ),
           ]),

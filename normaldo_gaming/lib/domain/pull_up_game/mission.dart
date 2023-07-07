@@ -1,5 +1,9 @@
-abstract interface class Mission {
-  String get title;
-  String get description;
-  int get exp;
+final class Mission {
+  final String description;
+  final int exp;
+
+  const Mission({
+    required this.description,
+    required this.exp,
+  });
 }

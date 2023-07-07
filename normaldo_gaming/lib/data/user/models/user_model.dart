@@ -5,22 +5,35 @@ final class UserModel {
   final String name;
   final int dollars;
   final int highScore;
+  final int level;
+  final int exp;
 
   UserModel({
     required this.id,
     required this.name,
     required this.dollars,
     required this.highScore,
+    required this.level,
+    required this.exp,
   });
 
   UserModel.fromEntity(User user)
       : id = user.id,
         name = user.name,
         dollars = user.dollars,
-        highScore = user.highScore;
+        highScore = user.highScore,
+        level = user.level,
+        exp = user.exp;
 
   User toEntity() {
-    return User(id: id, name: name, highScore: highScore, dollars: dollars);
+    return User(
+      id: id,
+      name: name,
+      highScore: highScore,
+      dollars: dollars,
+      level: level,
+      exp: exp,
+    );
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -28,6 +41,8 @@ final class UserModel {
         name: json['name'],
         dollars: json['dollars'],
         highScore: json['highScore'],
+        level: json['level'],
+        exp: json['exp'],
       );
 
   Map<String, dynamic> toJson() {
@@ -36,6 +51,8 @@ final class UserModel {
       'name': name,
       'dollars': dollars,
       'highScore': highScore,
+      'level': level,
+      'exp': exp,
     };
   }
 
@@ -43,11 +60,15 @@ final class UserModel {
     String? name,
     int? dollars,
     int? highScore,
+    int? level,
+    int? exp,
   }) =>
       UserModel(
         id: id,
         name: name ?? this.name,
         dollars: dollars ?? this.dollars,
         highScore: highScore ?? this.highScore,
+        level: level ?? this.level,
+        exp: exp ?? this.exp,
       );
 }
