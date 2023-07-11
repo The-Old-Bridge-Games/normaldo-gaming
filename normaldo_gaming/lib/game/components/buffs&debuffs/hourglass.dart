@@ -95,4 +95,7 @@ class Hourglass extends PositionComponent
 
   @override
   bool get isSoloSpawn => true;
+
+  @override
+  Items get item => Items.hourglass;
 }

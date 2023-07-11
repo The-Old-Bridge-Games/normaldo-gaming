@@ -143,4 +143,7 @@ class FatPizza extends PositionComponent
     }
     super.update(dt);
   }
+
+  @override
+  Items get item => Items.fatPizza;
 }

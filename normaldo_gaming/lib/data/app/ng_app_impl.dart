@@ -47,6 +47,7 @@ class NGAppImpl implements NGApp {
       'sfx/super_pizza.mp3',
       'sfx/ydar.mp3',
       'sfx/yyyyyyy.mp3',
+      'sfx/mission_notification.mp3'
     ]);
     await AudioPlayer.global.setAudioContext(AudioContextConfig(
       forceSpeaker: false,

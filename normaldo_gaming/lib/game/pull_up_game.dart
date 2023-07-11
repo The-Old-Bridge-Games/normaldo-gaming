@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
@@ -10,13 +11,18 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
+import 'components/mission_notification_component.dart';
 
 class PullUpGame extends FlameGame
     with TapCallbacks, DragCallbacks, HasCollisionDetection, HasNgAudio {
@@ -39,6 +45,10 @@ class PullUpGame extends FlameGame
   late final Grid grid;
   late final EffectsComponent effectsComponent;
 
+  final _levelManager = injector.get<LevelManager>();
+
+  double get _notificationXOffset => (size.x / 2) - 150;
+
   @override
   Future<void> onLoad() async {
     await HomeIndicator.hide();
@@ -47,7 +57,70 @@ class PullUpGame extends FlameGame
 
     await _initBloc();
 
+    _levelManager.completedMissions.listen((completedMission) {
+      print('COMPLETED: $completedMission');
+      _showCompletedMission(completedMission);
+    });
+
+    add(TimerComponent(
+      period: 0.5,
+      removeOnFinish: true,
+      onTick: () {
+        _showMissions();
+      },
+    ));
+
     return super.onLoad();
+  }
+
+  void _showMissions() {
+    audio.playSfx(Sfx.missionCompleted);
+    void showMission(Mission mission) {
+      final component = MissionNotificationComponent(
+        mission: mission,
+        completed: false,
+      );
+      add(component
+        ..anchor = Anchor.topCenter
+        ..position = Vector2(_notificationXOffset, -100)
+        ..add(_missionDismissEffect(onComplete: () {
+          remove(component);
+        })));
+    }
+
+    for (final mission in _levelManager.missions) {
+      add(TimerComponent(
+        period: 2.6 * _levelManager.missions.indexOf(mission),
+        removeOnFinish: true,
+        onTick: () => showMission(mission),
+      ));
+    }
+  }
+
+  void _showCompletedMission(Mission mission) {
+    audio.playSfx(Sfx.missionCompleted);
+    final missionNotificationComponent =
+        MissionNotificationComponent(mission: mission);
+    add(missionNotificationComponent
+      ..anchor = Anchor.topCenter
+      ..position = Vector2(_notificationXOffset, -100)
+      ..add(
+        _missionDismissEffect(onComplete: () {
+          remove(missionNotificationComponent);
+        }),
+      ));
+  }
+
+  Effect _missionDismissEffect({required void Function() onComplete}) {
+    return MoveEffect.to(
+      Vector2(_notificationXOffset, 8.0),
+      EffectController(
+        duration: .3,
+        atMaxDuration: 2,
+        reverseDuration: .3,
+      ),
+      onComplete: onComplete,
+    );
   }
 
   void _initializeComponents() {

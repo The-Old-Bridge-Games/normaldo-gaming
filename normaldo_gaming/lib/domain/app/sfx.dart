@@ -12,7 +12,8 @@ enum Sfx {
   cocktail,
   molotov,
   hourglass,
-  roundBox;
+  roundBox,
+  missionCompleted;
 
   const Sfx();
 }

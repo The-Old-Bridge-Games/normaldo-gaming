@@ -11,6 +11,7 @@ abstract class NGTheme {
   static const heartRed = Color(0xffDC0000);
   static const purple1 = Color(0xffA349A4);
   static const purple2 = Color(0xff7C347C);
+  static const purple3 = Color(0xff5E265E);
   static const orange1 = Color(0xffFFCC00);
 
   static const auraGreen = green1;

@@ -85,4 +85,7 @@ class Cocktail extends PositionComponent
 
   @override
   bool get isSoloSpawn => false;
+
+  @override
+  Items get item => Items.cocktail;
 }

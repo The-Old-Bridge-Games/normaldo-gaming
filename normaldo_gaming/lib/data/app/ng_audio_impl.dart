@@ -18,7 +18,8 @@ class NoAudio implements Exception {
 }
 
 class NgAudioImpl implements NgAudio {
-  double _bgmVolume = 0.1;
+  double _bgmVolume = 1;
+  // double _bgmVolume = 0.1;
 
   final _bgm = <String>[];
   String _currentBgmPath = '';
@@ -241,6 +242,8 @@ extension on Sfx {
         return ['magic_sound_longer.mp3'];
       case Sfx.roundBox:
         return ['round_box.mp3'];
+      case Sfx.missionCompleted:
+        return ['mission_notification.mp3'];
     }
   }
 
@@ -259,5 +262,6 @@ extension on Sfx {
         Sfx.molotov => 10,
         Sfx.hourglass => 5,
         Sfx.roundBox => 8,
+        Sfx.missionCompleted => 2,
       };
 }

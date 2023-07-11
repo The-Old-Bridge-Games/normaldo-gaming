@@ -50,6 +50,7 @@ class Grid extends PositionComponent
 
   @override
   void onNewState(LevelState state) async {
+    gameSessionCubit.changeLevel(state.level.index);
     if (_itemsCreator != null) remove(_itemsCreator!);
     _itemsCreator = TimerComponent(
       period: state.level.frequency,
@@ -73,7 +74,7 @@ class Grid extends PositionComponent
   }
 
   void stopLine(int index) {
-    assert(index >= 0 && index < 5);
+    assert(index >= 0 && index < 5, 'Your index – $index');
     if (_stoppedLines.keys.contains(index)) return;
     _stoppedLines[index] = _linesCentersY.removeAt(index);
   }
