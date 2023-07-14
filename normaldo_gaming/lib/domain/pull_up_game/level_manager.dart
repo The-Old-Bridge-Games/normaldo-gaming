@@ -17,4 +17,8 @@ abstract interface class LevelManager {
 
   void checkState({required GameSessionState state});
   void checkHit({required Items hitItem});
+
+  void remove(Mission mission);
+  void addNewMission();
+  void insertNewMission(int index);
 }

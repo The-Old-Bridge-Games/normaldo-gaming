@@ -4,11 +4,13 @@ sealed class Mission {
   final String description;
   final int exp;
   final bool isOneGame;
+  bool completed;
 
-  const Mission({
+  Mission({
     required this.description,
     required this.exp,
     required this.isOneGame,
+    this.completed = false,
   });
 
   MissionType get type;
