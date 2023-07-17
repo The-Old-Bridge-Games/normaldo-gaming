@@ -86,6 +86,10 @@ flutter:
     - assets/audio/sfx/
 
   fonts:
-    - family: HyperStiffRoundBootiedOpossumRegular
+    # - family: HyperStiffRoundBootiedOpossumRegular
+    #   fonts:
+    #     - asset: fonts/HyperStiffRoundBootiedOpossumRegular.ttf
+
+    - family: NormaldoFont
       fonts:
-        - asset: fonts/HyperStiffRoundBootiedOpossumRegular.ttf
+        - asset: fonts/NormaldoFont.ttf

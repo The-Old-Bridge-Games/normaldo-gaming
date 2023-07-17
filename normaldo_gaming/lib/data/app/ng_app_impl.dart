@@ -79,7 +79,7 @@ class NGAppImpl implements NGApp {
 }
 
 final _theme = ThemeData(
-    fontFamily: "HyperStiffRoundBootiedOpossumRegular",
+    fontFamily: "NormaldoFont",
     textButtonTheme: const TextButtonThemeData(
         style: ButtonStyle(
       shadowColor: MaterialStatePropertyAll(Colors.transparent),

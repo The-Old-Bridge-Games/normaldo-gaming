@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract class NGTheme {
   const NGTheme._();
 
-  static const _fontFamily = 'HyperStiffRoundBootiedOpossumRegular';
+  static const _fontFamily = 'NormaldoFont';
 
   static const green1 = Color(0xff22B14C);
   static const green2 = Color(0xffB5E61D);
