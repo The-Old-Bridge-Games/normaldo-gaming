@@ -6,9 +6,14 @@ import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 class MissionTile extends StatelessWidget {
   static const height = 55.0;
 
-  const MissionTile({required this.mission, super.key});
+  const MissionTile({
+    required this.mission,
+    this.progressText,
+    super.key,
+  });
 
   final Mission mission;
+  final String? progressText;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,9 @@ class MissionTile extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                mission.description,
+                progressText == null
+                    ? mission.description
+                    : '${mission.description} $progressText',
                 style: textTheme.bodySmall?.copyWith(fontSize: 12),
               ),
             ),

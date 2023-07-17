@@ -7,6 +7,7 @@ import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
@@ -217,6 +218,9 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
           initialItemCount: _levelManager.missions.length,
           itemBuilder: (context, index, animation) {
             final mission = _levelManager.missions[index];
+            final progress = mission.type == MissionType.finishGame
+                ? null
+                : _levelManager.progressOf(mission) ?? 0;
             return FadeTransition(
               key: UniqueKey(),
               opacity: animation.drive(Tween(
@@ -224,22 +228,13 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
                 end: 1,
               )),
               child: MissionTile(
-                mission: mission,
-              ),
+                  mission: mission,
+                  progressText:
+                      progress == null ? null : '($progress/${mission.value})'),
             );
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildSecondaryBackground(int exp) {
-    final textTheme = Theme.of(context).textTheme;
-    return Center(
-      child: Text(
-        '+ $exp EXP',
-        style: textTheme.displayMedium,
-      ),
     );
   }
 

@@ -15,6 +15,8 @@ abstract interface class LevelManager {
 
   Stream<Mission> get completedMissions;
 
+  int? progressOf(Mission mission);
+
   void checkState({required GameSessionState state});
   void checkHit({required Items hitItem});
 

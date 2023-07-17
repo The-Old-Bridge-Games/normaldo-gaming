@@ -4,12 +4,14 @@ sealed class Mission {
   final String description;
   final int exp;
   final bool isOneGame;
+  final int value;
   bool completed;
 
   Mission({
     required this.description,
     required this.exp,
     required this.isOneGame,
+    required this.value,
     this.completed = false,
   });
 
@@ -25,12 +27,8 @@ enum MissionType {
 final class CollectPizzaInOneGameMission extends Mission {
   CollectPizzaInOneGameMission({
     required super.exp,
-    required this.pizzaCount,
-  }) : super(
-            isOneGame: true,
-            description: 'Collect $pizzaCount pizzas in one game');
-
-  final int pizzaCount;
+    required super.value,
+  }) : super(isOneGame: true, description: 'Collect $value pizzas in one game');
 
   @override
   MissionType get type => MissionType.collectPizza;
@@ -39,13 +37,12 @@ final class CollectPizzaInOneGameMission extends Mission {
 final class CrashItemInOneGameMission extends Mission {
   CrashItemInOneGameMission({
     required super.exp,
-    required this.count,
+    required super.value,
     required this.item,
   }) : super(
             isOneGame: true,
-            description: 'Crash $count ${item.name} in one game');
+            description: 'Crash $value ${item.name} in one game');
 
-  final int count;
   final Items item;
 
   @override
@@ -56,12 +53,10 @@ final class FinishGameAtLevelMission extends Mission {
   FinishGameAtLevelMission({
     required super.exp,
     required super.description,
-    required this.level,
+    required super.value,
   }) : super(
           isOneGame: true,
         );
-
-  final int level;
 
   @override
   MissionType get type => MissionType.finishGame;

@@ -8,25 +8,21 @@ import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
 class LevelManagerImpl implements LevelManager {
-  final _missions = <Mission>[
-    CollectPizzaInOneGameMission(
-      exp: 1,
-      pizzaCount: 1,
-    ),
-    FinishGameAtLevelMission(
-      description: 'End game before exiting the lair',
-      exp: 1,
-      level: 0,
-    ),
-    CollectPizzaInOneGameMission(
-      exp: 2,
-      pizzaCount: 2,
-    ),
-  ];
+  LevelManagerImpl() {
+    for (int i = 0; i < 3; i++) {
+      addNewMission();
+    }
+  }
+  final _missions = <Mission>[];
 
   final _streamController = StreamController<Mission>.broadcast();
 
   final _missionsProgress = <Mission, int>{};
+
+  @override
+  int? progressOf(Mission mission) {
+    return _missionsProgress[mission];
+  }
 
   @override
   int nextLevelExp(User user) {
@@ -45,7 +41,9 @@ class LevelManagerImpl implements LevelManager {
   bool isMaxLevel(User user) => nextLevelExp(user) == LevelManager.maxLevelExp;
 
   @override
-  List<Mission> get missions => _missions;
+  List<Mission> get missions {
+    return _missions;
+  }
 
   @override
   Stream<Mission> get completedMissions =>
@@ -57,17 +55,17 @@ class LevelManagerImpl implements LevelManager {
       if (mission.completed) continue;
       switch (mission) {
         case CollectPizzaInOneGameMission():
-          if (state.score == mission.pizzaCount) {
+          if (state.score == mission.value) {
             _streamController.sink.add(mission);
             mission.completed = true;
           }
         case FinishGameAtLevelMission():
-          if (state.level == 0 && state.isDead) {
+          if (state.level == mission.value && state.isDead) {
             _streamController.sink.add(mission);
             mission.completed = true;
           }
         default:
-          return;
+          continue;
       }
     }
   }
@@ -81,7 +79,7 @@ class LevelManagerImpl implements LevelManager {
     for (final mission in crashMissions) {
       if ((mission as CrashItemInOneGameMission).item == hitItem) {
         _missionsProgress[mission] = (_missionsProgress[mission] ?? 0) + 1;
-        if (_missionsProgress[mission] == mission.count) {
+        if (_missionsProgress[mission] == mission.value) {
           _streamController.sink.add(mission);
           _missionsProgress.remove(mission);
           mission.completed = true;
@@ -117,44 +115,44 @@ class LevelManagerImpl implements LevelManager {
 final _allMissions = [
   CollectPizzaInOneGameMission(
     exp: 1,
-    pizzaCount: 50,
+    value: 50,
   ),
   CollectPizzaInOneGameMission(
     exp: 2,
-    pizzaCount: 150,
+    value: 150,
   ),
   CollectPizzaInOneGameMission(
     exp: 3,
-    pizzaCount: 250,
+    value: 250,
   ),
   FinishGameAtLevelMission(
     description: 'End game before exiting the lair',
     exp: 1,
-    level: 0,
+    value: 0,
   ),
   FinishGameAtLevelMission(
     description: 'End game at a GLEB piece',
     exp: 2,
-    level: 6,
+    value: 6,
   ),
   FinishGameAtLevelMission(
     description: 'End game at a club entrance',
     exp: 3,
-    level: 21,
+    value: 21,
   ),
   CrashItemInOneGameMission(
     item: Items.trashBin,
     exp: 3,
-    count: 3,
+    value: 3,
   ),
   CrashItemInOneGameMission(
     item: Items.molotov,
     exp: 3,
-    count: 1,
+    value: 1,
   ),
   CrashItemInOneGameMission(
     item: Items.cocktail,
     exp: 1,
-    count: 3,
+    value: 3,
   ),
 ];
