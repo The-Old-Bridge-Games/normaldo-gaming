@@ -58,6 +58,8 @@ class LevelManagerImpl implements LevelManager {
           if (state.score == mission.value) {
             _streamController.sink.add(mission);
             mission.completed = true;
+          } else {
+            _missionsProgress[mission] = state.score;
           }
         case FinishGameAtLevelMission():
           if (state.level == mission.value && state.isDead) {
