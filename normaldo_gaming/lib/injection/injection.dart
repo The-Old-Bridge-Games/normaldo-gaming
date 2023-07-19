@@ -4,8 +4,10 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/app/ng_audio_impl.dart';
 import 'package:normaldo_gaming/data/level/level_manager_impl.dart';
+import 'package:normaldo_gaming/data/pull_up_game/missions/local_missions_repository.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository.dart';
 
 final injector = Injector();
 
@@ -15,9 +17,12 @@ void initializeInjector() {
   injector.map<GameSessionCubit>((injector) => GameSessionCubit());
   injector.map<LevelBloc>((injector) => LevelBloc());
 
+  // Repositories
+  injector.map<MissionsRepository>((injector) => LocalMissionsRepository());
+
   // Managers
   injector.map<LevelManager>(
-    (injector) => LevelManagerImpl(),
+    (injector) => LevelManagerImpl(injector.get()),
     isSingleton: true,
   );
 

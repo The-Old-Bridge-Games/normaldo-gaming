@@ -28,6 +28,7 @@ final class CollectPizzaInOneGameMission extends Mission {
   CollectPizzaInOneGameMission({
     required super.exp,
     required super.value,
+    super.completed,
   }) : super(isOneGame: true, description: 'Collect $value pizzas in one game');
 
   @override
@@ -39,6 +40,7 @@ final class CrashItemInOneGameMission extends Mission {
     required super.exp,
     required super.value,
     required this.item,
+    super.completed,
   }) : super(
             isOneGame: true,
             description: 'Crash $value ${item.name} in one game');
@@ -54,6 +56,7 @@ final class FinishGameAtLevelMission extends Mission {
     required super.exp,
     required super.description,
     required super.value,
+    super.completed,
   }) : super(
           isOneGame: true,
         );

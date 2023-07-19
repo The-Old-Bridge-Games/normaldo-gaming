@@ -5,19 +5,31 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
 class LevelManagerImpl implements LevelManager {
-  LevelManagerImpl() {
-    for (int i = 0; i < 3; i++) {
-      addNewMission();
-    }
-  }
+  LevelManagerImpl(this._repository);
+  final MissionsRepository _repository;
+
   final _missions = <Mission>[];
 
   final _streamController = StreamController<Mission>.broadcast();
 
   final _missionsProgress = <Mission, int>{};
+
+  @override
+  Future<void> init() async {
+    final missions = await _repository.fetchMissions();
+    if (missions == null || missions.isEmpty) {
+      for (int i = 0; i < 3; i++) {
+        addNewMission();
+      }
+      _repository.save(missions: _missions);
+    } else {
+      _missions.addAll(missions);
+    }
+  }
 
   @override
   int? progressOf(Mission mission) {
@@ -70,6 +82,7 @@ class LevelManagerImpl implements LevelManager {
           continue;
       }
     }
+    _repository.saveProgress(progress: _missionsProgress);
   }
 
   @override
@@ -88,11 +101,13 @@ class LevelManagerImpl implements LevelManager {
         }
       }
     }
+    _repository.saveProgress(progress: _missionsProgress);
   }
 
   @override
   void remove(Mission mission) {
     _missions.remove(mission);
+    _repository.save(missions: missions);
   }
 
   @override
@@ -102,6 +117,7 @@ class LevelManagerImpl implements LevelManager {
       mission = _allMissions[Random().nextInt(_allMissions.length)];
     }
     _missions.add(mission);
+    _repository.save(missions: missions);
   }
 
   @override
@@ -111,6 +127,17 @@ class LevelManagerImpl implements LevelManager {
       mission = _allMissions[Random().nextInt(_allMissions.length)];
     }
     _missions.insert(index, mission);
+    _repository.save(missions: missions);
+  }
+
+  @override
+  void cleanProgress() {
+    for (final mission in missions) {
+      if (mission.isOneGame) {
+        _missionsProgress.remove(mission);
+      }
+    }
+    _repository.saveProgress(progress: _missionsProgress);
   }
 }
 

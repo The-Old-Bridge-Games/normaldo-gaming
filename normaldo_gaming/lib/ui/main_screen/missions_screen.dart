@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
-import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -80,7 +78,11 @@ class _MissionsScreenState extends State<MissionsScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  UserLevelBar(levelManager: _levelManager, barWidth: 200),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24),
+                    child: UserLevelBar(
+                        levelManager: _levelManager, barWidth: 200),
+                  ),
                   const SizedBox(height: 16),
                   Stack(
                     children: [
@@ -89,9 +91,19 @@ class _MissionsScreenState extends State<MissionsScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           itemCount: _levelManager.missions.length,
-                          itemBuilder: (context, index) => MissionTile(
-                                mission: _levelManager.missions[index],
-                              )),
+                          itemBuilder: (context, index) {
+                            final mission = _levelManager.missions[index];
+                            final progress =
+                                mission.type == MissionType.finishGame
+                                    ? null
+                                    : _levelManager.progressOf(mission) ?? 0;
+                            return MissionTile(
+                              mission: _levelManager.missions[index],
+                              progressText: progress == null
+                                  ? null
+                                  : '($progress/${mission.value})',
+                            );
+                          }),
                     ],
                   )
                 ],

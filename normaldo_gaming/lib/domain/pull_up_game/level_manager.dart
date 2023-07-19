@@ -17,6 +17,10 @@ abstract interface class LevelManager {
 
   int? progressOf(Mission mission);
 
+  Future<void> init();
+
+  void cleanProgress();
+
   void checkState({required GameSessionState state});
   void checkHit({required Items hitItem});
 

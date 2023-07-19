@@ -111,6 +111,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   @override
   void dispose() {
     audio.stopAudio(_audioId);
+    _levelManager.cleanProgress();
     super.dispose();
   }
 
