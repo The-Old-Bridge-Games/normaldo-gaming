@@ -210,7 +210,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Text('missions', style: textTheme.displayMedium),
+        Text('missions', style: textTheme.displayLarge),
         const SizedBox(height: 18),
         AnimatedList(
           key: _animatedListKey,
@@ -253,7 +253,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
         const SizedBox(width: 8),
         Text(
           score.toString(),
-          style: textTheme.displaySmall,
+          style: textTheme.displayLarge,
         ),
         const Spacer(),
         _buildNewRecordText(),
@@ -275,7 +275,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
         const SizedBox(width: 8),
         Text(
           dollars.toString(),
-          style: textTheme.displaySmall,
+          style: textTheme.displayLarge,
         )
       ],
     );

@@ -20,7 +20,7 @@ class Balance extends PositionComponent
   final _amountLabel = TextComponent(
       text: '0',
       textRenderer: TextPaint(
-          style: NGTheme.displayMedium.copyWith(
+          style: NGTheme.displayLarge.copyWith(
         background: Paint()
           ..color = BasicPalette.black.color
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50.0),
@@ -39,6 +39,7 @@ class Balance extends PositionComponent
     );
     add(dollarSprite..position.y = 4);
     _amountLabel.x = dollarSprite.size.x + 12;
+    _amountLabel.y = 12;
 
     add(_amountLabel);
   }

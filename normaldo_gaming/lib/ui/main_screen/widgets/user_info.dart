@@ -23,14 +23,17 @@ class UserInfo extends StatelessWidget {
           username,
           style: textTheme.displayMedium,
         ),
+        const SizedBox(height: 8),
         Text(
           'high score: $highScore',
           style: textTheme.displayMedium,
         ),
+        const SizedBox(height: 8),
         Text(
           'dollars: $dollars',
           style: textTheme.displayMedium,
         ),
+        const SizedBox(height: 8),
       ],
     );
   }

@@ -19,7 +19,7 @@ class ScoreLabel extends PositionComponent
 
   final _text = TextComponent(
       textRenderer: TextPaint(
-          style: NGTheme.displayMedium.copyWith(
+          style: NGTheme.displayLarge.copyWith(
     background: Paint()
       ..color = BasicPalette.black.color
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 50.0),
@@ -33,7 +33,9 @@ class ScoreLabel extends PositionComponent
     );
     add(pizzaSprite..position.y = 4);
     _text.text = '0';
-    add(_text..position.x = pizzaSprite.size.x + 12);
+    add(_text
+      ..position.x = pizzaSprite.size.x + 12
+      ..position.y = 8);
   }
 
   @override
