@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -155,17 +156,17 @@ final _allMissions = [
     value: 250,
   ),
   FinishGameAtLevelMission(
-    description: 'End game before exiting the lair',
+    description: 'End game before exiting the lair'.tr(),
     exp: 1,
     value: 0,
   ),
   FinishGameAtLevelMission(
-    description: 'End game at a GLEB piece',
+    description: 'End game at a GLEB piece'.tr(),
     exp: 2,
     value: 6,
   ),
   FinishGameAtLevelMission(
-    description: 'End game at a club entrance',
+    description: 'End game at a club entrance'.tr(),
     exp: 3,
     value: 21,
   ),

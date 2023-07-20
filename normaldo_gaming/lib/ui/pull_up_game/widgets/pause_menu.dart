@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -57,12 +58,12 @@ class _PauseMenuState extends State<PauseMenu> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Are you sure??',
+                      'Are you sure??'.tr(),
                       style: textTheme.displayLarge,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'All game results will be dropped..',
+                      'All game results will be dropped..'.tr(),
                       style: textTheme.displaySmall,
                     ),
                     const SizedBox(height: 32),
@@ -76,7 +77,7 @@ class _PauseMenuState extends State<PauseMenu> {
                               context.pop();
                             },
                             label: Text(
-                              "let's do it!",
+                              "let's do it!".tr(),
                               style: textTheme.bodySmall
                                   ?.copyWith(color: Colors.red),
                             )),
@@ -87,7 +88,7 @@ class _PauseMenuState extends State<PauseMenu> {
                               context.pop();
                             },
                             label: Text(
-                              "Nope",
+                              'Nope'.tr(),
                               style: textTheme.bodySmall
                                   ?.copyWith(color: NGTheme.green1),
                             )),
@@ -130,18 +131,19 @@ class _PauseMenuState extends State<PauseMenu> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Paused',
+                        Text('Paused'.tr(),
                             style: textTheme.displayLarge
                                 ?.copyWith(color: NGTheme.green1)),
                         const SizedBox(height: 32),
                         BouncingButton(
                           onPressed: _onMenuPressed,
-                          child: Text('Menu', style: textTheme.displayMedium),
+                          child:
+                              Text('Menu'.tr(), style: textTheme.displayMedium),
                         ),
                         const SizedBox(height: 8),
                         BouncingButton(
                           onPressed: _unpause,
-                          child: Text('Back to gaaaame',
+                          child: Text('Back to gaaaame'.tr(),
                               style: textTheme.displayMedium),
                         ),
                       ],
@@ -154,7 +156,7 @@ class _PauseMenuState extends State<PauseMenu> {
           ),
           Visibility(
             visible: !_unpausing,
-            child: Text('Missions', style: textTheme.displayLarge),
+            child: Text('Missions'.tr(), style: textTheme.displayLarge),
           ),
           Visibility(
             visible: !_unpausing,

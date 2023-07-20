@@ -1,7 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
+
+extension on Mission {
+  String trDescription(BuildContext context) {
+    return switch (this) {
+      CollectPizzaInOneGameMission() =>
+        description.plural(value, args: [value.toString()]),
+      FinishGameAtLevelMission() => description.tr(),
+      CrashItemInOneGameMission() => description.plural(value, args: [
+          value.toString(),
+          (this as CrashItemInOneGameMission).item.name.plural(value)
+        ])
+    };
+  }
+}
 
 class MissionTile extends StatelessWidget {
   static const height = 55.0;
@@ -32,8 +47,8 @@ class MissionTile extends StatelessWidget {
             Expanded(
               child: Text(
                 progressText == null
-                    ? mission.description
-                    : '${mission.description} $progressText',
+                    ? mission.trDescription(context)
+                    : '${mission.trDescription(context)} $progressText',
                 style: textTheme.bodySmall?.copyWith(fontSize: 12),
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -29,6 +30,10 @@ class _MainScreenState extends State<MainScreen> {
       'tag': _tag,
       'tag2': _tag2,
     });
+  }
+
+  void _onSettingsPressed() {
+    context.goNamed(NGRoutes.settings.name);
   }
 
   @override
@@ -94,6 +99,17 @@ class _MainScreenState extends State<MainScreen> {
                 bottom: 20,
                 left: 24,
                 child: _buildResetButton(context, textTheme)),
+            Positioned(
+                right: 32,
+                top: 32,
+                child: BouncingButton(
+                  onPressed: _onSettingsPressed,
+                  child: Image.asset(
+                    'assets/images/gear.png',
+                    height: 35,
+                    width: 35,
+                  ),
+                ))
           ],
         ),
       ),
@@ -109,8 +125,8 @@ class _MainScreenState extends State<MainScreen> {
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: const Text('U wanna reset ya profile?'),
-                  content: const Text('This operation is irreversible!'),
+                  title: Text('U wanna reset ya profile?'.tr()),
+                  content: Text('This operation is irreversible!'.tr()),
                   actions: [
                     ActionChip(
                       onPressed: () async {
@@ -136,21 +152,6 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildMissionsButton() {
-    return BouncingButton(
-      onPressed: _onMissionsPressed,
-      child: Hero(
-        tag: _tag,
-        child: Image.asset(
-          'assets/images/missions.png',
-          fit: BoxFit.cover,
-          width: 27,
-          height: 27,
-        ),
-      ),
-    );
-  }
-
   Widget _buildButtons(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -158,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
         BouncingButton(
             onPressed: () => _onStartPressed(context),
             child: Text(
-              "Start",
+              'Start'.tr(),
               style: Theme.of(context).textTheme.displayLarge,
             ))
       ],

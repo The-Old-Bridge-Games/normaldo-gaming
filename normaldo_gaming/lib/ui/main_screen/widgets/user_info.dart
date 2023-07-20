@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class UserInfo extends StatelessWidget {
@@ -25,12 +26,12 @@ class UserInfo extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'high score: $highScore',
+          'high score'.tr(args: [highScore.toString()]),
           style: textTheme.displayMedium,
         ),
         const SizedBox(height: 8),
         Text(
-          'dollars: $dollars',
+          'dollars'.tr(args: [dollars.toString()]),
           style: textTheme.displayMedium,
         ),
         const SizedBox(height: 8),

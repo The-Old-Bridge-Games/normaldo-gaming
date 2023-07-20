@@ -29,7 +29,7 @@ final class CollectPizzaInOneGameMission extends Mission {
     required super.exp,
     required super.value,
     super.completed,
-  }) : super(isOneGame: true, description: 'Collect $value pizzas in one game');
+  }) : super(isOneGame: true, description: 'Collect pizzas in one game');
 
   @override
   MissionType get type => MissionType.collectPizza;
@@ -41,9 +41,7 @@ final class CrashItemInOneGameMission extends Mission {
     required super.value,
     required this.item,
     super.completed,
-  }) : super(
-            isOneGame: true,
-            description: 'Crash $value ${item.name} in one game');
+  }) : super(isOneGame: true, description: 'Crash item in one game');
 
   final Items item;
 

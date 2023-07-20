@@ -5,7 +5,8 @@ enum NGRoutes {
   main('/main'),
   createUser('/createUser'),
   pullUpGame('/main/pullUpGame'),
-  missions('/main/missions');
+  missions('/main/missions'),
+  settings('/main/settings');
 
   const NGRoutes(this.path);
 

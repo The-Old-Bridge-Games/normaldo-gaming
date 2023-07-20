@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -48,7 +49,7 @@ class _MissionsScreenState extends State<MissionsScreen> {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linearToEaseOut,
                         child: Text(
-                          'Missions',
+                          'Missions'.tr(),
                           style: textTheme.displayMedium,
                         ),
                       ),

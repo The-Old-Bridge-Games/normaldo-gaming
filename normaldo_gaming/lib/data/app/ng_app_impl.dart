@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ class NGAppImpl implements NGApp {
   @override
   Future<void> run() async {
     final binding = WidgetsFlutterBinding.ensureInitialized();
+    await EasyLocalization.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: binding);
     FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll([
@@ -72,16 +74,35 @@ class NGAppImpl implements NGApp {
     initializeInjector();
     await injector.get<NgAudio>().init();
     await injector.get<LevelManager>().init();
-    runApp(MultiBlocProvider(
-      providers: [
-        BlocProvider<UserCubit>(create: (context) => injector.get()),
-      ],
-      child: MaterialApp.router(
-        routerConfig: NGRouter.router,
-        debugShowCheckedModeBanner: false,
-        theme: _theme,
+    const supportedLocales = [Locale('ru'), Locale('en')];
+    runApp(EasyLocalization(
+      useOnlyLangCode: true,
+      supportedLocales: supportedLocales,
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<UserCubit>(create: (context) => injector.get()),
+        ],
+        child: const _AppWidget(),
       ),
     ));
+  }
+}
+
+class _AppWidget extends StatelessWidget {
+  const _AppWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: NGRouter.router,
+      debugShowCheckedModeBanner: false,
+      theme: _theme,
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      locale: context.locale,
+    );
   }
 }
 

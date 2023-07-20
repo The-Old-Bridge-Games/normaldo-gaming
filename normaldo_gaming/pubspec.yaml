@@ -40,6 +40,9 @@ dependencies:
   home_indicator: ^2.0.2
   flutter_vibrate: ^1.3.0
 
+  # Localization
+  easy_localization: ^3.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,6 +76,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/translations/
     - assets/images/
     - assets/images/2.0x/
     - assets/images/3.0x/
