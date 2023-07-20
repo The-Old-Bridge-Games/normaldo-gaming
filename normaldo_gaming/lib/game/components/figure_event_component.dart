@@ -191,16 +191,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
     if (gameObjects.isEmpty && _finished) removeFromParent();
     figure.maybeWhen(punchWave: () {
       if ((gameObjects.every((e) =>
-              e.absolutePosition.x <
-              (gameRef as PullUpGame).grid.normaldo.absolutePosition.x)) &&
+              e.absolutePosition.x < (gameRef as PullUpGame).grid.size.x)) &&
           _finished) {
         onFinish();
       }
     }, orElse: () {
       if (gameObjects.isNotEmpty && !_finished) {
         if ((gameObjects.every((e) =>
-            e.absolutePosition.x <
-            (gameRef as PullUpGame).grid.normaldo.absolutePosition.x))) {
+            e.absolutePosition.x < (gameRef as PullUpGame).grid.size.x))) {
           onFinish();
           _finished = true;
         }
