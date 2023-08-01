@@ -18,8 +18,7 @@ class NoAudio implements Exception {
 }
 
 class NgAudioImpl implements NgAudio {
-  double _bgmVolume = 1;
-  // double _bgmVolume = 0.1;
+  double _bgmVolume = 0.1;
 
   final _bgm = <String>[];
   String _currentBgmPath = '';
