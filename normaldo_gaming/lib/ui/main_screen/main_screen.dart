@@ -109,9 +109,37 @@ class _MainScreenState extends State<MainScreen> {
                     height: 35,
                     width: 35,
                   ),
-                ))
+                )),
+            Align(
+              alignment: const Alignment(-0.6, 1),
+              child: _buildSlotMachineButton(),
+            )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSlotMachineButton() {
+    return BouncingButton(
+      onPressed: () => context.goNamed(NGRoutes.slots.name),
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/slot_machine.png',
+            width: 80,
+            height: 160,
+            fit: BoxFit.contain,
+          ),
+          Positioned(
+              top: 42,
+              left: 22,
+              child: Image.asset(
+                'assets/images/normaldo/normaldo2.png',
+                width: 30,
+                height: 30,
+              ))
+        ],
       ),
     );
   }

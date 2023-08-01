@@ -12,6 +12,7 @@ import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/pull_up_game_widget.dart';
 import 'package:normaldo_gaming/ui/root/root_screen.dart';
 import 'package:normaldo_gaming/ui/settings/settings_screen.dart';
+import 'package:normaldo_gaming/ui/slot_machine/slot_machine_screen.dart';
 
 part 'utils/go_route_ext.dart';
 part 'utils/ng_routes.dart';
@@ -79,7 +80,12 @@ abstract class NGRouter {
                     path: NGRoutes.settings.name,
                     name: NGRoutes.settings.name,
                     builder: (context, state) => const SettingsScreen(),
-                  )
+                  ),
+                  GoRoute(
+                    path: NGRoutes.slots.name,
+                    name: NGRoutes.slots.name,
+                    builder: (context, state) => SlotMachineScreen(),
+                  ),
                 ]),
             GoRoute(
               path: NGRoutes.createUser.name,
