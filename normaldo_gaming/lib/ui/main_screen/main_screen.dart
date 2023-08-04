@@ -71,6 +71,7 @@ class _MainScreenState extends State<MainScreen> {
                       username: state.user.name,
                       highScore: state.user.highScore,
                       dollars: state.user.dollars,
+                      extraLives: state.user.extraLives,
                     ),
                     const SizedBox(height: 8),
                     Row(

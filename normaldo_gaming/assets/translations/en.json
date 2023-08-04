@@ -4,6 +4,7 @@
     "Start": "Start",
     "high score": "high score: {}",
     "dollars": "dollars: {}",
+    "extra lives": "extra lives: {}",
     "Are you sure??": "Are you sure??",
     "All game results will be dropped..": "All game results will be dropped..",
     "let's do it!": "let's do it!",
@@ -30,5 +31,12 @@
     "molotov": "molotov",
     "hourglass": "hourglass",
     "punch": "boxing glove",
-    "bigBuddyBin": "big buddy bin"
+    "bigBuddyBin": "big buddy bin",
+    "Spin": "Spin",
+    "Back": "Back",
+    "Bid": "Bid",
+    "not enough funds": "not enough funds",
+    "Nothing..": "Nothing..",
+    "YOU WIN!!!": "YOU WIN!!!",
+    "OK": "OK"
 }

@@ -7,6 +7,7 @@ final class UserModel {
   final int highScore;
   final int level;
   final int exp;
+  final int extraLives;
 
   UserModel({
     required this.id,
@@ -15,6 +16,7 @@ final class UserModel {
     required this.highScore,
     required this.level,
     required this.exp,
+    required this.extraLives,
   });
 
   UserModel.fromEntity(User user)
@@ -23,7 +25,8 @@ final class UserModel {
         dollars = user.dollars,
         highScore = user.highScore,
         level = user.level,
-        exp = user.exp;
+        exp = user.exp,
+        extraLives = user.extraLives;
 
   User toEntity() {
     return User(
@@ -33,17 +36,18 @@ final class UserModel {
       dollars: dollars,
       level: level,
       exp: exp,
+      extraLives: extraLives,
     );
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'],
-        name: json['name'],
-        dollars: json['dollars'],
-        highScore: json['highScore'],
-        level: json['level'],
-        exp: json['exp'],
-      );
+      id: json['id'],
+      name: json['name'],
+      dollars: json['dollars'],
+      highScore: json['highScore'],
+      level: json['level'],
+      exp: json['exp'],
+      extraLives: json['extraLives']);
 
   Map<String, dynamic> toJson() {
     return {
@@ -53,6 +57,7 @@ final class UserModel {
       'highScore': highScore,
       'level': level,
       'exp': exp,
+      'extraLives': extraLives,
     };
   }
 
@@ -62,6 +67,7 @@ final class UserModel {
     int? highScore,
     int? level,
     int? exp,
+    int? extraLives,
   }) =>
       UserModel(
         id: id,
@@ -70,5 +76,6 @@ final class UserModel {
         highScore: highScore ?? this.highScore,
         level: level ?? this.level,
         exp: exp ?? this.exp,
+        extraLives: extraLives ?? this.extraLives,
       );
 }

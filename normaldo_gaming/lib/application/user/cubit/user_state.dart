@@ -14,5 +14,6 @@ class UserState with _$UserState {
         dollars: 0,
         level: 0,
         exp: 0,
+        extraLives: 0,
       ));
 }

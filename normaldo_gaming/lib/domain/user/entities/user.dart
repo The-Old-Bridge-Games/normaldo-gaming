@@ -5,6 +5,7 @@ final class User {
   final int dollars;
   final int level;
   final int exp;
+  final int extraLives;
 
   const User({
     required this.id,
@@ -13,5 +14,6 @@ final class User {
     required this.dollars,
     required this.level,
     required this.exp,
+    required this.extraLives,
   });
 }

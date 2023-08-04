@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
@@ -84,7 +85,9 @@ abstract class NGRouter {
                   GoRoute(
                     path: NGRoutes.slots.name,
                     name: NGRoutes.slots.name,
-                    builder: (context, state) => SlotMachineScreen(),
+                    builder: (context, state) => BlocProvider<SlotMachineCubit>(
+                        create: (context) => injector.get(),
+                        child: const SlotMachineScreen()),
                   ),
                 ]),
             GoRoute(
