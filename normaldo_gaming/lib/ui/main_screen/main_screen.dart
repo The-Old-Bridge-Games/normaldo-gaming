@@ -48,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: BlocBuilder<UserCubit, UserState>(
+        bloc: context.read(),
         builder: (context, state) => Stack(
           fit: StackFit.expand,
           children: [

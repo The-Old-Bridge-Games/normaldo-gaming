@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
 import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/pull_up_game_widget.dart';
 import 'package:normaldo_gaming/ui/root/root_screen.dart';
 import 'package:normaldo_gaming/ui/settings/settings_screen.dart';
@@ -31,10 +32,14 @@ abstract class NGRouter {
             GoRoute(
                 path: NGRoutes.main.name,
                 name: NGRoutes.main.name,
-                builder: (context, state) =>
-                    const BlocListener<UserCubit, UserState>(
+                builder: (context, state) => BlocListener<UserCubit, UserState>(
                       listener: _userBlocListener,
-                      child: MainScreen(),
+                      child: BlocListener<UserCubit, UserState>(
+                        listenWhen: (previous, current) =>
+                            previous.user.level < current.user.level,
+                        listener: _newLevelListener,
+                        child: const MainScreen(),
+                      ),
                     ),
                 routes: [
                   GoRoute(
@@ -103,5 +108,16 @@ abstract class NGRouter {
     if (state.user.name.isEmpty) {
       context.goRoute(NGRoutes.createUser);
     }
+  }
+
+  static void _newLevelListener(BuildContext context, UserState state) async {
+    showDialog(
+        context: context,
+        builder: (context) => NewLevelDialog(
+              reward: state.user.level * 10,
+              level: state.user.level,
+            )).then((value) async {
+      context.read<UserCubit>().addDollars(state.user.level * 10);
+    });
   }
 }

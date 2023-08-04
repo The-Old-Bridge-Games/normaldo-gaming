@@ -47,7 +47,7 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(
       state.copyWith(
         user: UserModel.fromEntity(state.user)
-            .copyWith(dollars: state.user.extraLives + amount)
+            .copyWith(extraLives: state.user.extraLives + amount)
             .toEntity(),
       ),
     );
