@@ -4,6 +4,7 @@
     "Start": "Старт",
     "high score": "Рекорд: {}",
     "dollars": "Доллары: {}",
+    "extra lives": "воскрешения: {}",
     "Are you sure??": "Ты уверен??",
     "All game results will be dropped..": "Весь прогресс этой игры будут потерян..",
     "let's do it!": "Вперёд!",
@@ -58,5 +59,12 @@
     "molotov": "молотов",
     "hourglass": "песочные часы",
     "punch": "перчатка",
-    "bigBuddyBin": "большой приятель Бак"
+    "bigBuddyBin": "большой приятель Бак",
+    "Spin": "Крутить",
+    "Back": "Назад",
+    "Bid": "Ставка",
+    "not enough funds": "Не хватает средств",
+    "Nothing..": "Ничего..",
+    "YOU WIN!!!": "ПОБЕДА!!!",
+    "OK": "OK"
 }

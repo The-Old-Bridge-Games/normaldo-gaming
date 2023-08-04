@@ -7,11 +7,13 @@ class UserInfo extends StatelessWidget {
     required this.username,
     required this.highScore,
     required this.dollars,
+    required this.extraLives,
   });
 
   final String username;
   final int highScore;
   final int dollars;
+  final int extraLives;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,11 @@ class UserInfo extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           'dollars'.tr(args: [dollars.toString()]),
+          style: textTheme.displayMedium,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'extra lives'.tr(args: [extraLives.toString()]),
           style: textTheme.displayMedium,
         ),
         const SizedBox(height: 8),

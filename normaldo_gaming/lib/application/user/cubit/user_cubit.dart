@@ -31,6 +31,39 @@ class UserCubit extends HydratedCubit<UserState> {
     ));
   }
 
+  void takeDollars(int dollars) {
+    assert(dollars < state.user.dollars);
+    emit(
+      state.copyWith(
+        user: UserModel.fromEntity(state.user)
+            .copyWith(dollars: state.user.dollars - dollars)
+            .toEntity(),
+      ),
+    );
+  }
+
+  void addExtraLife(int amount) {
+    assert(amount > 0);
+    emit(
+      state.copyWith(
+        user: UserModel.fromEntity(state.user)
+            .copyWith(extraLives: state.user.extraLives + amount)
+            .toEntity(),
+      ),
+    );
+  }
+
+  void takeExtraLife(int amount) {
+    assert(amount > 0);
+    emit(
+      state.copyWith(
+        user: UserModel.fromEntity(state.user)
+            .copyWith(dollars: state.user.extraLives - amount)
+            .toEntity(),
+      ),
+    );
+  }
+
   void changeName(String name) {
     assert(name.length >= 3, "too short name");
     emit(state.copyWith(
@@ -88,6 +121,7 @@ class UserCubit extends HydratedCubit<UserState> {
       highScore: user.highScore,
       level: state.user.level,
       exp: state.user.exp,
+      extraLives: state.user.extraLives,
     ).toJson();
   }
 }

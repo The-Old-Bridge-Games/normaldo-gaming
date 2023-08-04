@@ -25,9 +25,11 @@ class _BlinkingTextState extends State<BlinkingText> {
   double _opacity = 0.0;
 
   Future<void> _timerHandler(Timer timer) async {
-    setState(() {
-      _opacity = _opacity == 1 ? 0 : 1;
-    });
+    if (mounted) {
+      setState(() {
+        _opacity = _opacity == 1 ? 0 : 1;
+      });
+    }
     if (widget.endDelay != null) {
       if (_opacity == 1) {
         timer.cancel();

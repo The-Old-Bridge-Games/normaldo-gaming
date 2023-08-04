@@ -48,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: BlocBuilder<UserCubit, UserState>(
+        bloc: context.read(),
         builder: (context, state) => Stack(
           fit: StackFit.expand,
           children: [
@@ -71,6 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                       username: state.user.name,
                       highScore: state.user.highScore,
                       dollars: state.user.dollars,
+                      extraLives: state.user.extraLives,
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -109,9 +111,37 @@ class _MainScreenState extends State<MainScreen> {
                     height: 35,
                     width: 35,
                   ),
-                ))
+                )),
+            Align(
+              alignment: const Alignment(-0.6, 1),
+              child: _buildSlotMachineButton(),
+            )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSlotMachineButton() {
+    return BouncingButton(
+      onPressed: () => context.goNamed(NGRoutes.slots.name),
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/slot_machine.png',
+            width: 80,
+            height: 160,
+            fit: BoxFit.contain,
+          ),
+          Positioned(
+              top: 42,
+              left: 22,
+              child: Image.asset(
+                'assets/images/normaldo/normaldo2.png',
+                width: 30,
+                height: 30,
+              ))
+        ],
       ),
     );
   }
