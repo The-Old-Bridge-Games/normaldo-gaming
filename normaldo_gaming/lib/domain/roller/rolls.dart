@@ -1,16 +1,16 @@
 enum Rolls {
   // Gives 1 exp
-  exp1(20),
+  exp1(10),
   // Gives 2 exp
-  exp2(15),
+  exp2(5),
   // Gives 3 exps
-  exp3(5),
+  exp3(2),
   // Reduces your bid by 2
-  half1(27.95),
+  half1(37.95),
   // Shows different values on slot machine
-  empty(27.95),
+  empty(41.95),
   // Gives extra life bonus to your user
-  extraLife(3),
+  extraLife(2),
   // Gives x10 to your bid
   win(1),
   // Gives 100x to your bid

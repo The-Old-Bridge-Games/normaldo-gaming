@@ -21,9 +21,9 @@ class SlotMachineCubit extends Cubit<SlotMachineState> {
   }
 
   void changeBid({required int bid}) {
-    assert(state.bid >= 5);
-    assert(state.bid <= 100);
-    assert(state.bid % 5 == 0);
+    assert(bid >= 5);
+    assert(bid <= 100);
+    assert(bid % 5 == 0);
 
     emit(state.copyWith(bid: bid));
   }
