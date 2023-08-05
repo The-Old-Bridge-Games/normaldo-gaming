@@ -80,6 +80,9 @@ flutter:
     - assets/images/
     - assets/images/2.0x/
     - assets/images/3.0x/
+    - assets/images/slot_machine.png
+    - assets/images/2.0x/slot_machine.png
+    - assets/images/3.0x/slot_machine.png
     - assets/images/backgrounds/
     - assets/images/backgrounds/2.0x/
     - assets/images/backgrounds/3.0x/

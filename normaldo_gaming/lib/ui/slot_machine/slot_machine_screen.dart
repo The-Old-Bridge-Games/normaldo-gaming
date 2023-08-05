@@ -188,48 +188,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                     barWidth: 300,
                   ),
                 ),
-                Align(
-                  alignment: const Alignment(0, 1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/slot_machine.png',
-                        height: 300,
-                        width: 150,
-                      ),
-                      const SizedBox(width: 8),
-                      Image.asset(
-                        'assets/images/slot_machine.png',
-                        height: 300,
-                        width: 150,
-                      ),
-                      const SizedBox(width: 8),
-                      Image.asset(
-                        'assets/images/slot_machine.png',
-                        height: 300,
-                        width: 150,
-                      ),
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: IgnorePointer(
-                      child: SlotMachineWidget(
-                        shuffle: false,
-                        height: 57,
-                        reelSpacing: 90,
-                        width: 400,
-                        reelItemExtent: 50,
-                        rollItems: _rollItems.values.toList(),
-                        onCreated: _onCreated,
-                        onFinished: (resultIndexes) {},
-                      ),
-                    ),
-                  ),
-                ),
+                _buildSlotMachine(),
                 Positioned(
                   right: -20,
                   top: 180,
@@ -253,6 +212,57 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
             );
           }),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSlotMachine() {
+    return Positioned(
+      bottom: 0,
+      right: 100,
+      left: 100,
+      child: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/slot_machine.png',
+                height: 300,
+                width: 150,
+              ),
+              const SizedBox(width: 8),
+              Image.asset(
+                'assets/images/slot_machine.png',
+                height: 300,
+                width: 150,
+              ),
+              const SizedBox(width: 8),
+              Image.asset(
+                'assets/images/slot_machine.png',
+                height: 300,
+                width: 150,
+              ),
+            ],
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: (300 * 0.272)),
+              child: IgnorePointer(
+                child: SlotMachineWidget(
+                  shuffle: false,
+                  height: 57,
+                  reelSpacing: 90,
+                  width: 400,
+                  reelItemExtent: 50,
+                  rollItems: _rollItems.values.toList(),
+                  onCreated: _onCreated,
+                  onFinished: (resultIndexes) {},
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
