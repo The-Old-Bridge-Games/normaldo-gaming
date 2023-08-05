@@ -21,7 +21,6 @@ class SlotWinDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        width: 200,
         height: 200,
         clipBehavior: Clip.hardEdge,
         padding: const EdgeInsets.all(16),
@@ -37,7 +36,7 @@ class SlotWinDialog extends StatelessWidget {
                 style: textTheme.displayLarge?.copyWith(color: NGTheme.green1)),
             const SizedBox(height: 32),
             _buildWin(context),
-            const SizedBox(height: 32),
+            const Spacer(),
             BouncingButton(
               onPressed: () => context.pop(),
               child: Text('OK'.tr(), style: textTheme.displayLarge),
@@ -57,6 +56,8 @@ class SlotWinDialog extends StatelessWidget {
           style: textTheme.displayLarge,
         ),
       Rolls.exp1 => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -69,6 +70,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.exp2 => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -81,6 +84,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.exp3 => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -93,6 +98,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.extraLife => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -105,6 +112,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.half1 => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -117,6 +126,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.win => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -129,6 +140,8 @@ class SlotWinDialog extends StatelessWidget {
           ],
         ),
       Rolls.jackpot => Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(

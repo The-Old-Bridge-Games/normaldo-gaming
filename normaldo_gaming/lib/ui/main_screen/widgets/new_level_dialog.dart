@@ -22,13 +22,14 @@ class NewLevelDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Column(
         children: [
+          const SizedBox(height: 40),
           BlinkingText(
             'NEW LEVEL!',
             duration: const Duration(milliseconds: 500),
             endDelay: const Duration(seconds: 2),
             style: textTheme.displayLarge?.copyWith(fontSize: 48),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 32),
           Container(
             width: 200,
             clipBehavior: Clip.hardEdge,
@@ -45,14 +46,14 @@ class NewLevelDialog extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/star.png',
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                     ),
                     const SizedBox(width: 16),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text('${level - 1} –> $level',
-                          style: textTheme.displayMedium),
+                          style: textTheme.displayLarge),
                     ),
                   ],
                 ),

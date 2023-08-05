@@ -111,6 +111,7 @@ abstract class NGRouter {
   }
 
   static void _newLevelListener(BuildContext context, UserState state) async {
+    await Future.delayed(const Duration(milliseconds: 500));
     showDialog(
         context: context,
         builder: (context) => NewLevelDialog(
