@@ -148,8 +148,20 @@ final _allMissions = [
     value: 50,
   ),
   CollectPizzaInOneGameMission(
+    exp: 1,
+    value: 70,
+  ),
+  CollectPizzaInOneGameMission(
+    exp: 1,
+    value: 100,
+  ),
+  CollectPizzaInOneGameMission(
     exp: 2,
     value: 150,
+  ),
+  CollectPizzaInOneGameMission(
+    exp: 3,
+    value: 200,
   ),
   CollectPizzaInOneGameMission(
     exp: 3,
@@ -166,6 +178,16 @@ final _allMissions = [
     value: 6,
   ),
   FinishGameAtLevelMission(
+    description: 'End game at slot machines'.tr(),
+    exp: 2,
+    value: 9,
+  ),
+  FinishGameAtLevelMission(
+    description: 'Finish the game by just popping out of the sewers'.tr(),
+    exp: 2,
+    value: 14,
+  ),
+  FinishGameAtLevelMission(
     description: 'End game at a club entrance'.tr(),
     exp: 3,
     value: 21,
@@ -177,12 +199,27 @@ final _allMissions = [
   ),
   CrashItemInOneGameMission(
     item: Items.molotov,
-    exp: 3,
+    exp: 2,
     value: 1,
   ),
   CrashItemInOneGameMission(
     item: Items.cocktail,
     exp: 1,
     value: 3,
+  ),
+  CrashItemInOneGameMission(
+    item: Items.trashBin,
+    exp: 1,
+    value: 1,
+  ),
+  CrashItemInOneGameMission(
+    item: Items.punch,
+    exp: 1,
+    value: 1,
+  ),
+  CrashItemInOneGameMission(
+    item: Items.dumbbell,
+    exp: 2,
+    value: 2,
   ),
 ];
