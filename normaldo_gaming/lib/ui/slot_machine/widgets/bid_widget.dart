@@ -90,7 +90,7 @@ class _BidWidgetState extends State<BidWidget> {
                 Expanded(
                   child: Visibility(
                     visible: _currentBid < 100 &&
-                        state.user.dollars > _currentBid + bidStep,
+                        state.user.dollars >= _currentBid + bidStep,
                     child: BouncingButton(
                       onPressed: _onPlusPressed,
                       child: Text(

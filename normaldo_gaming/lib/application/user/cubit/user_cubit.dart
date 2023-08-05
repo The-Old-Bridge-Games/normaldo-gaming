@@ -32,7 +32,7 @@ class UserCubit extends HydratedCubit<UserState> {
   }
 
   void takeDollars(int dollars) {
-    assert(dollars < state.user.dollars);
+    assert(dollars <= state.user.dollars);
     emit(
       state.copyWith(
         user: UserModel.fromEntity(state.user)

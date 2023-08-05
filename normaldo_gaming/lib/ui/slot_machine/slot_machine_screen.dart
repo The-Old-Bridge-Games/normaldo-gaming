@@ -198,7 +198,11 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                       duration: const Duration(milliseconds: 300),
                       opacity: state.spinning ? 0.5 : 1,
                       child: BouncingButton(
-                        onPressed: state.spinning ? null : _onSpinPressed,
+                        onPressed: state.spinning ||
+                                context.read<UserCubit>().state.user.dollars <
+                                    state.bid
+                            ? null
+                            : _onSpinPressed,
                         child: Text(
                           'Spin'.tr(),
                           style: textTheme.displayLarge,
