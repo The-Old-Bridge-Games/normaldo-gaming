@@ -29,12 +29,14 @@ class AudioObserver extends NavigatorObserver {
   }
 
   Future<void> _startPullUpGameBgm() async {
+    await audio.stopBgm();
     audio.clearBgm();
     audio.addAllToBgm(['mix.mp3']);
     audio.playBgm();
   }
 
   Future<void> _startMainScreenBgm() async {
+    await audio.stopBgm();
     audio.clearBgm();
     audio.addToBgm('main_theme.mp3');
     audio.playBgm();
