@@ -6,15 +6,15 @@ enum Rolls {
   // Gives 3 exps
   exp3(5),
   // Reduces your bid by 2
-  half1(27.75),
+  half1(27.95),
   // Shows different values on slot machine
-  empty(27.75),
+  empty(27.95),
   // Gives extra life bonus to your user
   extraLife(3),
-  // Gives x1.5 to your bid
+  // Gives x10 to your bid
   win(1),
-  // Gives 10x to your bid
-  jackpot(0.5);
+  // Gives 100x to your bid
+  jackpot(0.1);
 
   const Rolls(this.baseChance);
 
