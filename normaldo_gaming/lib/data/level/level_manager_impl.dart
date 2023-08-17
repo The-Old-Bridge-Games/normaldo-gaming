@@ -10,6 +10,30 @@ import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
 class LevelManagerImpl implements LevelManager {
+  static const _ranks = [
+    'Hungerling',
+    'Nibbler',
+    'Gourmand',
+    'Muncher',
+    'Glutton',
+    'Sweet Tooth',
+    'Foodie',
+    'Foodie-Pro',
+    'Devourer',
+    'Gutspiller',
+    'Digestor',
+    'Epic Devourer',
+    'Engulfer',
+    'Abdominal Magnate',
+    'Satiated Warrior',
+    'Belly Gladiator',
+    'Omnivorous Monster',
+    'Bottomless Barrel',
+    'Fat',
+    'Universe Eater',
+    'FATBOSS',
+  ];
+
   LevelManagerImpl(this._repository);
   final MissionsRepository _repository;
 
@@ -45,9 +69,14 @@ class LevelManagerImpl implements LevelManager {
       3 || 4 => 7,
       5 || 6 => 9,
       7 || 8 || 9 || 10 => 10,
-      50 => LevelManager.maxLevelExp,
+      100 => LevelManager.maxLevelExp,
       _ => (user.level + 1) + 2,
     };
+  }
+
+  @override
+  String rank(User user) {
+    return _ranks[user.level ~/ 5];
   }
 
   @override

@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_info.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
+import 'package:normaldo_gaming/ui/widgets/rank_label.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

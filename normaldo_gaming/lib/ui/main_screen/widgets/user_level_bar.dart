@@ -4,6 +4,7 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
+import 'package:normaldo_gaming/ui/widgets/rank_label.dart';
 
 class UserLevelBar extends StatefulWidget {
   const UserLevelBar({
@@ -42,42 +43,48 @@ class _LevelBarState extends State<UserLevelBar> {
         ),
         const SizedBox(width: 16),
         BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-          return Stack(
+          return Column(
             children: [
-              Container(
-                width: widget.barWidth,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: Colors.grey[600],
-                  borderRadius: BorderRadius.circular(2.0),
-                ),
+              Center(child: RankLabel()),
+              const SizedBox(height: 8),
+              Stack(
+                children: [
+                  Container(
+                    width: widget.barWidth,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[600],
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    decoration: BoxDecoration(
+                      color: NGTheme.orange1,
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    height: 25,
+                    width: widget.levelManager.isMaxLevel(state.user)
+                        ? widget.barWidth
+                        : widget.barWidth /
+                            widget.levelManager.nextLevelExp(state.user) *
+                            state.user.exp,
+                  ),
+                  Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 2,
+                    child: Text(
+                      widget.levelManager.isMaxLevel(state.user)
+                          ? 'max level'
+                          : '${state.user.exp}/${widget.levelManager.nextLevelExp(state.user)}',
+                      textAlign: TextAlign.center,
+                      style: textTheme.displaySmall,
+                    ),
+                  )
+                ],
               ),
-              AnimatedContainer(
-                duration: const Duration(seconds: 1),
-                curve: Curves.fastLinearToSlowEaseIn,
-                decoration: BoxDecoration(
-                  color: NGTheme.orange1,
-                  borderRadius: BorderRadius.circular(2.0),
-                ),
-                height: 25,
-                width: widget.levelManager.isMaxLevel(state.user)
-                    ? widget.barWidth
-                    : widget.barWidth /
-                        widget.levelManager.nextLevelExp(state.user) *
-                        state.user.exp,
-              ),
-              Positioned(
-                left: 8,
-                right: 8,
-                bottom: 2,
-                child: Text(
-                  widget.levelManager.isMaxLevel(state.user)
-                      ? 'max level'
-                      : '${state.user.exp}/${widget.levelManager.nextLevelExp(state.user)}',
-                  textAlign: TextAlign.center,
-                  style: textTheme.displaySmall,
-                ),
-              )
             ],
           );
         }),

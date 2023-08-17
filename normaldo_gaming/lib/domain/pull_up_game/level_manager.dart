@@ -9,6 +9,8 @@ abstract interface class LevelManager {
 
   int nextLevelExp(User user);
 
+  String rank(User user);
+
   bool isMaxLevel(User user);
 
   List<Mission> get missions;
