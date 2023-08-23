@@ -6,6 +6,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/pre_death_screen.dart';
 
 import 'widgets/death_screen.dart';
 
@@ -62,7 +63,7 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
             levelBloc: context.read<LevelBloc>()),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
-          Overlays.deathScreen.name: (context, game) => const DeathScreen(),
+          Overlays.deathScreen.name: (context, game) => const PreDeathScreen(),
         },
       ),
     );

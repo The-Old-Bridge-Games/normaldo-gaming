@@ -20,6 +20,9 @@ dependencies:
   path_provider: ^2.0.15
   equatable: ^2.0.5
 
+  # Ads
+  unity_ads_plugin: ^0.3.8
+
   # Database
   hive: ^2.2.3
 

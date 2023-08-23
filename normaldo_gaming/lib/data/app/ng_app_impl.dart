@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,13 +11,16 @@ import 'package:hive/hive.dart';
 import 'package:home_indicator/home_indicator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
+import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/widgets/config_inherited_widget.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 class NGAppImpl implements NGApp {
   @override
@@ -23,6 +29,13 @@ class NGAppImpl implements NGApp {
     await EasyLocalization.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: binding);
     FlameAudio.bgm.initialize();
+    final config = kDebugMode ? Config.dev() : Config.prod();
+    UnityAds.init(
+      gameId: Platform.isIOS ? config.iosAdId : config.androidAdId,
+      onComplete: () => print('Initialization Complete'),
+      onFailed: (error, message) =>
+          print('Initialization Failed: $error $message'),
+    );
     await FlameAudio.audioCache.loadAll([
       'main_theme.mp3',
       'club_track.mp3',
@@ -71,7 +84,7 @@ class NGAppImpl implements NGApp {
     HydratedBloc.storage = await HydratedStorage.build(
         storageDirectory: await getApplicationDocumentsDirectory());
 
-    initializeInjector();
+    initializeInjector(config);
     await injector.get<NgAudio>().init();
     await injector.get<LevelManager>().init();
     const supportedLocales = [Locale('ru'), Locale('en')];
@@ -84,7 +97,10 @@ class NGAppImpl implements NGApp {
         providers: [
           BlocProvider<UserCubit>(create: (context) => injector.get()),
         ],
-        child: const _AppWidget(),
+        child: ConfigInheritedWidget(
+          config: config,
+          child: const _AppWidget(),
+        ),
       ),
     ));
   }
