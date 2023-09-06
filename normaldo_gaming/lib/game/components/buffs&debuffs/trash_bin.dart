@@ -44,7 +44,7 @@ class TrashBin extends PositionComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     final gameSessionCubit = (gameRef as PullUpGame).gameSessionCubit;
     if (other is Normaldo) {
-      if (gameSessionCubit.state.hit || gameSessionCubit.state.isDead) return;
+      if (other.immortal || gameSessionCubit.state.isDead) return;
       removeFromParent();
       other.takeHit();
       audio.playSfx(Sfx.binCrash);

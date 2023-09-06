@@ -1,6 +1,7 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
@@ -21,6 +22,7 @@ void initializeInjector(Config config) {
   injector.map<GameSessionCubit>((injector) => GameSessionCubit());
   injector.map<LevelBloc>((injector) => LevelBloc());
   injector.map<SlotMachineCubit>((injector) => SlotMachineCubit());
+  injector.map<PreDeathCubit>((injector) => PreDeathCubit());
 
   // Repositories
   injector.map<MissionsRepository>((injector) => LocalMissionsRepository());

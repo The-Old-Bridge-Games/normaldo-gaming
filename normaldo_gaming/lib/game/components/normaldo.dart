@@ -90,6 +90,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   }) : super(size: size, anchor: Anchor.center);
 
   bool _immortal = false;
+  bool get immortal => _immortal;
 
   var _state = NormaldoHitState.idle;
 
@@ -257,9 +258,18 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
           }
         }));
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
-        listenWhen: (prevState, newState) => newState.isDead,
-        onNewState: (_) {
-          current = current?.dead;
+        listenWhen: (prevState, newState) =>
+            prevState.isDead != newState.isDead,
+        onNewState: (gameState) {
+          if (gameState.isDead) {
+            current = current?.dead;
+            state = NormaldoHitState.hit;
+          } else {
+            current = NormaldoFatState.skinny;
+            Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+              state = NormaldoHitState.idle;
+            });
+          }
         }));
   }
 

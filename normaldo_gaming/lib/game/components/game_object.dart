@@ -35,7 +35,7 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Normaldo) {
+    if (other is Normaldo && !other.immortal) {
       _levelManager.checkHit(hitItem: item);
     }
     super.onCollisionStart(intersectionPoints, other);

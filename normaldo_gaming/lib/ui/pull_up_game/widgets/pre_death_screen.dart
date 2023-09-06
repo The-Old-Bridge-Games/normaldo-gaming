@@ -1,6 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
@@ -18,29 +20,12 @@ class PreDeathScreen extends StatefulWidget {
 
 class _PreDeathScreenState extends State<PreDeathScreen> {
   double _opacity = 0.0;
-  bool _loadingAd = false;
-  double _skipValue = 1;
-  Timer? _skipTimer;
 
-  bool get showStats => _skipValue == 0;
+  void _cubitListener(BuildContext context, PreDeathState state) {}
 
   @override
   void initState() {
     super.initState();
-
-    _skipTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_skipValue <= 0) {
-        timer.cancel();
-        _skipTimer = null;
-        setState(() {
-          _skipValue = 0;
-        });
-      } else if (!_loadingAd) {
-        setState(() {
-          _skipValue -= 0.2;
-        });
-      }
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       // await Future.delayed(const Duration(seconds: 1));
@@ -51,118 +36,167 @@ class _PreDeathScreenState extends State<PreDeathScreen> {
   }
 
   @override
-  void dispose() {
-    _skipTimer?.cancel();
-    _skipTimer = null;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    if (showStats) return const DeathScreen();
-    return Scaffold(
-      backgroundColor: NGTheme.bgSemiBlack,
-      body: AnimatedOpacity(
-        opacity: _opacity,
-        duration: const Duration(seconds: 1),
-        child: Stack(
-          children: [
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: NGTheme.purple3, width: 3),
-                ),
-                child: BouncingButton(
-                  onPressed: () async {
-                    final placementId = injector
-                        .get<BaseAdManager>()
-                        .rewardedVideoAdPlacementId;
-                    setState(() {
-                      _loadingAd = true;
-                    });
-                    await UnityAds.load(
-                        placementId: placementId,
-                        onComplete: (placementId) {
-                          setState(() {
-                            _loadingAd = false;
-                          });
-                          UnityAds.showVideoAd(
-                            placementId: placementId,
-                            onStart: (placementId) =>
-                                print('Video Ad $placementId started'),
-                            onClick: (placementId) =>
-                                print('Video Ad $placementId click'),
-                            onSkipped: (placementId) =>
-                                print('Video Ad $placementId skipped'),
-                            onComplete: (placementId) =>
-                                print('Video Ad $placementId completed'),
-                            onFailed: (placementId, error, message) => print(
-                                'Video Ad $placementId failed: $error $message'),
-                          );
-                        },
-                        onFailed: (placementId, error, errorMessage) {
-                          setState(() {
-                            _loadingAd = false;
-                            _skipValue = 0.0;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                            errorMessage,
-                            style: textTheme.displayMedium,
-                          )));
-                        });
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/images/tv.png',
-                        width: 100,
+    final cubit = context.read<PreDeathCubit>();
+    return BlocConsumer<PreDeathCubit, PreDeathState>(
+        listener: _cubitListener,
+        builder: (context, state) {
+          if (state.skipped) return const DeathScreen();
+          return Scaffold(
+            backgroundColor: NGTheme.bgSemiBlack,
+            body: AnimatedOpacity(
+              opacity: _opacity,
+              duration: const Duration(seconds: 1),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: NGTheme.purple3, width: 3),
                       ),
-                      const SizedBox(height: 8),
-                      Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('+ 1', style: textTheme.displaySmall),
-                          const SizedBox(width: 8),
-                          Image.asset('assets/images/heart.png', width: 30)
+                          _buildAccountRevives(),
+                          Visibility(
+                              visible: !context
+                                  .read<GameSessionCubit>()
+                                  .state
+                                  .revivedWithAd,
+                              child: const SizedBox(width: 32)),
+                          Visibility(
+                            visible: !context
+                                .read<GameSessionCubit>()
+                                .state
+                                .revivedWithAd,
+                            child: BouncingButton(
+                              onPressed: () async {
+                                final placementId = injector
+                                    .get<BaseAdManager>()
+                                    .rewardedVideoAdPlacementId;
+                                cubit.setAdState(Loading());
+                                await UnityAds.load(
+                                    placementId: placementId,
+                                    onComplete: (placementId) {
+                                      cubit.setAdState(Showing());
+                                      UnityAds.showVideoAd(
+                                          placementId: placementId,
+                                          onStart: (placementId) =>
+                                              cubit.setAdState(Showing()),
+                                          onClick: (placementId) => print(
+                                              'Video Ad $placementId click'),
+                                          onSkipped: (placementId) =>
+                                              cubit.skip(),
+                                          onComplete: (placementId) {
+                                            context
+                                                .read<GameSessionCubit>()
+                                                .revive(withAd: true);
+                                          },
+                                          onFailed:
+                                              (placementId, error, message) =>
+                                                  cubit.skip());
+                                    },
+                                    onFailed:
+                                        (placementId, error, errorMessage) {
+                                      cubit.skip();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                        errorMessage,
+                                        style: textTheme.displayMedium,
+                                      )));
+                                    });
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/tv.png',
+                                    width: 70,
+                                    height: 70,
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text('+ 1',
+                                          style: textTheme.displaySmall),
+                                      const SizedBox(width: 8),
+                                      Image.asset('assets/images/heart.png',
+                                          width: 20)
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: const Alignment(0.3, 0),
+                    child: _buildSkipButton(state.skipValue),
+                  ),
+                  Visibility(
+                    visible: state.adState == Loading(),
+                    child: Container(
+                      color: Colors.black54,
+                      child: Center(
+                        child: BlinkingText(
+                          'Loading your Ad...',
+                          duration: const Duration(seconds: 1),
+                          style: textTheme.displayMedium,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-            Align(
-              alignment: const Alignment(0.3, 0),
-              child: _buildSkipButton(),
-            ),
-            Visibility(
-              visible: _loadingAd,
-              child: Container(
-                color: Colors.black54,
-                child: Center(
-                  child: BlinkingText(
-                    'Loading your Ad...',
-                    duration: const Duration(seconds: 1),
-                    style: textTheme.displayMedium,
-                  ),
+          );
+        });
+  }
+
+  Widget _buildAccountRevives() {
+    final textTheme = Theme.of(context).textTheme;
+    return Opacity(
+      opacity: context.read<UserCubit>().state.user.extraLives == 0 ? 0.5 : 1,
+      child: IgnorePointer(
+        ignoring: context.read<UserCubit>().state.user.extraLives == 0,
+        child: BouncingButton(
+          onPressed: () {
+            if (context.read<UserCubit>().state.user.extraLives == 0) return;
+            context.read<UserCubit>().takeExtraLife(1);
+            context.read<GameSessionCubit>().revive();
+          },
+          child: BlocBuilder<UserCubit, UserState>(
+            builder: (context, state) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  'assets/images/heart.png',
+                  width: 40,
+                  height: 40,
                 ),
-              ),
-            )
-          ],
+                Text(state.user.extraLives.toString(),
+                    style: textTheme.displaySmall),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildSkipButton() {
+  Widget _buildSkipButton(double skipValue) {
     final textTheme = Theme.of(context).textTheme;
     return BouncingButton(
+      onPressed: () => context.read<PreDeathCubit>().skip(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -176,7 +210,7 @@ class _PreDeathScreenState extends State<PreDeathScreen> {
                 children: [
                   CircularProgressIndicator(
                     color: NGTheme.purple1,
-                    value: _skipValue,
+                    value: skipValue,
                   ),
                   Positioned.fill(
                     top: 11,

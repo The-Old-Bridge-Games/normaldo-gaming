@@ -10,9 +10,6 @@ part 'game_session_cubit.freezed.dart';
 class GameSessionCubit extends Cubit<GameSessionState> {
   static const hitRevival = Duration(seconds: 2);
 
-  /// 3 extra lives by pizza packs and 1 initial life
-  static const maxLivesCount = 4;
-
   GameSessionCubit() : super(GameSessionState.initial());
 
   final _levelManager = injector.get<LevelManager>();
@@ -34,6 +31,23 @@ class GameSessionCubit extends Cubit<GameSessionState> {
     emit(state.copyWith(hit: true));
     await Future.delayed(hitRevival);
     emit(state.copyWith(hit: false));
+  }
+
+  Future<void> revive({bool withAd = false}) async {
+    if (withAd) {
+      emit(state.copyWith(
+        isDead: false,
+        revived: false,
+        revivedWithAd: true,
+        hit: true,
+      ));
+    } else {
+      emit(state.copyWith(
+        isDead: false,
+        revived: true,
+        hit: true,
+      ));
+    }
   }
 
   void resetHit() {
