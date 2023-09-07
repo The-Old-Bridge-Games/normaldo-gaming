@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
-
-import 'widgets/death_screen.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/pre_death_screen.dart';
 
 class PullUpGameWidget extends StatefulWidget {
   const PullUpGameWidget({super.key});
@@ -24,6 +25,7 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
     switch (state) {
       case AppLifecycleState.detached:
       case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
         if (cubit.state.isDead) {
           break;
@@ -62,7 +64,11 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
             levelBloc: context.read<LevelBloc>()),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
-          Overlays.deathScreen.name: (context, game) => const DeathScreen(),
+          Overlays.deathScreen.name: (context, game) =>
+              BlocProvider<PreDeathCubit>(
+                create: (context) => injector.get(),
+                child: const PreDeathScreen(),
+              ),
         },
       ),
     );

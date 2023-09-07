@@ -8,6 +8,8 @@ class GameSessionState with _$GameSessionState {
     required int dollars,
     required bool paused,
     required bool hit,
+    required bool revived,
+    required bool revivedWithAd,
     required int level,
   }) = _GameSessionState;
 
@@ -18,5 +20,7 @@ class GameSessionState with _$GameSessionState {
         paused: false,
         hit: false,
         level: 0,
+        revived: false,
+        revivedWithAd: false,
       );
 }

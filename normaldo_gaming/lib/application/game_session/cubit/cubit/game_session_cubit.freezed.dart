@@ -21,6 +21,8 @@ mixin _$GameSessionState {
   int get dollars => throw _privateConstructorUsedError;
   bool get paused => throw _privateConstructorUsedError;
   bool get hit => throw _privateConstructorUsedError;
+  bool get revived => throw _privateConstructorUsedError;
+  bool get revivedWithAd => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,7 +37,14 @@ abstract class $GameSessionStateCopyWith<$Res> {
       _$GameSessionStateCopyWithImpl<$Res, GameSessionState>;
   @useResult
   $Res call(
-      {int score, bool isDead, int dollars, bool paused, bool hit, int level});
+      {int score,
+      bool isDead,
+      int dollars,
+      bool paused,
+      bool hit,
+      bool revived,
+      bool revivedWithAd,
+      int level});
 }
 
 /// @nodoc
@@ -56,6 +65,8 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
+    Object? revived = null,
+    Object? revivedWithAd = null,
     Object? level = null,
   }) {
     return _then(_value.copyWith(
@@ -79,6 +90,14 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
           ? _value.hit
           : hit // ignore: cast_nullable_to_non_nullable
               as bool,
+      revived: null == revived
+          ? _value.revived
+          : revived // ignore: cast_nullable_to_non_nullable
+              as bool,
+      revivedWithAd: null == revivedWithAd
+          ? _value.revivedWithAd
+          : revivedWithAd // ignore: cast_nullable_to_non_nullable
+              as bool,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -96,7 +115,14 @@ abstract class _$$_GameSessionStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int score, bool isDead, int dollars, bool paused, bool hit, int level});
+      {int score,
+      bool isDead,
+      int dollars,
+      bool paused,
+      bool hit,
+      bool revived,
+      bool revivedWithAd,
+      int level});
 }
 
 /// @nodoc
@@ -115,6 +141,8 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
     Object? dollars = null,
     Object? paused = null,
     Object? hit = null,
+    Object? revived = null,
+    Object? revivedWithAd = null,
     Object? level = null,
   }) {
     return _then(_$_GameSessionState(
@@ -138,6 +166,14 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
           ? _value.hit
           : hit // ignore: cast_nullable_to_non_nullable
               as bool,
+      revived: null == revived
+          ? _value.revived
+          : revived // ignore: cast_nullable_to_non_nullable
+              as bool,
+      revivedWithAd: null == revivedWithAd
+          ? _value.revivedWithAd
+          : revivedWithAd // ignore: cast_nullable_to_non_nullable
+              as bool,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -155,6 +191,8 @@ class _$_GameSessionState implements _GameSessionState {
       required this.dollars,
       required this.paused,
       required this.hit,
+      required this.revived,
+      required this.revivedWithAd,
       required this.level});
 
   @override
@@ -168,11 +206,15 @@ class _$_GameSessionState implements _GameSessionState {
   @override
   final bool hit;
   @override
+  final bool revived;
+  @override
+  final bool revivedWithAd;
+  @override
   final int level;
 
   @override
   String toString() {
-    return 'GameSessionState(score: $score, isDead: $isDead, dollars: $dollars, paused: $paused, hit: $hit, level: $level)';
+    return 'GameSessionState(score: $score, isDead: $isDead, dollars: $dollars, paused: $paused, hit: $hit, revived: $revived, revivedWithAd: $revivedWithAd, level: $level)';
   }
 
   @override
@@ -185,12 +227,15 @@ class _$_GameSessionState implements _GameSessionState {
             (identical(other.dollars, dollars) || other.dollars == dollars) &&
             (identical(other.paused, paused) || other.paused == paused) &&
             (identical(other.hit, hit) || other.hit == hit) &&
+            (identical(other.revived, revived) || other.revived == revived) &&
+            (identical(other.revivedWithAd, revivedWithAd) ||
+                other.revivedWithAd == revivedWithAd) &&
             (identical(other.level, level) || other.level == level));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, score, isDead, dollars, paused, hit, level);
+  int get hashCode => Object.hash(runtimeType, score, isDead, dollars, paused,
+      hit, revived, revivedWithAd, level);
 
   @JsonKey(ignore: true)
   @override
@@ -206,6 +251,8 @@ abstract class _GameSessionState implements GameSessionState {
       required final int dollars,
       required final bool paused,
       required final bool hit,
+      required final bool revived,
+      required final bool revivedWithAd,
       required final int level}) = _$_GameSessionState;
 
   @override
@@ -218,6 +265,10 @@ abstract class _GameSessionState implements GameSessionState {
   bool get paused;
   @override
   bool get hit;
+  @override
+  bool get revived;
+  @override
+  bool get revivedWithAd;
   @override
   int get level;
   @override

@@ -136,9 +136,15 @@ class PullUpGame extends FlameGame
   Future<void> _initBloc() async {
     gameSessionCubit.stream.listen((state) async {
       if (state.isDead) {
-        await audio.stopBgm();
+        await audio.pauseBgm();
         pauseEngine();
         overlays.add(Overlays.deathScreen.name);
+      } else {
+        if (!state.paused && (state.revived || state.revivedWithAd)) {
+          overlays.remove(Overlays.deathScreen.name);
+          await audio.resumeBgm();
+          resumeEngine();
+        }
       }
     });
 

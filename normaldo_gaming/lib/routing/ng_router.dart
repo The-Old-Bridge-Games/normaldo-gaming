@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
@@ -14,6 +16,7 @@ import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/pull_up_game_widget.dart';
 import 'package:normaldo_gaming/ui/root/root_screen.dart';
 import 'package:normaldo_gaming/ui/settings/settings_screen.dart';
+import 'package:normaldo_gaming/ui/shop/shop_screen.dart';
 import 'package:normaldo_gaming/ui/slot_machine/slot_machine_screen.dart';
 
 part 'utils/go_route_ext.dart';
@@ -61,7 +64,7 @@ abstract class NGRouter {
                     pageBuilder: (context, state) => CustomTransitionPage(
                       key: state.pageKey,
                       child: MissionsScreen(
-                        tag: state.queryParameters['tag'] as String,
+                        tag: state.uri.queryParameters['tag'] as String,
                       ),
                       transitionDuration: const Duration(milliseconds: 300),
                       reverseTransitionDuration:
@@ -93,6 +96,16 @@ abstract class NGRouter {
                     builder: (context, state) => BlocProvider<SlotMachineCubit>(
                         create: (context) => injector.get(),
                         child: const SlotMachineScreen()),
+                  ),
+                  GoRoute(
+                    path: NGRoutes.shop.name,
+                    name: NGRoutes.shop.name,
+                    builder: (context, state) => MultiBlocProvider(providers: [
+                      BlocProvider<ShopItemsListCubit>(
+                          create: (context) => injector.get()..loadList()),
+                      BlocProvider<AdsCubit>(
+                          create: (context) => injector.get()),
+                    ], child: const ShopScreen()),
                   ),
                 ]),
             GoRoute(

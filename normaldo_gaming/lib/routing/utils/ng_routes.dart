@@ -7,6 +7,7 @@ enum NGRoutes {
   pullUpGame('/main/pullUpGame'),
   missions('/main/missions'),
   settings('/main/settings'),
+  shop('/main/shop'),
   slots('/main/slots');
 
   const NGRoutes(this.path);
