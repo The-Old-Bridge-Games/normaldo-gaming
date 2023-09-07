@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
@@ -43,6 +44,16 @@ class _PreDeathScreenState extends State<PreDeathScreen> {
         listener: _cubitListener,
         builder: (context, state) {
           if (state.skipped) return const DeathScreen();
+          if (state.adState is Finished) {
+            return Scaffold(
+              backgroundColor: Colors.black45,
+              body: Center(
+                  child: Text(
+                'Get ready...'.tr(),
+                style: textTheme.displayLarge,
+              )),
+            );
+          }
           return Scaffold(
             backgroundColor: NGTheme.bgSemiBlack,
             body: AnimatedOpacity(
@@ -91,10 +102,14 @@ class _PreDeathScreenState extends State<PreDeathScreen> {
                                               'Video Ad $placementId click'),
                                           onSkipped: (placementId) =>
                                               cubit.skip(),
-                                          onComplete: (placementId) {
+                                          onComplete: (placementId) async {
+                                            cubit.setAdState(Finished());
+                                            await Future.delayed(
+                                                const Duration(seconds: 2));
                                             context
                                                 .read<GameSessionCubit>()
                                                 .revive(withAd: true);
+                                            cubit.setAdState(Initial());
                                           },
                                           onFailed:
                                               (placementId, error, message) =>

@@ -32,6 +32,7 @@ class NGAppImpl implements NGApp {
     final config = kDebugMode ? Config.dev() : Config.prod();
     UnityAds.init(
       gameId: Platform.isIOS ? config.iosAdId : config.androidAdId,
+      testMode: kDebugMode,
       onComplete: () => print('Initialization Complete'),
       onFailed: (error, message) =>
           print('Initialization Failed: $error $message'),

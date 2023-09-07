@@ -8,10 +8,8 @@ part 'pre_death_cubit.freezed.dart';
 
 class PreDeathCubit extends Cubit<PreDeathState> {
   PreDeathCubit() : super(PreDeathState.initial()) {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (state.adState == Showing() ||
-          state.adState == Loading() ||
-          state.adState == Finished()) return;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (state.adState is! Initial) return;
       if (state.skipValue <= 0) {
         timer.cancel();
         emit(state.copyWith(skipValue: 0, skipped: true));
@@ -19,6 +17,23 @@ class PreDeathCubit extends Cubit<PreDeathState> {
         emit(state.copyWith(skipValue: state.skipValue - 0.2));
       }
     });
+  }
+
+  Timer? _timer;
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    _timer = null;
+    return super.close();
+  }
+
+  @override
+  void onChange(Change<PreDeathState> change) {
+    print(change.currentState.adState);
+    print(change.currentState.skipValue);
+    print(change.currentState.skipped);
+    super.onChange(change);
   }
 
   void skip() {
