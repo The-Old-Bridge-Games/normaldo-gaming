@@ -36,6 +36,10 @@ class _MainScreenState extends State<MainScreen> {
     context.goNamed(NGRoutes.settings.name);
   }
 
+  void _onShopPressed() {
+    context.goNamed(NGRoutes.shop.name);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -115,11 +119,25 @@ class _MainScreenState extends State<MainScreen> {
             Align(
               alignment: const Alignment(-0.6, 1),
               child: _buildSlotMachineButton(),
-            )
+            ),
+            Align(
+              alignment: const Alignment(-0, 1),
+              child: _buildShopButton(),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildShopButton() {
+    return BouncingButton(
+        onPressed: _onShopPressed,
+        child: Image.asset(
+          'assets/images/shop.png',
+          height: 100,
+          width: 100,
+        ));
   }
 
   Widget _buildSlotMachineButton() {

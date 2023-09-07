@@ -67,7 +67,7 @@ class NGAppImpl implements NGApp {
       'sfx/mission_notification.mp3'
     ]);
     await AudioPlayer.global.setAudioContext(AudioContextConfig(
-      forceSpeaker: false,
+      respectSilence: true,
       duckAudio: true,
     ).build());
 

@@ -80,7 +80,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
 
   String get location {
     if (!mounted) return '';
-    return GoRouterState.of(context).location;
+    return GoRouterState.of(context).matchedLocation;
   }
 
   @override
@@ -88,6 +88,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     switch (state) {
       case AppLifecycleState.detached:
       case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
         _audio.pauseBgm();
         break;

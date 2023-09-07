@@ -25,6 +25,7 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
     switch (state) {
       case AppLifecycleState.detached:
       case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
         if (cubit.state.isDead) {
           break;
