@@ -1,3 +1,5 @@
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+
 final class User {
   final String id;
   final String name;
@@ -6,6 +8,7 @@ final class User {
   final int level;
   final int exp;
   final int extraLives;
+  final Skin skin;
 
   const User({
     required this.id,
@@ -15,5 +18,6 @@ final class User {
     required this.level,
     required this.exp,
     required this.extraLives,
+    required this.skin,
   });
 }

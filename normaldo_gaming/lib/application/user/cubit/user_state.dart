@@ -6,7 +6,7 @@ class UserState with _$UserState {
     required User user,
   }) = _UserState;
 
-  factory UserState.initial() => const UserState(
+  factory UserState.initial() => UserState(
           user: User(
         id: 'no_user',
         name: '',
@@ -15,5 +15,6 @@ class UserState with _$UserState {
         level: 0,
         exp: 0,
         extraLives: 0,
+        skin: Skin.defaultOne(),
       ));
 }

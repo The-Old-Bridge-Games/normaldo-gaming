@@ -1,3 +1,4 @@
+import 'package:normaldo_gaming/data/skins/models/skin_model.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
 final class UserModel {
@@ -8,6 +9,7 @@ final class UserModel {
   final int level;
   final int exp;
   final int extraLives;
+  final SkinModel skinModel;
 
   UserModel({
     required this.id,
@@ -17,6 +19,7 @@ final class UserModel {
     required this.level,
     required this.exp,
     required this.extraLives,
+    required this.skinModel,
   });
 
   UserModel.fromEntity(User user)
@@ -26,7 +29,8 @@ final class UserModel {
         highScore = user.highScore,
         level = user.level,
         exp = user.exp,
-        extraLives = user.extraLives;
+        extraLives = user.extraLives,
+        skinModel = SkinModel.fromEntity(user.skin);
 
   User toEntity() {
     return User(
@@ -37,6 +41,7 @@ final class UserModel {
       level: level,
       exp: exp,
       extraLives: extraLives,
+      skin: skinModel,
     );
   }
 
@@ -47,7 +52,8 @@ final class UserModel {
       highScore: json['highScore'],
       level: json['level'],
       exp: json['exp'],
-      extraLives: json['extraLives']);
+      extraLives: json['extraLives'],
+      skinModel: SkinModel.fromJson(json['skin']));
 
   Map<String, dynamic> toJson() {
     return {
@@ -68,6 +74,7 @@ final class UserModel {
     int? level,
     int? exp,
     int? extraLives,
+    SkinModel? skinModel,
   }) =>
       UserModel(
         id: id,
@@ -77,5 +84,6 @@ final class UserModel {
         level: level ?? this.level,
         exp: exp ?? this.exp,
         extraLives: extraLives ?? this.extraLives,
+        skinModel: skinModel ?? this.skinModel,
       );
 }

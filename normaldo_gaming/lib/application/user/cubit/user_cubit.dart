@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
@@ -122,6 +123,7 @@ class UserCubit extends HydratedCubit<UserState> {
       level: state.user.level,
       exp: state.user.exp,
       extraLives: state.user.extraLives,
+      skinModel: {},
     ).toJson();
   }
 }
