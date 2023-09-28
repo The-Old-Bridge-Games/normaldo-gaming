@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/data/ads/ng_ad_manager.dart';
 import 'package:normaldo_gaming/data/app/ng_audio_impl.dart';
+import 'package:normaldo_gaming/data/game_center/game_center.dart';
 import 'package:normaldo_gaming/data/level/level_manager_impl.dart';
 import 'package:normaldo_gaming/data/pull_up_game/missions/local_missions_repository.dart';
 import 'package:normaldo_gaming/data/shop/shop_repository_impl.dart';
@@ -41,6 +42,9 @@ void initializeInjector(Config config) {
     (injector) => LevelManagerImpl(injector.get()),
     isSingleton: true,
   );
+
+  // Centers
+  injector.map<GameCenter>((injector) => GameCenterImpl());
 
   // Audio
   injector.map<NgAudio>(

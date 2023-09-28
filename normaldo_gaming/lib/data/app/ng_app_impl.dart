@@ -13,6 +13,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/game_center/game_center.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -86,6 +87,10 @@ class NGAppImpl implements NGApp {
         storageDirectory: await getApplicationDocumentsDirectory());
 
     initializeInjector(config);
+    injector
+        .get<GameCenter>()
+        .signIn()
+        .then((id) => print('Game Center ID: $id'));
     await injector.get<NgAudio>().init();
     await injector.get<LevelManager>().init();
     const supportedLocales = [Locale('ru'), Locale('en')];
