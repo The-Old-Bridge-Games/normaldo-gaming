@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/domain/normaldo/normaldo.dart';
 
 Future<Map<NormaldoFatState, Sprite>> normaldoSprites() async {
   final skinnySprite = await Sprite.load('normaldo/normaldo1.png');
