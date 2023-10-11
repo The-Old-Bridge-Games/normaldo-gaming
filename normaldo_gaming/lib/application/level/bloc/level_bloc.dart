@@ -16,11 +16,11 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
 
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(
-        changeLevel: (levelIndex) => _onChangeLevel(levelIndex, emit),
-        addEffect: (timestamp, item, duration) =>
-            _onAddEffect(timestamp, item, duration, emit),
-        removeEffect: (item) => _onRemoveEffect(item, emit),
+        changeLevel: (levelIndex, effects) =>
+            _onChangeLevel(levelIndex, effects, emit),
         startFigure: (figure) => _startFigure(figure, emit),
+        changeSpeed: (multiplier, effects) =>
+            _onChangeSpeed(multiplier, effects, emit),
         startRandomFigure: (_) => _startRandomFigure(emit),
         finishFigure: () => _onFigureFinished(emit)));
   }
@@ -33,79 +33,38 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     return frequency;
   }
 
-  double speed(int level) {
+  double speed(int level, List<Items> effects) {
+    if (effects.contains(Items.hourglass)) {
+      return state.level.speed;
+    }
     var speed = (200 + (15 * level)).toDouble();
     if (level > limitProgressingLevel) {
       speed = (200 + (15 * 12)).toDouble();
     }
-    if (state.effects.values
-        .where((element) => element.key == Items.hourglass)
-        .isNotEmpty) {
-      return state.level.speed;
-    }
     return speed;
+  }
+
+  void _onChangeSpeed(
+    double speed,
+    List<Items> effects,
+    Emitter<LevelState> emit,
+  ) {
+    final level = state.level.copyWith(speed: speed);
+    emit(state.copyWith(level: level));
   }
 
   void _onChangeLevel(
     int level,
+    List<Items> effects,
     Emitter<LevelState> emit,
   ) {
     emit(state.copyWith(
         level: LinearLevel(
       index: level,
       frequency: frequency(level),
-      speed: speed(level),
+      speed: speed(level, effects),
       itemsChances: _itemsAppearingByLevel[level] ?? state.level.itemsChances,
     )));
-  }
-
-  void _onAddEffect(
-    int timestamp,
-    Items item,
-    double duration,
-    Emitter<LevelState> emit,
-  ) async {
-    final effects = Map<int, MapEntry<Items, double>>.from(state.effects);
-    final same = effects.entries.where((entry) => entry.value.key == item);
-    final List<int> toRemove = [];
-    for (final entry in same) {
-      toRemove.add(entry.key);
-    }
-    for (final removeKey in toRemove) {
-      effects.remove(removeKey);
-    }
-    var newState = state.copyWith(
-        effects: effects..[timestamp] = MapEntry(item, duration));
-
-    if (item == Items.hourglass &&
-        state.effects.values
-            .where((element) => element.key == Items.hourglass)
-            .isEmpty) {
-      newState = newState.copyWith(
-        level: state.level.copyWith(speed: state.level.speed / 2),
-      );
-    }
-
-    emit(newState);
-  }
-
-  void _onRemoveEffect(
-    Items item,
-    Emitter<LevelState> emit,
-  ) {
-    final effects = Map<int, MapEntry<Items, double>>.from(state.effects);
-    final int? removeKey = effects.entries
-        .cast()
-        .firstWhere((element) => element.value.key == item, orElse: () => null)
-        ?.key;
-    var newState = state.copyWith(effects: effects..remove(removeKey));
-
-    emit(newState);
-
-    if (item == Items.hourglass) {
-      emit(newState.copyWith(
-          level: state.level.copyWith(speed: speed(state.level.index))));
-    }
   }
 
   void _startFigure(

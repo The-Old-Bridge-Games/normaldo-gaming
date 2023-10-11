@@ -56,11 +56,7 @@ class Hourglass extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.hourglass);
       removeFromParent();
-      bloc.add(LevelEvent.addEffect(
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        item: Items.hourglass,
-        duration: (Random().nextInt(8).toDouble() + 3),
-      ));
+      other.effectsController.addEffect(item, Random().nextInt(8) + 3);
     }
     super.onCollisionStart(intersectionPoints, other);
   }

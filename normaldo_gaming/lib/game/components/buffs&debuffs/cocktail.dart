@@ -52,13 +52,7 @@ class Cocktail extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.cocktail);
       removeFromParent();
-      bloc.add(
-        LevelEvent.addEffect(
-          timestamp: DateTime.now().millisecondsSinceEpoch,
-          item: Items.cocktail,
-          duration: Random().nextInt(4) + 2,
-        ),
-      );
+      other.effectsController.addEffect(item, Random().nextInt(4) + 2);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
