@@ -25,6 +25,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
         finishFigure: () => _onFigureFinished(emit)));
   }
 
+  final _random = Random();
+  List<FigureEvent> _figuresPool = [];
+
   double frequency(int level) {
     var frequency = pow(0.9, level + 1).toDouble();
     if (level > 15) {
@@ -79,9 +82,11 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   void _startRandomFigure(
     Emitter<LevelState> emit,
   ) {
-    emit(state.copyWith(
-      figure: FigureEvent.values[Random().nextInt(FigureEvent.values.length)],
-    ));
+    if (_figuresPool.isEmpty) {
+      _figuresPool = FigureEvent.values;
+    }
+    final figure = _figuresPool.removeAt(_random.nextInt(_figuresPool.length));
+    emit(state.copyWith(figure: figure));
   }
 
   void _onFigureFinished(
