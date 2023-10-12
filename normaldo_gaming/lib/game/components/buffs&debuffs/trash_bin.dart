@@ -5,7 +5,6 @@ import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -19,15 +18,6 @@ class TrashBin extends PositionComponent
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
   TrashBin() : super(anchor: Anchor.center);
-
-  @override
-  Aura get aura => Aura.red;
-
-  @override
-  Component get auraComponent => RectangleComponent(
-        size: size,
-        paint: auraPaint,
-      );
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -56,7 +46,6 @@ class TrashBin extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('trash_bin.png'),
@@ -65,6 +54,8 @@ class TrashBin extends PositionComponent
       Vector2(0.9, 0.8),
       parentSize: size,
     ));
+    // add(RectangleComponent.relative(Vector2(0.9, 0.8),
+    //     parentSize: size, paint: Paint()..color = Colors.blue));
     // ..collisionType = CollisionType.passive);
 
     return super.onLoad();

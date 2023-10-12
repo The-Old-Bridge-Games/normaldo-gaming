@@ -3,9 +3,10 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class LevelTimerComponent extends TimerComponent
-    with FlameBlocReader<LevelBloc, LevelState> {
+    with FlameBlocReader<LevelBloc, LevelState>, HasGameRef {
   LevelTimerComponent()
       : super(period: LevelBloc.levelChangeDuration, repeat: true);
 
@@ -36,6 +37,13 @@ class LevelTimerComponent extends TimerComponent
 
   @override
   void onTick() {
-    bloc.add(LevelEvent.changeLevel(level: bloc.state.level.index + 1));
+    bloc.add(LevelEvent.changeLevel(
+      level: bloc.state.level.index + 1,
+      effects: (gameRef as PullUpGame)
+          .grid
+          .normaldo
+          .effectsController
+          .effectsInProgress,
+    ));
   }
 }

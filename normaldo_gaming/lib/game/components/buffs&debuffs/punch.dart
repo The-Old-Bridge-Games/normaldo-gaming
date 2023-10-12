@@ -6,7 +6,6 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -24,15 +23,6 @@ class Punch extends PositionComponent
   bool _activated = false;
 
   late final RotateEffect _shakeEffect;
-
-  @override
-  Aura get aura => Aura.red;
-
-  @override
-  PositionComponent get auraComponent => RectangleComponent(
-        size: size,
-        paint: auraPaint,
-      );
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -76,7 +66,6 @@ class Punch extends PositionComponent
         component.position.y == position.y &&
         component.position.x > position.x);
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('punch.png'),

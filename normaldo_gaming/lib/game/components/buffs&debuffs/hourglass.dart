@@ -7,7 +7,6 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -30,15 +29,6 @@ class Hourglass extends PositionComponent
   )..collisionType = CollisionType.passive;
 
   @override
-  Aura get aura => Aura.blue;
-
-  @override
-  Component get auraComponent => CircleComponent(
-        radius: size.x / 2,
-        paint: auraPaint,
-      );
-
-  @override
   bool listenWhen(LevelState previousState, LevelState newState) {
     return previousState.level != newState.level;
   }
@@ -56,11 +46,7 @@ class Hourglass extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.hourglass);
       removeFromParent();
-      bloc.add(LevelEvent.addEffect(
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        item: Items.hourglass,
-        duration: (Random().nextInt(8).toDouble() + 3),
-      ));
+      other.effectsController.addEffect(item, Random().nextInt(8) + 3);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -68,7 +54,6 @@ class Hourglass extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('hourglass.png'),

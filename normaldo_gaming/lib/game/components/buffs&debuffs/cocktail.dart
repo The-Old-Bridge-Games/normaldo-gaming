@@ -6,7 +6,6 @@ import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -26,15 +25,6 @@ class Cocktail extends PositionComponent
   )..collisionType = CollisionType.passive;
 
   @override
-  Aura get aura => Aura.blue;
-
-  @override
-  Component get auraComponent => CircleComponent(
-        radius: size.x / 2,
-        paint: auraPaint,
-      );
-
-  @override
   bool listenWhen(LevelState previousState, LevelState newState) {
     return previousState.level != newState.level;
   }
@@ -52,13 +42,7 @@ class Cocktail extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.cocktail);
       removeFromParent();
-      bloc.add(
-        LevelEvent.addEffect(
-          timestamp: DateTime.now().millisecondsSinceEpoch,
-          item: Items.cocktail,
-          duration: Random().nextInt(4) + 2,
-        ),
-      );
+      other.effectsController.addEffect(item, Random().nextInt(4) + 2);
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -66,7 +50,6 @@ class Cocktail extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('cocktail.png'),

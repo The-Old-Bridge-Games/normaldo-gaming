@@ -21,13 +21,6 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
 
   Items get item;
 
-  Aura get aura;
-  Paint get auraPaint => Paint()
-    ..color = aura.color
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-
-  Component get auraComponent;
-
   bool get isSoloSpawn;
 
   NgAudio get audio => injector.get();

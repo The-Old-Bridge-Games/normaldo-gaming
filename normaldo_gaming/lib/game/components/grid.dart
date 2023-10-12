@@ -209,8 +209,8 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateEvent event) {
-    if (bloc.state.effects.entries
-        .any((entry) => entry.value.key == Items.cocktail)) {
+    if (normaldo.effectsController.effectsInProgress
+        .any((item) => item == Items.cocktail)) {
       normaldo.position += event.delta * 0.3;
     } else {
       normaldo.position += event.delta * _getFatMultiplier(normaldo);

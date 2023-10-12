@@ -14,7 +14,6 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
-import 'package:normaldo_gaming/game/components/effects_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
@@ -43,7 +42,6 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   final fatCounter = FatCounter();
   late final Grid grid;
-  late final EffectsComponent effectsComponent;
 
   final _levelManager = injector.get<LevelManager>();
 
@@ -158,9 +156,6 @@ class PullUpGame extends FlameGame
           )
             ..size = Vector2(size.x, size.y)
             ..position = Vector2(0, 0),
-          effectsComponent = EffectsComponent()
-            ..position = Vector2(
-                scoreLabel.x, fatCounter.position.y + fatCounter.size.y + 8),
         ]));
     await add(
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(

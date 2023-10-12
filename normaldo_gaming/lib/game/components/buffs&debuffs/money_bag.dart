@@ -4,7 +4,6 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -17,14 +16,6 @@ class MoneyBag extends PositionComponent
         GameObject,
         FlameBlocListenable<LevelBloc, LevelState> {
   MoneyBag() : super(anchor: Anchor.center);
-
-  @override
-  Aura get aura => Aura.blue;
-
-  @override
-  Component get auraComponent => CircleComponent()
-    ..size = size
-    ..paint = auraPaint;
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -52,7 +43,6 @@ class MoneyBag extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('money_bag.png'),
