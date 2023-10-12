@@ -7,6 +7,7 @@ import 'package:normaldo_gaming/core/components/rounded_rectangle_component.dart
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
+import 'package:normaldo_gaming/game/utils/mission_tr_ext.dart';
 
 class MissionNotificationComponent extends PositionComponent {
   MissionNotificationComponent({
@@ -51,7 +52,7 @@ class MissionNotificationComponent extends PositionComponent {
           position: Vector2(16.0, 8.0),
         ),
         TextBoxComponent(
-            text: mission.description,
+            text: mission.trDescription(),
             boxConfig: TextBoxConfig(
               timePerChar: 2 / mission.description.length,
               margins: EdgeInsets.zero,
