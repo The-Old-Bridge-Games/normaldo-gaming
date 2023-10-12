@@ -6,7 +6,6 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -24,15 +23,6 @@ class BigBuddyBin extends PositionComponent
   BigBuddyBin({this.exploding = false}) : super(anchor: Anchor.center);
 
   bool exploding;
-
-  @override
-  Aura get aura => Aura.red;
-
-  @override
-  Component get auraComponent => RectangleComponent(
-        size: size,
-        paint: auraPaint,
-      );
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -70,7 +60,6 @@ class BigBuddyBin extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('trash_bin.png'),

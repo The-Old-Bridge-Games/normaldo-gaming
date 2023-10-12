@@ -6,7 +6,6 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -20,21 +19,6 @@ class FatPizza extends PositionComponent
         GameObject,
         FlameBlocListenable<LevelBloc, LevelState> {
   FatPizza() : super(anchor: Anchor.center);
-
-  @override
-  Aura get aura => Aura.green;
-
-  @override
-  Component get auraComponent => PolygonComponent(
-        [
-          Vector2(size.x * 0.3, 0), // top point
-          Vector2(size.x, size.y * 0.3), // right point
-          Vector2(size.x * 0.7, size.y), // bottom point
-          Vector2(0, size.y * 0.5), // left point
-        ],
-        size: size * 1.2,
-        paint: auraPaint,
-      );
 
   bool _active = false;
 
@@ -114,7 +98,6 @@ class FatPizza extends PositionComponent
   @override
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(auraComponent);
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('pizza_pack1.png'),
