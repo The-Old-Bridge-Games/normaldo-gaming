@@ -157,8 +157,10 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
             return Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/backgrounds/slot_machine_screen.png'))),
+                image: AssetImage(
+                    'assets/images/backgrounds/slot_machine_screen.png'),
+                fit: BoxFit.fitHeight,
+              )),
               child: Stack(
                 children: [
                   Align(
@@ -175,15 +177,20 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 150),
-                      child: IgnorePointer(
-                        child: SlotMachineWidget(
+                    child: IgnorePointer(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) =>
+                            SlotMachineWidget.stacked(
                           shuffle: false,
                           height: 110,
                           width: MediaQuery.of(context).size.width,
                           reelHeight: 300,
-                          reelSpacing: 160,
+                          // reelSpacing: constraints.maxWidth / 3.888888888,
+                          rollAlignments: const [
+                            Alignment(-0.6, 0),
+                            Alignment(-0.01, 0),
+                            Alignment(0.58, 0),
+                          ],
                           reelItemExtent: 100,
                           rollItems: _rollItems.values.toList(),
                           onCreated: _onCreated,
