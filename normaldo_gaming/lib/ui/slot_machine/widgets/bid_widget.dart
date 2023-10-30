@@ -51,10 +51,6 @@ class _BidWidgetState extends State<BidWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final increaseStyle =
-        textTheme.displaySmall?.copyWith(color: NGTheme.green1);
-    final decreaseStyle =
-        textTheme.displaySmall?.copyWith(color: Colors.red[400]);
     return BlocConsumer<UserCubit, UserState>(
       listener: (context, state) {
         if (state.user.dollars < _currentBid) {
@@ -69,36 +65,22 @@ class _BidWidgetState extends State<BidWidget> {
             step: 100,
             child: BouncingButton(
               onPressed: () => _onMinusPressed(100),
-              child: Text(
-                '-100',
-                style: decreaseStyle,
-                textAlign: TextAlign.center,
-              ),
+              child: _buildBidButton(increasing: false, text: '-100'),
             ),
           ),
           const SizedBox(width: 8),
           _decreaseBidderWrapper(
             step: 50,
             child: BouncingButton(
-              onPressed: () => _onMinusPressed(50),
-              child: Text(
-                '-50',
-                style: decreaseStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                onPressed: () => _onMinusPressed(50),
+                child: _buildBidButton(increasing: false, text: '-50')),
           ),
           const SizedBox(width: 8),
           _decreaseBidderWrapper(
             step: 5,
             child: BouncingButton(
-              onPressed: () => _onMinusPressed(5),
-              child: Text(
-                '-5',
-                style: decreaseStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                onPressed: () => _onMinusPressed(5),
+                child: _buildBidButton(increasing: false, text: '-5')),
           ),
           const SizedBox(width: 16),
           SizedBox(
@@ -114,41 +96,44 @@ class _BidWidgetState extends State<BidWidget> {
             step: 5,
             userDollars: state.user.dollars,
             child: BouncingButton(
-              onPressed: () => _onPlusPressed(5),
-              child: Text(
-                '+5',
-                style: increaseStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                onPressed: () => _onPlusPressed(5),
+                child: _buildBidButton(text: '+5')),
           ),
           const SizedBox(width: 8),
           _increaseBidderWrapper(
             step: 50,
             userDollars: state.user.dollars,
             child: BouncingButton(
-              onPressed: () => _onPlusPressed(50),
-              child: Text(
-                '+50',
-                style: increaseStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                onPressed: () => _onPlusPressed(50),
+                child: _buildBidButton(text: '+50')),
           ),
           const SizedBox(width: 8),
           _increaseBidderWrapper(
             step: 100,
             userDollars: state.user.dollars,
             child: BouncingButton(
-              onPressed: () => _onPlusPressed(100),
-              child: Text(
-                '+100',
-                style: increaseStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                onPressed: () => _onPlusPressed(100),
+                child: _buildBidButton(text: '+100')),
           ),
         ],
+      ),
+    );
+  }
+
+  Container _buildBidButton({
+    required String text,
+    bool increasing = true,
+  }) {
+    const increaseColor = NGTheme.green1;
+    final decreaseColor = Colors.red[400];
+    final textTheme = Theme.of(context).textTheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      color: increasing ? increaseColor : decreaseColor,
+      child: Text(
+        text,
+        style: textTheme.displaySmall,
+        textAlign: TextAlign.center,
       ),
     );
   }
