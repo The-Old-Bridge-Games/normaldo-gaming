@@ -42,6 +42,7 @@ dependencies:
   # Others
   home_indicator: ^2.0.2
   flutter_vibrate: ^1.3.0
+  phone_state: ^1.0.3
 
   # Localization
   easy_localization: ^3.0.2

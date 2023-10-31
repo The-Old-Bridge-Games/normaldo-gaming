@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
@@ -61,11 +60,6 @@ class GameSessionCubit extends Cubit<GameSessionState> {
 
   void togglePause() {
     emit(state.copyWith(paused: !state.paused));
-    if (!state.paused) {
-      injector.get<NgAudio>().resumeBgm();
-    } else {
-      injector.get<NgAudio>().pauseBgm();
-    }
   }
 
   void die() {

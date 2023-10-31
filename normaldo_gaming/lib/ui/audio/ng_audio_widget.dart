@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:phone_state/phone_state.dart';
 
 class AudioObserver extends NavigatorObserver {
   final audio = injector.get<NgAudio>();
@@ -78,6 +81,8 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     with WidgetsBindingObserver {
   final _audio = injector.get<NgAudio>();
 
+  StreamSubscription? _incomingCallSubscription;
+
   String get location {
     if (!mounted) return '';
     return GoRouterState.of(context).matchedLocation;
@@ -114,11 +119,17 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _startMainScreenBgm();
     });
+    _incomingCallSubscription = PhoneState.stream.listen((state) {
+      if (state.status == PhoneStateStatus.CALL_ENDED) {
+        _audio.resumeBgm();
+      }
+    });
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _incomingCallSubscription?.cancel();
     super.dispose();
   }
 
