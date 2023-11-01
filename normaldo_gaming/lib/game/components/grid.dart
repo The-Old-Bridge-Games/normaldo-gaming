@@ -7,7 +7,10 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/shuriken.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
@@ -45,32 +48,54 @@ class Grid extends PositionComponent
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
-    return previousState.level != newState.level;
+    return previousState.level != newState.level ||
+        previousState.miniGame != newState.miniGame;
   }
+
+  bool gameInProgress = false;
 
   @override
   void onNewState(LevelState state) async {
-    gameSessionCubit.changeLevel(state.level.index);
-    if (_itemsCreator != null) remove(_itemsCreator!);
-    _itemsCreator = TimerComponent(
-      period: state.level.frequency,
-      repeat: true,
-      onTick: () {
-        if (state.figure != null) return;
-        add(FlameBlocProvider<LevelBloc, LevelState>.value(
-            value: levelBloc,
-            children: [
-              ...state.level.next().map((e) => e.item.component()
-                ..size = e.item.getSize(lineSize)
-                ..position = Vector2(
-                    gameRef.size.x + e.item.getSize(lineSize).x * 2,
-                    _linesCentersY[
-                        e.line ?? Random().nextInt(_linesCentersY.length)]))
-            ]));
-      },
-    );
-    if (state.figure != null) _itemsCreator?.timer.pause();
-    add(_itemsCreator!);
+    if (state.miniGame != null) {
+      if (gameInProgress) return;
+      gameInProgress = true;
+      normaldo.notify(
+        text: 'Hmm.. I feel something..',
+        color: NGTheme.green1,
+      );
+      _itemsCreator?.timer.pause();
+      add(TimerComponent(
+          period: (2 + Random().nextInt(4)).toDouble(),
+          removeOnFinish: true,
+          onTick: () {
+            add(Shredder()
+              ..size = Items.shredder.getSize(lineSize)
+              ..position = Vector2(0, -100));
+          }));
+    } else {
+      if (gameInProgress) gameInProgress = false;
+      gameSessionCubit.changeLevel(state.level.index);
+      if (_itemsCreator != null) remove(_itemsCreator!);
+      _itemsCreator = TimerComponent(
+        period: state.level.frequency,
+        repeat: true,
+        onTick: () {
+          if (state.figure != null) return;
+          add(FlameBlocProvider<LevelBloc, LevelState>.value(
+              value: levelBloc,
+              children: [
+                ...state.level.next().map((e) => e.item.component()
+                  ..size = e.item.getSize(lineSize)
+                  ..position = Vector2(
+                      gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                      _linesCentersY[
+                          e.line ?? Random().nextInt(_linesCentersY.length)]))
+              ]));
+        },
+      );
+      if (state.figure != null) _itemsCreator?.timer.pause();
+      add(_itemsCreator!);
+    }
   }
 
   void stopLine(int index) {

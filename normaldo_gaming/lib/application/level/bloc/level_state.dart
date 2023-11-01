@@ -5,6 +5,7 @@ class LevelState with _$LevelState {
   const factory LevelState({
     required LinearLevel level,
     FigureEvent? figure,
+    MiniGame? miniGame,
   }) = _LevelState;
 
   factory LevelState.initial() => LevelState(

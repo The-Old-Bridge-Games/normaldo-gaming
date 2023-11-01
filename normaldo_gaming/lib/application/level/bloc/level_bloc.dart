@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mini_games/mini_game.dart';
 
 part 'level_bloc.freezed.dart';
 part 'level_event.dart';
@@ -16,13 +17,18 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
 
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(
-        changeLevel: (levelIndex, effects) =>
-            _onChangeLevel(levelIndex, effects, emit),
-        startFigure: (figure) => _startFigure(figure, emit),
-        changeSpeed: (multiplier, effects) =>
-            _onChangeSpeed(multiplier, effects, emit),
-        startRandomFigure: (_) => _startRandomFigure(emit),
-        finishFigure: () => _onFigureFinished(emit)));
+          changeLevel: (levelIndex, effects) =>
+              _onChangeLevel(levelIndex, effects, emit),
+          startFigure: (figure) => _startFigure(figure, emit),
+          changeSpeed: (multiplier, effects) =>
+              _onChangeSpeed(multiplier, effects, emit),
+          startRandomFigure: (_) => _startRandomFigure(emit),
+          finishFigure: () => _onFigureFinished(emit),
+          startMiniGame: (game) => _onStartMiniGame(game, emit),
+          finishMiniGame: () {
+            return emit(state.copyWith(miniGame: null));
+          },
+        ));
   }
 
   final _random = Random();
@@ -93,5 +99,12 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     Emitter<LevelState> emit,
   ) {
     emit(state.copyWith(figure: null));
+  }
+
+  void _onStartMiniGame(
+    MiniGame game,
+    Emitter<LevelState> emit,
+  ) {
+    emit(state.copyWith(miniGame: game));
   }
 }

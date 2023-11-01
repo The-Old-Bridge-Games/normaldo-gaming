@@ -20,6 +20,8 @@ mixin _$LevelEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -29,6 +31,8 @@ mixin _$LevelEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -38,6 +42,8 @@ mixin _$LevelEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -48,6 +54,8 @@ mixin _$LevelEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -57,6 +65,8 @@ mixin _$LevelEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -66,6 +76,8 @@ mixin _$LevelEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -174,6 +186,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -186,6 +200,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -198,6 +214,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -214,6 +232,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -226,6 +246,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -238,6 +260,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -338,6 +362,8 @@ class _$_StartFigure implements _StartFigure {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -350,6 +376,8 @@ class _$_StartFigure implements _StartFigure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -362,6 +390,8 @@ class _$_StartFigure implements _StartFigure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -378,6 +408,8 @@ class _$_StartFigure implements _StartFigure {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -390,6 +422,8 @@ class _$_StartFigure implements _StartFigure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -402,6 +436,8 @@ class _$_StartFigure implements _StartFigure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -422,6 +458,312 @@ abstract class _StartFigure implements LevelEvent {
   @JsonKey(ignore: true)
   _$$_StartFigureCopyWith<_$_StartFigure> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StartMiniGameCopyWith<$Res> {
+  factory _$$_StartMiniGameCopyWith(
+          _$_StartMiniGame value, $Res Function(_$_StartMiniGame) then) =
+      __$$_StartMiniGameCopyWithImpl<$Res>;
+  @useResult
+  $Res call({MiniGame game});
+
+  $MiniGameCopyWith<$Res> get game;
+}
+
+/// @nodoc
+class __$$_StartMiniGameCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$_StartMiniGame>
+    implements _$$_StartMiniGameCopyWith<$Res> {
+  __$$_StartMiniGameCopyWithImpl(
+      _$_StartMiniGame _value, $Res Function(_$_StartMiniGame) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? game = null,
+  }) {
+    return _then(_$_StartMiniGame(
+      game: null == game
+          ? _value.game
+          : game // ignore: cast_nullable_to_non_nullable
+              as MiniGame,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MiniGameCopyWith<$Res> get game {
+    return $MiniGameCopyWith<$Res>(_value.game, (value) {
+      return _then(_value.copyWith(game: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_StartMiniGame implements _StartMiniGame {
+  const _$_StartMiniGame({required this.game});
+
+  @override
+  final MiniGame game;
+
+  @override
+  String toString() {
+    return 'LevelEvent.startMiniGame(game: $game)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StartMiniGame &&
+            (identical(other.game, game) || other.game == game));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, game);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StartMiniGameCopyWith<_$_StartMiniGame> get copyWith =>
+      __$$_StartMiniGameCopyWithImpl<_$_StartMiniGame>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int level, List<Items> effects) changeLevel,
+    required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
+    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(double speed, List<Items> effects) changeSpeed,
+    required TResult Function() finishFigure,
+  }) {
+    return startMiniGame(game);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int level, List<Items> effects)? changeLevel,
+    TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
+    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(double speed, List<Items> effects)? changeSpeed,
+    TResult? Function()? finishFigure,
+  }) {
+    return startMiniGame?.call(game);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int level, List<Items> effects)? changeLevel,
+    TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
+    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(double speed, List<Items> effects)? changeSpeed,
+    TResult Function()? finishFigure,
+    required TResult orElse(),
+  }) {
+    if (startMiniGame != null) {
+      return startMiniGame(game);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeLevel value) changeLevel,
+    required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
+    required TResult Function(_StartRandomFigure value) startRandomFigure,
+    required TResult Function(_ChangeSpeed value) changeSpeed,
+    required TResult Function(_FinishFigure value) finishFigure,
+  }) {
+    return startMiniGame(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeLevel value)? changeLevel,
+    TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
+    TResult? Function(_StartRandomFigure value)? startRandomFigure,
+    TResult? Function(_ChangeSpeed value)? changeSpeed,
+    TResult? Function(_FinishFigure value)? finishFigure,
+  }) {
+    return startMiniGame?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeLevel value)? changeLevel,
+    TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
+    TResult Function(_StartRandomFigure value)? startRandomFigure,
+    TResult Function(_ChangeSpeed value)? changeSpeed,
+    TResult Function(_FinishFigure value)? finishFigure,
+    required TResult orElse(),
+  }) {
+    if (startMiniGame != null) {
+      return startMiniGame(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StartMiniGame implements LevelEvent {
+  const factory _StartMiniGame({required final MiniGame game}) =
+      _$_StartMiniGame;
+
+  MiniGame get game;
+  @JsonKey(ignore: true)
+  _$$_StartMiniGameCopyWith<_$_StartMiniGame> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_FinishMiniGameCopyWith<$Res> {
+  factory _$$_FinishMiniGameCopyWith(
+          _$_FinishMiniGame value, $Res Function(_$_FinishMiniGame) then) =
+      __$$_FinishMiniGameCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_FinishMiniGameCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$_FinishMiniGame>
+    implements _$$_FinishMiniGameCopyWith<$Res> {
+  __$$_FinishMiniGameCopyWithImpl(
+      _$_FinishMiniGame _value, $Res Function(_$_FinishMiniGame) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_FinishMiniGame implements _FinishMiniGame {
+  const _$_FinishMiniGame();
+
+  @override
+  String toString() {
+    return 'LevelEvent.finishMiniGame()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_FinishMiniGame);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int level, List<Items> effects) changeLevel,
+    required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
+    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(double speed, List<Items> effects) changeSpeed,
+    required TResult Function() finishFigure,
+  }) {
+    return finishMiniGame();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int level, List<Items> effects)? changeLevel,
+    TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
+    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(double speed, List<Items> effects)? changeSpeed,
+    TResult? Function()? finishFigure,
+  }) {
+    return finishMiniGame?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int level, List<Items> effects)? changeLevel,
+    TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
+    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(double speed, List<Items> effects)? changeSpeed,
+    TResult Function()? finishFigure,
+    required TResult orElse(),
+  }) {
+    if (finishMiniGame != null) {
+      return finishMiniGame();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeLevel value) changeLevel,
+    required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
+    required TResult Function(_StartRandomFigure value) startRandomFigure,
+    required TResult Function(_ChangeSpeed value) changeSpeed,
+    required TResult Function(_FinishFigure value) finishFigure,
+  }) {
+    return finishMiniGame(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeLevel value)? changeLevel,
+    TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
+    TResult? Function(_StartRandomFigure value)? startRandomFigure,
+    TResult? Function(_ChangeSpeed value)? changeSpeed,
+    TResult? Function(_FinishFigure value)? finishFigure,
+  }) {
+    return finishMiniGame?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeLevel value)? changeLevel,
+    TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
+    TResult Function(_StartRandomFigure value)? startRandomFigure,
+    TResult Function(_ChangeSpeed value)? changeSpeed,
+    TResult Function(_FinishFigure value)? finishFigure,
+    required TResult orElse(),
+  }) {
+    if (finishMiniGame != null) {
+      return finishMiniGame(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FinishMiniGame implements LevelEvent {
+  const factory _FinishMiniGame() = _$_FinishMiniGame;
 }
 
 /// @nodoc
@@ -500,6 +842,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -512,6 +856,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -524,6 +870,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -540,6 +888,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -552,6 +902,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -564,6 +916,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -668,6 +1022,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -680,6 +1036,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -692,6 +1050,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -708,6 +1068,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -720,6 +1082,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -732,6 +1096,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -796,6 +1162,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult when<TResult extends Object?>({
     required TResult Function(int level, List<Items> effects) changeLevel,
     required TResult Function(FigureEvent figure) startFigure,
+    required TResult Function(MiniGame game) startMiniGame,
+    required TResult Function() finishMiniGame,
     required TResult Function(List<FigureEvent>? figures) startRandomFigure,
     required TResult Function(double speed, List<Items> effects) changeSpeed,
     required TResult Function() finishFigure,
@@ -808,6 +1176,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int level, List<Items> effects)? changeLevel,
     TResult? Function(FigureEvent figure)? startFigure,
+    TResult? Function(MiniGame game)? startMiniGame,
+    TResult? Function()? finishMiniGame,
     TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult? Function(double speed, List<Items> effects)? changeSpeed,
     TResult? Function()? finishFigure,
@@ -820,6 +1190,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int level, List<Items> effects)? changeLevel,
     TResult Function(FigureEvent figure)? startFigure,
+    TResult Function(MiniGame game)? startMiniGame,
+    TResult Function()? finishMiniGame,
     TResult Function(List<FigureEvent>? figures)? startRandomFigure,
     TResult Function(double speed, List<Items> effects)? changeSpeed,
     TResult Function()? finishFigure,
@@ -836,6 +1208,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult map<TResult extends Object?>({
     required TResult Function(_ChangeLevel value) changeLevel,
     required TResult Function(_StartFigure value) startFigure,
+    required TResult Function(_StartMiniGame value) startMiniGame,
+    required TResult Function(_FinishMiniGame value) finishMiniGame,
     required TResult Function(_StartRandomFigure value) startRandomFigure,
     required TResult Function(_ChangeSpeed value) changeSpeed,
     required TResult Function(_FinishFigure value) finishFigure,
@@ -848,6 +1222,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ChangeLevel value)? changeLevel,
     TResult? Function(_StartFigure value)? startFigure,
+    TResult? Function(_StartMiniGame value)? startMiniGame,
+    TResult? Function(_FinishMiniGame value)? finishMiniGame,
     TResult? Function(_StartRandomFigure value)? startRandomFigure,
     TResult? Function(_ChangeSpeed value)? changeSpeed,
     TResult? Function(_FinishFigure value)? finishFigure,
@@ -860,6 +1236,8 @@ class _$_FinishFigure implements _FinishFigure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChangeLevel value)? changeLevel,
     TResult Function(_StartFigure value)? startFigure,
+    TResult Function(_StartMiniGame value)? startMiniGame,
+    TResult Function(_FinishMiniGame value)? finishMiniGame,
     TResult Function(_StartRandomFigure value)? startRandomFigure,
     TResult Function(_ChangeSpeed value)? changeSpeed,
     TResult Function(_FinishFigure value)? finishFigure,
@@ -2078,6 +2456,7 @@ abstract class _SlowMo implements FigureEvent {
 mixin _$LevelState {
   LinearLevel get level => throw _privateConstructorUsedError;
   FigureEvent? get figure => throw _privateConstructorUsedError;
+  MiniGame? get miniGame => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LevelStateCopyWith<LevelState> get copyWith =>
@@ -2090,9 +2469,10 @@ abstract class $LevelStateCopyWith<$Res> {
           LevelState value, $Res Function(LevelState) then) =
       _$LevelStateCopyWithImpl<$Res, LevelState>;
   @useResult
-  $Res call({LinearLevel level, FigureEvent? figure});
+  $Res call({LinearLevel level, FigureEvent? figure, MiniGame? miniGame});
 
   $FigureEventCopyWith<$Res>? get figure;
+  $MiniGameCopyWith<$Res>? get miniGame;
 }
 
 /// @nodoc
@@ -2110,6 +2490,7 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
   $Res call({
     Object? level = null,
     Object? figure = freezed,
+    Object? miniGame = freezed,
   }) {
     return _then(_value.copyWith(
       level: null == level
@@ -2120,6 +2501,10 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
               as FigureEvent?,
+      miniGame: freezed == miniGame
+          ? _value.miniGame
+          : miniGame // ignore: cast_nullable_to_non_nullable
+              as MiniGame?,
     ) as $Val);
   }
 
@@ -2134,6 +2519,18 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
       return _then(_value.copyWith(figure: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MiniGameCopyWith<$Res>? get miniGame {
+    if (_value.miniGame == null) {
+      return null;
+    }
+
+    return $MiniGameCopyWith<$Res>(_value.miniGame!, (value) {
+      return _then(_value.copyWith(miniGame: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -2144,10 +2541,12 @@ abstract class _$$_LevelStateCopyWith<$Res>
       __$$_LevelStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({LinearLevel level, FigureEvent? figure});
+  $Res call({LinearLevel level, FigureEvent? figure, MiniGame? miniGame});
 
   @override
   $FigureEventCopyWith<$Res>? get figure;
+  @override
+  $MiniGameCopyWith<$Res>? get miniGame;
 }
 
 /// @nodoc
@@ -2163,6 +2562,7 @@ class __$$_LevelStateCopyWithImpl<$Res>
   $Res call({
     Object? level = null,
     Object? figure = freezed,
+    Object? miniGame = freezed,
   }) {
     return _then(_$_LevelState(
       level: null == level
@@ -2173,6 +2573,10 @@ class __$$_LevelStateCopyWithImpl<$Res>
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
               as FigureEvent?,
+      miniGame: freezed == miniGame
+          ? _value.miniGame
+          : miniGame // ignore: cast_nullable_to_non_nullable
+              as MiniGame?,
     ));
   }
 }
@@ -2180,16 +2584,18 @@ class __$$_LevelStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LevelState implements _LevelState {
-  const _$_LevelState({required this.level, this.figure});
+  const _$_LevelState({required this.level, this.figure, this.miniGame});
 
   @override
   final LinearLevel level;
   @override
   final FigureEvent? figure;
+  @override
+  final MiniGame? miniGame;
 
   @override
   String toString() {
-    return 'LevelState(level: $level, figure: $figure)';
+    return 'LevelState(level: $level, figure: $figure, miniGame: $miniGame)';
   }
 
   @override
@@ -2198,11 +2604,13 @@ class _$_LevelState implements _LevelState {
         (other.runtimeType == runtimeType &&
             other is _$_LevelState &&
             (identical(other.level, level) || other.level == level) &&
-            (identical(other.figure, figure) || other.figure == figure));
+            (identical(other.figure, figure) || other.figure == figure) &&
+            (identical(other.miniGame, miniGame) ||
+                other.miniGame == miniGame));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, level, figure);
+  int get hashCode => Object.hash(runtimeType, level, figure, miniGame);
 
   @JsonKey(ignore: true)
   @override
@@ -2214,12 +2622,15 @@ class _$_LevelState implements _LevelState {
 abstract class _LevelState implements LevelState {
   const factory _LevelState(
       {required final LinearLevel level,
-      final FigureEvent? figure}) = _$_LevelState;
+      final FigureEvent? figure,
+      final MiniGame? miniGame}) = _$_LevelState;
 
   @override
   LinearLevel get level;
   @override
   FigureEvent? get figure;
+  @override
+  MiniGame? get miniGame;
   @override
   @JsonKey(ignore: true)
   _$$_LevelStateCopyWith<_$_LevelState> get copyWith =>

@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
@@ -28,6 +29,11 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
+    final gameSessionCubit = (gameRef as PullUpGame).gameSessionCubit;
+    if ((other is Normaldo && other.immortal) ||
+        gameSessionCubit.state.isDead) {
+      return;
+    }
     if (other is Normaldo && !other.immortal) {
       _levelManager.checkHit(hitItem: item);
     }
@@ -43,6 +49,12 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
     if (position.x < -size.x) {
       removeFromParent();
     }
+  }
+
+  @override
+  set onCollisionStartCallback(
+      CollisionCallback<PositionComponent>? _onCollisionStartCallback) {
+    super.onCollisionStartCallback = _onCollisionStartCallback;
   }
 
   @override

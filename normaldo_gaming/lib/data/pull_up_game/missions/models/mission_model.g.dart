@@ -46,4 +46,5 @@ const _$ItemsEnumMap = {
   Items.hourglass: 'hourglass',
   Items.punch: 'punch',
   Items.bigBuddyBin: 'bigBuddyBin',
+  Items.shredder: 'shredder',
 };

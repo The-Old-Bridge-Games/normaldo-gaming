@@ -9,6 +9,10 @@ abstract class LevelEvent with _$LevelEvent {
   const factory LevelEvent.startFigure({
     required FigureEvent figure,
   }) = _StartFigure;
+  const factory LevelEvent.startMiniGame({
+    required MiniGame game,
+  }) = _StartMiniGame;
+  const factory LevelEvent.finishMiniGame() = _FinishMiniGame;
   const factory LevelEvent.startRandomFigure({
     List<FigureEvent>? figures,
   }) = _StartRandomFigure;

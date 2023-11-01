@@ -12,6 +12,7 @@ import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'bomb.dart';
+import 'bosses/shredder.dart';
 
 class BigBuddyBin extends PositionComponent
     with
@@ -50,6 +51,8 @@ class BigBuddyBin extends PositionComponent
       } else {
         audio.playSfx(Sfx.binCrash);
       }
+    } else if (other is Shredder) {
+      removeFromParent();
     } else {
       other.removeFromParent();
     }
