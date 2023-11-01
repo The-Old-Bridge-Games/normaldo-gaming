@@ -11,6 +11,7 @@ class LevelTimerComponent extends TimerComponent
   LevelTimerComponent()
       : super(period: LevelBloc.levelChangeDuration, repeat: true);
 
+  final random = Random();
   double get _eventPeriod => (15 + Random().nextInt(16)).toDouble();
   // final double _eventPeriod = 5;
 
@@ -30,10 +31,13 @@ class LevelTimerComponent extends TimerComponent
   @override
   Future<void> onLoad() {
     add(TimerComponent(
-        period: (20 + Random().nextInt(100)).toDouble(),
+        period: (20 + random.nextInt(80)).toDouble(),
+        repeat: true,
         removeOnFinish: true,
         onTick: () {
-          bloc.add(const LevelEvent.startMiniGame(game: MiniGame.shredder()));
+          if (random.nextBool()) {
+            bloc.add(const LevelEvent.startMiniGame(game: MiniGame.shredder()));
+          }
         }));
     add(TimerComponent(
       period: _eventPeriod,
