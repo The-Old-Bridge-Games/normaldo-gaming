@@ -7,10 +7,9 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -20,7 +19,6 @@ class Shuriken extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
-        Eatable,
         GameObject,
         FlameBlocListenable<LevelBloc, LevelState> {
   Shuriken() : super(anchor: Anchor.center);
@@ -94,7 +92,7 @@ class Shuriken extends PositionComponent
           add(MoveToEffect(
             destination,
             EffectController(
-              speed: speed * 2,
+              duration: 3,
             ),
             onComplete: () => removeFromParent(),
           ));

@@ -30,7 +30,7 @@ class LevelTimerComponent extends TimerComponent
   @override
   Future<void> onLoad() {
     add(TimerComponent(
-        period: 5,
+        period: (20 + Random().nextInt(100)).toDouble(),
         removeOnFinish: true,
         onTick: () {
           bloc.add(const LevelEvent.startMiniGame(game: MiniGame.shredder()));

@@ -3,27 +3,28 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-import 'bomb.dart';
-import 'bosses/shredder/shredder.dart';
-
-class BigBuddyBin extends PositionComponent
+class ShredderSword extends PositionComponent
     with
-        HasGameRef,
         CollisionCallbacks,
+        HasGameRef,
         GameObject,
-        FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState> {
-  BigBuddyBin({this.exploding = false}) : super(anchor: Anchor.center);
+  ShredderSword() : super(anchor: Anchor.center);
 
-  bool exploding;
+  late final eatingHitbox = RectangleHitbox.relative(
+    Vector2.all(0.9),
+    parentSize: size,
+  )..collisionType = CollisionType.active;
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -32,46 +33,40 @@ class BigBuddyBin extends PositionComponent
 
   @override
   void onNewState(LevelState state) {
+    if (!hearsBloc) return;
     speed = state.level.speed;
   }
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    final gameSessionCubit = (gameRef as PullUpGame).gameSessionCubit;
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
     if (other is Normaldo) {
-      if (gameSessionCubit.state.hit || gameSessionCubit.state.isDead) return;
-      removeFromParent();
       other.takeHit();
-      final grid = (gameRef as PullUpGame).grid;
-      if (exploding) {
-        grid.add(BombExplosionComponent()..size = grid.size);
-        audio.playSfx(Sfx.bomb);
-        Vibrate.vibrate();
-      } else {
-        audio.playSfx(Sfx.binCrash);
-      }
-    } else if (other is Shredder) {
-      removeFromParent();
-    } else {
+      audio.playSfx(Sfx.binCrash);
+    }
+    if (other is GameObject &&
+        !disabled &&
+        other is! Punch &&
+        other is! BigBuddyBin &&
+        other is! Shredder) {
       other.removeFromParent();
     }
-
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
   Future<void> onLoad() async {
+    autoRemove = false;
+    disabled = true;
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(SpriteComponent(
       size: size,
-      sprite: await Sprite.load('trash_bin.png'),
+      sprite: await Sprite.load('shredder_sword.png'),
     ));
-    add(RectangleHitbox.relative(
-      Vector2(0.95, 0.95),
-      parentSize: size,
-    ));
-    // ..collisionType = CollisionType.passive);
+
+    add(eatingHitbox);
 
     return super.onLoad();
   }
@@ -80,5 +75,5 @@ class BigBuddyBin extends PositionComponent
   bool get isSoloSpawn => false;
 
   @override
-  Items get item => Items.bigBuddyBin;
+  Items get item => Items.shredderSword;
 }

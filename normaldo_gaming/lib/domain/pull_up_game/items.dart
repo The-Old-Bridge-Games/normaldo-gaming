@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/cocktail.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/dumbbell.dart';
@@ -11,6 +11,7 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/molotov.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/money_bag.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/shredder_sword.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/shuriken.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
 
@@ -29,7 +30,8 @@ enum Items {
   punch,
   bigBuddyBin,
   shredder,
-  shuriken;
+  shuriken,
+  shredderSword;
   // trashBin(0, 1),
   // pizza(250, 0),
   // dollar(0, 0),
@@ -70,6 +72,8 @@ enum Items {
         return Shredder();
       case shuriken:
         return Shuriken();
+      case shredderSword:
+        return ShredderSword();
     }
   }
 
@@ -100,9 +104,11 @@ enum Items {
       case bigBuddyBin:
         return Vector2(lineSize * 6 / 1.2, lineSize * 3 * 0.95);
       case shredder:
-        return Vector2(lineSize, lineSize);
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
       case shuriken:
         return Vector2(lineSize / 2, lineSize / 2);
+      case shredderSword:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
     }
   }
 }

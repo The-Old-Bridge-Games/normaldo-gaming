@@ -19,6 +19,7 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
   void Function() onRemoved = () {};
 
   bool disabled = false;
+  bool autoRemove = true;
 
   Items get item;
 
@@ -46,15 +47,11 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
     if (!disabled) {
       position.x -= speed * dt;
     }
-    if (position.x < -size.x) {
-      removeFromParent();
+    if (autoRemove) {
+      if (position.x < -size.x) {
+        removeFromParent();
+      }
     }
-  }
-
-  @override
-  set onCollisionStartCallback(
-      CollisionCallback<PositionComponent>? _onCollisionStartCallback) {
-    super.onCollisionStartCallback = _onCollisionStartCallback;
   }
 
   @override
