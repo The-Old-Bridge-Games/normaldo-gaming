@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/attacks/shredder_attack.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
@@ -10,7 +12,7 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/shredder_sword.dar
 import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 
-final class PredatorAttack extends ShredderAttack {
+final class PredatorAttack extends ShredderAttack with HasNgAudio {
   PredatorAttack() : _completed = false;
 
   bool _completed;
@@ -44,6 +46,7 @@ final class PredatorAttack extends ShredderAttack {
     while (destination.y > 0 && destination.y < grid.size.y) {
       destination += distinction;
     }
+    audio.playSfx(Sfx.shredderPredator);
     shredder.add(RotateEffect.by(
         (shredder.shredderSprite.isFlippedHorizontally ? pi : -pi) * 2,
         EffectController(

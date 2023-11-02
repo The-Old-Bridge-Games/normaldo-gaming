@@ -13,7 +13,9 @@ enum Sfx {
   molotov,
   hourglass,
   roundBox,
-  missionCompleted;
+  missionCompleted,
+  shredderPredator,
+  shurikens;
 
   const Sfx();
 }

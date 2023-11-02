@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/attacks/shredder_attack.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
@@ -20,7 +22,7 @@ final class Corner {
   final Vector2 position;
 }
 
-final class ShurikenShowerAttack extends ShredderAttack {
+final class ShurikenShowerAttack extends ShredderAttack with HasNgAudio {
   ShurikenShowerAttack() : _completed = false;
 
   final List<Corner> corners = [];
@@ -72,6 +74,7 @@ final class ShurikenShowerAttack extends ShredderAttack {
             duration: 0.5,
           ), onComplete: () {
         addShurikens(corner, shredder, grid);
+        audio.playSfx(Sfx.shurikens);
       }),
       RotateEffect.by(
         pi * 2,

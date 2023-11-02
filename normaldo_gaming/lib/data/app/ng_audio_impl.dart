@@ -243,6 +243,10 @@ extension on Sfx {
         return ['round_box.mp3'];
       case Sfx.missionCompleted:
         return ['mission_notification.mp3'];
+      case Sfx.shredderPredator:
+        return ['shredder_predator.mp3'];
+      case Sfx.shurikens:
+        return ['shurikens.mp3'];
     }
   }
 
@@ -262,5 +266,7 @@ extension on Sfx {
         Sfx.hourglass => 5,
         Sfx.roundBox => 8,
         Sfx.missionCompleted => 2,
+        Sfx.shredderPredator => 5,
+        Sfx.shurikens => 4,
       };
 }
