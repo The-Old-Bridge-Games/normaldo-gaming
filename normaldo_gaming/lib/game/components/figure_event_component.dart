@@ -177,6 +177,75 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   (index) => Item(item: Items.pizza, line: index))),
         ];
       },
+      winMoneyLabel: () => [
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 1),
+          const Item(item: Items.dollar, line: 2),
+        ],
+        [
+          const Item(item: Items.dollar, line: 3),
+        ],
+        [
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 2),
+          const Item(item: Items.dollar, line: 3),
+        ],
+        [
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 3),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 1),
+          const Item(item: Items.dollar, line: 2),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 1),
+          const Item(item: Items.dollar, line: 2),
+          const Item(item: Items.dollar, line: 3),
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 1),
+          const Item(item: Items.dollar, line: 2),
+          const Item(item: Items.dollar, line: 3),
+          const Item(item: Items.dollar, line: 4),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+        ],
+        [
+          const Item(item: Items.dollar, line: 1),
+        ],
+        [
+          const Item(item: Items.dollar, line: 2),
+        ],
+        [
+          const Item(item: Items.dollar, line: 3),
+        ],
+        [
+          const Item(item: Items.dollar, line: 0),
+          const Item(item: Items.dollar, line: 1),
+          const Item(item: Items.dollar, line: 2),
+          const Item(item: Items.dollar, line: 3),
+          const Item(item: Items.dollar, line: 4),
+        ],
+      ],
     );
 
     _addItemsFromMatrix(matrix);
@@ -354,6 +423,25 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
               ..size = itemSize
               ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
                   linesCentersY[item.line ?? 0]));
+          }
+        }
+      },
+      winMoneyLabel: () {
+        final gapIndexes = [7, 10];
+        double xOffset = 0;
+        for (final column in matrix) {
+          xOffset += Items.dollar.getSize(lineSize).x * 1.5;
+          if (gapIndexes.contains(matrix.indexOf(column))) {
+            xOffset += 100;
+          }
+          for (final item in column) {
+            final itemSize = item.item.getSize(lineSize);
+            add(item.item.component()
+              ..size = itemSize
+              ..position = Vector2(
+                size.x * 1.3 + xOffset,
+                linesCentersY[item.line ?? 0],
+              ));
           }
         }
       },

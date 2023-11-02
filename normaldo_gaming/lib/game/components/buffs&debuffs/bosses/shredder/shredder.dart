@@ -62,6 +62,8 @@ class Shredder extends PositionComponent
     autoRemove = false;
     onRemoved = () {
       bloc.add(const LevelEvent.finishMiniGame());
+      bloc.add(
+          const LevelEvent.startFigure(figure: FigureEvent.winMoneyLabel()));
     };
     disabled = true;
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;

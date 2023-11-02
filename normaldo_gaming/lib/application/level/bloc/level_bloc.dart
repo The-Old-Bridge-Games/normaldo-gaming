@@ -105,6 +105,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     MiniGame game,
     Emitter<LevelState> emit,
   ) {
-    emit(state.copyWith(miniGame: game));
+    if (state.miniGame == null) {
+      emit(state.copyWith(miniGame: game));
+    }
   }
 }

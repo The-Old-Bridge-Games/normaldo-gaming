@@ -33,6 +33,7 @@ class FigureEvent with _$FigureEvent {
   const factory FigureEvent.unreachablePizza() = _UnreachablePizza;
   const factory FigureEvent.only2Lines() = _Only2Times;
   const factory FigureEvent.slowMo() = _SlowMo;
+  const factory FigureEvent.winMoneyLabel() = _WinMoneyLabel;
 
   static List<FigureEvent> get values => [
         const FigureEvent.trashWall(),

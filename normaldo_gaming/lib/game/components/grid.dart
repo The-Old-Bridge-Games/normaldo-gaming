@@ -13,7 +13,6 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/sh
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
