@@ -32,6 +32,7 @@ final class ShurikenShowerAttack extends ShredderAttack {
 
   @override
   void start(Shredder shredder, Grid grid) {
+    shredder.scale = Vector2.all(1);
     corners.addAll([
       Corner(position: shredder.size, corner: Corners.topLeft),
       Corner(
@@ -68,7 +69,7 @@ final class ShurikenShowerAttack extends ShredderAttack {
       ScaleEffect.to(
           Vector2.all(1),
           EffectController(
-            duration: 1,
+            duration: 0.5,
           ), onComplete: () {
         addShurikens(corner, shredder, grid);
       }),
@@ -80,13 +81,7 @@ final class ShurikenShowerAttack extends ShredderAttack {
       ),
       ScaleEffect.to(Vector2.zero(), EffectController(duration: 0.5)),
     ], onComplete: () {
-      final nextCornerIndex = cornerIndex + 1;
-      if (nextCornerIndex < corners.length) {
-        _iterationAnimation(shredder, grid, nextCornerIndex);
-      } else {
-        _completed = true;
-        shredder.scale = Vector2.all(1);
-      }
+      _completed = true;
     }));
   }
 

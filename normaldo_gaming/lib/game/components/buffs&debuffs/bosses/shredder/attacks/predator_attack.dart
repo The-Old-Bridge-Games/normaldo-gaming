@@ -26,6 +26,7 @@ final class PredatorAttack extends ShredderAttack {
     final bottomRndPosition = Vector2(rndXPos, grid.size.y + shredder.size.y);
     final fromTop = Random().nextBool();
     shredder.position = fromTop ? topRndPosition : bottomRndPosition;
+    shredder.scale = Vector2.all(1);
     _flipIfNeeded(shredder, grid.normaldo);
     final sword = ShredderSword();
     shredder.add(sword
@@ -52,7 +53,7 @@ final class PredatorAttack extends ShredderAttack {
       MoveToEffect(
           destination,
           EffectController(
-            duration: 2,
+            speed: shredder.speed * 1.2,
             curve: Curves.linear,
           ), onComplete: () {
         _completed = true;

@@ -13,6 +13,7 @@ import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/sh
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'normaldo.dart';
 
@@ -67,6 +68,7 @@ class Grid extends PositionComponent
           period: (2 + Random().nextInt(4)).toDouble(),
           removeOnFinish: true,
           onTick: () {
+            removeAllItems();
             add(Shredder()
               ..size = Items.shredder.getSize(lineSize)
               ..position = Vector2(0, -100));

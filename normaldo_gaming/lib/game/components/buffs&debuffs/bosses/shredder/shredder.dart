@@ -46,7 +46,7 @@ class Shredder extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo) {
+    if (other is Normaldo && !other.immortal) {
       other.takeHit();
       audio.playSfx(Sfx.binCrash);
       // attack =
@@ -76,12 +76,15 @@ class Shredder extends PositionComponent
     final grid = (gameRef as PullUpGame).grid;
     _attacks.addAll([
       ShurikenShowerAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
       ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
     ]);
     _attacks.shuffle();
     if (_attacks.isNotEmpty) {

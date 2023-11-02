@@ -44,7 +44,7 @@ class Shuriken extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo) {
+    if (other is Normaldo && !other.immortal) {
       other.takeHit();
       audio.playSfx(Sfx.binCrash);
       removeFromParent();
@@ -92,7 +92,7 @@ class Shuriken extends PositionComponent
           add(MoveToEffect(
             destination,
             EffectController(
-              duration: 3,
+              speed: speed * 1.2,
             ),
             onComplete: () => removeFromParent(),
           ));
