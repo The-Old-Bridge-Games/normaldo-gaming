@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
@@ -68,6 +69,7 @@ class Grid extends PositionComponent
           removeOnFinish: true,
           onTick: () {
             removeAllItems();
+            add(BombExplosionComponent()..size = size);
             add(Shredder()
               ..size = Items.shredder.getSize(lineSize)
               ..position = Vector2(0, -100));
