@@ -247,7 +247,7 @@ final _allMissions = [
     value: 1,
   ),
   CrashItemInOneGameMission(
-    item: Items.dumbbell,
+    item: Items.homeless,
     exp: 2,
     value: 2,
   ),
