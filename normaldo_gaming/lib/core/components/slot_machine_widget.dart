@@ -16,7 +16,7 @@ class SlotMachineController {
 
 class SlotMachineWidget extends StatefulWidget {
   const SlotMachineWidget({
-    Key? key,
+    super.key,
     required this.rollItems,
     this.multiplyNumberOfSlotItems = 2,
     this.shuffle = true,
@@ -28,9 +28,26 @@ class SlotMachineWidget extends StatefulWidget {
     this.reelSpacing = 8,
     required this.onCreated,
     required this.onFinished,
-  }) : super(key: key);
+  }) : rollAlignments = const [];
+
+  const SlotMachineWidget.stacked({
+    super.key,
+    required this.rollItems,
+    required this.rollAlignments,
+    required this.onCreated,
+    required this.onFinished,
+    this.multiplyNumberOfSlotItems = 2,
+    this.shuffle = true,
+    this.width = 232,
+    this.height = 96,
+    this.reelWidth = 72,
+    this.reelHeight = 96,
+    this.reelItemExtent = 48,
+  })  : reelSpacing = 0,
+        assert(rollAlignments.length == 3);
 
   final List<RollItem> rollItems;
+  final List<AlignmentGeometry> rollAlignments;
   final int multiplyNumberOfSlotItems;
   final bool shuffle;
   final double width;
@@ -77,37 +94,75 @@ class _SlotMachineState extends State<SlotMachineWidget> {
         SizedBox(
           width: widget.width,
           height: widget.height,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _Reel(
-                reelWidth: widget.reelWidth,
-                reelHeight: widget.reelHeight,
-                itemExtent: widget.reelItemExtent,
-                rollItems: _actualRollItems,
-                shuffle: widget.shuffle,
-                onCreated: (lc) => _reelControllers[0] = lc,
-              ),
-              SizedBox(width: widget.reelSpacing),
-              _Reel(
-                reelWidth: widget.reelWidth,
-                reelHeight: widget.reelHeight,
-                itemExtent: widget.reelItemExtent,
-                rollItems: _actualRollItems,
-                shuffle: widget.shuffle,
-                onCreated: (lc) => _reelControllers[1] = lc,
-              ),
-              SizedBox(width: widget.reelSpacing),
-              _Reel(
-                reelWidth: widget.reelWidth,
-                reelHeight: widget.reelHeight,
-                itemExtent: widget.reelItemExtent,
-                rollItems: _actualRollItems,
-                shuffle: widget.shuffle,
-                onCreated: (lc) => _reelControllers[2] = lc,
-              ),
-            ],
-          ),
+          child: widget.rollAlignments.isNotEmpty
+              ? Stack(
+                  children: [
+                    Align(
+                      alignment: widget.rollAlignments.first,
+                      child: _Reel(
+                        reelWidth: widget.reelWidth,
+                        reelHeight: widget.reelHeight,
+                        itemExtent: widget.reelItemExtent,
+                        rollItems: _actualRollItems,
+                        shuffle: widget.shuffle,
+                        onCreated: (lc) => _reelControllers[0] = lc,
+                      ),
+                    ),
+                    Align(
+                      alignment: widget.rollAlignments[1],
+                      child: _Reel(
+                        reelWidth: widget.reelWidth,
+                        reelHeight: widget.reelHeight,
+                        itemExtent: widget.reelItemExtent,
+                        rollItems: _actualRollItems,
+                        shuffle: widget.shuffle,
+                        onCreated: (lc) => _reelControllers[1] = lc,
+                      ),
+                    ),
+                    Align(
+                      alignment: widget.rollAlignments[2],
+                      child: _Reel(
+                        reelWidth: widget.reelWidth,
+                        reelHeight: widget.reelHeight,
+                        itemExtent: widget.reelItemExtent,
+                        rollItems: _actualRollItems,
+                        shuffle: widget.shuffle,
+                        onCreated: (lc) => _reelControllers[2] = lc,
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _Reel(
+                      reelWidth: widget.reelWidth,
+                      reelHeight: widget.reelHeight,
+                      itemExtent: widget.reelItemExtent,
+                      rollItems: _actualRollItems,
+                      shuffle: widget.shuffle,
+                      onCreated: (lc) => _reelControllers[0] = lc,
+                    ),
+                    SizedBox(width: widget.reelSpacing),
+                    _Reel(
+                      reelWidth: widget.reelWidth,
+                      reelHeight: widget.reelHeight,
+                      itemExtent: widget.reelItemExtent,
+                      rollItems: _actualRollItems,
+                      shuffle: widget.shuffle,
+                      onCreated: (lc) => _reelControllers[1] = lc,
+                    ),
+                    SizedBox(width: widget.reelSpacing),
+                    _Reel(
+                      reelWidth: widget.reelWidth,
+                      reelHeight: widget.reelHeight,
+                      itemExtent: widget.reelItemExtent,
+                      rollItems: _actualRollItems,
+                      shuffle: widget.shuffle,
+                      onCreated: (lc) => _reelControllers[2] = lc,
+                    ),
+                  ],
+                ),
         ),
       ],
     );

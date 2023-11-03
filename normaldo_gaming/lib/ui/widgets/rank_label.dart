@@ -6,7 +6,9 @@ import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 class RankLabel extends StatelessWidget {
-  RankLabel({super.key});
+  RankLabel({super.key, this.style});
+
+  final TextStyle? style;
 
   final LevelManager _levelManager = injector.get();
 
@@ -15,7 +17,7 @@ class RankLabel extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
       return Text(_levelManager.rank(state.user).tr(),
-          style: textTheme.displayMedium);
+          style: style ?? textTheme.displayMedium);
     });
   }
 }
