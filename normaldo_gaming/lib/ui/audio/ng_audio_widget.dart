@@ -85,7 +85,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
 
   String get location {
     if (!mounted) return '';
-    return GoRouterState.of(context).matchedLocation;
+    return GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
   }
 
   @override
@@ -98,7 +98,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
         _audio.pauseBgm();
         break;
       case AppLifecycleState.resumed:
-        if (location == '/') {
+        if (location != '/main/pullUpGame') {
           _audio.resumeBgm();
         }
         break;
@@ -109,6 +109,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     _audio.clearBgm();
     _audio.addToBgm('main_theme.mp3');
     _audio.playBgm();
+    _audio.setVolumeToBgm(volume: 0.1);
   }
 
   @override

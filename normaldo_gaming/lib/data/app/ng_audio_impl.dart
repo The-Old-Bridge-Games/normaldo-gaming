@@ -6,17 +6,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 
-class NoAudio implements Exception {
-  NoAudio(this.id);
-
-  final int id;
-
-  @override
-  String toString() {
-    return 'NoAudio with $id identifier';
-  }
-}
-
 class NgAudioImpl implements NgAudio {
   double _bgmVolume = 0.1;
 
@@ -204,6 +193,57 @@ class NgAudioImpl implements NgAudio {
   void clearBgm() {
     assert(_initialized);
     _bgm.clear();
+  }
+
+  @override
+  Future<void> setVolumeToAudio({
+    required int audioId,
+    required double volume,
+  }) async {
+    if (volume < 0 || volume > 1) return;
+    final player = _players[audioId];
+    if (player != null) {
+      return player.setVolume(volume);
+    }
+  }
+
+  @override
+  Future<void> setVolumeToBgm({required double volume}) async {
+    if (volume < 0 || volume > 1) return;
+    _bgmVolume = volume;
+    await _currentBgmPlayer?.setVolume(volume);
+  }
+
+  @override
+  double audioVolume({required int audioId}) {
+    final player = _players[audioId];
+    if (player != null) return player.volume;
+    throw NoAudio(audioId);
+  }
+
+  @override
+  double get bgmVolume => _currentBgmPlayer?.volume ?? _bgmVolume;
+
+  @override
+  Future<void> stopAllAudios() async {
+    for (final player in _players.values) {
+      await player.stop();
+    }
+    _players.clear();
+  }
+
+  @override
+  Future<void> pauseAllAudios() async {
+    for (final player in _players.values) {
+      await player.pause();
+    }
+  }
+
+  @override
+  Future<void> resumeAllAudios() async {
+    for (final player in _players.values) {
+      await player.resume();
+    }
   }
 }
 

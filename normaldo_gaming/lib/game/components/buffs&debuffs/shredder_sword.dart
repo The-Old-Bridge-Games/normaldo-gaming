@@ -50,7 +50,8 @@ class ShredderSword extends PositionComponent
         !disabled &&
         other is! Punch &&
         other is! BigBuddyBin &&
-        other is! Shredder) {
+        other is! Shredder &&
+        other is! Normaldo) {
       other.removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);

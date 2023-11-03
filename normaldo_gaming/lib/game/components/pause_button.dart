@@ -28,9 +28,13 @@ class PauseButton extends SpriteComponent
           onNewState: (state) {
             if (state.paused) {
               gameRef.pauseEngine();
+              audio.pauseBgm();
+              audio.pauseAllAudios();
               gameRef.overlays.add(Overlays.pauseMenu.name);
             } else {
               gameRef.resumeEngine();
+              audio.resumeBgm();
+              audio.resumeAllAudios();
               gameRef.overlays.remove(Overlays.pauseMenu.name);
             }
           }),

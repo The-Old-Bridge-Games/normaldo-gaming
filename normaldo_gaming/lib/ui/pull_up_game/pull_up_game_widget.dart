@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
@@ -18,7 +19,7 @@ class PullUpGameWidget extends StatefulWidget {
 }
 
 class _PullUpGameWidgetState extends State<PullUpGameWidget>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, HasNgAudio {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final cubit = context.read<GameSessionCubit>();
@@ -49,6 +50,8 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    audio.setVolumeToBgm(volume: 0.1);
+    audio.stopAllAudios();
     super.dispose();
   }
 
