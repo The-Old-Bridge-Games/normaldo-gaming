@@ -11,19 +11,16 @@ class SlotMachineCubit extends Cubit<SlotMachineState> {
 
   void roll() {
     if (state.bid < 5) return;
-    final step = state.bid ~/ 5;
     final roller = Roller<Rolls>(List.generate(Rolls.values.length, (index) {
       final roll = Rolls.values[index];
-      return (roll, roll.weight(step));
+      return (roll, roll.weight());
     }));
     final roll = roller.roll();
     emit(state.copyWith(winRoll: roll, spinning: true));
   }
 
   void changeBid({required int bid}) {
-    assert(bid >= 5);
-    assert(bid <= 100);
-    assert(bid % 5 == 0);
+    assert(state.bid >= 5);
 
     emit(state.copyWith(bid: bid));
   }

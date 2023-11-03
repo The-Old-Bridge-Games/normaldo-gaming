@@ -177,6 +177,75 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   (index) => Item(item: Items.pizza, line: index))),
         ];
       },
+      winLabel: (item) => [
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+        ],
+        [
+          Item(item: item, line: 3),
+        ],
+        [
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+        ],
+        [
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 3),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
+        ],
+        [
+          Item(item: item, line: 0),
+        ],
+        [
+          Item(item: item, line: 1),
+        ],
+        [
+          Item(item: item, line: 2),
+        ],
+        [
+          Item(item: item, line: 3),
+        ],
+        [
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
+        ],
+      ],
     );
 
     _addItemsFromMatrix(matrix);
@@ -331,12 +400,12 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
-            final itemSize = Items.trashBin.getSize(lineSize);
+            final itemSize = item.item.getSize(lineSize);
             add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
                   size.x * (xOffset > 0 ? 2.6 : 1.3) +
-                      (xOffset * Items.trashBin.getSize(lineSize).x * 2),
+                      (xOffset * item.item.getSize(lineSize).x * 2),
                   linesCentersY[item.line ?? 0]));
           }
         }
@@ -354,6 +423,25 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
               ..size = itemSize
               ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
                   linesCentersY[item.line ?? 0]));
+          }
+        }
+      },
+      winLabel: (_) {
+        final gapIndexes = [7, 10];
+        double xOffset = 0;
+        for (final column in matrix) {
+          xOffset += Items.dollar.getSize(lineSize).x * 1.5;
+          if (gapIndexes.contains(matrix.indexOf(column))) {
+            xOffset += 100;
+          }
+          for (final item in column) {
+            final itemSize = item.item.getSize(lineSize);
+            add(item.item.component()
+              ..size = itemSize
+              ..position = Vector2(
+                size.x * 1.3 + xOffset,
+                linesCentersY[item.line ?? 0],
+              ));
           }
         }
       },

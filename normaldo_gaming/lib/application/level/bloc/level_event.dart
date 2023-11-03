@@ -9,6 +9,10 @@ abstract class LevelEvent with _$LevelEvent {
   const factory LevelEvent.startFigure({
     required FigureEvent figure,
   }) = _StartFigure;
+  const factory LevelEvent.startMiniGame({
+    required MiniGame game,
+  }) = _StartMiniGame;
+  const factory LevelEvent.finishMiniGame() = _FinishMiniGame;
   const factory LevelEvent.startRandomFigure({
     List<FigureEvent>? figures,
   }) = _StartRandomFigure;
@@ -29,6 +33,7 @@ class FigureEvent with _$FigureEvent {
   const factory FigureEvent.unreachablePizza() = _UnreachablePizza;
   const factory FigureEvent.only2Lines() = _Only2Times;
   const factory FigureEvent.slowMo() = _SlowMo;
+  const factory FigureEvent.winLabel({required Items item}) = _WinLabel;
 
   static List<FigureEvent> get values => [
         const FigureEvent.trashWall(),

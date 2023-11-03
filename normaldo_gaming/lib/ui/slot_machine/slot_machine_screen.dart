@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/components/slot_machine_widget.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
@@ -21,8 +22,13 @@ class SlotMachineScreen extends StatefulWidget {
   State<SlotMachineScreen> createState() => _SlotMachineScreenState();
 }
 
-class _SlotMachineScreenState extends State<SlotMachineScreen> {
+class _SlotMachineScreenState extends State<SlotMachineScreen>
+    with SingleTickerProviderStateMixin {
   late final SlotMachineController _controller;
+  late final _spinAnimationController = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  );
 
   final _rollItems = <Rolls, RollItem>{
     Rolls.exp1: RollItem(
@@ -77,6 +83,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
     final userCubit = context.read<UserCubit>();
 
     if (state.winRoll != null) {
+      _spinAnimationController.forward();
       final winRoll = state.winRoll!;
       userCubit.takeDollars(state.bid);
       if (state.winRoll == Rolls.empty) {
@@ -84,14 +91,17 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
       } else {
         _controller.start(hitRollItemIndex: _rollItems[winRoll]?.index);
       }
-      await Future.delayed(Duration(seconds: 1 + Random().nextInt(3)));
-      _controller.stop(reelIndex: 0);
-      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(900)));
-      _controller.stop(reelIndex: 1);
-      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(900)));
-      _controller.stop(reelIndex: 2);
+      final reelIndexes = [0, 1, 2]..shuffle();
+      await Future.delayed(
+          Duration(milliseconds: 300 + Random().nextInt(1700)));
+      _controller.stop(reelIndex: reelIndexes.removeAt(0));
+      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(400)));
+      _controller.stop(reelIndex: reelIndexes.removeAt(0));
+      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(400)));
+      _controller.stop(reelIndex: reelIndexes.removeAt(0));
       await Future.delayed(const Duration(milliseconds: 1000));
       cubit.stopSpin();
+      _spinAnimationController.reverse();
       if (winRoll != Rolls.empty) {
         // ignore: use_build_context_synchronously
         await showDialog(
@@ -122,7 +132,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
       case Rolls.half1:
         userCubit.addDollars(bid ~/ 2);
       case Rolls.win:
-        userCubit.addDollars(bid * 10);
+        userCubit.addDollars(bid * 2);
       case Rolls.jackpot:
         userCubit.addDollars(bid * 100);
     }
@@ -130,7 +140,6 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return WillPopScope(
       onWillPop: () async {
         if (context.read<SlotMachineCubit>().state.spinning) {
@@ -145,74 +154,53 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
           backgroundColor: Colors.black,
           body: BlocBuilder<SlotMachineCubit, SlotMachineState>(
               builder: (context, state) {
-            return Stack(
-              children: [
-                Visibility(
-                  visible: !state.spinning,
-                  child: Positioned(
-                    top: 24,
-                    left: 24,
-                    child: _buildBackButton(),
+            return Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage(
+                    'assets/images/backgrounds/slot_machine_screen.png'),
+                fit: BoxFit.fitHeight,
+              )),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: _buildBackButton(state),
                   ),
-                ),
-                Positioned(
-                  top: 80,
-                  left: 64,
-                  child: _buildBalance(),
-                ),
-                Positioned(
-                  top: 120,
-                  left: 64,
-                  child: _buildExtraLives(),
-                ),
-                Positioned(
-                  top: 240,
-                  right: 20,
-                  child: IgnorePointer(
-                    ignoring: state.spinning,
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 300),
-                      opacity: state.spinning ? 0.5 : 1,
-                      child: BidWidget(
-                        onBidChanged: (bid) {
-                          context.read<SlotMachineCubit>().changeBid(bid: bid);
-                        },
-                      ),
-                    ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: _buildUserLevel(),
                   ),
-                ),
-                Align(
-                  alignment: const Alignment(0, -0.89),
-                  child: UserLevelBar(
-                    levelManager: injector.get(),
-                    barWidth: 300,
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _buildBottomPanel(state),
                   ),
-                ),
-                _buildSlotMachine(),
-                Positioned(
-                  right: -20,
-                  top: 180,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 48),
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 300),
-                      opacity: state.spinning ? 0.5 : 1,
-                      child: BouncingButton(
-                        onPressed: state.spinning ||
-                                context.read<UserCubit>().state.user.dollars <
-                                    state.bid
-                            ? null
-                            : _onSpinPressed,
-                        child: Text(
-                          'Spin'.tr(),
-                          style: textTheme.displayLarge,
-                          textAlign: TextAlign.center,
+                  Align(
+                    alignment: Alignment.center,
+                    child: IgnorePointer(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) =>
+                            SlotMachineWidget.stacked(
+                          shuffle: false,
+                          height: 110,
+                          width: MediaQuery.of(context).size.width,
+                          reelHeight: 300,
+                          // reelSpacing: constraints.maxWidth / 3.888888888,
+                          rollAlignments: const [
+                            Alignment(-0.6, 0),
+                            Alignment(-0.01, 0),
+                            Alignment(0.58, 0),
+                          ],
+                          reelItemExtent: 100,
+                          rollItems: _rollItems.values.toList(),
+                          onCreated: _onCreated,
+                          onFinished: (resultIndexes) {},
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
             );
           }),
         ),
@@ -220,99 +208,179 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
     );
   }
 
-  Widget _buildSlotMachine() {
-    return Positioned(
-      bottom: 0,
-      right: 100,
-      left: 100,
-      child: Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/slot_machine.png',
-                height: 300,
-                width: 150,
-              ),
-              const SizedBox(width: 8),
-              Image.asset(
-                'assets/images/slot_machine.png',
-                height: 300,
-                width: 150,
-              ),
-              const SizedBox(width: 8),
-              Image.asset(
-                'assets/images/slot_machine.png',
-                height: 300,
-                width: 150,
-              ),
-            ],
+  Widget _buildBottomPanel(SlotMachineState state) {
+    final textTheme = Theme.of(context).textTheme;
+    const borderSide = BorderSide(
+      width: 3,
+      color: NGTheme.purple2,
+    );
+    return AnimatedBuilder(
+      animation: _spinAnimationController,
+      builder: (context, child) => Transform.translate(
+        offset: const Offset(0, 150) * _spinAnimationController.value,
+        child: child,
+      ),
+      child: Container(
+        padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          border: Border(
+            left: borderSide,
+            top: borderSide,
+            right: borderSide,
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: (300 * 0.272)),
-              child: IgnorePointer(
-                child: SlotMachineWidget(
-                  shuffle: false,
-                  height: 57,
-                  reelSpacing: 90,
-                  width: 400,
-                  reelItemExtent: 50,
-                  rollItems: _rollItems.values.toList(),
-                  onCreated: _onCreated,
-                  onFinished: (resultIndexes) {},
+        ),
+        child: SafeArea(
+          left: false,
+          right: false,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildExtraLives(),
+              const SizedBox(width: 16),
+              _buildBalance(),
+              const SizedBox(width: 32),
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: BidWidget(onBidChanged: (newBid) {
+                  context.read<SlotMachineCubit>().changeBid(bid: newBid);
+                }),
+              ),
+              const SizedBox(width: 32),
+              IgnorePointer(
+                ignoring: state.spinning,
+                child: Visibility(
+                  visible: !state.spinning,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  maintainState: true,
+                  child: GestureDetector(
+                    onTap: _onSpinPressed,
+                    child: Text(
+                      'Spin'.tr(),
+                      style: textTheme.displayMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(width: 8),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildExtraLives() {
     final textTheme = Theme.of(context).textTheme;
+    const double side = 20;
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         return Row(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Image.asset('assets/images/heart.png', width: 30, height: 30),
+            Image.asset('assets/images/heart.png', width: side, height: side),
             const SizedBox(width: 8),
-            Text(state.user.extraLives.toString(),
-                style: textTheme.displayMedium),
+            SizedBox(
+              width: 30,
+              child: Text(state.user.extraLives.toString(),
+                  style: textTheme.displayMedium),
+            ),
           ],
         );
       },
     );
   }
 
-  Widget _buildBackButton() {
-    final textTheme = Theme.of(context).textTheme;
-    return BouncingButton(
-        onPressed: () => context.pop(),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.chevron_left, size: 30, color: Colors.white),
-            const SizedBox(width: 4),
-            Text('Back'.tr(), style: textTheme.displayLarge)
-          ],
-        ));
-  }
-
   Widget _buildBalance() {
+    const double side = 20;
     final textTheme = Theme.of(context).textTheme;
     return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
       return Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Image.asset('assets/images/dollar.png', width: 30, height: 30),
+          Image.asset('assets/images/dollar.png', width: side, height: side),
           const SizedBox(width: 8),
-          Text(state.user.dollars.toString(), style: textTheme.displayMedium),
+          SizedBox(
+            width: 100,
+            child: Text(state.user.dollars.toString(),
+                style: textTheme.displayMedium),
+          ),
         ],
       );
     });
+  }
+
+  Widget _buildUserLevel() {
+    final textTheme = Theme.of(context).textTheme;
+    const borderSide = BorderSide(
+      width: 3,
+      color: NGTheme.purple2,
+    );
+    return AnimatedBuilder(
+      animation: _spinAnimationController,
+      builder: (context, child) => Transform.translate(
+        offset: const Offset(200, -100) * _spinAnimationController.value,
+        child: Transform.rotate(
+          angle: pi / 2 * _spinAnimationController.value,
+          child: child,
+        ),
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+            .add(const EdgeInsets.only(right: 32)),
+        decoration: const BoxDecoration(
+            color: Colors.black,
+            border: Border(
+              bottom: borderSide,
+              left: borderSide,
+            )),
+        child: UserLevelBar(
+          levelManager: injector.get(),
+          barWidth: 100,
+          rankStyle: textTheme.bodySmall,
+          iconSize: 20,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackButton(SlotMachineState state) {
+    final textTheme = Theme.of(context).textTheme;
+    const borderSide = BorderSide(
+      width: 3,
+      color: NGTheme.purple2,
+    );
+    return IgnorePointer(
+      ignoring: state.spinning,
+      child: AnimatedBuilder(
+        animation: _spinAnimationController,
+        builder: (context, child) => Transform.translate(
+          offset: const Offset(-100, -100) * _spinAnimationController.value,
+          child: Transform.rotate(
+            alignment: Alignment.topLeft,
+            angle: _spinAnimationController.value * -pi / 2,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  border: Border(
+                    bottom: borderSide,
+                    right: borderSide,
+                  )),
+              child: BouncingButton(
+                  onPressed: () => context.pop(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 24, top: 16),
+                    child: Text('Exit'.tr(), style: textTheme.displayMedium),
+                  )),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -6,22 +6,25 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
+import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-class Dumbbell extends PositionComponent
+class ShredderSword extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
         GameObject,
         FlameBlocListenable<LevelBloc, LevelState> {
-  Dumbbell() : super(anchor: Anchor.center);
+  ShredderSword() : super(anchor: Anchor.center);
 
-  late final _eatingHitbox = CircleHitbox(
-    radius: size.x / 2.2,
-    position: Vector2(2, 0),
-  )..collisionType = CollisionType.passive;
+  late final eatingHitbox = RectangleHitbox.relative(
+    Vector2.all(0.9),
+    parentSize: size,
+  )..collisionType = CollisionType.active;
 
   @override
   bool listenWhen(LevelState previousState, LevelState newState) {
@@ -30,6 +33,7 @@ class Dumbbell extends PositionComponent
 
   @override
   void onNewState(LevelState state) {
+    if (!hearsBloc) return;
     speed = state.level.speed;
   }
 
@@ -38,43 +42,39 @@ class Dumbbell extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo && _eatingHitbox.isColliding) {
-      removeFromParent();
-      audio.playSfx(Sfx.dumbbellCatch);
-      other.decreaseFatPoints(other.pizzaToGetFatter ?? 0);
+    if (other is Normaldo && !other.immortal) {
+      other.takeHit();
+      audio.playSfx(Sfx.binCrash);
+    }
+    if (other is GameObject &&
+        !disabled &&
+        other is! Punch &&
+        other is! BigBuddyBin &&
+        other is! Shredder &&
+        other is! Normaldo) {
+      other.removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
   Future<void> onLoad() async {
+    autoRemove = false;
+    disabled = true;
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
-    add(
-      SpriteAnimationComponent(
-          size: size,
-          animation: SpriteAnimation.spriteList(
-            [
-              await Sprite.load('dumbbell1.png'),
-              await Sprite.load('dumbbell2.png'),
-            ],
-            stepTime: 0.5,
-          )),
-    );
-    add(_eatingHitbox);
+    add(SpriteComponent(
+      size: size,
+      sprite: await Sprite.load('shredder_sword.png'),
+    ));
 
-    // 4DEV
-    // add(CircleComponent(
-    //   radius: size.x / 2.2,
-    //   position: Vector2(2, 0),
-    //   paint: Paint()..color = Colors.white.withOpacity(0.7),
-    // ));
+    add(eatingHitbox);
 
     return super.onLoad();
   }
 
   @override
-  bool get isSoloSpawn => true;
+  bool get isSoloSpawn => false;
 
   @override
-  Items get item => Items.dumbbell;
+  Items get item => Items.shredderSword;
 }

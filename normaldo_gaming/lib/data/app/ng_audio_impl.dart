@@ -6,17 +6,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 
-class NoAudio implements Exception {
-  NoAudio(this.id);
-
-  final int id;
-
-  @override
-  String toString() {
-    return 'NoAudio with $id identifier';
-  }
-}
-
 class NgAudioImpl implements NgAudio {
   double _bgmVolume = 0.1;
 
@@ -205,6 +194,57 @@ class NgAudioImpl implements NgAudio {
     assert(_initialized);
     _bgm.clear();
   }
+
+  @override
+  Future<void> setVolumeToAudio({
+    required int audioId,
+    required double volume,
+  }) async {
+    if (volume < 0 || volume > 1) return;
+    final player = _players[audioId];
+    if (player != null) {
+      return player.setVolume(volume);
+    }
+  }
+
+  @override
+  Future<void> setVolumeToBgm({required double volume}) async {
+    if (volume < 0 || volume > 1) return;
+    _bgmVolume = volume;
+    await _currentBgmPlayer?.setVolume(volume);
+  }
+
+  @override
+  double audioVolume({required int audioId}) {
+    final player = _players[audioId];
+    if (player != null) return player.volume;
+    throw NoAudio(audioId);
+  }
+
+  @override
+  double get bgmVolume => _currentBgmPlayer?.volume ?? _bgmVolume;
+
+  @override
+  Future<void> stopAllAudios() async {
+    for (final player in _players.values) {
+      await player.stop();
+    }
+    _players.clear();
+  }
+
+  @override
+  Future<void> pauseAllAudios() async {
+    for (final player in _players.values) {
+      await player.pause();
+    }
+  }
+
+  @override
+  Future<void> resumeAllAudios() async {
+    for (final player in _players.values) {
+      await player.resume();
+    }
+  }
 }
 
 extension on Sfx {
@@ -243,6 +283,10 @@ extension on Sfx {
         return ['round_box.mp3'];
       case Sfx.missionCompleted:
         return ['mission_notification.mp3'];
+      case Sfx.shredderPredator:
+        return ['shredder_predator.mp3'];
+      case Sfx.shurikens:
+        return ['shurikens.mp3'];
     }
   }
 
@@ -262,5 +306,7 @@ extension on Sfx {
         Sfx.hourglass => 5,
         Sfx.roundBox => 8,
         Sfx.missionCompleted => 2,
+        Sfx.shredderPredator => 5,
+        Sfx.shurikens => 4,
       };
 }

@@ -38,7 +38,7 @@ const _$ItemsEnumMap = {
   Items.pizza: 'pizza',
   Items.dollar: 'dollar',
   Items.fatPizza: 'fatPizza',
-  Items.dumbbell: 'dumbbell',
+  Items.homeless: 'homeless',
   Items.moneyBag: 'moneyBag',
   Items.bomb: 'bomb',
   Items.cocktail: 'cocktail',
@@ -46,4 +46,7 @@ const _$ItemsEnumMap = {
   Items.hourglass: 'hourglass',
   Items.punch: 'punch',
   Items.bigBuddyBin: 'bigBuddyBin',
+  Items.shredder: 'shredder',
+  Items.shuriken: 'shuriken',
+  Items.shredderSword: 'shredderSword',
 };
