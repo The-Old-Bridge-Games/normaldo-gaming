@@ -400,12 +400,12 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
-            final itemSize = Items.trashBin.getSize(lineSize);
+            final itemSize = item.item.getSize(lineSize);
             add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
                   size.x * (xOffset > 0 ? 2.6 : 1.3) +
-                      (xOffset * Items.trashBin.getSize(lineSize).x * 2),
+                      (xOffset * item.item.getSize(lineSize).x * 2),
                   linesCentersY[item.line ?? 0]));
           }
         }

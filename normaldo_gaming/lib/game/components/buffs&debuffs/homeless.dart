@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
@@ -10,13 +13,15 @@ import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-class Dumbbell extends PositionComponent
+class Homeless extends PositionComponent
     with
         CollisionCallbacks,
         HasGameRef,
         GameObject,
         FlameBlocListenable<LevelBloc, LevelState> {
-  Dumbbell() : super(anchor: Anchor.center);
+  Homeless() : super(anchor: Anchor.center);
+
+  final random = Random();
 
   late final _eatingHitbox = CircleHitbox(
     radius: size.x / 2.2,
@@ -38,10 +43,10 @@ class Dumbbell extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo && _eatingHitbox.isColliding) {
+    if (other is Normaldo) {
       removeFromParent();
-      audio.playSfx(Sfx.dumbbellCatch);
-      other.decreaseFatPoints(other.pizzaToGetFatter ?? 0);
+      audio.playSfx(Sfx.binCrash);
+      other.takeHit();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -50,17 +55,26 @@ class Dumbbell extends PositionComponent
   Future<void> onLoad() async {
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
     add(
-      SpriteAnimationComponent(
-          size: size,
-          animation: SpriteAnimation.spriteList(
-            [
-              await Sprite.load('dumbbell1.png'),
-              await Sprite.load('dumbbell2.png'),
-            ],
-            stepTime: 0.5,
-          )),
+      SpriteComponent(
+        size: size,
+        sprite: await Sprite.load(
+            random.nextBool() ? 'homeless1.png' : 'homeless2.png'),
+      ),
     );
     add(_eatingHitbox);
+    add(
+      TimerComponent(
+          period: 1 + random.nextInt(3).toDouble() + random.nextDouble(),
+          repeat: true,
+          onTick: () {
+            add(RotateEffect.to(
+                pi * 2 * (random.nextBool() ? -1 : 1),
+                EffectController(
+                  duration: 1,
+                  curve: Curves.easeInOutCubicEmphasized,
+                )));
+          }),
+    );
 
     // 4DEV
     // add(CircleComponent(
@@ -76,5 +90,5 @@ class Dumbbell extends PositionComponent
   bool get isSoloSpawn => true;
 
   @override
-  Items get item => Items.dumbbell;
+  Items get item => Items.homeless;
 }

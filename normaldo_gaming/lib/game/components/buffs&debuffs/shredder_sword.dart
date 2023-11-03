@@ -42,7 +42,7 @@ class ShredderSword extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo) {
+    if (other is Normaldo && !other.immortal) {
       other.takeHit();
       audio.playSfx(Sfx.binCrash);
     }

@@ -38,7 +38,7 @@ const _$ItemsEnumMap = {
   Items.pizza: 'pizza',
   Items.dollar: 'dollar',
   Items.fatPizza: 'fatPizza',
-  Items.dumbbell: 'dumbbell',
+  Items.homeless: 'homeless',
   Items.moneyBag: 'moneyBag',
   Items.bomb: 'bomb',
   Items.cocktail: 'cocktail',
