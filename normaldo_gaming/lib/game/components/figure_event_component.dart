@@ -177,73 +177,73 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   (index) => Item(item: Items.pizza, line: index))),
         ];
       },
-      winMoneyLabel: () => [
+      winLabel: (item) => [
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 1),
-          const Item(item: Items.dollar, line: 2),
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
         ],
         [
-          const Item(item: Items.dollar, line: 3),
+          Item(item: item, line: 3),
         ],
         [
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 2),
-          const Item(item: Items.dollar, line: 3),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
         ],
         [
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 3),
+          Item(item: item, line: 3),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 1),
-          const Item(item: Items.dollar, line: 2),
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 0),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 1),
-          const Item(item: Items.dollar, line: 2),
-          const Item(item: Items.dollar, line: 3),
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 0),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 1),
-          const Item(item: Items.dollar, line: 2),
-          const Item(item: Items.dollar, line: 3),
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
+          Item(item: item, line: 0),
         ],
         [
-          const Item(item: Items.dollar, line: 1),
+          Item(item: item, line: 1),
         ],
         [
-          const Item(item: Items.dollar, line: 2),
+          Item(item: item, line: 2),
         ],
         [
-          const Item(item: Items.dollar, line: 3),
+          Item(item: item, line: 3),
         ],
         [
-          const Item(item: Items.dollar, line: 0),
-          const Item(item: Items.dollar, line: 1),
-          const Item(item: Items.dollar, line: 2),
-          const Item(item: Items.dollar, line: 3),
-          const Item(item: Items.dollar, line: 4),
+          Item(item: item, line: 0),
+          Item(item: item, line: 1),
+          Item(item: item, line: 2),
+          Item(item: item, line: 3),
+          Item(item: item, line: 4),
         ],
       ],
     );
@@ -426,7 +426,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           }
         }
       },
-      winMoneyLabel: () {
+      winLabel: (_) {
         final gapIndexes = [7, 10];
         double xOffset = 0;
         for (final column in matrix) {

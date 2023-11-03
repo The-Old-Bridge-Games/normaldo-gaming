@@ -1266,7 +1266,7 @@ mixin _$FigureEvent {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1279,7 +1279,7 @@ mixin _$FigureEvent {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1292,7 +1292,7 @@ mixin _$FigureEvent {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1306,7 +1306,7 @@ mixin _$FigureEvent {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1319,7 +1319,7 @@ mixin _$FigureEvent {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1332,7 +1332,7 @@ mixin _$FigureEvent {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1402,7 +1402,7 @@ class _$_TrashWall implements _TrashWall {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return trashWall();
   }
@@ -1418,7 +1418,7 @@ class _$_TrashWall implements _TrashWall {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return trashWall?.call();
   }
@@ -1434,7 +1434,7 @@ class _$_TrashWall implements _TrashWall {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (trashWall != null) {
@@ -1454,7 +1454,7 @@ class _$_TrashWall implements _TrashWall {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return trashWall(this);
   }
@@ -1470,7 +1470,7 @@ class _$_TrashWall implements _TrashWall {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return trashWall?.call(this);
   }
@@ -1486,7 +1486,7 @@ class _$_TrashWall implements _TrashWall {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (trashWall != null) {
@@ -1546,7 +1546,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return guardedPizza();
   }
@@ -1562,7 +1562,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return guardedPizza?.call();
   }
@@ -1578,7 +1578,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (guardedPizza != null) {
@@ -1598,7 +1598,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return guardedPizza(this);
   }
@@ -1614,7 +1614,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return guardedPizza?.call(this);
   }
@@ -1630,7 +1630,7 @@ class _$_GuardedPizza implements _GuardedPizza {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (guardedPizza != null) {
@@ -1690,7 +1690,7 @@ class _$_CursedPath implements _CursedPath {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return cursedPath();
   }
@@ -1706,7 +1706,7 @@ class _$_CursedPath implements _CursedPath {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return cursedPath?.call();
   }
@@ -1722,7 +1722,7 @@ class _$_CursedPath implements _CursedPath {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (cursedPath != null) {
@@ -1742,7 +1742,7 @@ class _$_CursedPath implements _CursedPath {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return cursedPath(this);
   }
@@ -1758,7 +1758,7 @@ class _$_CursedPath implements _CursedPath {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return cursedPath?.call(this);
   }
@@ -1774,7 +1774,7 @@ class _$_CursedPath implements _CursedPath {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (cursedPath != null) {
@@ -1834,7 +1834,7 @@ class _$_PunchWave implements _PunchWave {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return punchWave();
   }
@@ -1850,7 +1850,7 @@ class _$_PunchWave implements _PunchWave {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return punchWave?.call();
   }
@@ -1866,7 +1866,7 @@ class _$_PunchWave implements _PunchWave {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (punchWave != null) {
@@ -1886,7 +1886,7 @@ class _$_PunchWave implements _PunchWave {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return punchWave(this);
   }
@@ -1902,7 +1902,7 @@ class _$_PunchWave implements _PunchWave {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return punchWave?.call(this);
   }
@@ -1918,7 +1918,7 @@ class _$_PunchWave implements _PunchWave {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (punchWave != null) {
@@ -1978,7 +1978,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return bigBuddyBin();
   }
@@ -1994,7 +1994,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return bigBuddyBin?.call();
   }
@@ -2010,7 +2010,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (bigBuddyBin != null) {
@@ -2030,7 +2030,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return bigBuddyBin(this);
   }
@@ -2046,7 +2046,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return bigBuddyBin?.call(this);
   }
@@ -2062,7 +2062,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (bigBuddyBin != null) {
@@ -2122,7 +2122,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return unreachablePizza();
   }
@@ -2138,7 +2138,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return unreachablePizza?.call();
   }
@@ -2154,7 +2154,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (unreachablePizza != null) {
@@ -2174,7 +2174,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return unreachablePizza(this);
   }
@@ -2190,7 +2190,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return unreachablePizza?.call(this);
   }
@@ -2206,7 +2206,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (unreachablePizza != null) {
@@ -2266,7 +2266,7 @@ class _$_Only2Times implements _Only2Times {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return only2Lines();
   }
@@ -2282,7 +2282,7 @@ class _$_Only2Times implements _Only2Times {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return only2Lines?.call();
   }
@@ -2298,7 +2298,7 @@ class _$_Only2Times implements _Only2Times {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (only2Lines != null) {
@@ -2318,7 +2318,7 @@ class _$_Only2Times implements _Only2Times {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return only2Lines(this);
   }
@@ -2334,7 +2334,7 @@ class _$_Only2Times implements _Only2Times {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return only2Lines?.call(this);
   }
@@ -2350,7 +2350,7 @@ class _$_Only2Times implements _Only2Times {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (only2Lines != null) {
@@ -2408,7 +2408,7 @@ class _$_SlowMo implements _SlowMo {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
     return slowMo();
   }
@@ -2424,7 +2424,7 @@ class _$_SlowMo implements _SlowMo {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
     return slowMo?.call();
   }
@@ -2440,7 +2440,7 @@ class _$_SlowMo implements _SlowMo {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (slowMo != null) {
@@ -2460,7 +2460,7 @@ class _$_SlowMo implements _SlowMo {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
     return slowMo(this);
   }
@@ -2476,7 +2476,7 @@ class _$_SlowMo implements _SlowMo {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
     return slowMo?.call(this);
   }
@@ -2492,7 +2492,7 @@ class _$_SlowMo implements _SlowMo {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
     if (slowMo != null) {
@@ -2507,39 +2507,65 @@ abstract class _SlowMo implements FigureEvent {
 }
 
 /// @nodoc
-abstract class _$$_WinMoneyLabelCopyWith<$Res> {
-  factory _$$_WinMoneyLabelCopyWith(
-          _$_WinMoneyLabel value, $Res Function(_$_WinMoneyLabel) then) =
-      __$$_WinMoneyLabelCopyWithImpl<$Res>;
+abstract class _$$_WinLabelCopyWith<$Res> {
+  factory _$$_WinLabelCopyWith(
+          _$_WinLabel value, $Res Function(_$_WinLabel) then) =
+      __$$_WinLabelCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items item});
 }
 
 /// @nodoc
-class __$$_WinMoneyLabelCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_WinMoneyLabel>
-    implements _$$_WinMoneyLabelCopyWith<$Res> {
-  __$$_WinMoneyLabelCopyWithImpl(
-      _$_WinMoneyLabel _value, $Res Function(_$_WinMoneyLabel) _then)
+class __$$_WinLabelCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$_WinLabel>
+    implements _$$_WinLabelCopyWith<$Res> {
+  __$$_WinLabelCopyWithImpl(
+      _$_WinLabel _value, $Res Function(_$_WinLabel) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? item = null,
+  }) {
+    return _then(_$_WinLabel(
+      item: null == item
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_WinMoneyLabel implements _WinMoneyLabel {
-  const _$_WinMoneyLabel();
+class _$_WinLabel implements _WinLabel {
+  const _$_WinLabel({required this.item});
+
+  @override
+  final Items item;
 
   @override
   String toString() {
-    return 'FigureEvent.winMoneyLabel()';
+    return 'FigureEvent.winLabel(item: $item)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_WinMoneyLabel);
+        (other.runtimeType == runtimeType &&
+            other is _$_WinLabel &&
+            (identical(other.item, item) || other.item == item));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, item);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_WinLabelCopyWith<_$_WinLabel> get copyWith =>
+      __$$_WinLabelCopyWithImpl<_$_WinLabel>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2552,9 +2578,9 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     required TResult Function() unreachablePizza,
     required TResult Function() only2Lines,
     required TResult Function() slowMo,
-    required TResult Function() winMoneyLabel,
+    required TResult Function(Items item) winLabel,
   }) {
-    return winMoneyLabel();
+    return winLabel(item);
   }
 
   @override
@@ -2568,9 +2594,9 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     TResult? Function()? unreachablePizza,
     TResult? Function()? only2Lines,
     TResult? Function()? slowMo,
-    TResult? Function()? winMoneyLabel,
+    TResult? Function(Items item)? winLabel,
   }) {
-    return winMoneyLabel?.call();
+    return winLabel?.call(item);
   }
 
   @override
@@ -2584,11 +2610,11 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     TResult Function()? unreachablePizza,
     TResult Function()? only2Lines,
     TResult Function()? slowMo,
-    TResult Function()? winMoneyLabel,
+    TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
-    if (winMoneyLabel != null) {
-      return winMoneyLabel();
+    if (winLabel != null) {
+      return winLabel(item);
     }
     return orElse();
   }
@@ -2604,9 +2630,9 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     required TResult Function(_UnreachablePizza value) unreachablePizza,
     required TResult Function(_Only2Times value) only2Lines,
     required TResult Function(_SlowMo value) slowMo,
-    required TResult Function(_WinMoneyLabel value) winMoneyLabel,
+    required TResult Function(_WinLabel value) winLabel,
   }) {
-    return winMoneyLabel(this);
+    return winLabel(this);
   }
 
   @override
@@ -2620,9 +2646,9 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     TResult? Function(_UnreachablePizza value)? unreachablePizza,
     TResult? Function(_Only2Times value)? only2Lines,
     TResult? Function(_SlowMo value)? slowMo,
-    TResult? Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult? Function(_WinLabel value)? winLabel,
   }) {
-    return winMoneyLabel?.call(this);
+    return winLabel?.call(this);
   }
 
   @override
@@ -2636,18 +2662,23 @@ class _$_WinMoneyLabel implements _WinMoneyLabel {
     TResult Function(_UnreachablePizza value)? unreachablePizza,
     TResult Function(_Only2Times value)? only2Lines,
     TResult Function(_SlowMo value)? slowMo,
-    TResult Function(_WinMoneyLabel value)? winMoneyLabel,
+    TResult Function(_WinLabel value)? winLabel,
     required TResult orElse(),
   }) {
-    if (winMoneyLabel != null) {
-      return winMoneyLabel(this);
+    if (winLabel != null) {
+      return winLabel(this);
     }
     return orElse();
   }
 }
 
-abstract class _WinMoneyLabel implements FigureEvent {
-  const factory _WinMoneyLabel() = _$_WinMoneyLabel;
+abstract class _WinLabel implements FigureEvent {
+  const factory _WinLabel({required final Items item}) = _$_WinLabel;
+
+  Items get item;
+  @JsonKey(ignore: true)
+  _$$_WinLabelCopyWith<_$_WinLabel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

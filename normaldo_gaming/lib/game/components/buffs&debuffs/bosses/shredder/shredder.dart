@@ -61,9 +61,14 @@ class Shredder extends PositionComponent
   Future<void> onLoad() async {
     autoRemove = false;
     onRemoved = () {
+      final items = [
+        Items.dollar,
+        Items.pizza,
+      ]..shuffle();
+      final item = items.first;
       bloc.add(const LevelEvent.finishMiniGame());
       bloc.add(
-          const LevelEvent.startFigure(figure: FigureEvent.winMoneyLabel()));
+          LevelEvent.startFigure(figure: FigureEvent.winLabel(item: item)));
     };
     disabled = true;
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
