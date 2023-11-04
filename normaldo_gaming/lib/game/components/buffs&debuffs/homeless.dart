@@ -53,7 +53,9 @@ class Homeless extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    const duration = 0.3;
     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
+    final start = 1 + random.nextInt(3).toDouble() + random.nextDouble();
     add(
       SpriteComponent(
         size: size,
@@ -64,14 +66,31 @@ class Homeless extends PositionComponent
     add(_eatingHitbox);
     add(
       TimerComponent(
-          period: 1 + random.nextInt(3).toDouble() + random.nextDouble(),
+          period: start,
           repeat: true,
           onTick: () {
             add(RotateEffect.to(
                 pi * 2 * (random.nextBool() ? -1 : 1),
                 EffectController(
-                  duration: 1,
+                  duration: duration,
+                  reverseDuration: duration,
+                  // curve: Curves.easeInOutCubicEmphasized,
                   curve: Curves.easeInOutCubicEmphasized,
+                )));
+          }),
+    );
+    final grid = (gameRef as PullUpGame).grid;
+    add(
+      TimerComponent(
+          period: start,
+          repeat: true,
+          onTick: () {
+            add(MoveAlongPathEffect(
+                Path()
+                  ..quadraticBezierTo(-size.x / 2, -grid.lineSize, -size.x, 0),
+                EffectController(
+                  duration: duration,
+                  reverseDuration: duration,
                 )));
           }),
     );
