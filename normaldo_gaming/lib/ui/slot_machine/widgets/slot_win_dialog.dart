@@ -136,7 +136,7 @@ class SlotWinDialog extends StatelessWidget {
               height: iconDimension,
             ),
             const SizedBox(width: 8),
-            Text('+ ${bid * 10}', style: textTheme.displayLarge),
+            Text('+ ${bid * 2}', style: textTheme.displayLarge),
           ],
         ),
       Rolls.jackpot => Row(

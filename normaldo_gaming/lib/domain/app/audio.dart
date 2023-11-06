@@ -65,7 +65,7 @@ abstract class NgAudio {
 
   /// Plays sound effect. Cannot stop or pause it because in general sfx
   /// means that it will be a very short sound.
-  Future<void> playSfx(Sfx sfx);
+  Future<void> playSfx(Sfx sfx, {double? volume});
 
   Future<void> setVolumeToBgm({required double volume});
   Future<void> setVolumeToAudio({

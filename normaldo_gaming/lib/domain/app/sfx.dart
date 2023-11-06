@@ -15,7 +15,9 @@ enum Sfx {
   roundBox,
   missionCompleted,
   shredderPredator,
-  shurikens;
+  shurikens,
+  rollDropped,
+  spin;
 
   const Sfx();
 }

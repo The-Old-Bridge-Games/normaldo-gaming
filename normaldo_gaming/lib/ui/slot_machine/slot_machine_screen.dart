@@ -8,11 +8,14 @@ import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubi
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/components/slot_machine_widget.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/slot_machine/widgets/bid_widget.dart';
 import 'package:normaldo_gaming/ui/slot_machine/widgets/slot_win_dialog.dart';
+import 'package:normaldo_gaming/ui/slot_machine/widgets/slots_info_dialog.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class SlotMachineScreen extends StatefulWidget {
@@ -23,7 +26,7 @@ class SlotMachineScreen extends StatefulWidget {
 }
 
 class _SlotMachineScreenState extends State<SlotMachineScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, HasNgAudio {
   late final SlotMachineController _controller;
   late final _spinAnimationController = AnimationController(
     duration: const Duration(milliseconds: 500),
@@ -61,18 +64,34 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
     ),
   };
 
+  int? _rollingAudioPlayerId;
+
   dynamic _onCreated(SlotMachineController controller) async {
     _controller = controller;
     _controller.start(hitRollItemIndex: null);
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 0);
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 1);
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 2);
+    _dropRolls();
   }
 
-  Future<void> _onSpinPressed() async {
+  void _onInfoPressed() {
+    showDialog(context: context, builder: (context) => const SlotsInfoDialog());
+  }
+
+  Future<void> _dropRolls() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    _controller.stop(reelIndex: 0);
+    audio.playSfx(Sfx.rollDropped);
+    await Future.delayed(const Duration(milliseconds: 500));
+    _controller.stop(reelIndex: 1);
+    audio.playSfx(Sfx.rollDropped);
+    await Future.delayed(const Duration(milliseconds: 500));
+    _controller.stop(reelIndex: 2);
+    audio.playSfx(Sfx.rollDropped);
+  }
+
+  Future<void> _onSpinPressed({required bool spinning}) async {
+    audio.playSfx(Sfx.spin, volume: 0.2);
+    if (spinning) return;
+    _rollingAudioPlayerId = await audio.playAudio('rolling.mp3', volume: 1.0);
     final cubit = context.read<SlotMachineCubit>();
     cubit.roll();
   }
@@ -92,20 +111,31 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
         _controller.start(hitRollItemIndex: _rollItems[winRoll]?.index);
       }
       final reelIndexes = [0, 1, 2]..shuffle();
+      const rollDropDuration = Duration(milliseconds: 300);
       await Future.delayed(
           Duration(milliseconds: 300 + Random().nextInt(1700)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
-      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(400)));
+      await Future.delayed(rollDropDuration);
+      await audio.playSfx(Sfx.rollDropped);
+      // await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(200)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
-      await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(400)));
+      await Future.delayed(rollDropDuration);
+      await audio.playSfx(Sfx.rollDropped);
+      // await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(200)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
+      await Future.delayed(rollDropDuration);
+      await audio.playSfx(Sfx.rollDropped);
+      if (_rollingAudioPlayerId != null) {
+        audio.stopAudio(_rollingAudioPlayerId!);
+      }
       await Future.delayed(const Duration(milliseconds: 1000));
       cubit.stopSpin();
       _spinAnimationController.reverse();
-      if (winRoll != Rolls.empty) {
+      if (winRoll != Rolls.empty && winRoll != Rolls.half1) {
         // ignore: use_build_context_synchronously
         await showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) => SlotWinDialog(
             winRoll: winRoll,
             bid: state.bid,
@@ -176,6 +206,10 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                     child: _buildBottomPanel(state),
                   ),
                   Align(
+                    alignment: Alignment.centerRight,
+                    child: _buildInfoButton(),
+                  ),
+                  Align(
                     alignment: Alignment.center,
                     child: IgnorePointer(
                       child: LayoutBuilder(
@@ -214,61 +248,81 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
       width: 3,
       color: NGTheme.purple2,
     );
-    return AnimatedBuilder(
-      animation: _spinAnimationController,
-      builder: (context, child) => Transform.translate(
-        offset: const Offset(0, 150) * _spinAnimationController.value,
-        child: child,
-      ),
-      child: Container(
-        padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
-        decoration: const BoxDecoration(
-          color: Colors.black,
-          border: Border(
-            left: borderSide,
-            top: borderSide,
-            right: borderSide,
-          ),
-        ),
-        child: SafeArea(
-          left: false,
-          right: false,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildExtraLives(),
-              const SizedBox(width: 16),
-              _buildBalance(),
-              const SizedBox(width: 32),
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: BidWidget(onBidChanged: (newBid) {
-                  context.read<SlotMachineCubit>().changeBid(bid: newBid);
-                }),
-              ),
-              const SizedBox(width: 32),
-              IgnorePointer(
-                ignoring: state.spinning,
-                child: Visibility(
-                  visible: !state.spinning,
-                  maintainAnimation: true,
-                  maintainSize: true,
-                  maintainState: true,
-                  child: GestureDetector(
-                    onTap: _onSpinPressed,
-                    child: Text(
-                      'Spin'.tr(),
-                      style: textTheme.displayMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Align(
+          alignment: const Alignment(0.8, 1),
+          child: GestureDetector(
+            onTap: context.read<UserCubit>().state.user.dollars < state.bid ||
+                    context.read<UserCubit>().state.user.dollars == 0 ||
+                    state.bid == 0
+                ? null
+                : () => _onSpinPressed(spinning: state.spinning),
+            child: Container(
+              height: 70,
+              padding: const EdgeInsets.only(left: 8, top: 16, right: 8),
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                border: Border(
+                  left: borderSide,
+                  top: borderSide,
+                  right: borderSide,
                 ),
               ),
-              const SizedBox(width: 8),
-            ],
+              child: SafeArea(
+                left: false,
+                right: false,
+                child: Text(
+                  'Spin'.tr(),
+                  style: textTheme.displayMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
         ),
-      ),
+        Align(
+          alignment: const Alignment(-0.89, 1),
+          child: AnimatedBuilder(
+            animation: _spinAnimationController,
+            builder: (context, child) => Transform.translate(
+              offset: const Offset(0, 150) * _spinAnimationController.value,
+              child: child,
+            ),
+            child: Container(
+              height: 70,
+              padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                border: Border(
+                  left: borderSide,
+                  top: borderSide,
+                ),
+              ),
+              child: SafeArea(
+                left: false,
+                right: false,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildExtraLives(),
+                    const SizedBox(width: 16),
+                    _buildBalance(),
+                    const SizedBox(width: 32),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: BidWidget(onBidChanged: (newBid) {
+                        context.read<SlotMachineCubit>().changeBid(bid: newBid);
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -348,6 +402,29 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
     );
   }
 
+  Widget _buildInfoButton() {
+    final textTheme = Theme.of(context).textTheme;
+    return BouncingButton(
+      onPressed: _onInfoPressed,
+      child: Container(
+        padding: const EdgeInsets.only(
+          left: 12,
+          top: 8,
+          bottom: 8,
+          right: 32,
+        ),
+        decoration: const BoxDecoration(
+          color: NGTheme.purple2,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(100),
+            bottomLeft: Radius.circular(100),
+          ),
+        ),
+        child: Text('?', style: textTheme.displayLarge),
+      ),
+    );
+  }
+
   Widget _buildBackButton(SlotMachineState state) {
     final textTheme = Theme.of(context).textTheme;
     const borderSide = BorderSide(
@@ -363,20 +440,22 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
           child: Transform.rotate(
             alignment: Alignment.topLeft,
             angle: _spinAnimationController.value * -pi / 2,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: const BoxDecoration(
-                  color: Colors.black,
-                  border: Border(
-                    bottom: borderSide,
-                    right: borderSide,
-                  )),
-              child: BouncingButton(
-                  onPressed: () => context.pop(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 24, top: 16),
-                    child: Text('Exit'.tr(), style: textTheme.displayMedium),
-                  )),
+            child: BouncingButton(
+              onPressed: () => context.pop(),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: const BoxDecoration(
+                    color: Colors.black,
+                    border: Border(
+                      bottom: borderSide,
+                      right: borderSide,
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 24, top: 16),
+                  child: Text('Exit'.tr(), style: textTheme.displayMedium),
+                ),
+              ),
             ),
           ),
         ),

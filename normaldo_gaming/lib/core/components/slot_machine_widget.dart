@@ -314,7 +314,7 @@ class __ReelState extends State<_Reel> {
 
     _scrollController.animateToItem(
       counter - addCount,
-      duration: const Duration(milliseconds: 750),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.decelerate,
     );
   }

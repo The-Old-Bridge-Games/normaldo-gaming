@@ -12,7 +12,7 @@ enum Rolls {
   // Gives extra life bonus to your user
   extraLife(3),
   // Gives x2 to your bid
-  win(10),
+  win(12),
   // Gives x100 to your bid
   jackpot(0.1);
 

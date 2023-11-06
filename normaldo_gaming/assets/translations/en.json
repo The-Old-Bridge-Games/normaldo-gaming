@@ -4,6 +4,7 @@
   "Start": "Start",
   "high score": "high score: {}",
   "dollars": "dollars: {}",
+  "extra life": "extra life",
   "extra lives": "extra lives: {}",
   "Are you sure??": "Are you sure??",
   "All game results will be dropped..": "All game results will be dropped..",
@@ -70,5 +71,6 @@
   "Poisoned": "Poisoned",
   "MAX FAT!": "MAX FAT!",
   "Hmm.. I feel something..": "Hmm.. I feel something..",
-  "Exit": "Exit"
+  "Exit": "Exit",
+  "WIN ROLLS": "WIN ROLLS"
 }

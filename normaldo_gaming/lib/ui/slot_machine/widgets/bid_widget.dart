@@ -46,6 +46,7 @@ class _BidWidgetState extends State<BidWidget> {
     } else {
       _currentBid = minBidStep;
     }
+    widget.onBidChanged(_currentBid);
   }
 
   @override

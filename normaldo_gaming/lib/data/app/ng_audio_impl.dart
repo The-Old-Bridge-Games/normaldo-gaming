@@ -109,14 +109,14 @@ class NgAudioImpl implements NgAudio {
   }
 
   @override
-  Future<void> playSfx(Sfx sfx) async {
+  Future<void> playSfx(Sfx sfx, {double? volume}) async {
     assert(_initialized);
     try {
       if (sfx == Sfx.buttonPressed) {
         Vibrate.feedback(FeedbackType.light);
       }
       final pools = _audioPools[sfx] ?? [];
-      await pools[Random().nextInt(pools.length)].start();
+      await pools[Random().nextInt(pools.length)].start(volume: volume ?? 1.0);
     } catch (e) {
       print(e);
     }
@@ -287,6 +287,10 @@ extension on Sfx {
         return ['shredder_predator.mp3'];
       case Sfx.shurikens:
         return ['shurikens.mp3'];
+      case Sfx.rollDropped:
+        return ['roll_dropped.mp3'];
+      case Sfx.spin:
+        return ['spin.mp3'];
     }
   }
 
@@ -308,5 +312,7 @@ extension on Sfx {
         Sfx.missionCompleted => 2,
         Sfx.shredderPredator => 5,
         Sfx.shurikens => 4,
+        Sfx.rollDropped => 1,
+        Sfx.spin => 1,
       };
 }

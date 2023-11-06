@@ -46,6 +46,7 @@ class NGAppImpl implements NGApp {
       'main_theme.mp3',
       'club_track.mp3',
       'hard_track.mp3',
+      'rolling.mp3',
       'sfx/beer1.mp3',
       'sfx/bomb1.mp3',
       'sfx/button1.mp3',
@@ -70,7 +71,9 @@ class NGAppImpl implements NGApp {
       'sfx/super_pizza.mp3',
       'sfx/ydar.mp3',
       'sfx/yyyyyyy.mp3',
-      'sfx/mission_notification.mp3'
+      'sfx/mission_notification.mp3',
+      'sfx/spin.mp3',
+      'sfx/roll_dropped.mp3',
     ]);
     await AudioPlayer.global.setAudioContext(AudioContextConfig(
       respectSilence: true,

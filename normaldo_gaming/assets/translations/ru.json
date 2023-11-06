@@ -4,6 +4,7 @@
   "Start": "Старт",
   "high score": "Рекорд: {}",
   "dollars": "Доллары: {}",
+  "extra life": "доп. жизнь",
   "extra lives": "воскрешения: {}",
   "Are you sure??": "Ты уверен??",
   "All game results will be dropped..": "Весь прогресс этой игры будут потерян..",
@@ -101,5 +102,6 @@
   "Big Buddy Bin": "Большой Парень Бочка",
   "Molotov": "Молотов",
   "Hmm.. I feel something..": "Хм.. Я что-то чувствую..",
-  "Exit": "Выход"
+  "Exit": "Выход",
+  "WIN ROLLS": "КОМБИНАЦИИ"
 }

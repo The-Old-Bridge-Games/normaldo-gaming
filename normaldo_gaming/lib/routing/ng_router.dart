@@ -127,6 +127,7 @@ abstract class NGRouter {
     await Future.delayed(const Duration(milliseconds: 500));
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => NewLevelDialog(
               reward: state.user.level * 10,
               level: state.user.level,
