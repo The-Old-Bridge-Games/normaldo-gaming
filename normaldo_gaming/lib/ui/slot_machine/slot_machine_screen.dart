@@ -65,6 +65,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   };
 
   int? _rollingAudioPlayerId;
+  int? _backgroundMusicId;
 
   dynamic _onCreated(SlotMachineController controller) async {
     _controller = controller;
@@ -91,7 +92,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   Future<void> _onSpinPressed({required bool spinning}) async {
     audio.playSfx(Sfx.spin, volume: 0.2);
     if (spinning) return;
-    _rollingAudioPlayerId = await audio.playAudio('rolling.mp3', volume: 1.0);
+    _rollingAudioPlayerId = await audio.playAudio('rolling.mp3', volume: 0.2);
     final cubit = context.read<SlotMachineCubit>();
     cubit.roll();
   }
@@ -166,6 +167,25 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
       case Rolls.jackpot:
         userCubit.addDollars(bid * 100);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    audio.setVolumeToBgm(volume: 0);
+    audio
+        .loopAudio('slots_music.mp3', volume: 0.3)
+        .then((value) => _backgroundMusicId = value);
+  }
+
+  @override
+  void dispose() {
+    audio.setVolumeToBgm(volume: 0.1);
+    if (_backgroundMusicId != null) {
+      audio.stopAudio(_backgroundMusicId!);
+    }
+    super.dispose();
   }
 
   @override

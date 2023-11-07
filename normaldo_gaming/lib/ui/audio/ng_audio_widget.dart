@@ -98,11 +98,13 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
       case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
         _audio.pauseBgm();
+        _audio.pauseAllAudios();
         break;
       case AppLifecycleState.resumed:
         if (location != '/main/pullUpGame') {
           _audio.resumeBgm();
         }
+        _audio.resumeAllAudios();
         break;
     }
   }
