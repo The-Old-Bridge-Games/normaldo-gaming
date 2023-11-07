@@ -410,14 +410,14 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
           (Random().nextBool() ? pi : -pi) * 2,
           EffectController(
             duration: dur,
-            reverseDuration: dur,
+            reverseDuration: dur * 2,
             curve: curve,
           )),
       ScaleEffect.to(
           Vector2.all(0.1),
           EffectController(
               duration: dur,
-              reverseDuration: dur,
+              reverseDuration: dur * 2,
               curve: curve,
               onMax: () {
                 print('on max');
