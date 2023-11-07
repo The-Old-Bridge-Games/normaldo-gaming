@@ -248,76 +248,71 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
       width: 3,
       color: NGTheme.purple2,
     );
-    return Stack(
-      clipBehavior: Clip.none,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
-          alignment: const Alignment(0.8, 1),
-          child: GestureDetector(
-            onTap: context.read<UserCubit>().state.user.dollars < state.bid ||
-                    context.read<UserCubit>().state.user.dollars == 0 ||
-                    state.bid == 0
-                ? null
-                : () => _onSpinPressed(spinning: state.spinning),
-            child: Container(
-              height: 70,
-              padding: const EdgeInsets.only(left: 8, top: 16, right: 8),
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                border: Border(
-                  left: borderSide,
-                  top: borderSide,
-                  right: borderSide,
-                ),
+        AnimatedBuilder(
+          animation: _spinAnimationController,
+          builder: (context, child) => Transform.translate(
+            offset: const Offset(0, 150) * _spinAnimationController.value,
+            child: child,
+          ),
+          child: Container(
+            height: 70,
+            padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              border: Border(
+                left: borderSide,
+                top: borderSide,
+                right: borderSide,
               ),
-              child: SafeArea(
-                left: false,
-                right: false,
-                child: Text(
-                  'Spin'.tr(),
-                  style: textTheme.displayMedium,
-                  textAlign: TextAlign.center,
-                ),
+            ),
+            child: SafeArea(
+              left: false,
+              right: false,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildExtraLives(),
+                  const SizedBox(width: 16),
+                  _buildBalance(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: BidWidget(onBidChanged: (newBid) {
+                      context.read<SlotMachineCubit>().changeBid(bid: newBid);
+                    }),
+                  ),
+                ],
               ),
             ),
           ),
         ),
-        Align(
-          alignment: const Alignment(-0.89, 1),
-          child: AnimatedBuilder(
-            animation: _spinAnimationController,
-            builder: (context, child) => Transform.translate(
-              offset: const Offset(0, 150) * _spinAnimationController.value,
-              child: child,
-            ),
-            child: Container(
-              height: 70,
-              padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                border: Border(
-                  left: borderSide,
-                  top: borderSide,
-                ),
+        const SizedBox(width: 16),
+        GestureDetector(
+          onTap: context.read<UserCubit>().state.user.dollars < state.bid ||
+                  context.read<UserCubit>().state.user.dollars == 0 ||
+                  state.bid == 0
+              ? null
+              : () => _onSpinPressed(spinning: state.spinning),
+          child: Container(
+            height: 70,
+            padding: const EdgeInsets.only(left: 8, top: 16, right: 8),
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              border: Border(
+                left: borderSide,
+                top: borderSide,
+                right: borderSide,
               ),
-              child: SafeArea(
-                left: false,
-                right: false,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildExtraLives(),
-                    const SizedBox(width: 16),
-                    _buildBalance(),
-                    const SizedBox(width: 32),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: BidWidget(onBidChanged: (newBid) {
-                        context.read<SlotMachineCubit>().changeBid(bid: newBid);
-                      }),
-                    ),
-                  ],
-                ),
+            ),
+            child: SafeArea(
+              left: false,
+              right: false,
+              child: Text(
+                'Spin'.tr(),
+                style: textTheme.displayMedium,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
