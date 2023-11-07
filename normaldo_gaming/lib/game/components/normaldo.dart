@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/collisions.dart';
@@ -15,6 +16,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
 import 'package:normaldo_gaming/game/components/notification_component.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
 enum NormaldoHitState {
@@ -89,7 +91,8 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         FlameBlocReader<GameSessionCubit, GameSessionState>,
         _StateActions,
         CollisionCallbacks,
-        HasNgAudio {
+        HasNgAudio,
+        HasGameRef {
   Normaldo({
     required Vector2 size,
   }) : super(size: size, anchor: Anchor.center);
@@ -230,8 +233,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
     if (current != state) {
       audio.playSfx(Sfx.weightIncreased);
-      current = state;
-      _updateHitbox();
+      _changeFatAnimation(state);
     }
   }
 
@@ -249,8 +251,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
     if (current != state) {
       audio.playSfx(Sfx.weightLoosed);
-      current = state;
-      _updateHitbox();
+      _changeFatAnimation(state);
     }
   }
 
@@ -259,12 +260,13 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     Color? color,
     double? fontSize,
   }) {
-    add(
+    final grid = (gameRef as PullUpGame).grid;
+    grid.add(
       NotificationComponent(
         text: text,
         color: color,
         fontSize: fontSize,
-      )..position = Vector2(-10, 0),
+      )..position = position + Vector2(-10, -size.y / 2),
     );
   }
 
@@ -398,6 +400,31 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       default:
         throw UnexpectedError();
     }
+  }
+
+  void _changeFatAnimation(NormaldoFatState? state) {
+    const dur = 0.25;
+    const curve = Curves.bounceOut;
+    addAll([
+      RotateEffect.to(
+          (Random().nextBool() ? pi : -pi) * 2,
+          EffectController(
+            duration: dur,
+            reverseDuration: dur,
+            curve: curve,
+          )),
+      ScaleEffect.to(
+          Vector2.all(0.1),
+          EffectController(
+              duration: dur,
+              reverseDuration: dur,
+              curve: curve,
+              onMax: () {
+                print('on max');
+                current = state;
+                _updateHitbox();
+              }))
+    ]);
   }
 }
 

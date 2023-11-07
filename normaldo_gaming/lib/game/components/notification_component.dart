@@ -29,7 +29,8 @@ class NotificationComponent extends TextComponent {
         delay: 0.58,
       ),
       ScaleEffect.by(Vector2(1.1, 1.1), EffectController(duration: 0.5)),
-      MoveEffect.to(Vector2((-30 + Random().nextInt(60)).toDouble(), -30),
+      MoveEffect.to(
+          position + Vector2((-30 + Random().nextInt(60)).toDouble(), -30),
           EffectController(duration: 0.6, onMax: () {}))
     ]);
     return super.onLoad();
