@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/onboarding_widget.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pre_death_screen.dart';
 
@@ -72,6 +73,7 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
                 create: (context) => injector.get(),
                 child: const PreDeathScreen(),
               ),
+          Overlays.onboarding.name: (context, game) => const OnboardingWidget(),
         },
       ),
     );

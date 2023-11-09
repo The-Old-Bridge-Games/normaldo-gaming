@@ -68,6 +68,11 @@ class PullUpGame extends FlameGame
       },
     ));
 
+    if (true) {
+      pauseEngine();
+      overlays.add(Overlays.onboarding.name);
+    }
+
     return super.onLoad();
   }
 
