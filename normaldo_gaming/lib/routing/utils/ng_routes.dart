@@ -8,7 +8,8 @@ enum NGRoutes {
   missions('/main/missions'),
   settings('/main/settings'),
   shop('/main/shop'),
-  slots('/main/slots');
+  slots('/main/slots'),
+  knowledgeBook('/main/knowledge');
 
   const NGRoutes(this.path);
 

@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
 import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
+import 'package:normaldo_gaming/ui/knowledge_book/knowledge_book_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
@@ -106,6 +107,11 @@ abstract class NGRouter {
                       BlocProvider<AdsCubit>(
                           create: (context) => injector.get()),
                     ], child: const ShopScreen()),
+                  ),
+                  GoRoute(
+                    path: NGRoutes.knowledgeBook.name,
+                    name: NGRoutes.knowledgeBook.name,
+                    builder: (context, state) => const KnowledgeBookScreen(),
                   ),
                 ]),
             GoRoute(

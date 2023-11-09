@@ -40,6 +40,10 @@ class _MainScreenState extends State<MainScreen> {
     context.goNamed(NGRoutes.shop.name);
   }
 
+  void _onKnowledgeBookPressed() {
+    context.goNamed(NGRoutes.knowledgeBook.name);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -124,8 +128,23 @@ class _MainScreenState extends State<MainScreen> {
               alignment: const Alignment(-0, 1),
               child: _buildShopButton(),
             ),
+            Align(
+              alignment: const Alignment(0.9, 0),
+              child: _buildKnowledgeBookButton(),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildKnowledgeBookButton() {
+    return BouncingButton(
+      onPressed: _onKnowledgeBookPressed,
+      child: Image.asset(
+        'assets/images/knowledge_book.png',
+        height: 55,
+        width: 39,
       ),
     );
   }
