@@ -38,7 +38,7 @@ class _LevelBarState extends State<UserLevelBar> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Image.asset(
-              'assets/images/star.png',
+              'assets/images/pizza_pack1.png',
               fit: BoxFit.cover,
               height: widget.iconSize ?? 30,
               width: widget.iconSize ?? 30,

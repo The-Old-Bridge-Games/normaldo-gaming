@@ -56,9 +56,9 @@ class MissionTile extends StatelessWidget {
     }
 
     final starsIcons = switch (mission.exp) {
-      1 => iconWrapper('assets/images/star.png'),
-      2 => iconWrapper('assets/images/two_stars.png'),
-      3 => iconWrapper('assets/images/three_stars.png'),
+      1 => iconWrapper('assets/images/pizza_pack1.png'),
+      2 => iconWrapper('assets/images/pizza_pack2.png'),
+      3 => iconWrapper('assets/images/pizza_pack3.png'),
       _ => throw UnexpectedError(),
     };
 

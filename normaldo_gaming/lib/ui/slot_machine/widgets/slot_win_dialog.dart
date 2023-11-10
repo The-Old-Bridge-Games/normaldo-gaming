@@ -61,7 +61,7 @@ class SlotWinDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/star.png',
+              'assets/images/pizza_pack1.png',
               width: iconDimension,
               height: iconDimension,
             ),
@@ -75,7 +75,7 @@ class SlotWinDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/two_stars.png',
+              'assets/images/pizza_pack2.png',
               width: iconDimension,
               height: iconDimension,
             ),
@@ -89,7 +89,7 @@ class SlotWinDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/three_stars.png',
+              'assets/images/pizza_pack3.png',
               width: iconDimension,
               height: iconDimension,
             ),

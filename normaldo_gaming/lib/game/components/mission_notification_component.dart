@@ -20,9 +20,9 @@ class MissionNotificationComponent extends PositionComponent {
 
   Future<Sprite> starSprite() async {
     return switch (mission.exp) {
-      1 => Sprite.load('star.png'),
-      2 => Sprite.load('two_stars.png'),
-      3 => Sprite.load('three_stars.png'),
+      1 => Sprite.load('pizza_pack1.png'),
+      2 => Sprite.load('pizza_pack2.png'),
+      3 => Sprite.load('pizza_pack3.png'),
       _ => throw UnexpectedError(),
     };
   }

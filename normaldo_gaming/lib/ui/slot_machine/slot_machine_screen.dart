@@ -36,15 +36,15 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   final _rollItems = <Rolls, RollItem>{
     Rolls.exp1: RollItem(
       index: 0,
-      child: Image.asset('assets/images/star.png'),
+      child: Image.asset('assets/images/pizza_pack1.png'),
     ),
     Rolls.exp2: RollItem(
       index: 1,
-      child: Image.asset('assets/images/two_stars.png'),
+      child: Image.asset('assets/images/pizza_pack2.png'),
     ),
     Rolls.exp3: RollItem(
       index: 2,
-      child: Image.asset('assets/images/three_stars.png'),
+      child: Image.asset('assets/images/pizza_pack3.png'),
     ),
     Rolls.extraLife: RollItem(
       index: 3,

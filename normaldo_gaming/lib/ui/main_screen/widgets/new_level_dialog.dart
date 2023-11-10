@@ -45,7 +45,7 @@ class NewLevelDialog extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/images/star.png',
+                      'assets/images/pizza_pack1.png',
                       width: 40,
                       height: 40,
                     ),
