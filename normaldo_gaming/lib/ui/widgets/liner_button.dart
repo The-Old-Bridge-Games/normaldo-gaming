@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 enum LinerSide { top, right, bottom, left }
 
@@ -64,8 +63,8 @@ class LinerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BouncingButton(
-      onPressed: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
       child: Container(
         padding: _padding,
         decoration: BoxDecoration(

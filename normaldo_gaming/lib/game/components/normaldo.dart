@@ -42,7 +42,8 @@ enum NormaldoFatState {
   fatDead,
   uberFatDead;
 
-  int get pizzaToFat {
+  int pizzaToFat([int? amount]) {
+    if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 30,
       slim || slimEat => 40,
@@ -95,20 +96,22 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         HasGameRef {
   Normaldo({
     required Vector2 size,
+    this.customPizzaToGetFatter,
   }) : super(size: size, anchor: Anchor.center);
 
   bool _immortal = false;
   bool get immortal => _immortal;
 
+  final int? customPizzaToGetFatter;
   late final EffectsController effectsController;
 
   var _state = NormaldoHitState.idle;
 
-  int? get pizzaToGetFatter => current?.pizzaToFat;
+  int? get pizzaToGetFatter => current?.pizzaToFat(customPizzaToGetFatter);
 
   void takeHit() {
     if (_state == NormaldoHitState.idle) {
-      decreaseFatPoints(current?.pizzaToFat ?? 0);
+      decreaseFatPoints(current?.pizzaToFat(customPizzaToGetFatter) ?? 0);
     }
   }
 
@@ -181,7 +184,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void increaseFatPoints(int by) {
     assert(by > 0);
-    final pizzaToGetFatter = current!.pizzaToFat;
+    final pizzaToGetFatter = current!.pizzaToFat(customPizzaToGetFatter);
     _pizzaEaten += by;
     if (_pizzaEaten >= pizzaToGetFatter && !isFat && !isUberFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
@@ -196,7 +199,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void decreaseFatPoints(int by) {
     assert(by > 0);
-    final pizzaToGetFatter = current!.pizzaToFat;
+    final pizzaToGetFatter = current!.pizzaToFat(customPizzaToGetFatter);
     _pizzaEaten -= by;
     bloc.takeHit();
     if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
@@ -229,7 +232,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         fontSize: 18,
       );
     } else {
-      notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
+      if (customPizzaToGetFatter == null) {
+        notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
+      }
     }
     if (current != state) {
       audio.playSfx(Sfx.weightIncreased);
@@ -248,7 +253,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       state = NormaldoFatState.onlyIdle[indexOfCurrent - 1];
     }
     final index = NormaldoFatState.onlyIdle.indexOf(state);
-    notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
+    if (customPizzaToGetFatter == null) {
+      notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
+    }
     if (current != state) {
       audio.playSfx(Sfx.weightLoosed);
       _changeFatAnimation(state);

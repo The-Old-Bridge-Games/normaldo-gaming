@@ -38,7 +38,7 @@ abstract class NGTheme {
 
   static const bodySmall = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 14,
+    fontSize: 12,
     color: Colors.white,
   );
 }

@@ -10,6 +10,7 @@ import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -28,10 +29,12 @@ class PullUpGame extends FlameGame
   static final menuIconSize = Vector2.all(30);
 
   PullUpGame({
+    required this.userCubit,
     required this.gameSessionCubit,
     required this.levelBloc,
   });
 
+  final UserCubit userCubit;
   final GameSessionCubit gameSessionCubit;
   final LevelBloc levelBloc;
 
@@ -65,6 +68,16 @@ class PullUpGame extends FlameGame
       removeOnFinish: true,
       onTick: () {
         _showMissions();
+      },
+    ));
+    add(TimerComponent(
+      period: 0.1,
+      removeOnFinish: true,
+      onTick: () {
+        if (!userCubit.state.educated) {
+          pauseEngine();
+          overlays.add(Overlays.onboarding.name);
+        }
       },
     ));
 

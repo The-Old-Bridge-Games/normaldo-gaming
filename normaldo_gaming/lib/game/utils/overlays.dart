@@ -1,4 +1,5 @@
 enum Overlays {
   pauseMenu,
-  deathScreen;
+  deathScreen,
+  onboarding;
 }

@@ -21,7 +21,7 @@ class FatCounter extends PositionComponent with HasGameRef {
   var _fatPoints = 0;
   set fatPoints(int newValue) {
     _fatPoints = newValue;
-    _bar.size.x = barSize.x / _normaldoFatState.pizzaToFat * newValue;
+    _bar.size.x = barSize.x / _normaldoFatState.pizzaToFat() * newValue;
   }
 
   set normaldoFatState(NormaldoFatState newState) {

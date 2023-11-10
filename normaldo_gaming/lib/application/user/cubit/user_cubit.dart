@@ -53,6 +53,10 @@ class UserCubit extends HydratedCubit<UserState> {
     );
   }
 
+  void educate() {
+    emit(state.copyWith(educated: true));
+  }
+
   void takeExtraLife(int amount) {
     assert(amount > 0);
     emit(
@@ -108,6 +112,7 @@ class UserCubit extends HydratedCubit<UserState> {
   UserState? fromJson(Map<String, dynamic> json) {
     return UserState(
       user: UserModel.fromJson(json).toEntity(),
+      educated: json['educated'],
     );
   }
 
@@ -122,6 +127,7 @@ class UserCubit extends HydratedCubit<UserState> {
       level: state.user.level,
       exp: state.user.exp,
       extraLives: state.user.extraLives,
-    ).toJson();
+    ).toJson()
+      ..addEntries([MapEntry('educated', state.educated)]);
   }
 }
