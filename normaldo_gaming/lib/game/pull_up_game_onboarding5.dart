@@ -73,9 +73,9 @@ class PullUpGameOnboarding5 extends FlameGame with HasCollisionDetection {
           startDelay: startDelay,
         );
     normaldo.add(SequenceEffect([
-      MoveByEffect(Vector2(-100, -30), (controller(startDelay: 1))),
-      MoveByEffect(Vector2(50, 30), controller()),
-      MoveByEffect(Vector2(-70, -10), controller()),
+      MoveByEffect(Vector2(100, -30), (controller(startDelay: 1))),
+      MoveByEffect(Vector2(-50, 30), controller()),
+      MoveByEffect(Vector2(-50, -10), controller()),
       // MoveByEffect(Vector2(-40, 20), controller()),
     ], onComplete: () {
       start(normaldo);
