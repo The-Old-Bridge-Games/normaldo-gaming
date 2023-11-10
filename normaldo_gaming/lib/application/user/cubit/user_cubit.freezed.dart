@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserState {
   User get user => throw _privateConstructorUsedError;
+  bool get educated => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({User user});
+  $Res call({User user, bool educated});
 }
 
 /// @nodoc
@@ -45,12 +46,17 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   @override
   $Res call({
     Object? user = null,
+    Object? educated = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      educated: null == educated
+          ? _value.educated
+          : educated // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -62,7 +68,7 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       __$$_UserStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user});
+  $Res call({User user, bool educated});
 }
 
 /// @nodoc
@@ -77,12 +83,17 @@ class __$$_UserStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
+    Object? educated = null,
   }) {
     return _then(_$_UserState(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      educated: null == educated
+          ? _value.educated
+          : educated // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -90,14 +101,16 @@ class __$$_UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState({required this.user});
+  const _$_UserState({required this.user, required this.educated});
 
   @override
   final User user;
+  @override
+  final bool educated;
 
   @override
   String toString() {
-    return 'UserState(user: $user)';
+    return 'UserState(user: $user, educated: $educated)';
   }
 
   @override
@@ -105,11 +118,13 @@ class _$_UserState implements _UserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserState &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.educated, educated) ||
+                other.educated == educated));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, educated);
 
   @JsonKey(ignore: true)
   @override
@@ -119,10 +134,13 @@ class _$_UserState implements _UserState {
 }
 
 abstract class _UserState implements UserState {
-  const factory _UserState({required final User user}) = _$_UserState;
+  const factory _UserState(
+      {required final User user, required final bool educated}) = _$_UserState;
 
   @override
   User get user;
+  @override
+  bool get educated;
   @override
   @JsonKey(ignore: true)
   _$$_UserStateCopyWith<_$_UserState> get copyWith =>

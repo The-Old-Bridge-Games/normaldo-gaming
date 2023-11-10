@@ -64,8 +64,10 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
       },
       child: GameWidget(
         game: PullUpGame(
-            gameSessionCubit: context.read<GameSessionCubit>(),
-            levelBloc: context.read<LevelBloc>()),
+          gameSessionCubit: context.read<GameSessionCubit>(),
+          levelBloc: context.read<LevelBloc>(),
+          userCubit: context.read(),
+        ),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
           Overlays.deathScreen.name: (context, game) =>
@@ -73,7 +75,8 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
                 create: (context) => injector.get(),
                 child: const PreDeathScreen(),
               ),
-          Overlays.onboarding.name: (context, game) => const OnboardingWidget(),
+          Overlays.onboarding.name: (context, PullUpGame game) =>
+              OnboardingWidget(game: game),
         },
       ),
     );
