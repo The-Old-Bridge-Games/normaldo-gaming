@@ -40,8 +40,8 @@ class ShopScreen extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) =>
-                          const EarnDollarsDialog(amount: 5)).then((value) {
-                    context.read<UserCubit>().addDollars(5);
+                          const EarnDollarsDialog(amount: 15)).then((value) {
+                    context.read<UserCubit>().addDollars(15);
                   });
                 },
                 onFailed: (placementId, error, message) =>

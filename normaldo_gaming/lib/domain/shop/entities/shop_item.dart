@@ -22,7 +22,7 @@ final class DollarForAdItem extends ShopItem {
   String get imagePath => 'assets/images/tv.png';
 
   @override
-  String get title => '+5 dollars';
+  String get title => '+15 dollars';
 
   @override
   CurrencyType get currencyType => CurrencyType.dollars;
