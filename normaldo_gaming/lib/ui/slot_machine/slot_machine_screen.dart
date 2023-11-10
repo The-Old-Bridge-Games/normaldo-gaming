@@ -175,7 +175,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
 
     audio.setVolumeToBgm(volume: 0);
     audio
-        .loopAudio('slots_music.mp3', volume: 0.3)
+        .loopAudio('slots_music2.mp3', volume: 0.3)
         .then((value) => _backgroundMusicId = value);
   }
 
