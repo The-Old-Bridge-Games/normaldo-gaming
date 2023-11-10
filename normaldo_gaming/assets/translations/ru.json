@@ -35,14 +35,7 @@
     "many": "Ударься о {} {} в одной игре",
     "other": "Ударься об {} {} в одной игре"
   },
-  "trashBin": {
-    "zero": "мусорных баков",
-    "one": "мусорный бак",
-    "two": "мусорных бака",
-    "few": "мусорных бака",
-    "many": "мусорных баков",
-    "other": "мусорных баков"
-  },
+  "trashBin": "бочка",
   "pizza": "пицца",
   "dollar": "доллар",
   "fatPizza": "коробка пиццы",
@@ -99,5 +92,11 @@
   "WIN ROLLS": "КОМБИНАЦИИ",
   "Book of Knowledge": "Книга Знаний",
   "homeless": "бомж",
-  "shuriken": "сюрикен"
+  "shuriken": "сюрикен",
+  "like any rooftop-hitting beverage, the cocktail complicates Normaldo's flight, making his movement more challenging. Be careful to avoid collisions with obstacles!": "подобно любому крышесносному напитку, коктейль усложняет полет NORMALDO, делая его движение более каменным. Будь внимателен, чтобы избежать столкновения с препятствиями!",
+  "a crumpled bin filled with a pile of garbage, perhaps the most negative item in this story, because you will encounter it until you reach the GAME OVER point. Masters of quick reactions, welcome aboard! And to those who are just starting their journey, don't worry, everything will be NORMALDO!": "помятый бак,  набитый кучей мусора , пожалуй самый отрицательный предмет этой истории , потому что его вы будете встречать до той  самой  точки GAME OVER. Мастера высокой реакции, добро пожаловать на борт! А тем, кто только начинает свой путь, не волнуйтесь все будет NORMALDO! переведи на английский",
+  "individuals constantly try to distract NORMALDO from his main mission — eating all the pizza! Beware of these cunning characters and don't let them throw you off track at the most crucial moments.": "Бомжи постоянно пытаются отвлечь NORMALDO от его главной миссии — съесть всю пиццу! Остерегайся этих хитрых типов и не дай им сбить тебя с толку в самый ответственный момент.",
+  "an item with unpredictable behavior. Dodge at high speed, otherwise, this tricky item can confuse even the most experienced NORMALDOSOs!": "айтем с неопределённым поведением. Уворачивайся с высокой скоростью, иначе этот хитрый предмет сможет сбить с толку даже самых опытных NORMALDOSOV!",
+  "this cunning weapon is often used to distract attention for a more serious attack! Be careful! Only lightning-fast reactions will help you; the main thing is not to stand still, and then everything will be NORMALDO!": "это коварное оружие, часто применяется для отвлечения внимания для более серьезной атаки! Будь осторожен! тебе поможет только молниеносная реакция , главное не стоять на месте и тогда все будет NORMALDO!",
+  "always stay on alert! Dangers lurk in the dark alleys of the city. But NORMALDO will always find a way to squeeze through with his chubby self! The glove shoots out at lightning speed - we advise not to relax.": "нужно всегда будь на чеку! В тёмных переулках города поджидают опасности. но NORMALDO всегда найдет где протиснуть свой жирок ! Перчатка вылетает со скоростью света - советуем не расслабляться )"
 }

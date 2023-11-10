@@ -26,6 +26,7 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
   ];
 
   final badItems = [
+    Items.trashBin,
     Items.cocktail,
     Items.homeless,
     Items.molotov,
