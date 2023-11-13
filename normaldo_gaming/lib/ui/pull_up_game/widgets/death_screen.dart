@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
@@ -12,6 +14,7 @@ import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
+import 'package:normaldo_gaming/ui/slot_machine/slot_machine_screen.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class DeathScreen extends StatefulWidget {
@@ -126,58 +129,97 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
         child: Center(
           child: Container(
             alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(horizontal: 65, vertical: 32),
+            margin: const EdgeInsets.symmetric(horizontal: 65, vertical: 16),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: NGTheme.purple3, width: 3),
             ),
-            child: Row(
+            child: Stack(
               children: [
-                Expanded(child: _buildMissions()),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  UserLevelBar(
+                                    levelManager: _levelManager,
+                                    barWidth: 223,
+                                  ),
+                                  const SizedBox(height: 32.0),
+                                  _buildScore(context, cubit.state.score),
+                                  const SizedBox(height: 32.0),
+                                  _buildDollars(context, cubit.state.dollars),
+                                  const Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(child: _buildMissions()),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 70,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BouncingButton(
+                            onPressed: () => context.pop(),
+                            child: Image.asset(
+                              'assets/images/menu_bubble_button.png',
+                            ),
+                          ),
+                          const SizedBox(width: 32),
+                          BouncingButton(
+                            onPressed: () async {
+                              await audio.stopBgm();
+                              // ignore: use_build_context_synchronously
+                              context.pushReplacement(NGRoutes.pullUpGame.path);
+                            },
+                            child: Image.asset(
+                              'assets/images/retry_bubble_button.png',
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Align(
+                  alignment: const Alignment(-0.3, 1),
+                  child: BouncingButton(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BlocProvider<SlotMachineCubit>(
+                                  create: (context) => injector.get(),
+                                  child: const SlotMachineScreen(),
+                                ))),
+                    child: Stack(
                       children: [
-                        UserLevelBar(
-                          levelManager: _levelManager,
-                          barWidth: 223,
+                        Image.asset(
+                          'assets/images/slot_machine.png',
+                          width: 80,
+                          height: 160,
+                          fit: BoxFit.contain,
                         ),
-                        const SizedBox(height: 32.0),
-                        _buildScore(context, cubit.state.score),
-                        const SizedBox(height: 32.0),
-                        _buildDollars(context, cubit.state.dollars),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            BouncingButton(
-                              onPressed: () => context.pop(),
-                              child: Image.asset(
-                                'assets/images/menu_bubble_button.png',
-                                width: 100,
-                                height: 100,
-                              ),
-                            ),
-                            const SizedBox(width: 32),
-                            BouncingButton(
-                              onPressed: () async {
-                                await audio.stopBgm();
-                                // ignore: use_build_context_synchronously
-                                context
-                                    .pushReplacement(NGRoutes.pullUpGame.path);
-                              },
-                              child: Image.asset(
-                                'assets/images/retry_bubble_button.png',
-                                width: 100,
-                                height: 100,
-                              ),
-                            ),
-                          ],
-                        )
+                        Positioned(
+                            top: 42,
+                            left: 22,
+                            child: Image.asset(
+                              'assets/images/normaldo/normaldo2.png',
+                              width: 30,
+                              height: 30,
+                            ))
                       ],
                     ),
                   ),
@@ -210,7 +252,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Text('missions', style: textTheme.displayLarge),
+        Text('Missions'.tr(), style: textTheme.displayLarge),
         const SizedBox(height: 18),
         AnimatedList(
           key: _animatedListKey,
