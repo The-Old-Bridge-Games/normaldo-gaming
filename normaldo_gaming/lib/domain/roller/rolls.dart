@@ -8,11 +8,11 @@ enum Rolls {
   // Reduces your bid by 2
   half1(50),
   // Shows different values on slot machine
-  empty(100),
+  empty(50),
   // Gives extra life bonus to your user
   extraLife(3),
   // Gives x2 to your bid
-  win(12),
+  win(25),
   // Gives x100 to your bid
   jackpot(0.1);
 

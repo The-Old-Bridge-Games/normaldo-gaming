@@ -132,7 +132,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
       await Future.delayed(const Duration(milliseconds: 1000));
       cubit.stopSpin();
       _spinAnimationController.reverse();
-      if (winRoll != Rolls.empty && winRoll != Rolls.half1) {
+      if (winRoll != Rolls.empty) {
         // ignore: use_build_context_synchronously
         await showDialog(
           context: context,
@@ -175,7 +175,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
 
     audio.setVolumeToBgm(volume: 0);
     audio
-        .loopAudio('slots_music2.mp3', volume: 0.3)
+        .loopAudio('avtiki.mp3', volume: 0.5)
         .then((value) => _backgroundMusicId = value);
   }
 
