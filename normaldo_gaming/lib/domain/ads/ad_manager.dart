@@ -1,4 +1,4 @@
-abstract base class BaseAdManager {
+abstract interface class BaseAdManager {
   String get gameId;
   String get interstitialVideoAdPlacementId;
   String get rewardedVideoAdPlacementId;

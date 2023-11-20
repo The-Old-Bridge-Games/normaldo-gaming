@@ -6,10 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
@@ -23,8 +22,6 @@ class PauseMenu extends StatefulWidget {
 class _PauseMenuState extends State<PauseMenu> {
   bool _unpausing = false;
   Timer? _timer;
-
-  final _levelManager = injector.get<LevelManager>();
 
   void _unpause() {
     setState(() => _unpausing = true);
@@ -73,7 +70,7 @@ class _PauseMenuState extends State<PauseMenu> {
                         ActionChip(
                             onPressed: () {
                               Vibrate.feedback(FeedbackType.light);
-                              context.pop();
+                              Navigator.of(context).pop();
                               context.pop();
                             },
                             label: Text(
@@ -85,7 +82,7 @@ class _PauseMenuState extends State<PauseMenu> {
                         ActionChip(
                             onPressed: () {
                               Vibrate.feedback(FeedbackType.light);
-                              context.pop();
+                              Navigator.of(context).pop();
                             },
                             label: Text(
                               'Nope'.tr(),
@@ -166,15 +163,18 @@ class _PauseMenuState extends State<PauseMenu> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Row(
-                  children: _levelManager.missions.map((mission) {
+                  children:
+                      context.read<MissionsCubit>().missions.map((mission) {
                     final progress = mission.type == MissionType.finishGame
                         ? null
-                        : _levelManager.progressOf(mission) ?? 0;
+                        : context.read<MissionsCubit>().progressOf(mission) ??
+                            0;
                     return Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 16.0),
                         child: MissionTile(
                           mission: mission,
+                          canSkipWithAd: false,
                           progressText: progress == null
                               ? null
                               : '($progress/${mission.value})',

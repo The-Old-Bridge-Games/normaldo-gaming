@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 
 part 'game_session_state.dart';
 part 'game_session_cubit.freezed.dart';
@@ -9,20 +8,20 @@ part 'game_session_cubit.freezed.dart';
 class GameSessionCubit extends Cubit<GameSessionState> {
   static const hitRevival = Duration(seconds: 2);
 
-  GameSessionCubit() : super(GameSessionState.initial());
+  GameSessionCubit(this.missionsCubit) : super(GameSessionState.initial());
 
-  final _levelManager = injector.get<LevelManager>();
+  final MissionsCubit missionsCubit;
 
   void eatPizza() {
     emit(state.copyWith(
       score: state.score + 1,
     ));
-    _levelManager.checkState(state: state);
+    missionsCubit.checkState(state: state);
   }
 
   void changeLevel(int level) {
     emit(state.copyWith(level: level));
-    _levelManager.checkState(state: state);
+    missionsCubit.checkState(state: state);
   }
 
   Future<void> takeHit() async {
@@ -64,6 +63,6 @@ class GameSessionCubit extends Cubit<GameSessionState> {
 
   void die() {
     emit(state.copyWith(isDead: true));
-    _levelManager.checkState(state: state);
+    missionsCubit.checkState(state: state);
   }
 }

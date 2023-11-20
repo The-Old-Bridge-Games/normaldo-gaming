@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
@@ -52,7 +52,8 @@ abstract class NGRouter {
                     builder: (context, state) => MultiBlocProvider(
                       providers: [
                         BlocProvider<GameSessionCubit>(
-                            create: (context) => injector.get()),
+                            create: (context) => GameSessionCubit(
+                                context.read<MissionsCubit>())),
                         BlocProvider<LevelBloc>(
                             create: (context) => injector.get()),
                       ],
@@ -104,8 +105,6 @@ abstract class NGRouter {
                     builder: (context, state) => MultiBlocProvider(providers: [
                       BlocProvider<ShopItemsListCubit>(
                           create: (context) => injector.get()..loadList()),
-                      BlocProvider<AdsCubit>(
-                          create: (context) => injector.get()),
                     ], child: const ShopScreen()),
                   ),
                   GoRoute(

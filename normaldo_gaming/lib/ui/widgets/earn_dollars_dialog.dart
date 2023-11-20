@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 
 import 'bouncing_button.dart';
@@ -45,7 +44,7 @@ class EarnDollarsDialog extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             BouncingButton(
-              onPressed: () => context.pop(),
+              onPressed: () => Navigator.of(context).pop(),
               child: Text('OK'.tr(), style: textTheme.displayLarge),
             )
           ],

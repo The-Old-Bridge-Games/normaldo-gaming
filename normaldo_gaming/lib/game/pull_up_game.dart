@@ -10,6 +10,7 @@ import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -31,11 +32,13 @@ class PullUpGame extends FlameGame
   PullUpGame({
     required this.userCubit,
     required this.gameSessionCubit,
+    required this.missionsCubit,
     required this.levelBloc,
   });
 
   final UserCubit userCubit;
   final GameSessionCubit gameSessionCubit;
+  final MissionsCubit missionsCubit;
   final LevelBloc levelBloc;
 
   // Components

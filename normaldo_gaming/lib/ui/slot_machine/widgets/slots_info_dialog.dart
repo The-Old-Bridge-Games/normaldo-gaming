@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 
@@ -32,7 +31,7 @@ class SlotsInfoDialog extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 24),
                   child: GestureDetector(
-                    onTap: () => context.pop(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       padding: const EdgeInsets.only(
                         right: 8,

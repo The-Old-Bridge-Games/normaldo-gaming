@@ -6,14 +6,11 @@ import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/aura.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
-  final _levelManager = injector.get<LevelManager>();
-
   double speed = 0.0;
   bool hearsBloc = true;
   void Function() onRemoved = () {};
@@ -36,7 +33,8 @@ mixin GameObject on PositionComponent, HasGameRef, CollisionCallbacks {
       return;
     }
     if (other is Normaldo && !other.immortal) {
-      _levelManager.checkHit(hitItem: item);
+      final missionsCubit = (gameRef as PullUpGame).missionsCubit;
+      missionsCubit.checkHit(hitItem: item);
     }
     super.onCollisionStart(intersectionPoints, other);
   }

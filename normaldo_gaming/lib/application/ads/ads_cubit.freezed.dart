@@ -21,8 +21,9 @@ mixin _$AdsState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,8 +31,9 @@ mixin _$AdsState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,8 +41,9 @@ mixin _$AdsState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +54,7 @@ mixin _$AdsState {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$AdsState {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +74,7 @@ mixin _$AdsState {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -131,8 +137,9 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) {
     return initial();
   }
@@ -143,8 +150,9 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) {
     return initial?.call();
   }
@@ -155,8 +163,9 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -173,6 +182,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) {
     return initial(this);
   }
@@ -185,6 +195,7 @@ class _$_Initial implements _Initial {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) {
     return initial?.call(this);
   }
@@ -197,6 +208,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -250,8 +262,9 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) {
     return loading();
   }
@@ -262,8 +275,9 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) {
     return loading?.call();
   }
@@ -274,8 +288,9 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -292,6 +307,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) {
     return loading(this);
   }
@@ -304,6 +320,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) {
     return loading?.call(this);
   }
@@ -316,6 +333,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -369,8 +387,9 @@ class _$_Showing implements _Showing {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) {
     return showing();
   }
@@ -381,8 +400,9 @@ class _$_Showing implements _Showing {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) {
     return showing?.call();
   }
@@ -393,8 +413,9 @@ class _$_Showing implements _Showing {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) {
     if (showing != null) {
@@ -411,6 +432,7 @@ class _$_Showing implements _Showing {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) {
     return showing(this);
   }
@@ -423,6 +445,7 @@ class _$_Showing implements _Showing {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) {
     return showing?.call(this);
   }
@@ -435,6 +458,7 @@ class _$_Showing implements _Showing {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) {
     if (showing != null) {
@@ -452,6 +476,8 @@ abstract class _Showing implements AdsState {
 abstract class _$$_FailedCopyWith<$Res> {
   factory _$$_FailedCopyWith(_$_Failed value, $Res Function(_$_Failed) then) =
       __$$_FailedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
@@ -460,26 +486,51 @@ class __$$_FailedCopyWithImpl<$Res>
     implements _$$_FailedCopyWith<$Res> {
   __$$_FailedCopyWithImpl(_$_Failed _value, $Res Function(_$_Failed) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorMessage = null,
+  }) {
+    return _then(_$_Failed(
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Failed implements _Failed {
-  const _$_Failed();
+  const _$_Failed({required this.errorMessage});
+
+  @override
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'AdsState.failed()';
+    return 'AdsState.failed(errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Failed);
+        (other.runtimeType == runtimeType &&
+            other is _$_Failed &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, errorMessage);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_FailedCopyWith<_$_Failed> get copyWith =>
+      __$$_FailedCopyWithImpl<_$_Failed>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -487,10 +538,11 @@ class _$_Failed implements _Failed {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) {
-    return failed();
+    return failed(errorMessage);
   }
 
   @override
@@ -499,10 +551,11 @@ class _$_Failed implements _Failed {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) {
-    return failed?.call();
+    return failed?.call(errorMessage);
   }
 
   @override
@@ -511,12 +564,13 @@ class _$_Failed implements _Failed {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) {
     if (failed != null) {
-      return failed();
+      return failed(errorMessage);
     }
     return orElse();
   }
@@ -529,6 +583,7 @@ class _$_Failed implements _Failed {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) {
     return failed(this);
   }
@@ -541,6 +596,7 @@ class _$_Failed implements _Failed {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) {
     return failed?.call(this);
   }
@@ -553,6 +609,7 @@ class _$_Failed implements _Failed {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -563,7 +620,12 @@ class _$_Failed implements _Failed {
 }
 
 abstract class _Failed implements AdsState {
-  const factory _Failed() = _$_Failed;
+  const factory _Failed({required final String errorMessage}) = _$_Failed;
+
+  String get errorMessage;
+  @JsonKey(ignore: true)
+  _$$_FailedCopyWith<_$_Failed> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -606,8 +668,9 @@ class _$_Skipped implements _Skipped {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() showing,
-    required TResult Function() failed,
+    required TResult Function(String errorMessage) failed,
     required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
   }) {
     return skipped();
   }
@@ -618,8 +681,9 @@ class _$_Skipped implements _Skipped {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? showing,
-    TResult? Function()? failed,
+    TResult? Function(String errorMessage)? failed,
     TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
   }) {
     return skipped?.call();
   }
@@ -630,8 +694,9 @@ class _$_Skipped implements _Skipped {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? showing,
-    TResult Function()? failed,
+    TResult Function(String errorMessage)? failed,
     TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
     required TResult orElse(),
   }) {
     if (skipped != null) {
@@ -648,6 +713,7 @@ class _$_Skipped implements _Skipped {
     required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
     required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
   }) {
     return skipped(this);
   }
@@ -660,6 +726,7 @@ class _$_Skipped implements _Skipped {
     TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
     TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
   }) {
     return skipped?.call(this);
   }
@@ -672,6 +739,7 @@ class _$_Skipped implements _Skipped {
     TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
     TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
     required TResult orElse(),
   }) {
     if (skipped != null) {
@@ -683,4 +751,163 @@ class _$_Skipped implements _Skipped {
 
 abstract class _Skipped implements AdsState {
   const factory _Skipped() = _$_Skipped;
+}
+
+/// @nodoc
+abstract class _$$_CompletedCopyWith<$Res> {
+  factory _$$_CompletedCopyWith(
+          _$_Completed value, $Res Function(_$_Completed) then) =
+      __$$_CompletedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({void Function() onComplete});
+}
+
+/// @nodoc
+class __$$_CompletedCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$_Completed>
+    implements _$$_CompletedCopyWith<$Res> {
+  __$$_CompletedCopyWithImpl(
+      _$_Completed _value, $Res Function(_$_Completed) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? onComplete = null,
+  }) {
+    return _then(_$_Completed(
+      onComplete: null == onComplete
+          ? _value.onComplete
+          : onComplete // ignore: cast_nullable_to_non_nullable
+              as void Function(),
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Completed implements _Completed {
+  const _$_Completed({required this.onComplete});
+
+  @override
+  final void Function() onComplete;
+
+  @override
+  String toString() {
+    return 'AdsState.completed(onComplete: $onComplete)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Completed &&
+            (identical(other.onComplete, onComplete) ||
+                other.onComplete == onComplete));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, onComplete);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CompletedCopyWith<_$_Completed> get copyWith =>
+      __$$_CompletedCopyWithImpl<_$_Completed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() showing,
+    required TResult Function(String errorMessage) failed,
+    required TResult Function() skipped,
+    required TResult Function(void Function() onComplete) completed,
+  }) {
+    return completed(onComplete);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? showing,
+    TResult? Function(String errorMessage)? failed,
+    TResult? Function()? skipped,
+    TResult? Function(void Function() onComplete)? completed,
+  }) {
+    return completed?.call(onComplete);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? showing,
+    TResult Function(String errorMessage)? failed,
+    TResult Function()? skipped,
+    TResult Function(void Function() onComplete)? completed,
+    required TResult orElse(),
+  }) {
+    if (completed != null) {
+      return completed(onComplete);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Showing value) showing,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_Completed value) completed,
+  }) {
+    return completed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Showing value)? showing,
+    TResult? Function(_Failed value)? failed,
+    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_Completed value)? completed,
+  }) {
+    return completed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Showing value)? showing,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Skipped value)? skipped,
+    TResult Function(_Completed value)? completed,
+    required TResult orElse(),
+  }) {
+    if (completed != null) {
+      return completed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Completed implements AdsState {
+  const factory _Completed({required final void Function() onComplete}) =
+      _$_Completed;
+
+  void Function() get onComplete;
+  @JsonKey(ignore: true)
+  _$$_CompletedCopyWith<_$_Completed> get copyWith =>
+      throw _privateConstructorUsedError;
 }

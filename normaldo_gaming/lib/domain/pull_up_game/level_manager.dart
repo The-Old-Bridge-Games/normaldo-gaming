@@ -1,8 +1,5 @@
-import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
-
-import 'items.dart';
 
 abstract interface class LevelManager {
   static const maxLevelExp = -1;
@@ -17,14 +14,9 @@ abstract interface class LevelManager {
 
   Stream<Mission> get completedMissions;
 
-  int? progressOf(Mission mission);
-
   Future<void> init();
 
   void cleanProgress();
-
-  void checkState({required GameSessionState state});
-  void checkHit({required Items hitItem});
 
   void remove(Mission mission);
   void addNewMission();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -67,6 +68,7 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
           gameSessionCubit: context.read<GameSessionCubit>(),
           levelBloc: context.read<LevelBloc>(),
           userCubit: context.read(),
+          missionsCubit: context.read<MissionsCubit>(),
         ),
         overlayBuilderMap: {
           Overlays.pauseMenu.name: (context, game) => const PauseMenu(),

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
 
-final class AdManager extends BaseAdManager {
+final class AdManager implements BaseAdManager {
   AdManager(this.config);
 
   final Config config;

@@ -10,6 +10,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:home_indicator/home_indicator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -35,9 +37,9 @@ class NGAppImpl implements NGApp {
     FlutterNativeSplash.preserve(widgetsBinding: binding);
     FlameAudio.bgm.initialize();
     final config = kDebugMode ? Config.dev() : Config.prod();
-    UnityAds.init(
+    await UnityAds.init(
       gameId: Platform.isIOS ? config.iosAdId : config.androidAdId,
-      testMode: kDebugMode,
+      testMode: false,
       onComplete: () => print('Initialization Complete'),
       onFailed: (error, message) =>
           print('Initialization Failed: $error $message'),
@@ -97,9 +99,14 @@ class NGAppImpl implements NGApp {
       supportedLocales: supportedLocales,
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
+      // Try to fix no fill
+      // Add mission completion as an ad reward
       child: MultiBlocProvider(
         providers: [
           BlocProvider<UserCubit>(create: (context) => injector.get()),
+          BlocProvider<AdsCubit>(create: (context) => injector.get()),
+          BlocProvider<MissionsCubit>(
+              create: (context) => injector.get()..loadMissions()),
         ],
         child: ConfigInheritedWidget(
           config: config,

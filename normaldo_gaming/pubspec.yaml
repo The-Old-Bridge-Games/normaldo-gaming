@@ -21,7 +21,7 @@ dependencies:
   equatable: ^2.0.5
 
   # Ads
-  unity_ads_plugin: ^0.3.8
+  unity_ads_plugin: ^0.3.10
 
   # Database
   hive: ^2.2.3

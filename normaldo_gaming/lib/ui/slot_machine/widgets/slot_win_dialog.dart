@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -38,7 +37,7 @@ class SlotWinDialog extends StatelessWidget {
             _buildWin(context),
             const Spacer(),
             BouncingButton(
-              onPressed: () => context.pop(),
+              onPressed: () => Navigator.of(context).pop(),
               child: Text('OK'.tr(), style: textTheme.displayLarge),
             )
           ],

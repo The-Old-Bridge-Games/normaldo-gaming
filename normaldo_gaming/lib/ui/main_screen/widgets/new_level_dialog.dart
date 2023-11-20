@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -31,7 +30,7 @@ class NewLevelDialog extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           Container(
-            width: 200,
+            width: 300,
             clipBehavior: Clip.hardEdge,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -43,6 +42,7 @@ class NewLevelDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       'assets/images/pizza_pack1.png',
@@ -73,7 +73,7 @@ class NewLevelDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 BouncingButton(
-                  onPressed: () => context.pop(),
+                  onPressed: () => Navigator.of(context).pop(),
                   child: Text('OK'.tr(), style: textTheme.displayLarge),
                 )
               ],

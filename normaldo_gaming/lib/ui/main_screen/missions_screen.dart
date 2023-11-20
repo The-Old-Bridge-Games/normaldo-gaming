@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/missions/missions_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
+import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
@@ -22,8 +26,6 @@ class MissionsScreen extends StatefulWidget {
 }
 
 class _MissionsScreenState extends State<MissionsScreen> {
-  final _levelManager = injector.get<LevelManager>();
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -34,7 +36,7 @@ class _MissionsScreenState extends State<MissionsScreen> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width / 2,
-            color: NGTheme.purple1,
+            color: NGTheme.purple2,
             child: SafeArea(
               right: false,
               child: Column(
@@ -82,31 +84,10 @@ class _MissionsScreenState extends State<MissionsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 24),
                     child: UserLevelBar(
-                        levelManager: _levelManager, barWidth: 200),
+                        levelManager: injector.get(), barWidth: 200),
                   ),
                   const SizedBox(height: 16),
-                  Stack(
-                    children: [
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          itemCount: _levelManager.missions.length,
-                          itemBuilder: (context, index) {
-                            final mission = _levelManager.missions[index];
-                            final progress =
-                                mission.type == MissionType.finishGame
-                                    ? null
-                                    : _levelManager.progressOf(mission) ?? 0;
-                            return MissionTile(
-                              mission: _levelManager.missions[index],
-                              progressText: progress == null
-                                  ? null
-                                  : '($progress/${mission.value})',
-                            );
-                          }),
-                    ],
-                  )
+                  const Expanded(child: MissionsList())
                 ],
               ),
             ),
