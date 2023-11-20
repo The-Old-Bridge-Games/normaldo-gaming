@@ -83,7 +83,7 @@ class NGAppImpl implements NGApp {
     final directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
 
-    HomeIndicator.hide();
+    HomeIndicator.deferScreenEdges(ScreenEdge.values);
 
     HydratedBloc.storage = await HydratedStorage.build(
         storageDirectory: await getApplicationDocumentsDirectory());

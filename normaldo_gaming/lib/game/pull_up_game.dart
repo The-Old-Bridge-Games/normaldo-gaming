@@ -52,7 +52,10 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await HomeIndicator.hide();
+    final hidden = await HomeIndicator.isHidden();
+    if (!hidden) {
+      await HomeIndicator.hide();
+    }
 
     _initializeComponents();
 
