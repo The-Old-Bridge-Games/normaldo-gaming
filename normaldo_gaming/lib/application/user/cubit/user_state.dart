@@ -5,6 +5,7 @@ class UserState with _$UserState {
   const factory UserState({
     required User user,
     required bool educated,
+    NetworkException? failure,
   }) = _UserState;
 
   factory UserState.initial() => const UserState(
@@ -16,6 +17,7 @@ class UserState with _$UserState {
           level: 0,
           exp: 0,
           extraLives: 0,
+          totalPizzas: 0,
         ),
         educated: false,
       );

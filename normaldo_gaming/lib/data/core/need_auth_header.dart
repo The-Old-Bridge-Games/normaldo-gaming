@@ -1,0 +1,1 @@
+const needAuthHeader = {'needAuth': 'true'};

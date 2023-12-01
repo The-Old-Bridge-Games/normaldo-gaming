@@ -1,8 +1,7 @@
 import 'entities/user.dart';
 
 abstract interface class UserRepository {
-  Future<User> getUser();
-  Future<User> updateUser();
-  Future<User> createUser();
-  Future<void> deleteUser();
+  Future<User> getUserInfo();
+
+  Future<User> updateUser({required User user});
 }

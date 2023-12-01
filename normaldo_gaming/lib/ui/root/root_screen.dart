@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
+import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
-import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -20,20 +20,24 @@ class _RootScreenState extends State<RootScreen> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<UserCubit>().state.user.name.isEmpty) {
-        context.push(NGRoutes.createUser.path);
-      }
+      FlutterNativeSplash.remove();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserCubit, UserState>(
-      listenWhen: (_, current) => current.user.name.isEmpty,
-      listener: (context, state) {
-        context.push(NGRoutes.createUser.path);
-      },
-      child: const NgAudioWidget(child: MainScreen()),
+    return NgAudioWidget(
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          print(state);
+          state.when(
+            initial: () {},
+            authorized: () => context.push(NGRoutes.main.path),
+            notAuthorized: () => context.push(NGRoutes.signUp.path),
+          );
+        },
+        child: const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

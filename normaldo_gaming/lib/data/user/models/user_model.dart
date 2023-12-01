@@ -8,6 +8,7 @@ final class UserModel {
   final int level;
   final int exp;
   final int extraLives;
+  final int totalPizzas;
 
   UserModel({
     required this.id,
@@ -17,6 +18,7 @@ final class UserModel {
     required this.level,
     required this.exp,
     required this.extraLives,
+    required this.totalPizzas,
   });
 
   UserModel.fromEntity(User user)
@@ -26,7 +28,8 @@ final class UserModel {
         highScore = user.highScore,
         level = user.level,
         exp = user.exp,
-        extraLives = user.extraLives;
+        extraLives = user.extraLives,
+        totalPizzas = user.totalPizzas;
 
   User toEntity() {
     return User(
@@ -37,6 +40,7 @@ final class UserModel {
       level: level,
       exp: exp,
       extraLives: extraLives,
+      totalPizzas: totalPizzas,
     );
   }
 
@@ -47,7 +51,8 @@ final class UserModel {
       highScore: json['highScore'],
       level: json['level'],
       exp: json['exp'],
-      extraLives: json['extraLives']);
+      extraLives: json['extraLives'],
+      totalPizzas: json['totalPizzas']);
 
   Map<String, dynamic> toJson() {
     return {
@@ -58,6 +63,7 @@ final class UserModel {
       'level': level,
       'exp': exp,
       'extraLives': extraLives,
+      'totalPizzas': totalPizzas,
     };
   }
 
@@ -68,6 +74,7 @@ final class UserModel {
     int? level,
     int? exp,
     int? extraLives,
+    int? totalPizzas,
   }) =>
       UserModel(
         id: id,
@@ -77,5 +84,6 @@ final class UserModel {
         level: level ?? this.level,
         exp: exp ?? this.exp,
         extraLives: extraLives ?? this.extraLives,
+        totalPizzas: totalPizzas ?? this.totalPizzas,
       );
 }

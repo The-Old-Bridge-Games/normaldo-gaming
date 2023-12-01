@@ -5,15 +5,16 @@ import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
+import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
+import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
-import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
-import 'package:normaldo_gaming/ui/create_user/create_user_screen.dart';
+import 'package:normaldo_gaming/ui/auth/sign_in_screen.dart';
+import 'package:normaldo_gaming/ui/auth/sign_up_screen.dart';
 import 'package:normaldo_gaming/ui/knowledge_book/knowledge_book_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
-import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/pull_up_game_widget.dart';
 import 'package:normaldo_gaming/ui/root/root_screen.dart';
 import 'package:normaldo_gaming/ui/settings/settings_screen.dart';
@@ -27,6 +28,7 @@ abstract class NGRouter {
   static final router = GoRouter(
     debugLogDiagnostics: true,
     observers: [AudioObserver()],
+    initialLocation: NGRoutes.root.path,
     routes: [
       GoRoute(
           path: NGRoutes.root.path,
@@ -36,15 +38,7 @@ abstract class NGRouter {
             GoRoute(
                 path: NGRoutes.main.name,
                 name: NGRoutes.main.name,
-                builder: (context, state) => BlocListener<UserCubit, UserState>(
-                      listener: _userBlocListener,
-                      child: BlocListener<UserCubit, UserState>(
-                        listenWhen: (previous, current) =>
-                            previous.user.level < current.user.level,
-                        listener: _newLevelListener,
-                        child: const MainScreen(),
-                      ),
-                    ),
+                builder: (context, state) => const MainScreen(),
                 routes: [
                   GoRoute(
                     path: NGRoutes.pullUpGame.name,
@@ -65,7 +59,8 @@ abstract class NGRouter {
                     pageBuilder: (context, state) => CustomTransitionPage(
                       key: state.pageKey,
                       child: MissionsScreen(
-                        tag: state.uri.queryParameters['tag'] as String,
+                        tag: (state.extra as Map<String, dynamic>)['tag']
+                            as String,
                       ),
                       transitionDuration: const Duration(milliseconds: 300),
                       reverseTransitionDuration:
@@ -115,30 +110,23 @@ abstract class NGRouter {
                   ),
                 ]),
             GoRoute(
-              path: NGRoutes.createUser.name,
-              name: NGRoutes.createUser.name,
-              builder: (context, state) => const CreateUserScreen(),
-            ),
+                path: NGRoutes.signUp.name,
+                name: NGRoutes.signUp.name,
+                builder: (context, state) => BlocProvider<SignUpCubit>(
+                      create: (context) => injector.get(),
+                      child: const SignUpScreen(),
+                    ),
+                routes: [
+                  GoRoute(
+                    path: NGRoutes.signIn.name,
+                    name: NGRoutes.signIn.name,
+                    builder: (context, state) => BlocProvider<SignInCubit>(
+                      create: (context) => injector.get(),
+                      child: const SignInScreen(),
+                    ),
+                  ),
+                ]),
           ]),
     ],
   );
-
-  static void _userBlocListener(BuildContext context, UserState state) {
-    if (state.user.name.isEmpty) {
-      context.goRoute(NGRoutes.createUser);
-    }
-  }
-
-  static void _newLevelListener(BuildContext context, UserState state) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => NewLevelDialog(
-              reward: state.user.level * 10,
-              level: state.user.level,
-            )).then((value) async {
-      context.read<UserCubit>().addDollars(state.user.level * 10);
-    });
-  }
 }
