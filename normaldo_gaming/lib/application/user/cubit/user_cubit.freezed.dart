@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserState {
   User get user => throw _privateConstructorUsedError;
   bool get educated => throw _privateConstructorUsedError;
+  NetworkException? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({User user, bool educated});
+  $Res call({User user, bool educated, NetworkException? failure});
 }
 
 /// @nodoc
@@ -47,6 +48,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -57,6 +59,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as NetworkException?,
     ) as $Val);
   }
 }
@@ -68,7 +74,7 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       __$$_UserStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, bool educated});
+  $Res call({User user, bool educated, NetworkException? failure});
 }
 
 /// @nodoc
@@ -84,6 +90,7 @@ class __$$_UserStateCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? failure = freezed,
   }) {
     return _then(_$_UserState(
       user: null == user
@@ -94,6 +101,10 @@ class __$$_UserStateCopyWithImpl<$Res>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as NetworkException?,
     ));
   }
 }
@@ -101,16 +112,19 @@ class __$$_UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState({required this.user, required this.educated});
+  const _$_UserState(
+      {required this.user, required this.educated, this.failure});
 
   @override
   final User user;
   @override
   final bool educated;
+  @override
+  final NetworkException? failure;
 
   @override
   String toString() {
-    return 'UserState(user: $user, educated: $educated)';
+    return 'UserState(user: $user, educated: $educated, failure: $failure)';
   }
 
   @override
@@ -120,11 +134,12 @@ class _$_UserState implements _UserState {
             other is _$_UserState &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.educated, educated) ||
-                other.educated == educated));
+                other.educated == educated) &&
+            (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, educated);
+  int get hashCode => Object.hash(runtimeType, user, educated, failure);
 
   @JsonKey(ignore: true)
   @override
@@ -135,12 +150,16 @@ class _$_UserState implements _UserState {
 
 abstract class _UserState implements UserState {
   const factory _UserState(
-      {required final User user, required final bool educated}) = _$_UserState;
+      {required final User user,
+      required final bool educated,
+      final NetworkException? failure}) = _$_UserState;
 
   @override
   User get user;
   @override
   bool get educated;
+  @override
+  NetworkException? get failure;
   @override
   @JsonKey(ignore: true)
   _$$_UserStateCopyWith<_$_UserState> get copyWith =>

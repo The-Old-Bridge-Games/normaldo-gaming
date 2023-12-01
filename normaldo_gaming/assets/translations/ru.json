@@ -99,5 +99,21 @@
   "an item with unpredictable behavior. Dodge at high speed, otherwise, this tricky item can confuse even the most experienced NORMALDOSOs!": "айтем с неопределённым поведением. Уворачивайся с высокой скоростью, иначе этот хитрый предмет сможет сбить с толку даже самых опытных NORMALDOSOV!",
   "this cunning weapon is often used to distract attention for a more serious attack! Be careful! Only lightning-fast reactions will help you; the main thing is not to stand still, and then everything will be NORMALDO!": "это коварное оружие, часто применяется для отвлечения внимания для более серьезной атаки! Будь осторожен! тебе поможет только молниеносная реакция , главное не стоять на месте и тогда все будет NORMALDO!",
   "always stay on alert! Dangers lurk in the dark alleys of the city. But NORMALDO will always find a way to squeeze through with his chubby self! The glove shoots out at lightning speed - we advise not to relax.": "нужно всегда будь на чеку! В тёмных переулках города поджидают опасности. но NORMALDO всегда найдет где протиснуть свой жирок ! Перчатка вылетает со скоростью света - советуем не расслабляться )",
-  "I know..": "Знаю.."
+  "I know..": "Знаю..",
+  "Sign Up": "Создать",
+  "Registration": "Регистрация",
+  "Nickname..": "Никнейм..",
+  "Password": "Пароль",
+  "Repeat password..": "Повторите пароль..",
+  "Sign In": "Войти",
+  "Login": "Вход",
+  "nickname must be 3 chars at least": "ник должен содержать хотя бы 2 символа",
+  "incorrect email": "некорректный email",
+  "password must be 6 chars at least": "пароль должен быть хотя бы 6 символов",
+  "passwords don't match": "пароли не совпадают",
+  "Something goes wrong..": "Что-то пошло не так..",
+  "User with this nickname already exists": "Пользователь с таким ником уже существует",
+  "User not found": "Пользователь не найден",
+  "Are you sure?": "Ты уверен?",
+  "You're going to logout your account": "Ты собираешься выйти из своего аккаунта"
 }

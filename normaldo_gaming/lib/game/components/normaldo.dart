@@ -45,9 +45,9 @@ enum NormaldoFatState {
   int pizzaToFat([int? amount]) {
     if (amount != null) return amount;
     return switch (this) {
-      skinny || skinnyEat => 30,
-      slim || slimEat => 40,
-      fat || fatEat => 50,
+      skinny || skinnyEat => 10,
+      slim || slimEat => 20,
+      fat || fatEat => 35,
       uberFat || uberFatEat => 60,
       _ => 1
     };

@@ -10,6 +10,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:home_indicator/home_indicator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
+import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
+import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -99,7 +102,10 @@ class NGAppImpl implements NGApp {
       fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<AuthCubit>(create: (context) => injector.get()..auth()),
           BlocProvider<UserCubit>(create: (context) => injector.get()),
+          BlocProvider<SignUpCubit>(create: (context) => injector.get()),
+          BlocProvider<SignInCubit>(create: (context) => injector.get()),
         ],
         child: ConfigInheritedWidget(
           config: config,
