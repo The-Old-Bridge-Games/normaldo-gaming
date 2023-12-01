@@ -144,4 +144,5 @@ final _theme = ThemeData(
       displayMedium: NGTheme.displayMedium,
       displaySmall: NGTheme.displaySmall,
       bodySmall: NGTheme.bodySmall,
+      labelSmall: NGTheme.labelSmall,
     ));

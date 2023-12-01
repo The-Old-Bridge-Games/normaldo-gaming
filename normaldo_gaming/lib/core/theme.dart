@@ -41,4 +41,9 @@ abstract class NGTheme {
     fontSize: 12,
     color: Colors.white,
   );
+  static const labelSmall = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 10,
+    color: Colors.white,
+  );
 }

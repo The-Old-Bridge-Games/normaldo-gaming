@@ -115,5 +115,6 @@
   "User with this nickname already exists": "Пользователь с таким ником уже существует",
   "User not found": "Пользователь не найден",
   "Are you sure?": "Ты уверен?",
-  "You're going to logout your account": "Ты собираешься выйти из своего аккаунта"
+  "You're going to logout your account": "Ты собираешься выйти из своего аккаунта",
+  "Sign out": "Выйти из аккаунта"
 }
