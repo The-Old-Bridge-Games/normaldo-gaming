@@ -212,12 +212,15 @@ class _MainScreenState extends State<MainScreen> {
           height: 60,
           // color: Colors.red.withOpacity(0.3),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              FittedBox(
-                child: Text(
-                  user.name,
-                  style: textTheme.bodySmall,
+              Expanded(
+                child: FittedBox(
+                  child: Text(
+                    user.name,
+                    style: textTheme.displayMedium,
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
@@ -227,18 +230,18 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     // HIGHSCORE
                     Image.asset('assets/images/pizza.png'),
-                    const SizedBox(width: 2),
+                    const SizedBox(width: 4),
                     Text(
                       user.highScore.toString(),
-                      style: textTheme.labelSmall,
+                      style: textTheme.displaySmall,
                     ),
                     const SizedBox(width: 8),
                     // DOLLARS
                     Image.asset('assets/images/dollar.png'),
-                    const SizedBox(width: 2),
+                    const SizedBox(width: 4),
                     Text(
                       user.dollars.toString(),
-                      style: textTheme.labelSmall,
+                      style: textTheme.displaySmall,
                     )
                   ],
                 ),
@@ -250,10 +253,10 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     // EXTRA LIVES
                     Image.asset('assets/images/heart.png'),
-                    const SizedBox(width: 2),
+                    const SizedBox(width: 4),
                     Text(
-                      user.highScore.toString(),
-                      style: textTheme.labelSmall,
+                      user.extraLives.toString(),
+                      style: textTheme.displaySmall,
                     ),
                   ],
                 ),

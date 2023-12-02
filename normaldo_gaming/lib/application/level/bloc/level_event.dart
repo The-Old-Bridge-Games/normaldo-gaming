@@ -25,6 +25,8 @@ abstract class LevelEvent with _$LevelEvent {
 
 @freezed
 class FigureEvent with _$FigureEvent {
+  static const double speedMultiplier = 1.5;
+
   const factory FigureEvent.trashWall() = _TrashWall;
   const factory FigureEvent.guardedPizza() = _GuardedPizza;
   const factory FigureEvent.cursedPath() = _CursedPath;

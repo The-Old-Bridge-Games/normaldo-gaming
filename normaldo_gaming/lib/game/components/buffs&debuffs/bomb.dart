@@ -51,6 +51,8 @@ class Bomb extends PositionComponent
       removeFromParent();
       grid.removeAllItems();
       grid.add(BombExplosionComponent()..size = grid.size);
+    } else {
+      removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }

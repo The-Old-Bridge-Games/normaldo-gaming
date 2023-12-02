@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -10,6 +9,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 class Cocktail extends PositionComponent
     with
@@ -42,7 +42,7 @@ class Cocktail extends PositionComponent
     if (other is Normaldo && _eatingHitbox.isColliding) {
       audio.playSfx(Sfx.cocktail);
       removeFromParent();
-      other.effectsController.addEffect(item, Random().nextInt(4) + 2);
+      other.effectsController.addEffect(item, Utils.generateCocktailDuration());
     }
     super.onCollisionStart(intersectionPoints, other);
   }

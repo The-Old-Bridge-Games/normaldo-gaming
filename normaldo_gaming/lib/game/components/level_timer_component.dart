@@ -17,7 +17,7 @@ class LevelTimerComponent extends TimerComponent
   void _onTick() {
     if (bloc.state.miniGame != null) return;
     if (bloc.state.figure == null) {
-      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.slowMo()));
+      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.only2Lines()));
       bloc.add(const LevelEvent.startRandomFigure());
     }
     add(TimerComponent(

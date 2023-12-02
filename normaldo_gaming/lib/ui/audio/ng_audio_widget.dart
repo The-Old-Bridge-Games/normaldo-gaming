@@ -58,7 +58,6 @@ class AudioObserver extends NavigatorObserver {
         _startPullUpGameBgm();
         break;
       case 'main':
-        await audio.stopBgm();
         _startMainScreenBgm();
         break;
       default:
@@ -121,9 +120,6 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _startMainScreenBgm();
-    });
     _incomingCallSubscription = PhoneState.stream.listen((state) {
       if (state.status == PhoneStateStatus.CALL_ENDED) {
         _audio.resumeBgm();

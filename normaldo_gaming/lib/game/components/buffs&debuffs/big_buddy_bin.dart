@@ -32,7 +32,7 @@ class BigBuddyBin extends PositionComponent
 
   @override
   void onNewState(LevelState state) {
-    speed = state.level.speed;
+    speed = state.level.speed * 1.5;
   }
 
   @override

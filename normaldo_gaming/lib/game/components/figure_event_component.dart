@@ -376,7 +376,6 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           ));
         final bigBuddy = (children
             .firstWhere((element) => element is BigBuddyBin) as BigBuddyBin);
-        bigBuddy.speed *= 1.5;
         bigBuddy.exploding = true;
       },
       only2Lines: () {
@@ -392,9 +391,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   linesCentersY[item.line ?? 0]));
           }
         }
-        children.whereType<BigBuddyBin>().forEach((element) {
-          element.speed *= 1.5;
-        });
+        children.whereType<BigBuddyBin>().forEach((element) {});
       },
       slowMo: () {
         for (final column in matrix) {
