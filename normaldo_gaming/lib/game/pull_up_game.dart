@@ -6,7 +6,6 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
-import 'package:home_indicator/home_indicator.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
@@ -52,11 +51,6 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    final hidden = await HomeIndicator.isHidden();
-    if (!hidden) {
-      await HomeIndicator.hide();
-    }
-
     _initializeComponents();
 
     await _initBloc();

@@ -190,20 +190,19 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
       nextFatState();
     } else if (_pizzaEaten >= pizzaToGetFatter && isFat) {
-      _pizzaEaten = pizzaToGetFatter;
+      _pizzaEaten = NormaldoFatState.uberFat.pizzaToFat();
       nextFatState();
     } else if (_pizzaEaten >= pizzaToGetFatter && isUberFat) {
-      _pizzaEaten = pizzaToGetFatter;
+      _pizzaEaten = NormaldoFatState.uberFat.pizzaToFat();
     }
   }
 
   void decreaseFatPoints(int by) {
     assert(by > 0);
-    final pizzaToGetFatter = current!.pizzaToFat(customPizzaToGetFatter);
     _pizzaEaten -= by;
     bloc.takeHit();
     if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
-      _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
+      _pizzaEaten = 0;
       prevFatState();
     } else if (_pizzaEaten <= 0 && isSlim) {
       _pizzaEaten = 0;

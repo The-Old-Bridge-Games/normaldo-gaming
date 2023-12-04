@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
-import 'package:home_indicator/home_indicator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
@@ -86,7 +85,7 @@ class NGAppImpl implements NGApp {
     final directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
 
-    HomeIndicator.deferScreenEdges(ScreenEdge.values);
+    // HomeIndicator.deferScreenEdges(ScreenEdge.values);
 
     HydratedBloc.storage = await HydratedStorage.build(
         storageDirectory: await getApplicationDocumentsDirectory());

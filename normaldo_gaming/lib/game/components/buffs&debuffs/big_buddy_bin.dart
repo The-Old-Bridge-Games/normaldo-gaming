@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/game_object.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 import 'bomb.dart';
 import 'bosses/shredder/shredder.dart';
@@ -32,7 +33,7 @@ class BigBuddyBin extends PositionComponent
 
   @override
   void onNewState(LevelState state) {
-    speed = state.level.speed * 1.5;
+    speed = state.level.speed * Utils.bigBuddyBinSpeedMultiplier;
   }
 
   @override
@@ -59,10 +60,15 @@ class BigBuddyBin extends PositionComponent
 
     super.onCollisionStart(intersectionPoints, other);
   }
+  // FIXES:
+  // 1. Updste speed of bigbuddy 🍕
+  // 2. make bin destroy dollars
+  // 3. reset fat point to the middle of previos fat
 
   @override
   Future<void> onLoad() async {
-    speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
+    speed = (gameRef as PullUpGame).levelBloc.state.level.speed *
+        Utils.bigBuddyBinSpeedMultiplier;
     add(SpriteComponent(
       size: size,
       sprite: await Sprite.load('trash_bin.png'),

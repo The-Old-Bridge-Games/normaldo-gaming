@@ -35,6 +35,8 @@ class Dollar extends PositionComponent
       (gameRef as PullUpGame).gameSessionCubit.addDollars(1);
       audio.playSfx(Sfx.dollarCatch);
       removeFromParent();
+    } else {
+      removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }

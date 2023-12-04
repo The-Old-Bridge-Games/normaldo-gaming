@@ -18,9 +18,7 @@ class FatCounter extends PositionComponent with HasGameRef {
 
   var _normaldoFatState = NormaldoFatState.slim;
 
-  var _fatPoints = 0;
   set fatPoints(int newValue) {
-    _fatPoints = newValue;
     _bar.size.x = barSize.x / _normaldoFatState.pizzaToFat() * newValue;
   }
 
@@ -72,12 +70,11 @@ class FatCounter extends PositionComponent with HasGameRef {
   void update(double dt) {
     final fPoints = (gameRef as PullUpGame).grid.normaldo.fatPoints;
     final fatState = (gameRef as PullUpGame).grid.normaldo.current;
-    if (fPoints != _fatPoints) {
-      fatPoints = fPoints;
-    }
     if (fatState != _normaldoFatState && fatState != null) {
       normaldoFatState = fatState;
     }
+
+    fatPoints = fPoints;
   }
 }
 
