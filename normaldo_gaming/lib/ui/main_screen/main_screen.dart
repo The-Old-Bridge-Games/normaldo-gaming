@@ -272,7 +272,7 @@ class _MainScreenState extends State<MainScreen> {
     return BouncingButton(
       onPressed: _onStartPressed,
       child: Container(
-        width: 200,
+        width: 230,
         height: 90,
         color: Colors.red.withOpacity(0.0001),
       ),
@@ -291,7 +291,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildSlotsHitbox() {
-    const dimension = 75.0;
+    const dimension = 85.0;
     return BouncingButton(
       onPressed: _onSlotsPressed,
       child: Container(
