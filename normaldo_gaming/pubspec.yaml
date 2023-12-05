@@ -104,6 +104,9 @@ flutter:
     - assets/images/stickers/
     - assets/images/stickers/2.0x/
     - assets/images/stickers/3.0x/
+    - assets/images/main_screen/
+    - assets/images/main_screen/2.0x/
+    - assets/images/main_screen/3.0x/
 
     - assets/audio/
     - assets/audio/sfx/

@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +15,28 @@ import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
+
+enum Tabs {
+  idle,
+  basement,
+  pizzeria,
+  shop,
+  trash,
+  slots,
+  settings,
+  play;
+
+  String get assetPath => switch (this) {
+        Tabs.idle => 'assets/images/main_screen/a1.png',
+        Tabs.basement => 'assets/images/main_screen/a3.png',
+        Tabs.pizzeria => 'assets/images/main_screen/a4.png',
+        Tabs.trash => 'assets/images/main_screen/a5.png',
+        Tabs.shop => 'assets/images/main_screen/a6.png',
+        Tabs.slots => 'assets/images/main_screen/a7.png',
+        Tabs.settings => 'assets/images/main_screen/a8.png',
+        Tabs.play => 'assets/images/main_screen/a9.png',
+      };
+}
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -39,31 +63,82 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  var _tab = Tabs.idle;
+  set tab(Tabs newValue) {
+    setState(() => _tab = newValue);
+  }
+
+  String get tabAsset => _tab.assetPath;
+
+  void _onTrashBinPressed() {
+    if (_tab == Tabs.trash) {
+      // context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
+      //       () => tab = Tabs.idle,
+      //     );
+    } else {
+      tab = Tabs.trash;
+    }
+  }
+
   void _onStartPressed() {
-    context.pushNamed(NGRoutes.pullUpGame.name);
+    if (_tab == Tabs.play) {
+      context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
+            () => tab = Tabs.idle,
+          );
+    } else {
+      tab = Tabs.play;
+    }
   }
 
   void _onMissionsPressed() {
-    context.pushNamed(NGRoutes.missions.name, extra: {
-      'tag': _tag,
-      'tag2': _tag2,
-    });
+    if (_tab == Tabs.basement) {
+      context.pushNamed(NGRoutes.missions.name, extra: {
+        'tag': _tag,
+        'tag2': _tag2,
+      }).whenComplete(() => tab = Tabs.idle);
+    } else {
+      tab = Tabs.basement;
+    }
   }
 
   void _onSettingsPressed() {
-    context.pushNamed(NGRoutes.settings.name);
+    if (_tab == Tabs.settings) {
+      context
+          .pushNamed(NGRoutes.settings.name)
+          .whenComplete(() => tab = Tabs.idle);
+    } else {
+      tab = Tabs.settings;
+    }
   }
 
   void _onShopPressed() {
-    context.pushNamed(NGRoutes.shop.name);
+    if (_tab == Tabs.shop) {
+      context.pushNamed(NGRoutes.shop.name).whenComplete(
+            () => tab = Tabs.idle,
+          );
+    } else {
+      tab = Tabs.shop;
+    }
   }
 
   void _onSlotsPressed() {
-    context.pushNamed(NGRoutes.slots.name);
+    if (_tab == Tabs.slots) {
+      context
+          .pushNamed(NGRoutes.slots.name)
+          .whenComplete(() => tab = Tabs.idle);
+    } else {
+      tab = Tabs.slots;
+    }
   }
 
   void _onKnowledgeBookPressed() {
-    context.pushNamed(NGRoutes.knowledgeBook.name);
+    if (_tab == Tabs.pizzeria) {
+      context.pushNamed(NGRoutes.knowledgeBook.name).whenComplete(
+            () => tab = Tabs.idle,
+          );
+    } else {
+      tab = Tabs.pizzeria;
+    }
   }
 
   void _failureListener(BuildContext context, UserState state) {
@@ -78,6 +153,12 @@ class _MainScreenState extends State<MainScreen> {
 
     FlutterNativeSplash.remove();
     context.read<UserCubit>().load();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      for (final tab in Tabs.values) {
+        precacheImage(AssetImage(tab.assetPath), context);
+      }
+    });
   }
 
   @override
@@ -85,58 +166,118 @@ class _MainScreenState extends State<MainScreen> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        body: BlocListener<UserCubit, UserState>(
-          listenWhen: (previous, current) =>
-              previous.failure != current.failure,
-          listener: _failureListener,
-          child: BlocConsumer<UserCubit, UserState>(
+        body: GestureDetector(
+          onTap: () => tab = Tabs.idle,
+          child: BlocListener<UserCubit, UserState>(
             listenWhen: (previous, current) =>
-                previous.user.level < current.user.level,
-            listener: _newLevelListener,
-            bloc: context.read(),
-            builder: (context, state) => Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.asset(
-                  'assets/images/nrmld_back.png',
-                  fit: BoxFit.fill,
-                ),
-                Align(
-                  alignment: const Alignment(-0.76, 0.18),
-                  child: _buildStats(),
-                ),
-                Align(
-                  alignment: const Alignment(-0.4, -0.25),
-                  child: _buildMissionsHitbox(),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: _buildUserLevel(),
-                ),
-                Align(
-                  alignment: const Alignment(0.12, 0.3),
-                  child: _buildSlotsHitbox(),
-                ),
-                Align(
-                  alignment: const Alignment(-0.1, 0.3),
-                  child: _buildShopHitbox(),
-                ),
-                Align(
-                  alignment: const Alignment(0.8, 0.4),
-                  child: _buildPlayHitbox(),
-                ),
-                Align(
-                  alignment: const Alignment(-0.27, 0.4),
-                  child: _buildKnowledgeBookHitbox(),
-                ),
-                Align(
-                  alignment: const Alignment(0.29, 0.4),
-                  child: _buildSettingsHitbox(),
-                ),
-              ],
+                previous.failure != current.failure,
+            listener: _failureListener,
+            child: BlocConsumer<UserCubit, UserState>(
+              listenWhen: (previous, current) =>
+                  previous.user.level < current.user.level,
+              listener: _newLevelListener,
+              bloc: context.read(),
+              builder: (context, state) => Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    tabAsset,
+                    fit: BoxFit.fill,
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.76, 0.18),
+                    child: _buildStats(),
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.4, -0.25),
+                    child: _buildMissionsHitbox(),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: _buildUserLevel(),
+                  ),
+                  Align(
+                    alignment: const Alignment(0.12, 0.3),
+                    child: _buildSlotsHitbox(),
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.1, 0.3),
+                    child: _buildShopHitbox(),
+                  ),
+                  Align(
+                    alignment: const Alignment(0.8, 0.4),
+                    child: _buildPlayHitbox(),
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.27, 0.3),
+                    child: _buildKnowledgeBookHitbox(),
+                  ),
+                  Align(
+                    alignment: const Alignment(0.29, 0.4),
+                    child: _buildSettingsHitbox(),
+                  ),
+                  Align(
+                    alignment: const Alignment(-0.135, 0.48),
+                    child: _buildTrashHitbox(),
+                  ),
+                  AnimatedAlign(
+                    alignment: _tab == Tabs.idle
+                        ? const Alignment(0, 2)
+                        : const Alignment(0, 1),
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linearToEaseOut,
+                    child: _buildNavigationClue(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTrashHitbox() {
+    return BouncingButton(
+      onPressed: _onTrashBinPressed,
+      child: Container(
+        width: 22,
+        height: 20,
+        color: Colors.red.withOpacity(0.0001),
+      ),
+    );
+  }
+
+  Widget _buildNavigationClue() {
+    const borderSide = BorderSide(
+      width: 3,
+      color: NGTheme.purple2,
+    );
+    final textTheme = Theme.of(context).textTheme;
+    return GestureDetector(
+      onTap: () => switch (_tab) {
+        Tabs.idle => () {},
+        Tabs.basement => _onMissionsPressed(),
+        Tabs.pizzeria => _onKnowledgeBookPressed(),
+        Tabs.play => _onStartPressed(),
+        Tabs.settings => _onSettingsPressed(),
+        Tabs.shop => _onShopPressed(),
+        Tabs.slots => _onSlotsPressed(),
+        Tabs.trash => _onTrashBinPressed(),
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        height: 70,
+        padding: const EdgeInsets.only(left: 32, top: 8, right: 32),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          border: Border(
+            left: borderSide,
+            top: borderSide,
+            right: borderSide,
+          ),
+        ),
+        child: Text('${_tab.name.tr()}  >', style: textTheme.displayLarge),
       ),
     );
   }
@@ -156,8 +297,8 @@ class _MainScreenState extends State<MainScreen> {
     return BouncingButton(
       onPressed: _onKnowledgeBookPressed,
       child: Container(
-        width: 75,
-        height: 90,
+        width: 80,
+        height: 100,
         color: Colors.red.withOpacity(0.0001),
       ),
     );
@@ -235,7 +376,7 @@ class _MainScreenState extends State<MainScreen> {
                       user.highScore.toString(),
                       style: textTheme.displaySmall,
                     ),
-                    const SizedBox(width: 8),
+                    const Spacer(),
                     // DOLLARS
                     Image.asset('assets/images/dollar.png'),
                     const SizedBox(width: 4),
