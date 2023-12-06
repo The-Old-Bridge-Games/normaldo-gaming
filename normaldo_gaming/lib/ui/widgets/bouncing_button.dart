@@ -20,11 +20,11 @@ class BouncingButton extends StatefulWidget {
   final BounceScale scale;
 
   const BouncingButton({
-    Key? key,
+    super.key,
     required this.child,
     this.scale = const BounceScale.wideWidget(),
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   State createState() => _BouncingButtonState();
