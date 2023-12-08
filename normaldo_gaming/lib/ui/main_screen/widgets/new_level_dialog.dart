@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class NewLevelDialog extends StatelessWidget {
@@ -12,7 +14,7 @@ class NewLevelDialog extends StatelessWidget {
     super.key,
   });
 
-  final int reward;
+  final List<Reward> reward;
   final int level;
 
   @override
@@ -22,7 +24,6 @@ class NewLevelDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Column(
         children: [
-          const SizedBox(height: 40),
           BlinkingText(
             'NEW LEVEL!',
             duration: const Duration(milliseconds: 500),
@@ -31,7 +32,7 @@ class NewLevelDialog extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           Container(
-            width: 200,
+            // width: MediaQuery.of(context).size.width / 2,
             clipBehavior: Clip.hardEdge,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -43,6 +44,8 @@ class NewLevelDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       'assets/images/pizza_pack1.png',
@@ -58,19 +61,7 @@ class NewLevelDialog extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('+ $reward', style: textTheme.displayLarge),
-                    const SizedBox(width: 8),
-                    Image.asset(
-                      'assets/images/dollar.png',
-                      width: 30,
-                      height: 30,
-                    ),
-                  ],
-                ),
+                _buildRewards(context),
                 const SizedBox(height: 32),
                 BouncingButton(
                   onPressed: () => context.pop(),
@@ -81,6 +72,68 @@ class NewLevelDialog extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRewards(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      children: reward
+          .where((e) =>
+              e is RankReward ||
+              e is BucksReward ||
+              e is ExtraLiveReward ||
+              e is SkinReward)
+          .map((e) => switch (e) {
+                RankReward() => Text(
+                    '${'NEW RANK!'.tr()}\n<<< ${e.rank} >>>'.tr(),
+                    style: textTheme.displayMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                BucksReward() => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/dollar.png',
+                          width: 30,
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          e.amount.toString(),
+                          style: textTheme.displayMedium,
+                        )
+                      ],
+                    ),
+                  ),
+                ExtraLiveReward() => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/heart.png',
+                          width: 30,
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          e.amount.toString(),
+                          style: textTheme.displayMedium,
+                        )
+                      ],
+                    ),
+                  ),
+                SkinReward() => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'NEW SKIN!'.tr(),
+                      style: textTheme.displayMedium,
+                    ),
+                  ),
+                _ => throw UnexpectedError(),
+              })
+          .toList(),
     );
   }
 }

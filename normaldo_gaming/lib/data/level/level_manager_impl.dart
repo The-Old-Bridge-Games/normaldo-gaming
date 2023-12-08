@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
@@ -76,7 +78,42 @@ class LevelManagerImpl implements LevelManager {
 
   @override
   String rank(User user) {
-    return _ranks[user.level ~/ 5];
+    if (_ranks.isEmpty) throw UnexpectedError();
+    final level = user.level;
+    if (level < 5) return _ranks[0];
+    if (level < 7) return _ranks[1];
+    if (level < 10) return _ranks[2];
+    if (level < 13) return _ranks[3];
+    if (level < 15) return _ranks[4];
+    if (level < 17) return _ranks[5];
+    if (level < 20) return _ranks[6];
+    if (level < 23) return _ranks[7];
+    if (level < 25) return _ranks[8];
+    if (level < 27) return _ranks[9];
+    if (level < 30) return _ranks[10];
+    if (level < 33) return _ranks[11];
+    if (level < 35) return _ranks[12];
+    if (level >= 35) {
+      final nextIndex = level - 22;
+      if (nextIndex >= _ranks.length) {
+        return _ranks[_ranks.length - 1];
+      }
+      return _ranks[nextIndex];
+    }
+    return _ranks[0];
+  }
+
+  String rankFromLvl(int lvl) {
+    return rank(User(
+      id: '',
+      name: '',
+      highScore: 0,
+      dollars: 0,
+      level: lvl,
+      exp: 0,
+      extraLives: 0,
+      totalPizzas: 0,
+    ));
   }
 
   @override
@@ -169,6 +206,133 @@ class LevelManagerImpl implements LevelManager {
     }
     _repository.saveProgress(progress: _missionsProgress);
   }
+
+  @override
+  List<List<Reward>> get levelUpRewards => [
+        // 1 lvl
+        [const TextReward(text: 'HERE WE GO')],
+        // 2 lvl
+        [const BucksReward(amount: 10)],
+        // 3 lvl
+        [const BucksReward(amount: 20)],
+        // 4 lvl
+        [const BucksReward(amount: 30)],
+        // 5 lvl
+        [
+          const BucksReward(amount: 40),
+          const ExtraLiveReward(amount: 2),
+          RankReward(rank: rankFromLvl(5)),
+        ],
+        // 6 lvl
+        [const BucksReward(amount: 60)],
+        // 7 lvl
+        [
+          const BucksReward(amount: 200),
+          const ExtraLiveReward(amount: 2),
+          RankReward(rank: rankFromLvl(7)),
+        ],
+        // 8 lvl
+        [const BucksReward(amount: 100)],
+        // 9 lvl
+        [const BucksReward(amount: 120)],
+        // 10 lvl
+        [
+          const BucksReward(amount: 300),
+          const SkinReward(),
+          const ExtraLiveReward(amount: 5),
+          RankReward(rank: rankFromLvl(10)),
+        ],
+        // 11 lvl
+        [const BucksReward(amount: 200)],
+        // 12 lvl
+        [const BucksReward(amount: 300)],
+        // 13 lvl
+        [
+          const BucksReward(amount: 400),
+          RankReward(rank: rankFromLvl(13)),
+          const ExtraLiveReward(amount: 3),
+        ],
+        // 14 lvl
+        [const BucksReward(amount: 500)],
+        // 15 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(15)),
+          const ExtraLiveReward(amount: 3),
+        ],
+        // 16 lvl
+        [const BucksReward(amount: 500)],
+        // 17 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(17)),
+          const ExtraLiveReward(amount: 3),
+        ],
+        // 18 lvl
+        [const BucksReward(amount: 500)],
+        // 19 lvl
+        [const BucksReward(amount: 500)],
+        // 20 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(20)),
+          const ExtraLiveReward(amount: 2),
+        ],
+        // 21 lvl
+        [const BucksReward(amount: 500)],
+        // 22 lvl
+        [const BucksReward(amount: 500)],
+        // 23 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(23)),
+          const ExtraLiveReward(amount: 2),
+        ],
+        // 24 lvl
+        [const BucksReward(amount: 500)],
+        // 25 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(25)),
+          const ExtraLiveReward(amount: 1),
+        ],
+        // 26 lvl
+        [const BucksReward(amount: 500)],
+        // 27 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(27)),
+          const ExtraLiveReward(amount: 1),
+        ],
+        // 28 lvl
+        [const BucksReward(amount: 500)],
+        // 29 lvl
+        [const BucksReward(amount: 500)],
+        // 30 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(30)),
+          const ExtraLiveReward(amount: 1),
+        ],
+        // 31 lvl
+        [const BucksReward(amount: 500)],
+        // 32 lvl
+        [const BucksReward(amount: 500)],
+        // 33 lvl
+        [
+          const BucksReward(amount: 500),
+          RankReward(rank: rankFromLvl(33)),
+          const ExtraLiveReward(amount: 1),
+        ],
+        // 34 lvl
+        [const BucksReward(amount: 500)],
+        // 35 lvl
+        [
+          const BucksReward(amount: 1000),
+          RankReward(rank: rankFromLvl(35)),
+          const ExtraLiveReward(amount: 1),
+        ],
+      ];
 }
 
 final _allMissions = [

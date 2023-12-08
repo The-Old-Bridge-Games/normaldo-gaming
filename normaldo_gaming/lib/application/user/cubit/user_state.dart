@@ -14,7 +14,7 @@ class UserState with _$UserState {
           name: '',
           highScore: 0,
           dollars: 0,
-          level: 0,
+          level: 1,
           exp: 0,
           extraLives: 0,
           totalPizzas: 0,

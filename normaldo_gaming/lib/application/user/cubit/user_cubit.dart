@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/domain/user/user_repository.dart';
@@ -58,6 +59,29 @@ class UserCubit extends HydratedCubit<UserState> {
     _userRepository.updateUser(user: state.user).catchError((e) {
       print(e);
     });
+  }
+
+  void applyRewards(List<Reward> rewards) {
+    var bucksRewarded = 0;
+    var extraLivesRewarded = 0;
+    for (final reward in rewards) {
+      switch (reward) {
+        case BucksReward():
+          bucksRewarded += reward.amount;
+        case ExtraLiveReward():
+          extraLivesRewarded += reward.amount;
+        case SkinReward():
+          continue;
+        default:
+          continue;
+      }
+    }
+    emit(state.copyWith(
+        user: UserModel.fromEntity(state.user)
+            .copyWith(
+                dollars: state.user.dollars + bucksRewarded,
+                extraLives: state.user.extraLives + extraLivesRewarded)
+            .toEntity()));
   }
 
   void addExtraLife(int amount) {

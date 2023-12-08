@@ -10,7 +10,8 @@ enum NGRoutes {
   settings('/main/settings'),
   shop('/main/shop'),
   slots('/main/slots'),
-  knowledgeBook('/main/knowledge');
+  knowledgeBook('/main/knowledge'),
+  basement('/main/base');
 
   const NGRoutes(this.path);
 
