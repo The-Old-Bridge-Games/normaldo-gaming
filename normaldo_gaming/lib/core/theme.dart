@@ -13,6 +13,8 @@ abstract class NGTheme {
   static const purple2 = Color(0xff7C347C);
   static const purple3 = Color(0xff5E265E);
   static const orange1 = Color(0xffFFCC00);
+  static const gray1 = Color(0xffADADAD);
+  static const gray2 = Color(0xff3C3838);
 
   static const auraGreen = green1;
   static const auraRed = Color(0xffDC0000);
@@ -45,5 +47,10 @@ abstract class NGTheme {
     fontFamily: _fontFamily,
     fontSize: 10,
     color: Colors.white,
+  );
+  static const labelMedium = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 16,
+    color: gray2,
   );
 }

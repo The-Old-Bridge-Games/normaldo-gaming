@@ -37,13 +37,30 @@ class NGAppImpl implements NGApp {
     FlutterNativeSplash.preserve(widgetsBinding: binding);
     FlameAudio.bgm.initialize();
     final config = kDebugMode ? Config.dev() : Config.prod();
-    UnityAds.init(
-      gameId: Platform.isIOS ? config.iosAdId : config.androidAdId,
-      testMode: kDebugMode,
-      onComplete: () => print('Initialization Complete'),
-      onFailed: (error, message) =>
-          print('Initialization Failed: $error $message'),
-    );
+    bool initAds = false;
+    print('''
+Init Ads: $initAds
+OS: ${Platform.operatingSystem}
+OS Version: ${Platform.operatingSystemVersion}
+''');
+    if (Platform.isIOS) {
+      final version = double.parse(
+          Platform.operatingSystemVersion.split('(').first.split(' ')[1]);
+      if (version >= 17) {
+        initAds = true;
+      }
+    } else {
+      initAds = true;
+    }
+    if (initAds) {
+      UnityAds.init(
+        gameId: Platform.isIOS ? config.iosAdId : config.androidAdId,
+        testMode: kDebugMode,
+        onComplete: () => print('Initialization Complete'),
+        onFailed: (error, message) =>
+            print('Initialization Failed: $error $message'),
+      );
+    }
     await FlameAudio.audioCache.loadAll([
       'main_theme.mp3',
       'club_track.mp3',
@@ -144,4 +161,5 @@ final _theme = ThemeData(
       displaySmall: NGTheme.displaySmall,
       bodySmall: NGTheme.bodySmall,
       labelSmall: NGTheme.labelSmall,
+      labelMedium: NGTheme.labelMedium,
     ));

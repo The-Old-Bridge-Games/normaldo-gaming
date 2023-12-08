@@ -12,6 +12,7 @@ import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/audio/ng_audio_widget.dart';
 import 'package:normaldo_gaming/ui/auth/sign_in_screen.dart';
 import 'package:normaldo_gaming/ui/auth/sign_up_screen.dart';
+import 'package:normaldo_gaming/ui/base_screen/base_screen.dart';
 import 'package:normaldo_gaming/ui/knowledge_book/knowledge_book_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/main_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/missions_screen.dart';
@@ -107,6 +108,11 @@ abstract class NGRouter {
                     path: NGRoutes.knowledgeBook.name,
                     name: NGRoutes.knowledgeBook.name,
                     builder: (context, state) => const KnowledgeBookScreen(),
+                  ),
+                  GoRoute(
+                    path: NGRoutes.basement.name,
+                    name: NGRoutes.basement.name,
+                    builder: (context, state) => BaseScreen(),
                   ),
                 ]),
             GoRoute(

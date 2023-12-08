@@ -20,8 +20,12 @@ dependencies:
   path_provider: ^2.0.15
   equatable: ^2.0.5
 
+  # UI
+  expandable: ^5.0.1
+  scrollable_positioned_list: ^0.3.8
+
   # Ads
-  unity_ads_plugin: ^0.3.8
+  unity_ads_plugin: ^0.3.10
 
   # Database
   hive: ^2.2.3
@@ -107,6 +111,9 @@ flutter:
     - assets/images/main_screen/
     - assets/images/main_screen/2.0x/
     - assets/images/main_screen/3.0x/
+    - assets/images/ui/the_path/
+    - assets/images/ui/the_path/2.0x/
+    - assets/images/ui/the_path/3.0x/
 
     - assets/audio/
     - assets/audio/sfx/

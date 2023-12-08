@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 
@@ -46,20 +47,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static const _tag = 'missions_tag_1';
-  static const _tag2 = 'missions_tag_2';
-
   static void _newLevelListener(BuildContext context, UserState state) async {
     await Future.delayed(const Duration(milliseconds: 500));
+    final rewards =
+        injector.get<LevelManager>().levelUpRewards[state.user.level - 1];
     // ignore: use_build_context_synchronously
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => NewLevelDialog(
-              reward: state.user.level * 10,
+              reward: rewards,
               level: state.user.level,
             )).then((value) async {
-      context.read<UserCubit>().addDollars(state.user.level * 10);
+      // Сделать зачисление призов
+      context.read<UserCubit>().applyRewards(rewards);
     });
   }
 
@@ -92,10 +93,9 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onMissionsPressed() {
     if (_tab == Tabs.basement) {
-      context.pushNamed(NGRoutes.missions.name, extra: {
-        'tag': _tag,
-        'tag2': _tag2,
-      }).whenComplete(() => tab = Tabs.idle);
+      context
+          .pushNamed(NGRoutes.basement.name)
+          .whenComplete(() => tab = Tabs.idle);
     } else {
       tab = Tabs.basement;
     }
@@ -103,9 +103,9 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onSettingsPressed() {
     if (_tab == Tabs.settings) {
-      context
-          .pushNamed(NGRoutes.settings.name)
-          .whenComplete(() => tab = Tabs.idle);
+      // context
+      //     .pushNamed(NGRoutes.settings.name)
+      //     .whenComplete(() => tab = Tabs.idle);
     } else {
       tab = Tabs.settings;
     }
@@ -321,6 +321,7 @@ class _MainScreenState extends State<MainScreen> {
       child: UserLevelBar(
         levelManager: injector.get(),
         barWidth: 100,
+        crossAxisAlignment: CrossAxisAlignment.end,
         rankStyle: textTheme.bodySmall,
         iconSize: 20,
       ),

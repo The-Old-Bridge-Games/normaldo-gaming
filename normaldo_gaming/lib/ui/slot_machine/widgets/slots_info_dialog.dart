@@ -227,7 +227,7 @@ class SlotsInfoDialog extends StatelessWidget {
               const SizedBox(width: 16),
               Text('>', style: textTheme.displayMedium),
               const SizedBox(width: 16),
-              Text('10x BID', style: textTheme.displayMedium),
+              Text('2x BID', style: textTheme.displayMedium),
             ],
           ),
         Rolls.jackpot => Row(

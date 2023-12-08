@@ -1,4 +1,5 @@
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
@@ -10,6 +11,8 @@ abstract interface class LevelManager {
   int nextLevelExp(User user);
 
   String rank(User user);
+
+  List<List<Reward>> get levelUpRewards;
 
   bool isMaxLevel(User user);
 
