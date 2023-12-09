@@ -44,8 +44,11 @@ OS: ${Platform.operatingSystem}
 OS Version: ${Platform.operatingSystemVersion}
 ''');
     if (Platform.isIOS) {
-      final version = double.parse(
-          Platform.operatingSystemVersion.split('(').first.split(' ')[1]);
+      final version = double.parse(Platform.operatingSystemVersion
+          .split('(')
+          .first
+          .split(' ')[1]
+          .split('.')[0]);
       if (version >= 17) {
         initAds = true;
       }

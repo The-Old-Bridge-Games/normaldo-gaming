@@ -1,4 +1,4 @@
-package com.example.normaldo_gaming
+package com.normaldo.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

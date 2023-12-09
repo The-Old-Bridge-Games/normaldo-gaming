@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
@@ -70,8 +69,13 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
 
   dynamic _onCreated(SlotMachineController controller) async {
     _controller = controller;
-    _controller.start(hitRollItemIndex: null);
-    _dropRolls();
+    Future.delayed(const Duration(milliseconds: 100)).then((value) {
+      _controller.start(
+          hitRollItemIndex: Random().nextInt(Rolls.values.length));
+      _controller.stop(reelIndex: 0);
+      _controller.stop(reelIndex: 1);
+      _controller.stop(reelIndex: 2);
+    });
   }
 
   void _onInfoPressed() {
@@ -178,14 +182,6 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
     audio
         .loopAudio('avtiki.mp3', volume: 0.5)
         .then((value) => _backgroundMusicId = value);
-
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _controller.start(
-          hitRollItemIndex: Random().nextInt(Rolls.values.length));
-      _controller.stop(reelIndex: 0);
-      _controller.stop(reelIndex: 1);
-      _controller.stop(reelIndex: 2);
-    });
   }
 
   @override

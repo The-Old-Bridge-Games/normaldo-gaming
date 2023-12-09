@@ -38,6 +38,7 @@ class _BaseScreenState extends State<BaseScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        centerTitle: true,
         leadingWidth: 100,
         leading: BouncingButton(
           onPressed: () => context.pop(),
@@ -79,7 +80,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     ),
                     const SizedBox(height: 16),
                     _buildMissions(),
-                    const SizedBox(height: 16),
+                    const Spacer(),
                     BouncingButton(
                       onPressed: _onChangeLocalePressed,
                       child: Text(
@@ -89,7 +90,7 @@ class _BaseScreenState extends State<BaseScreen> {
                         style: textTheme.displayMedium,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 16),
                     _buildLogoutButton(context, textTheme),
                   ],
                 ),
@@ -168,16 +169,14 @@ class _BaseScreenState extends State<BaseScreen> {
         Expandable(
           controller: _missionsExpandController,
           collapsed: const SizedBox.shrink(),
-          expanded: SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: _levelManager.missions
-                    .map((mission) =>
-                        Expanded(child: MissionCard(mission: mission)))
-                    .toList(),
-              ),
+          expanded: SizedBox(
+            height: 125,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: _levelManager.missions
+                  .map((mission) =>
+                      Expanded(child: MissionCard(mission: mission)))
+                  .toList(),
             ),
           ),
         ),

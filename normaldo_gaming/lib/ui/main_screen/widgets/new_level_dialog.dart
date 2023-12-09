@@ -30,7 +30,7 @@ class NewLevelDialog extends StatelessWidget {
             endDelay: const Duration(seconds: 2),
             style: textTheme.displayLarge?.copyWith(fontSize: 48),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 8),
           Container(
             // width: MediaQuery.of(context).size.width / 2,
             clipBehavior: Clip.hardEdge,
@@ -91,7 +91,7 @@ class NewLevelDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 BucksReward() => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -108,7 +108,7 @@ class NewLevelDialog extends StatelessWidget {
                     ),
                   ),
                 ExtraLiveReward() => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -125,7 +125,7 @@ class NewLevelDialog extends StatelessWidget {
                     ),
                   ),
                 SkinReward() => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
                       'NEW SKIN!'.tr(),
                       style: textTheme.displayMedium,

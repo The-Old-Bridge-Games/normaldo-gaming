@@ -24,56 +24,53 @@ class MissionCard extends StatelessWidget {
     final progress = mission.type == MissionType.finishGame
         ? null
         : _levelManager.progressOf(mission) ?? 0;
-    return AspectRatio(
-      aspectRatio: 4 / 3,
-      child: Card(
-        color: NGTheme.purple2,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Expanded(
-                  child: Stack(
-                children: [
-                  Row(
-                    children: [
-                      Opacity(
-                        opacity: bgOpacity,
-                        child: Image.asset('assets/images/pizza_pack1.png'),
-                      ),
-                      Opacity(
-                        opacity: bgOpacity,
-                        child: Image.asset('assets/images/pizza_pack1.png'),
-                      ),
-                      Opacity(
-                        opacity: bgOpacity,
-                        child: Image.asset('assets/images/pizza_pack1.png'),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: List.generate(
-                      mission.exp,
-                      (index) => Image.asset('assets/images/pizza_pack1.png'),
+    return Card(
+      color: NGTheme.purple2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+                child: Stack(
+              children: [
+                Row(
+                  children: [
+                    Opacity(
+                      opacity: bgOpacity,
+                      child: Image.asset('assets/images/pizza_pack1.png'),
                     ),
-                  ),
-                ],
-              )),
-              const SizedBox(height: 16),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  this.progress
-                      ? mission.trDescription()
-                      : '${mission.trDescription()} $progress',
-                  maxLines: 3,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodySmall?.copyWith(fontSize: 12),
+                    Opacity(
+                      opacity: bgOpacity,
+                      child: Image.asset('assets/images/pizza_pack1.png'),
+                    ),
+                    Opacity(
+                      opacity: bgOpacity,
+                      child: Image.asset('assets/images/pizza_pack1.png'),
+                    ),
+                  ],
                 ),
+                Row(
+                  children: List.generate(
+                    mission.exp,
+                    (index) => Image.asset('assets/images/pizza_pack1.png'),
+                  ),
+                ),
+              ],
+            )),
+            const SizedBox(height: 8),
+            Expanded(
+              flex: 3,
+              child: Text(
+                this.progress
+                    ? mission.trDescription()
+                    : '${mission.trDescription()} $progress',
+                maxLines: 5,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                style: textTheme.bodySmall?.copyWith(fontSize: 12),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
