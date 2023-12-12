@@ -180,10 +180,7 @@ class _MainScreenState extends State<MainScreen> {
               builder: (context, state) => Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset(
-                    tabAsset,
-                    fit: BoxFit.fill,
-                  ),
+                  _Background(tab: _tab),
                   Align(
                     alignment: const Alignment(-0.76, 0.18),
                     child: _buildStats(),
@@ -444,6 +441,94 @@ class _MainScreenState extends State<MainScreen> {
           color: Colors.red.withOpacity(0.0001),
         ),
       ),
+    );
+  }
+}
+
+class _Background extends StatelessWidget {
+  const _Background({super.key, required this.tab});
+
+  final Tabs tab;
+
+  @override
+  Widget build(BuildContext context) {
+    const boxFit = BoxFit.fill;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Visibility(
+            visible: tab == Tabs.idle,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.idle.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.basement,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.basement.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.pizzeria,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.pizzeria.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.play,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.play.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.settings,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.settings.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.shop,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.shop.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.slots,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.slots.assetPath,
+              fit: boxFit,
+            )),
+        Visibility(
+            visible: tab == Tabs.trash,
+            maintainSize: true,
+            maintainState: true,
+            maintainAnimation: true,
+            child: Image.asset(
+              Tabs.trash.assetPath,
+              fit: boxFit,
+            )),
+      ],
     );
   }
 }
