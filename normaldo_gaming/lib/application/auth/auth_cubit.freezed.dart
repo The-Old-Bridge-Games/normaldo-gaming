@@ -80,24 +80,25 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -107,7 +108,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -183,29 +184,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements AuthState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_AuthorizedCopyWith<$Res> {
-  factory _$$_AuthorizedCopyWith(
-          _$_Authorized value, $Res Function(_$_Authorized) then) =
-      __$$_AuthorizedCopyWithImpl<$Res>;
+abstract class _$$AuthorizedImplCopyWith<$Res> {
+  factory _$$AuthorizedImplCopyWith(
+          _$AuthorizedImpl value, $Res Function(_$AuthorizedImpl) then) =
+      __$$AuthorizedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AuthorizedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Authorized>
-    implements _$$_AuthorizedCopyWith<$Res> {
-  __$$_AuthorizedCopyWithImpl(
-      _$_Authorized _value, $Res Function(_$_Authorized) _then)
+class __$$AuthorizedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthorizedImpl>
+    implements _$$AuthorizedImplCopyWith<$Res> {
+  __$$AuthorizedImplCopyWithImpl(
+      _$AuthorizedImpl _value, $Res Function(_$AuthorizedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Authorized implements _Authorized {
-  const _$_Authorized();
+class _$AuthorizedImpl implements _Authorized {
+  const _$AuthorizedImpl();
 
   @override
   String toString() {
@@ -215,7 +216,7 @@ class _$_Authorized implements _Authorized {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Authorized);
+        (other.runtimeType == runtimeType && other is _$AuthorizedImpl);
   }
 
   @override
@@ -291,29 +292,29 @@ class _$_Authorized implements _Authorized {
 }
 
 abstract class _Authorized implements AuthState {
-  const factory _Authorized() = _$_Authorized;
+  const factory _Authorized() = _$AuthorizedImpl;
 }
 
 /// @nodoc
-abstract class _$$_NotAuthorizedCopyWith<$Res> {
-  factory _$$_NotAuthorizedCopyWith(
-          _$_NotAuthorized value, $Res Function(_$_NotAuthorized) then) =
-      __$$_NotAuthorizedCopyWithImpl<$Res>;
+abstract class _$$NotAuthorizedImplCopyWith<$Res> {
+  factory _$$NotAuthorizedImplCopyWith(
+          _$NotAuthorizedImpl value, $Res Function(_$NotAuthorizedImpl) then) =
+      __$$NotAuthorizedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotAuthorizedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_NotAuthorized>
-    implements _$$_NotAuthorizedCopyWith<$Res> {
-  __$$_NotAuthorizedCopyWithImpl(
-      _$_NotAuthorized _value, $Res Function(_$_NotAuthorized) _then)
+class __$$NotAuthorizedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$NotAuthorizedImpl>
+    implements _$$NotAuthorizedImplCopyWith<$Res> {
+  __$$NotAuthorizedImplCopyWithImpl(
+      _$NotAuthorizedImpl _value, $Res Function(_$NotAuthorizedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotAuthorized implements _NotAuthorized {
-  const _$_NotAuthorized();
+class _$NotAuthorizedImpl implements _NotAuthorized {
+  const _$NotAuthorizedImpl();
 
   @override
   String toString() {
@@ -323,7 +324,7 @@ class _$_NotAuthorized implements _NotAuthorized {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotAuthorized);
+        (other.runtimeType == runtimeType && other is _$NotAuthorizedImpl);
   }
 
   @override
@@ -399,5 +400,5 @@ class _$_NotAuthorized implements _NotAuthorized {
 }
 
 abstract class _NotAuthorized implements AuthState {
-  const factory _NotAuthorized() = _$_NotAuthorized;
+  const factory _NotAuthorized() = _$NotAuthorizedImpl;
 }

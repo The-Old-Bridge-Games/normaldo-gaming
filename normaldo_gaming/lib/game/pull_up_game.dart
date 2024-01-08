@@ -42,7 +42,7 @@ class PullUpGame extends FlameGame
   final scoreLabel = ScoreLabel();
   final balance = Balance();
   final pauseButton = PauseButton();
-  final fatCounter = FatCounter();
+  late final FatCounter fatCounter;
   late final Grid grid;
 
   final _levelManager = injector.get<LevelManager>();
@@ -51,6 +51,7 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    fatCounter = FatCounter(skin: userCubit.state.skin);
     _initializeComponents();
 
     await _initBloc();
@@ -163,6 +164,7 @@ class PullUpGame extends FlameGame
         children: [
           scene,
           grid = Grid(
+            skin: userCubit.state.skin,
             gameSessionCubit: gameSessionCubit,
             levelBloc: levelBloc,
           )

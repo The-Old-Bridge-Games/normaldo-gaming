@@ -69,22 +69,22 @@ class _$PreDeathStateCopyWithImpl<$Res, $Val extends PreDeathState>
 }
 
 /// @nodoc
-abstract class _$$_PreDeathStateCopyWith<$Res>
+abstract class _$$PreDeathStateImplCopyWith<$Res>
     implements $PreDeathStateCopyWith<$Res> {
-  factory _$$_PreDeathStateCopyWith(
-          _$_PreDeathState value, $Res Function(_$_PreDeathState) then) =
-      __$$_PreDeathStateCopyWithImpl<$Res>;
+  factory _$$PreDeathStateImplCopyWith(
+          _$PreDeathStateImpl value, $Res Function(_$PreDeathStateImpl) then) =
+      __$$PreDeathStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool skipped, double skipValue, AdState adState});
 }
 
 /// @nodoc
-class __$$_PreDeathStateCopyWithImpl<$Res>
-    extends _$PreDeathStateCopyWithImpl<$Res, _$_PreDeathState>
-    implements _$$_PreDeathStateCopyWith<$Res> {
-  __$$_PreDeathStateCopyWithImpl(
-      _$_PreDeathState _value, $Res Function(_$_PreDeathState) _then)
+class __$$PreDeathStateImplCopyWithImpl<$Res>
+    extends _$PreDeathStateCopyWithImpl<$Res, _$PreDeathStateImpl>
+    implements _$$PreDeathStateImplCopyWith<$Res> {
+  __$$PreDeathStateImplCopyWithImpl(
+      _$PreDeathStateImpl _value, $Res Function(_$PreDeathStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_PreDeathStateCopyWithImpl<$Res>
     Object? skipValue = null,
     Object? adState = null,
   }) {
-    return _then(_$_PreDeathState(
+    return _then(_$PreDeathStateImpl(
       skipped: null == skipped
           ? _value.skipped
           : skipped // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_PreDeathStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PreDeathState implements _PreDeathState {
-  const _$_PreDeathState(
+class _$PreDeathStateImpl implements _PreDeathState {
+  const _$PreDeathStateImpl(
       {required this.skipped, required this.skipValue, required this.adState});
 
   @override
@@ -133,7 +133,7 @@ class _$_PreDeathState implements _PreDeathState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PreDeathState &&
+            other is _$PreDeathStateImpl &&
             (identical(other.skipped, skipped) || other.skipped == skipped) &&
             (identical(other.skipValue, skipValue) ||
                 other.skipValue == skipValue) &&
@@ -146,15 +146,15 @@ class _$_PreDeathState implements _PreDeathState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PreDeathStateCopyWith<_$_PreDeathState> get copyWith =>
-      __$$_PreDeathStateCopyWithImpl<_$_PreDeathState>(this, _$identity);
+  _$$PreDeathStateImplCopyWith<_$PreDeathStateImpl> get copyWith =>
+      __$$PreDeathStateImplCopyWithImpl<_$PreDeathStateImpl>(this, _$identity);
 }
 
 abstract class _PreDeathState implements PreDeathState {
   const factory _PreDeathState(
       {required final bool skipped,
       required final double skipValue,
-      required final AdState adState}) = _$_PreDeathState;
+      required final AdState adState}) = _$PreDeathStateImpl;
 
   @override
   bool get skipped;
@@ -164,6 +164,6 @@ abstract class _PreDeathState implements PreDeathState {
   AdState get adState;
   @override
   @JsonKey(ignore: true)
-  _$$_PreDeathStateCopyWith<_$_PreDeathState> get copyWith =>
+  _$$PreDeathStateImplCopyWith<_$PreDeathStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -3,11 +3,15 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
 class FatCounter extends PositionComponent with HasGameRef {
+  FatCounter({required this.skin});
+
+  final Skin skin;
   late final RectangleComponent _bar;
   late final Map<NormaldoFatState, Sprite> _normaldoSprites;
 
@@ -33,7 +37,7 @@ class FatCounter extends PositionComponent with HasGameRef {
   FutureOr<void> onLoad() async {
     final iconSize = PullUpGame.menuIconSize;
     final barPosition = Vector2(iconSize.x, barSize.y);
-    _normaldoSprites = await normaldoSprites();
+    _normaldoSprites = await normaldoSprites(skin);
     _bar = RectangleComponent(
       paint: Paint()..color = NGTheme.green1,
     )
@@ -87,15 +91,12 @@ extension on NormaldoFatState {
       case NormaldoFatState.skinnyEat:
         return [NormaldoFatState.skinnyDead, NormaldoFatState.slim];
       case NormaldoFatState.slim:
-      case NormaldoFatState.slimDead:
       case NormaldoFatState.slimEat:
         return [NormaldoFatState.skinny, NormaldoFatState.fat];
       case NormaldoFatState.fat:
-      case NormaldoFatState.fatDead:
       case NormaldoFatState.fatEat:
         return [NormaldoFatState.slim, NormaldoFatState.uberFat];
       case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatDead:
       case NormaldoFatState.uberFatEat:
         return [NormaldoFatState.fat, NormaldoFatState.uberFat];
     }

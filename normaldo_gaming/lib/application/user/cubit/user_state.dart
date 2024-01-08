@@ -5,11 +5,12 @@ class UserState with _$UserState {
   const factory UserState({
     required User user,
     required bool educated,
+    required Skin skin,
     NetworkException? failure,
   }) = _UserState;
 
-  factory UserState.initial() => const UserState(
-        user: User(
+  factory UserState.initial() => UserState(
+        user: const User(
           id: 'no_user',
           name: '',
           highScore: 0,
@@ -20,5 +21,6 @@ class UserState with _$UserState {
           totalPizzas: 0,
         ),
         educated: false,
+        skin: Skin.basic(),
       );
 }

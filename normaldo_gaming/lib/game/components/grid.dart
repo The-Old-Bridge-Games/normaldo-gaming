@@ -11,6 +11,7 @@ import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
@@ -29,8 +30,13 @@ class Grid extends PositionComponent
         HasNgAudio {
   static const linesCount = 5;
 
-  Grid({required this.gameSessionCubit, required this.levelBloc});
+  Grid({
+    required this.gameSessionCubit,
+    required this.levelBloc,
+    required this.skin,
+  });
 
+  final Skin skin;
   final GameSessionCubit gameSessionCubit;
   final LevelBloc levelBloc;
 
@@ -165,7 +171,7 @@ class Grid extends PositionComponent
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / linesCount;
-    normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
+    normaldo = Normaldo(size: Vector2.all(lineSize * 0.9), skin: skin)
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
       _linesCentersY.add(_getCenterOfLine(i));
@@ -276,15 +282,12 @@ class Grid extends PositionComponent
         return 1;
       case NormaldoFatState.slim:
       case NormaldoFatState.slimEat:
-      case NormaldoFatState.slimDead:
         return 0.7;
       case NormaldoFatState.fat:
       case NormaldoFatState.fatEat:
-      case NormaldoFatState.fatDead:
         return 0.5;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
-      case NormaldoFatState.uberFatDead:
         return 0.4;
       case null:
         throw UnexpectedError();

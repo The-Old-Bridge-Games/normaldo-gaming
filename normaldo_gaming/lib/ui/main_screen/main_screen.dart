@@ -357,7 +357,7 @@ class _MainScreenState extends State<MainScreen> {
               Expanded(
                 child: FittedBox(
                   child: Text(
-                    user.name,
+                    user.name.isEmpty ? 'Loading...' : user.name,
                     style: textTheme.displayMedium,
                   ),
                 ),

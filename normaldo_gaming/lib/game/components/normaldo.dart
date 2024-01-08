@@ -14,6 +14,7 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
 import 'package:normaldo_gaming/game/components/notification_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -37,10 +38,7 @@ enum NormaldoFatState {
   uberFatEat,
 
   // dead states
-  skinnyDead,
-  slimDead,
-  fatDead,
-  uberFatDead;
+  skinnyDead;
 
   int pizzaToFat([int? amount]) {
     if (amount != null) return amount;
@@ -58,15 +56,6 @@ enum NormaldoFatState {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
         return NormaldoFatState.skinnyDead;
-      case NormaldoFatState.slim:
-      case NormaldoFatState.slimEat:
-        return NormaldoFatState.slimDead;
-      case NormaldoFatState.fat:
-      case NormaldoFatState.fatEat:
-        return NormaldoFatState.fatDead;
-      case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatEat:
-        return NormaldoFatState.uberFatDead;
       default:
         return this;
     }
@@ -96,8 +85,11 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         HasGameRef {
   Normaldo({
     required Vector2 size,
+    required this.skin,
     this.customPizzaToGetFatter,
   }) : super(size: size, anchor: Anchor.center);
+
+  final Skin skin;
 
   bool _immortal = false;
   bool get immortal => _immortal;
@@ -280,7 +272,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   Future<void> onLoad() async {
     super.onLoad();
 
-    sprites = await normaldoSprites();
+    sprites = await normaldoSprites(skin);
 
     current = NormaldoFatState.skinny;
 
@@ -390,17 +382,14 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         break;
       case NormaldoFatState.slim:
       case NormaldoFatState.slimEat:
-      case NormaldoFatState.slimDead:
         setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
         break;
       case NormaldoFatState.fat:
       case NormaldoFatState.fatEat:
-      case NormaldoFatState.fatDead:
         setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
         break;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
-      case NormaldoFatState.uberFatDead:
         setHitboxPositionAndSize(position: Vector2(size.x / 2, size.y / 2));
         break;
       default:

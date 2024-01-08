@@ -86,11 +86,11 @@ class _$SignUpStateCopyWithImpl<$Res, $Val extends SignUpState>
 }
 
 /// @nodoc
-abstract class _$$_SignUpStateCopyWith<$Res>
+abstract class _$$SignUpStateImplCopyWith<$Res>
     implements $SignUpStateCopyWith<$Res> {
-  factory _$$_SignUpStateCopyWith(
-          _$_SignUpState value, $Res Function(_$_SignUpState) then) =
-      __$$_SignUpStateCopyWithImpl<$Res>;
+  factory _$$SignUpStateImplCopyWith(
+          _$SignUpStateImpl value, $Res Function(_$SignUpStateImpl) then) =
+      __$$SignUpStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -102,11 +102,11 @@ abstract class _$$_SignUpStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SignUpStateCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$_SignUpState>
-    implements _$$_SignUpStateCopyWith<$Res> {
-  __$$_SignUpStateCopyWithImpl(
-      _$_SignUpState _value, $Res Function(_$_SignUpState) _then)
+class __$$SignUpStateImplCopyWithImpl<$Res>
+    extends _$SignUpStateCopyWithImpl<$Res, _$SignUpStateImpl>
+    implements _$$SignUpStateImplCopyWith<$Res> {
+  __$$SignUpStateImplCopyWithImpl(
+      _$SignUpStateImpl _value, $Res Function(_$SignUpStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -118,7 +118,7 @@ class __$$_SignUpStateCopyWithImpl<$Res>
     Object? repeatPassword = null,
     Object? failure = freezed,
   }) {
-    return _then(_$_SignUpState(
+    return _then(_$SignUpStateImpl(
       nickname: null == nickname
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -145,8 +145,8 @@ class __$$_SignUpStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SignUpState extends _SignUpState {
-  const _$_SignUpState(
+class _$SignUpStateImpl extends _SignUpState {
+  const _$SignUpStateImpl(
       {required this.nickname,
       required this.email,
       required this.password,
@@ -174,7 +174,7 @@ class _$_SignUpState extends _SignUpState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SignUpState &&
+            other is _$SignUpStateImpl &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.email, email) || other.email == email) &&
@@ -192,8 +192,8 @@ class _$_SignUpState extends _SignUpState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SignUpStateCopyWith<_$_SignUpState> get copyWith =>
-      __$$_SignUpStateCopyWithImpl<_$_SignUpState>(this, _$identity);
+  _$$SignUpStateImplCopyWith<_$SignUpStateImpl> get copyWith =>
+      __$$SignUpStateImplCopyWithImpl<_$SignUpStateImpl>(this, _$identity);
 }
 
 abstract class _SignUpState extends SignUpState {
@@ -202,7 +202,7 @@ abstract class _SignUpState extends SignUpState {
       required final EmailValidator email,
       required final PasswordValidator password,
       required final PasswordValidator repeatPassword,
-      final NetworkException? failure}) = _$_SignUpState;
+      final NetworkException? failure}) = _$SignUpStateImpl;
   const _SignUpState._() : super._();
 
   @override
@@ -217,6 +217,6 @@ abstract class _SignUpState extends SignUpState {
   NetworkException? get failure;
   @override
   @JsonKey(ignore: true)
-  _$$_SignUpStateCopyWith<_$_SignUpState> get copyWith =>
+  _$$SignUpStateImplCopyWith<_$SignUpStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

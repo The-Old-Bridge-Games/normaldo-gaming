@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
@@ -20,7 +21,8 @@ class PullUpGameOnboarding3 extends FlameGame with HasCollisionDetection {
   @override
   FutureOr<void> onLoad() async {
     final normaldoPos = Vector2(size.x * 0.5, size.y / 2);
-    normaldo = Normaldo(size: Vector2.all(60))..position = normaldoPos;
+    normaldo = Normaldo(size: Vector2.all(60), skin: Skin.basic())
+      ..position = normaldoPos;
     gameSessionCubit = injector.get();
     levelBloc = injector.get();
     await add(
