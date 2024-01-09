@@ -50,7 +50,7 @@ class BigBuddyBin extends PositionComponent
         audio.playSfx(Sfx.bomb);
         Vibrate.vibrate();
       } else {
-        audio.playSfx(Sfx.binCrash);
+        audio.playSfx(Sfx.binCrash, customAssets: other.skin.assets.sfx['hit']);
       }
     } else if (other is Shredder) {
       removeFromParent();

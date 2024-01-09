@@ -224,8 +224,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     final index = NormaldoFatState.onlyIdle.indexOf(state);
     if (index == 3) {
       if (skin.assets.sfx['maxFat'] != null) {
-        audio.playCustomSfx(
-          assets: skin.assets.sfx['maxFat']!,
+        audio.playSfx(
+          Sfx.weightIncreased,
+          customAssets: skin.assets.sfx['maxFat']!,
           volume: 1.0,
         );
       }

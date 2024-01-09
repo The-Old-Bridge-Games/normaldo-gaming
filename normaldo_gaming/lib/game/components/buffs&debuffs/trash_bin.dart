@@ -37,14 +37,7 @@ class TrashBin extends PositionComponent
       if (other.immortal || gameSessionCubit.state.isDead) return;
       removeFromParent();
       other.takeHit();
-      if (other.skin.assets.sfx['hit'] != null) {
-        audio.playCustomSfx(
-          assets: other.skin.assets.sfx['hit']!,
-          volume: 1.0,
-        );
-      } else {
-        audio.playSfx(Sfx.binCrash);
-      }
+      audio.playSfx(Sfx.binCrash, customAssets: other.skin.assets.sfx['hit']);
     }
 
     super.onCollisionStart(intersectionPoints, other);

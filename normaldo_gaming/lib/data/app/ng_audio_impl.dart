@@ -109,11 +109,18 @@ class NgAudioImpl implements NgAudio {
   }
 
   @override
-  Future<void> playSfx(Sfx sfx, {double? volume, List<String>? assets}) async {
+  Future<void> playSfx(
+    Sfx sfx, {
+    double? volume,
+    List<String>? customAssets,
+  }) async {
     assert(_initialized);
     try {
       if (sfx == Sfx.buttonPressed) {
         Vibrate.feedback(FeedbackType.light);
+      }
+      if (customAssets != null && customAssets.isNotEmpty) {
+        await _playCustomSfx(assets: customAssets, volume: volume);
       }
       final pools = _audioPools[sfx] ?? [];
       await pools[Random().nextInt(pools.length)].start(volume: volume ?? 1.0);
@@ -246,8 +253,7 @@ class NgAudioImpl implements NgAudio {
     }
   }
 
-  @override
-  Future<void> playCustomSfx({
+  Future<void> _playCustomSfx({
     required List<String> assets,
     double? volume,
   }) async {

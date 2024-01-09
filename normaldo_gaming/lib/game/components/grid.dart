@@ -266,15 +266,16 @@ class Grid extends PositionComponent
   bool onDragUpdate(DragUpdateEvent event) {
     if (normaldo.effectsController.effectsInProgress
         .any((item) => item == Items.cocktail)) {
-      normaldo.position += event.delta * 0.3;
+      normaldo.position += event.localDelta * 0.3;
     } else {
-      normaldo.position += event.delta * _getFatMultiplier(normaldo);
+      normaldo.position += event.localDelta * _getFatMultiplier(normaldo);
     }
     super.onDragUpdate(event);
     return false;
   }
 
   double _getFatMultiplier(Normaldo normaldo) {
+    if (normaldo.skin.uniqueId == 'glasses') return 1;
     switch (normaldo.current) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
