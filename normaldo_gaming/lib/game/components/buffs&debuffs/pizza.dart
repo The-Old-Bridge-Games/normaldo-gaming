@@ -46,7 +46,11 @@ class Pizza extends PositionComponent
     if (other is Normaldo && !disabled) {
       (gameRef as PullUpGame).gameSessionCubit.eatPizza();
       other.increaseFatPoints(1);
-      audio.playSfx(Sfx.eatPizza);
+      if (other.skin.assets.sfx['bite'] != null) {
+        audio.playCustomSfx(assets: other.skin.assets.sfx['bite']!);
+      } else {
+        audio.playSfx(Sfx.eatPizza, volume: 1.0);
+      }
       removeFromParent();
     }
     if (other is GameObject &&

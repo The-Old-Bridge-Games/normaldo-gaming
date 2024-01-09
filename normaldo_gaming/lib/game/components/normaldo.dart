@@ -20,6 +20,11 @@ import 'package:normaldo_gaming/game/components/notification_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 
+/* 
+SKINS IMPL
+1. Batman ✅
+*/
+
 enum NormaldoHitState {
   idle,
   hit,
@@ -41,6 +46,7 @@ enum NormaldoFatState {
   skinnyDead;
 
   int pizzaToFat([int? amount]) {
+    return 2;
     if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 15,
@@ -217,6 +223,12 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
     final index = NormaldoFatState.onlyIdle.indexOf(state);
     if (index == 3) {
+      if (skin.assets.sfx['maxFat'] != null) {
+        audio.playCustomSfx(
+          assets: skin.assets.sfx['maxFat']!,
+          volume: 1.0,
+        );
+      }
       notify(
         text: 'MAX FAT!'.tr(),
         color: NGTheme.green1,
@@ -228,7 +240,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       }
     }
     if (current != state) {
-      audio.playSfx(Sfx.weightIncreased);
+      if (index != 3 || (skin.assets.sfx['maxFat'] == null && index == 3)) {
+        audio.playSfx(Sfx.weightIncreased);
+      }
       _changeFatAnimation(state);
     }
   }

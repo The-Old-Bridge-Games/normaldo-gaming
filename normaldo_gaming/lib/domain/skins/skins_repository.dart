@@ -66,7 +66,7 @@ final class SkinAssets {
     required this.dead,
     required this.mask,
     this.url = false,
-    this.sfx,
+    this.sfx = const {},
   });
 
   final bool url;
@@ -81,5 +81,5 @@ final class SkinAssets {
   final String dead;
   final String mask;
 
-  final Map<String, String>? sfx;
+  final Map<String, List<String>> sfx;
 }

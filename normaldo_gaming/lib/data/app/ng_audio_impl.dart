@@ -109,7 +109,7 @@ class NgAudioImpl implements NgAudio {
   }
 
   @override
-  Future<void> playSfx(Sfx sfx, {double? volume}) async {
+  Future<void> playSfx(Sfx sfx, {double? volume, List<String>? assets}) async {
     assert(_initialized);
     try {
       if (sfx == Sfx.buttonPressed) {
@@ -244,6 +244,18 @@ class NgAudioImpl implements NgAudio {
     for (final player in _players.values) {
       await player.resume();
     }
+  }
+
+  @override
+  Future<void> playCustomSfx({
+    required List<String> assets,
+    double? volume,
+  }) async {
+    assert(assets.isNotEmpty);
+    await FlameAudio.play(
+      'skins/${assets[Random().nextInt(assets.length)]}',
+      volume: volume ?? 1.0,
+    );
   }
 }
 

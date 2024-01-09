@@ -45,7 +45,14 @@ class Hourglass extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
-      audio.playSfx(Sfx.hourglass);
+      if (other.skin.assets.sfx['slowMo'] != null) {
+        audio.playCustomSfx(
+          assets: other.skin.assets.sfx['slowMo']!,
+          volume: 1.0,
+        );
+      } else {
+        audio.playSfx(Sfx.hourglass);
+      }
       removeFromParent();
       other.effectsController
           .addEffect(item, Utils.generateHourglassDuration());

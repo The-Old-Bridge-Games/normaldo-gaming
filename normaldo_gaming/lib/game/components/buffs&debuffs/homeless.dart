@@ -45,8 +45,15 @@ class Homeless extends PositionComponent
   ) {
     if (other is Normaldo && !other.immortal) {
       removeFromParent();
-      audio.playSfx(Sfx.binCrash);
-      other.takeHit();
+      if (other.skin.resistanceToItems.contains(item)) {
+        audio.playCustomSfx(
+          assets: other.skin.assets.sfx['resist']!,
+          volume: 1.0,
+        );
+      } else {
+        audio.playSfx(Sfx.binCrash);
+        other.takeHit();
+      }
     }
     super.onCollisionStart(intersectionPoints, other);
   }
