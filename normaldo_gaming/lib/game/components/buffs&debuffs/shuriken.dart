@@ -46,7 +46,7 @@ class Shuriken extends PositionComponent
   ) {
     if (other is Normaldo && !other.immortal) {
       other.takeHit();
-      audio.playSfx(Sfx.binCrash);
+      audio.playSfx(Sfx.binCrash, customAssets: other.skin.assets.sfx['hit']);
       removeFromParent();
     }
     if (other is GameObject &&

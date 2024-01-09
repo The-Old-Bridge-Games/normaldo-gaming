@@ -40,10 +40,16 @@ class Cocktail extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
-      audio.playSfx(Sfx.cocktail,
-          customAssets: other.skin.assets.sfx['cocktail']);
+      if (other.skin.resistanceToItems.contains(item)) {
+        audio.playSfx(Sfx.cocktail,
+            customAssets: other.skin.assets.sfx['resist']);
+      } else {
+        audio.playSfx(Sfx.cocktail,
+            customAssets: other.skin.assets.sfx['cocktail']);
+        other.effectsController
+            .addEffect(item, Utils.generateCocktailDuration());
+      }
       removeFromParent();
-      other.effectsController.addEffect(item, Utils.generateCocktailDuration());
     }
     super.onCollisionStart(intersectionPoints, other);
   }

@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
@@ -85,6 +86,12 @@ class Grid extends PositionComponent
               removeWhere((component) => component is AudioFadeComponent);
             }
           }));
+          if (normaldo.skin.assets.sfx['shredder'] != null) {
+            audio.playSfx(
+              Sfx.binCrash,
+              customAssets: normaldo.skin.assets.sfx['shredder']!,
+            );
+          }
           normaldo.notify(
             text: 'Hmm.. I feel something..'.tr(),
             color: NGTheme.green1,
