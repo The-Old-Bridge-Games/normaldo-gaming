@@ -1,3 +1,4 @@
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 abstract class SkinDto {
@@ -23,7 +24,13 @@ abstract class SkinDto {
           dead: json['assets']['dead'],
           url: json['assets']['url'],
           sfx: json['assets']['sfx'],
+          mask: json['assets']['mask'],
         ),
+        resistanceToItems: (json['resistanceToItems'] as List<int>)
+            .map(
+              (e) => Items.values[e],
+            )
+            .toList(),
       );
 
   static Map<String, dynamic> toJson(Skin skin) => {
@@ -44,8 +51,11 @@ abstract class SkinDto {
           'fatBite': skin.assets.fatBite,
           'superFatBite': skin.assets.superFatBite,
           'dead': skin.assets.dead,
+          'mask': skin.assets.mask,
           'url': skin.assets.url,
           'sfx': skin.assets.sfx,
+          'resistanceToItems':
+              skin.resistanceToItems.map((e) => e.index).toList()
         }
       };
 }

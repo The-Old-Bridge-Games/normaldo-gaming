@@ -5,12 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/base_screen/widgets/mission_card.dart';
 import 'package:normaldo_gaming/ui/base_screen/widgets/the_path.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
+import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -34,7 +37,9 @@ class _BaseScreenState extends State<BaseScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final screenSize = MediaQuery.of(context).size;
-    final user = context.read<UserCubit>().state.user;
+    final cubit = context.read<UserCubit>();
+    final user = cubit.state.user;
+    final skin = cubit.state.skin;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -52,7 +57,8 @@ class _BaseScreenState extends State<BaseScreen> {
             ],
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         elevation: 0,
         title: Text('basement'.tr(), style: textTheme.displayLarge),
       ),
@@ -66,17 +72,27 @@ class _BaseScreenState extends State<BaseScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${user.name} ${_levelManager.rank(user).tr()}',
-                      style: textTheme.displaySmall,
-                    ),
-                    const SizedBox(height: 8),
-                    UserLevelBar(
-                      levelManager: _levelManager,
-                      barWidth: screenSize.width / 4,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      barHeight: 20,
-                      includeRank: false,
+                    Row(
+                      children: [
+                        _buildSkin(skin),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '${user.name} ${_levelManager.rank(user).tr()}',
+                              style: textTheme.displaySmall,
+                            ),
+                            const SizedBox(height: 8),
+                            UserLevelBar(
+                              levelManager: _levelManager,
+                              barWidth: screenSize.width / 4,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              barHeight: 20,
+                              includeRank: false,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _buildMissions(),
@@ -100,6 +116,37 @@ class _BaseScreenState extends State<BaseScreen> {
                 child: ThePath(),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector _buildSkin(Skin skin) {
+    return GestureDetector(
+      onTap: () {
+        final skinsRepo = injector.get<SkinsRepository>(key: 'skins_test');
+        showDialog(
+            context: context,
+            builder: (context) {
+              return SkinPicker(skinsRepo);
+            }).whenComplete(() => setState(() {}));
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 32.0),
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.5),
+              blurRadius: 50,
+              spreadRadius: 5,
+            )
+          ],
+          image: DecorationImage(
+            image: AssetImage('assets/images/${skin.assets.skinny}'),
           ),
         ),
       ),
@@ -181,6 +228,68 @@ class _BaseScreenState extends State<BaseScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class SkinPicker extends StatelessWidget {
+  const SkinPicker(
+    this._repository, {
+    super.key,
+  });
+
+  final SkinsRepository _repository;
+
+  @override
+  Widget build(BuildContext context) {
+    final currentSkinId = context.read<UserCubit>().state.skin.uniqueId;
+    return Dialog(
+      child: Container(
+        color: Colors.grey,
+        height: MediaQuery.of(context).size.height * 0.6,
+        width: MediaQuery.of(context).size.width * 0.7,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: _repository.mySkins.length,
+          itemBuilder: (context, index) {
+            final skin = _repository.mySkins[index];
+            return AspectRatio(
+              aspectRatio: 3 / 4,
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Image.asset('assets/images/${skin.assets.mask}'),
+                    ),
+                    Expanded(child: Text(skin.name.tr())),
+                    if (skin.uniqueId == currentSkinId)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'Selected'.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(color: NGTheme.purple2),
+                        ),
+                      )
+                    else
+                      NGButton(
+                          text: 'Select'.tr(),
+                          onPressed: () {
+                            context.read<UserCubit>().changeSkin(skin);
+                            context.pop();
+                          }),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

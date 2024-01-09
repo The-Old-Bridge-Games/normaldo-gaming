@@ -1,3 +1,5 @@
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+
 abstract class SkinsRepository {
   List<Skin> get mySkins;
 }
@@ -13,6 +15,7 @@ final class Skin {
   final double appearanceMultiplier;
   final double itemsSpeedMultiplier;
   final SkinAssets assets;
+  final List<Items> resistanceToItems;
 
   const Skin({
     required this.uniqueId,
@@ -23,6 +26,7 @@ final class Skin {
     required this.appearanceMultiplier,
     required this.itemsSpeedMultiplier,
     required this.assets,
+    required this.resistanceToItems,
   });
 
   factory Skin.basic() => const Skin(
@@ -43,7 +47,9 @@ final class Skin {
           fatBite: 'normaldo/normaldo3_eat.png',
           superFatBite: 'normaldo/normaldo4_eat.png',
           dead: 'normaldo/normaldo1_dead.png',
+          mask: '',
         ),
+        resistanceToItems: [],
       );
 }
 
@@ -58,6 +64,7 @@ final class SkinAssets {
     required this.fatBite,
     required this.superFatBite,
     required this.dead,
+    required this.mask,
     this.url = false,
     this.sfx,
   });
@@ -72,6 +79,7 @@ final class SkinAssets {
   final String fatBite;
   final String superFatBite;
   final String dead;
+  final String mask;
 
   final Map<String, String>? sfx;
 }

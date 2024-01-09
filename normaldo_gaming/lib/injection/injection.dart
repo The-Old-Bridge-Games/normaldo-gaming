@@ -22,6 +22,7 @@ import 'package:normaldo_gaming/data/core/interceptors/token_interceptor.dart';
 import 'package:normaldo_gaming/data/level/level_manager_impl.dart';
 import 'package:normaldo_gaming/data/pull_up_game/missions/local_missions_repository.dart';
 import 'package:normaldo_gaming/data/shop/shop_repository_impl.dart';
+import 'package:normaldo_gaming/data/skins/skins_repository_test_impl.dart';
 import 'package:normaldo_gaming/data/user/services/user_api_service.dart';
 import 'package:normaldo_gaming/data/user/user_repository_impl.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
@@ -30,6 +31,7 @@ import 'package:normaldo_gaming/domain/auth/auth_repository.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository.dart';
 import 'package:normaldo_gaming/domain/shop/shop_repository.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/user_repository.dart';
 
 final injector = Injector();
@@ -59,6 +61,11 @@ void initializeInjector(Config config) {
       injector.get<ChopperClient>().getService<AuthApiService>(),
       injector.get<AuthLocalStorage>(),
     ),
+    isSingleton: true,
+  );
+  injector.map<SkinsRepository>(
+    (injector) => SkinsRepositoryTestImpl(),
+    key: 'skins_test',
     isSingleton: true,
   );
 

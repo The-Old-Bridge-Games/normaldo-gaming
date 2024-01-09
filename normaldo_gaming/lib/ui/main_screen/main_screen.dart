@@ -378,9 +378,12 @@ class _MainScreenState extends State<MainScreen> {
                     // DOLLARS
                     Image.asset('assets/images/dollar.png'),
                     const SizedBox(width: 4),
-                    Text(
-                      user.dollars.toString(),
-                      style: textTheme.displaySmall,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        user.dollars.toString(),
+                        style: textTheme.displaySmall,
+                      ),
                     )
                   ],
                 ),

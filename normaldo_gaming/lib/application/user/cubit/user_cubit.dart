@@ -122,6 +122,10 @@ class UserCubit extends HydratedCubit<UserState> {
     _userRepository.updateUser(user: state.user);
   }
 
+  void changeSkin(Skin skin) {
+    emit(state.copyWith(skin: skin));
+  }
+
   void addExp(int exp) {
     assert(exp > 0);
     var newExp = state.user.exp + exp;
