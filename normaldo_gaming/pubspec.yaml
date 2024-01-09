@@ -105,6 +105,36 @@ flutter:
     - assets/images/normaldo/
     - assets/images/normaldo/2.0x/
     - assets/images/normaldo/3.0x/
+    - assets/images/normaldo/batman/
+    - assets/images/normaldo/batman/2.0x/
+    - assets/images/normaldo/batman/3.0x/
+    - assets/images/normaldo/dracula/
+    - assets/images/normaldo/dracula/2.0x
+    - assets/images/normaldo/dracula/3.0x
+    - assets/images/normaldo/glasses/
+    - assets/images/normaldo/glasses/2.0x
+    - assets/images/normaldo/glasses/3.0x
+    - assets/images/normaldo/halloween/
+    - assets/images/normaldo/halloween/2.0x
+    - assets/images/normaldo/halloween/3.0x
+    - assets/images/normaldo/harry_potter/
+    - assets/images/normaldo/harry_potter/2.0x
+    - assets/images/normaldo/harry_potter/3.0x
+    - assets/images/normaldo/new_year/
+    - assets/images/normaldo/new_year/2.0x
+    - assets/images/normaldo/new_year/3.0x
+    - assets/images/normaldo/pirate/
+    - assets/images/normaldo/pirate/2.0x
+    - assets/images/normaldo/pirate/3.0x
+    - assets/images/normaldo/spider_man/
+    - assets/images/normaldo/spider_man/2.0x
+    - assets/images/normaldo/spider_man/3.0x
+    - assets/images/normaldo/viking/
+    - assets/images/normaldo/viking/2.0x
+    - assets/images/normaldo/viking/3.0x
+    - assets/images/normaldo/wizard/
+    - assets/images/normaldo/wizard/2.0x
+    - assets/images/normaldo/wizard/3.0x
     - assets/images/stickers/
     - assets/images/stickers/2.0x/
     - assets/images/stickers/3.0x/
