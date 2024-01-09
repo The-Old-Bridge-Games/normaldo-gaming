@@ -286,6 +286,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    scale = Vector2.all(1.3);
 
     sprites = await normaldoSprites(skin);
 

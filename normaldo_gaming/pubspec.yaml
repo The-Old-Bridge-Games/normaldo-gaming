@@ -149,6 +149,7 @@ flutter:
     - assets/audio/sfx/
     - assets/audio/skins/batman/
     - assets/audio/skins/glasses/
+    - assets/audio/skins/halloween/
 
   fonts:
     # - family: HyperStiffRoundBootiedOpossumRegular

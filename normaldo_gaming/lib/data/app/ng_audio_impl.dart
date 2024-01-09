@@ -121,6 +121,7 @@ class NgAudioImpl implements NgAudio {
       }
       if (customAssets != null && customAssets.isNotEmpty) {
         await _playCustomSfx(assets: customAssets, volume: volume);
+        return;
       }
       final pools = _audioPools[sfx] ?? [];
       await pools[Random().nextInt(pools.length)].start(volume: volume ?? 1.0);
