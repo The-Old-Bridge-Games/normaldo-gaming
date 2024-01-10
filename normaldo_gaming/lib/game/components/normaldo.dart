@@ -292,6 +292,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
     current = NormaldoFatState.skinny;
 
+    if (skin.assets.sfx['start'] != null) {
+      audio.playSfx(Sfx.binCrash, customAssets: skin.assets.sfx['start']);
+    }
+
     effectsController =
         EffectsController(onNewState: ((Items item, double duration) {
       final durString = duration.toInt().toString();

@@ -46,7 +46,7 @@ class Bomb extends PositionComponent
   ) {
     if (other is Normaldo && _eatingHitbox.isColliding) {
       final grid = (gameRef as PullUpGame).grid;
-      audio.playSfx(Sfx.bomb);
+      audio.playSfx(Sfx.bomb, customAssets: other.skin.assets.sfx['bomb']);
       Vibrate.vibrate();
       removeFromParent();
       grid.removeAllItems();

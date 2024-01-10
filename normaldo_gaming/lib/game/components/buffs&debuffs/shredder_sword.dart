@@ -44,7 +44,7 @@ class ShredderSword extends PositionComponent
   ) {
     if (other is Normaldo && !other.immortal) {
       other.takeHit();
-      audio.playSfx(Sfx.binCrash);
+      audio.playSfx(Sfx.binCrash, customAssets: other.skin.assets.sfx['hit']);
     }
     if (other is GameObject &&
         !disabled &&

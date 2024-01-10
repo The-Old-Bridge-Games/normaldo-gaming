@@ -151,6 +151,7 @@ flutter:
     - assets/audio/skins/glasses/
     - assets/audio/skins/halloween/
     - assets/audio/skins/pirate/
+    - assets/audio/skins/harry_potter/
 
   fonts:
     # - family: HyperStiffRoundBootiedOpossumRegular

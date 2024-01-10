@@ -33,7 +33,8 @@ class Dollar extends PositionComponent
   ) {
     if (other is Normaldo) {
       (gameRef as PullUpGame).gameSessionCubit.addDollars(1);
-      audio.playSfx(Sfx.dollarCatch);
+      audio.playSfx(Sfx.dollarCatch,
+          customAssets: other.skin.assets.sfx['dollar']);
       removeFromParent();
     } else {
       removeFromParent();
