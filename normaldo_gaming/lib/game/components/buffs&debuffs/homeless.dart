@@ -48,11 +48,14 @@ class Homeless extends PositionComponent
       if (other.skin.resistanceToItems.contains(item)) {
         audio.playSfx(
           Sfx.binCrash,
-          customAssets: other.skin.assets.sfx['resist']!,
+          customAssets: other.skin.assets.sfx['resist'],
           volume: 1.0,
         );
       } else {
-        audio.playSfx(Sfx.binCrash, customAssets: other.skin.assets.sfx['hit']);
+        audio.playSfx(
+          Sfx.binCrash,
+          customAssets: other.skin.assets.sfx['hit'],
+        );
         other.takeHit();
       }
     }

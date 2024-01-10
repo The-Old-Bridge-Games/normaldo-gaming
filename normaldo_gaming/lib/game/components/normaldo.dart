@@ -242,7 +242,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
     if (current != state) {
       if (index != 3 || (skin.assets.sfx['maxFat'] == null && index == 3)) {
-        audio.playSfx(Sfx.weightIncreased);
+        audio.playSfx(
+          Sfx.weightIncreased,
+          customAssets: skin.assets.sfx['fatUp'],
+        );
       }
       _changeFatAnimation(state);
     }
