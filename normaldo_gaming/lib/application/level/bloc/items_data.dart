@@ -3,7 +3,7 @@ part of 'level_bloc.dart';
 const _itemsAppearingByLevel = {
   0: {
     Items.trashBin: 0.3,
-    Items.homeless: 0.2,
+    Items.moneyBag: 0.2,
     Items.pizza: 0.5,
   },
   1: {

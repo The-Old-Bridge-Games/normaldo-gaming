@@ -34,7 +34,8 @@ class MoneyBag extends PositionComponent
   ) {
     if (other is Normaldo) {
       (gameRef as PullUpGame).gameSessionCubit.addDollars(10);
-      audio.playSfx(Sfx.dollarCatch);
+      audio.playSfx(Sfx.dollarCatch,
+          customAssets: other.skin.assets.sfx['moneyBag']);
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
