@@ -100,11 +100,12 @@ class _SignUpScreenState extends State<SignInScreen> {
                                       NGButton(
                                         text: 'Sign In'.tr(),
                                         onPressed: () async {
-                                          final success = await cubit.signIn();
-                                          if (success) {
-                                            context.pop();
-                                            context.read<AuthCubit>().auth();
-                                          }
+                                          cubit.signIn().then((success) {
+                                            if (success) {
+                                              context.read<AuthCubit>().auth();
+                                              context.pop();
+                                            }
+                                          });
                                         },
                                       ),
                                       const SizedBox(width: 32),
