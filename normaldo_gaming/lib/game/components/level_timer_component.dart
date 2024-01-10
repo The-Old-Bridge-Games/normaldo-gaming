@@ -30,7 +30,8 @@ class LevelTimerComponent extends TimerComponent
   @override
   Future<void> onLoad() {
     add(TimerComponent(
-        period: (80 + random.nextInt(40)).toDouble(),
+        // period: (80 + random.nextInt(40)).toDouble(),
+        period: 30,
         repeat: true,
         removeOnFinish: true,
         onTick: () {

@@ -331,18 +331,34 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           appearanceMultiplier: 1,
           itemsSpeedMultiplier: 0.8,
           assets: SkinAssets(
-            skinny: 'normaldo/wizard/skinny.png',
-            slim: 'normaldo/wizard/slim.png',
-            fat: 'normaldo/wizard/fat.png',
-            superFat: 'normaldo/wizard/super_fat.png',
-            skinnyBite: 'normaldo/wizard/skinny_bite.png',
-            slimBite: 'normaldo/wizard/slim_bite.png',
-            fatBite: 'normaldo/wizard/fat_bite.png',
-            superFatBite: 'normaldo/wizard/super_fat_bite.png',
-            dead: 'normaldo/wizard/dead.png',
-            mask: 'normaldo/wizard/mask.png',
-          ),
-          resistanceToItems: [],
+              skinny: 'normaldo/wizard/skinny.png',
+              slim: 'normaldo/wizard/slim.png',
+              fat: 'normaldo/wizard/fat.png',
+              superFat: 'normaldo/wizard/super_fat.png',
+              skinnyBite: 'normaldo/wizard/skinny_bite.png',
+              slimBite: 'normaldo/wizard/slim_bite.png',
+              fatBite: 'normaldo/wizard/fat_bite.png',
+              superFatBite: 'normaldo/wizard/super_fat_bite.png',
+              dead: 'normaldo/wizard/dead.png',
+              mask: 'normaldo/wizard/mask.png',
+              sfx: {
+                'fatUp': ['wizard/WIZARD BURP.mp3'],
+                'resist': [
+                  'wizard/WIZARD COCTAIL ENJOY.mp3',
+                  'wizard/WIZARD COCTAIL.mp3',
+                  'wizard/WIZARD SIP SOME.mp3',
+                ],
+                'bite': [
+                  'wizard/WIZARD eat.mp3',
+                  'wizard/WIZARD EAT2.mp3',
+                ],
+                'hit': ['wizard/WIZARD HIT.mp3'],
+                'shredder': ['wizard/WIZARD LAUGHT DOGE.mp3'],
+                'slowMo': ['wizard/WIZARD SLOMO.mp3']
+              }),
+          resistanceToItems: [
+            Items.cocktail,
+          ],
         ),
       ];
 }

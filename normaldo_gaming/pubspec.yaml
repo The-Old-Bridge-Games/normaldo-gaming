@@ -156,6 +156,7 @@ flutter:
     - assets/audio/skins/spider_man/
     - assets/audio/skins/dracula/
     - assets/audio/skins/viking/
+    - assets/audio/skins/wizard/
 
   fonts:
     # - family: HyperStiffRoundBootiedOpossumRegular
