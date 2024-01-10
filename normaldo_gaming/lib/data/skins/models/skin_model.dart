@@ -23,14 +23,17 @@ abstract class SkinDto {
           superFatBite: json['assets']['superFatBite'],
           dead: json['assets']['dead'],
           url: json['assets']['url'],
-          sfx: json['assets']['sfx'],
+          sfx: (json['assets']['sfx'] as Map<String, dynamic>).map(
+              (key, value) =>
+                  MapEntry<String, List<String>>(key, value as List<String>)),
           mask: json['assets']['mask'],
         ),
-        resistanceToItems: (json['resistanceToItems'] as List<int>)
-            .map(
-              (e) => Items.values[e],
-            )
-            .toList(),
+        resistanceToItems: (json['resistanceToItems'] as List<int>?)
+                ?.map(
+                  (e) => Items.values[e],
+                )
+                .toList() ??
+            [],
       );
 
   static Map<String, dynamic> toJson(Skin skin) => {

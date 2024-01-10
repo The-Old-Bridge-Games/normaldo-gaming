@@ -171,9 +171,15 @@ class UserCubit extends HydratedCubit<UserState> {
   }
 
   @override
+  void onError(Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(error, stackTrace);
+  }
+
+  @override
   Map<String, dynamic>? toJson(UserState state) {
     final user = state.user;
-    return UserModel(
+    final json = UserModel(
       id: user.id,
       name: user.name,
       dollars: user.dollars,
@@ -187,5 +193,6 @@ class UserCubit extends HydratedCubit<UserState> {
         MapEntry('educated', state.educated),
         MapEntry('skin', SkinDto.toJson(state.skin)),
       ]);
+    return json;
   }
 }
