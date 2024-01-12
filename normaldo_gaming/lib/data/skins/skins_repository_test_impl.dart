@@ -2,6 +2,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 // ADD SFX
+// replace cocktail key to slow key
 
 final class SkinsRepositoryTestImpl implements SkinsRepository {
   @override
