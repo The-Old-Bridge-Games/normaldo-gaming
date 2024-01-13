@@ -16,6 +16,12 @@ abstract class NGTheme {
   static const gray1 = Color(0xffADADAD);
   static const gray2 = Color(0xff3C3838);
 
+  static const classicSkin = Color(0xffA3A3A3);
+  static const commonSkin = Color(0xff2FB10F);
+  static const rareSkin = Color(0xff376AEC);
+  static const epicSkin = Color(0xffC450E1);
+  static const legendarySkin = Color(0xffF8B404);
+
   static const auraGreen = green1;
   static const auraRed = Color(0xffDC0000);
   static const auraBlue = Color.fromARGB(255, 103, 179, 254);
@@ -52,5 +58,10 @@ abstract class NGTheme {
     fontFamily: _fontFamily,
     fontSize: 16,
     color: gray2,
+  );
+  static const rareSkinStyle = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 20,
+    color: rareSkin,
   );
 }

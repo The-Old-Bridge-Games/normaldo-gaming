@@ -9,7 +9,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
   List<Skin> get mySkins => [
         const Skin(
           uniqueId: 'batman',
-          name: 'Hero Mask',
+          name: 'HERO MASK',
           rarity: SkinRarity.rare,
           speed: 1.1,
           size: 1,
@@ -40,8 +40,8 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'dracula',
-          name: 'Dracula Blood',
-          rarity: SkinRarity.legendary,
+          name: 'DRACULA BLOOD',
+          rarity: SkinRarity.epic,
           speed: 1.2,
           size: 1.1,
           appearanceMultiplier: 1,
@@ -90,7 +90,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'glasses',
-          name: 'Fancy Glasses',
+          name: 'LUXURY GLASSES',
           rarity: SkinRarity.epic,
           speed: 1,
           size: 1.1,
@@ -119,8 +119,8 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'halloween',
-          name: 'Pumpkin Head',
-          rarity: SkinRarity.epic,
+          name: 'PUMPKIN HEAD',
+          rarity: SkinRarity.rare,
           speed: 1,
           size: 1,
           appearanceMultiplier: 1,
@@ -150,7 +150,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'harry_potter',
-          name: "The Chosen's Glasses",
+          name: "POTTA GLASSES",
           rarity: SkinRarity.legendary,
           speed: 1,
           size: 1,
@@ -182,8 +182,8 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'new_year',
-          name: "The Happy New Year Hat",
-          rarity: SkinRarity.common,
+          name: "NEW YEAR HAT",
+          rarity: SkinRarity.rare,
           speed: 1,
           size: 1,
           appearanceMultiplier: 1,
@@ -214,7 +214,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'pirate',
-          name: "Pirate's Hat",
+          name: "PIRATE HAT",
           rarity: SkinRarity.legendary,
           speed: 1.2,
           size: 0.9,
@@ -250,8 +250,8 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'spider-man',
-          name: "The Human Spider Mask",
-          rarity: SkinRarity.rare,
+          name: "THE HUMAN SPIDER \nMASK",
+          rarity: SkinRarity.legendary,
           speed: 1.3,
           size: 1,
           appearanceMultiplier: 1,
@@ -291,7 +291,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'viking',
-          name: "Viking Helmet",
+          name: "VIKING HELMET",
           rarity: SkinRarity.common,
           speed: 1,
           size: 1,
@@ -325,7 +325,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         ),
         const Skin(
           uniqueId: 'wizard',
-          name: "Wizard Staff",
+          name: "MAGIC WAND",
           rarity: SkinRarity.rare,
           speed: 0.9,
           size: 1,
@@ -361,5 +361,5 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
             Items.cocktail,
           ],
         ),
-      ];
+      ]..sort((a, b) => a.rarity.index - b.rarity.index);
 }

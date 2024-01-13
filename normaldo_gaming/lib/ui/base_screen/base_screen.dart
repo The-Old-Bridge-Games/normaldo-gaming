@@ -128,6 +128,7 @@ class _BaseScreenState extends State<BaseScreen> {
         final skinsRepo = injector.get<SkinsRepository>(key: 'skins_test');
         showDialog(
             context: context,
+            useSafeArea: false,
             builder: (context) {
               return SkinPicker(skinsRepo);
             }).whenComplete(() => setState(() {}));
@@ -232,60 +233,250 @@ class _BaseScreenState extends State<BaseScreen> {
   }
 }
 
-class SkinPicker extends StatelessWidget {
+class SkinPicker extends StatefulWidget {
   const SkinPicker(
     this._repository, {
+    this.initId,
     super.key,
   });
 
   final SkinsRepository _repository;
+  final String? initId;
+
+  @override
+  State<SkinPicker> createState() => _SkinPickerState();
+}
+
+class _SkinPickerState extends State<SkinPicker> {
+  late final FixedExtentScrollController _controller;
+
+  late int _currentPage;
+
+  bool _pageSelected(int index) {
+    return _currentPage == index;
+  }
+
+  bool _pageSelectedBySkin(Skin skin) {
+    return _currentPage == _indexOfSkin(skin);
+  }
+
+  int _indexOfSkin(Skin skin) => widget._repository.mySkins.indexOf(skin);
+
+  Color _colorOf(Skin skin) {
+    return switch (skin.rarity) {
+      SkinRarity.classic => NGTheme.classicSkin,
+      SkinRarity.common => NGTheme.commonSkin,
+      SkinRarity.rare => NGTheme.rareSkin,
+      SkinRarity.epic => NGTheme.epicSkin,
+      SkinRarity.legendary => NGTheme.legendarySkin,
+    };
+  }
+
+  String _rarityTitleOf(Skin skin) {
+    return switch (skin.rarity) {
+      // TODO – localizations
+      SkinRarity.classic => 'CLASSIC'.tr(),
+      SkinRarity.common => 'COMMON'.tr(),
+      SkinRarity.rare => 'RARE'.tr(),
+      SkinRarity.epic => 'EPIC'.tr(),
+      SkinRarity.legendary => 'LEGENDARY'.tr(),
+    };
+  }
+
+  Skin _skinFrom(int page) {
+    return widget._repository.mySkins[page];
+  }
+
+  @override
+  void initState() {
+    if (widget.initId != null) {
+      final skin = widget._repository.mySkins
+          .firstWhere((element) => element.uniqueId == widget.initId);
+      _currentPage = widget._repository.mySkins.indexOf(skin);
+    } else {
+      _currentPage = 0;
+    }
+    _controller = FixedExtentScrollController(
+      initialItem: _currentPage,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final currentSkinId = context.read<UserCubit>().state.skin.uniqueId;
     return Dialog(
-      child: Container(
-        color: Colors.grey,
-        height: MediaQuery.of(context).size.height * 0.6,
-        width: MediaQuery.of(context).size.width * 0.7,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: _repository.mySkins.length,
-          itemBuilder: (context, index) {
-            final skin = _repository.mySkins[index];
-            return AspectRatio(
-              aspectRatio: 3 / 4,
-              child: Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: Column(
+        children: [
+          const Spacer(flex: 2),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width,
+            child: ListWheelScrollViewX(
+              itemExtent: 180,
+              itemCount: widget._repository.mySkins.length,
+              scrollDirection: Axis.horizontal,
+              controller: _controller,
+              onSelectedItemChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              builder: (context, index) {
+                final skin = widget._repository.mySkins[index];
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      flex: 3,
-                      child: Image.asset('assets/images/${skin.assets.mask}'),
-                    ),
-                    Expanded(child: Text(skin.name.tr())),
-                    if (skin.uniqueId == currentSkinId)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          'Selected'.tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayMedium
-                              ?.copyWith(color: NGTheme.purple2),
+                    SizedBox(
+                      child: Center(
+                        child: AnimatedScale(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linearToEaseOut,
+                          scale: _pageSelectedBySkin(skin) ? 1.3 : 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              boxShadow: [
+                                if (_pageSelectedBySkin(skin))
+                                  BoxShadow(
+                                    color: _colorOf(skin),
+                                    blurRadius: 100,
+                                    spreadRadius: 10,
+                                  )
+                              ],
+                              borderRadius: BorderRadius.circular(20),
+                              border:
+                                  Border.all(width: 5, color: _colorOf(skin)),
+                            ),
+                            height: 150,
+                            width: 150,
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: RadialGradient(
+                                        radius: 0.5,
+                                        colors: [
+                                          _colorOf(skin),
+                                          Colors.transparent,
+                                        ],
+                                      )),
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 4),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                              horizontal: 4)
+                                          .add(EdgeInsets.only(
+                                              top: skin.rarity ==
+                                                      SkinRarity.legendary
+                                                  ? 4
+                                                  : 0)),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          _rarityTitleOf(skin),
+                                          style: NGTheme.rareSkinStyle
+                                              .copyWith(color: _colorOf(skin)),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Image.asset(
+                                        'assets/images/${skin.assets.mask}',
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
+                                            skin.name.tr(),
+                                            style: NGTheme.displaySmall
+                                                .copyWith(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      )
-                    else
-                      NGButton(
-                          text: 'Select'.tr(),
-                          onPressed: () {
-                            context.read<UserCubit>().changeSkin(skin);
-                            context.pop();
-                          }),
-                    const SizedBox(height: 16),
+                      ),
+                    ),
                   ],
-                ),
-              ),
+                );
+              },
+            ),
+          ),
+          const Spacer(),
+          NGButton(
+              text: 'Select'.tr(),
+              onPressed: () {
+                context.read<UserCubit>().changeSkin(_skinFrom(_currentPage));
+                context.pop();
+              }),
+          const Spacer(flex: 3),
+        ],
+      ),
+    );
+  }
+}
+
+class ListWheelScrollViewX extends StatelessWidget {
+  final Widget Function(BuildContext, int) builder;
+  final Axis scrollDirection;
+  final FixedExtentScrollController? controller;
+  final double itemExtent;
+  final double diameterRatio;
+  final void Function(int)? onSelectedItemChanged;
+  final int itemCount;
+  const ListWheelScrollViewX({
+    super.key,
+    required this.builder,
+    required this.itemExtent,
+    required this.itemCount,
+    this.controller,
+    this.onSelectedItemChanged,
+    this.scrollDirection = Axis.vertical,
+    this.diameterRatio = 100000,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RotatedBox(
+      quarterTurns: scrollDirection == Axis.horizontal ? 3 : 0,
+      child: ListWheelScrollView.useDelegate(
+        onSelectedItemChanged: onSelectedItemChanged,
+        controller: controller,
+        itemExtent: itemExtent,
+        renderChildrenOutsideViewport: true,
+        clipBehavior: Clip.none,
+        diameterRatio: diameterRatio,
+        physics: const FixedExtentScrollPhysics(),
+        squeeze: 0.9,
+        childDelegate: ListWheelChildBuilderDelegate(
+          childCount: itemCount,
+          builder: (context, index) {
+            return RotatedBox(
+              quarterTurns: scrollDirection == Axis.horizontal ? 1 : 0,
+              child: builder(context, index),
             );
           },
         ),

@@ -4,7 +4,7 @@ abstract class SkinsRepository {
   List<Skin> get mySkins;
 }
 
-enum SkinRarity { common, rare, epic, legendary }
+enum SkinRarity { classic, common, rare, epic, legendary }
 
 final class Skin {
   final String uniqueId;
@@ -35,8 +35,8 @@ final class Skin {
 
   factory Skin.basic() => const Skin(
         uniqueId: 'basic',
-        name: 'Just NORMALDO',
-        rarity: SkinRarity.common,
+        name: 'Normaldo',
+        rarity: SkinRarity.classic,
         speed: 1,
         size: 1,
         appearanceMultiplier: 1,
