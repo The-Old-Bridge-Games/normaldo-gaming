@@ -10,9 +10,13 @@ final class Skin {
   final String uniqueId;
   final String name;
   final SkinRarity rarity;
+  // TODO: – Remove field
   final double speed;
+  // TODO: – Remove field
   final double size;
+  // TODO: – Remove field
   final double appearanceMultiplier;
+  // TODO: – Remove field
   final double itemsSpeedMultiplier;
   final SkinAssets assets;
   final List<Items> resistanceToItems;
