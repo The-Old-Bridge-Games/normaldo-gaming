@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,153 +42,87 @@ class _SignUpScreenState extends State<SignInScreen> {
             listener: _blocListener,
             builder: (context, state) {
               return SingleChildScrollView(
-                child: SizedBox(
+                child: Container(
                   height: screenSize.height,
-                  child: Stack(
-                    children: [
-                      ..._stickers(),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Form(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                  alignment: Alignment.centerRight,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/ui/auth/sign_in_bg.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 60),
+                    child: Form(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Login'.tr(),
+                            style: textTheme.displayLarge,
+                          ),
+                          const SizedBox(height: 32),
+                          SizedBox(
+                            width: textFieldWidth,
+                            child: NGFormTextField(
+                              validator: (value) => !state.email.validate()
+                                  ? 'incorrect email'.tr()
+                                  : null,
+                              onChanged: (value) => cubit.changeEmail(value),
+                              keyboardType: TextInputType.emailAddress,
+                              placeholder: 'Email..',
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: textFieldWidth,
+                            child: NGFormTextField(
+                              validator: (value) => !state.password.validate()
+                                  ? 'password must be 6 chars at least'.tr()
+                                  : null,
+                              onChanged: (value) => cubit.changePassword(value),
+                              placeholder: 'Password'.tr(),
+                              obscureText: true,
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text(
-                                  'Login'.tr(),
-                                  style: textTheme.displayLarge,
+                                NGButton(
+                                  text: 'Sign In'.tr(),
+                                  onPressed: () async {
+                                    final success = await cubit.signIn();
+                                    if (success) {
+                                      context.pop();
+                                      context.read<AuthCubit>().auth();
+                                    }
+                                  },
                                 ),
-                                const SizedBox(height: 32),
-                                SizedBox(
-                                  width: textFieldWidth,
-                                  child: NGFormTextField(
-                                    validator: (value) =>
-                                        !state.email.validate()
-                                            ? 'incorrect email'.tr()
-                                            : null,
-                                    onChanged: (value) =>
-                                        cubit.changeEmail(value),
-                                    keyboardType: TextInputType.emailAddress,
-                                    placeholder: 'Email..',
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                SizedBox(
-                                  width: textFieldWidth,
-                                  child: NGFormTextField(
-                                    validator: (value) => !state.password
-                                            .validate()
-                                        ? 'password must be 6 chars at least'
-                                            .tr()
-                                        : null,
-                                    onChanged: (value) =>
-                                        cubit.changePassword(value),
-                                    placeholder: 'Password'.tr(),
-                                    obscureText: true,
-                                  ),
-                                ),
-                                const SizedBox(height: 32),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      NGButton(
-                                        text: 'Sign In'.tr(),
-                                        onPressed: () async {
-                                          final success = await cubit.signIn();
-                                          if (success) {
-                                            context.pop();
-                                            context.read<AuthCubit>().auth();
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(width: 32),
-                                      NGTextButton(
-                                        text: 'Registration'.tr(),
-                                        onPressed: () => context.pop(),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                const SizedBox(width: 32),
+                                NGTextButton(
+                                  text: 'Registration'.tr(),
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(color: Colors.white),
+                                  onPressed: () => context.pop(),
+                                )
                               ],
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               );
             }),
       ),
     );
-  }
-
-  List<Widget> _stickers() {
-    return [
-      Positioned(
-        top: 24,
-        left: 24,
-        child: Image.asset(
-          'assets/images/stickers/hmm.png',
-          width: 70,
-        ),
-      ),
-      Positioned(
-        bottom: 24,
-        left: 64,
-        child: Image.asset(
-          'assets/images/stickers/ufo.png',
-          width: 100,
-        ),
-      ),
-      Positioned(
-        top: 100,
-        left: 100,
-        child: Image.asset(
-          'assets/images/stickers/time.png',
-          width: 100,
-        ),
-      ),
-      Positioned(
-        top: 200,
-        left: 8,
-        child: Image.asset(
-          'assets/images/stickers/screw.png',
-          width: 70,
-        ),
-      ),
-      // Right side
-      Positioned(
-        top: 24,
-        right: 24,
-        child: Image.asset(
-          'assets/images/stickers/sleep.png',
-          width: 70,
-        ),
-      ),
-      Positioned(
-        bottom: 24,
-        right: 64,
-        child: Image.asset(
-          'assets/images/stickers/ok.png',
-          width: 100,
-        ),
-      ),
-      Positioned(
-        top: 100,
-        right: 8,
-        child: Transform.rotate(
-          angle: pi * 0.3,
-          child: Image.asset(
-            'assets/images/normaldo_label.png',
-            width: 300,
-          ),
-        ),
-      ),
-    ];
   }
 }

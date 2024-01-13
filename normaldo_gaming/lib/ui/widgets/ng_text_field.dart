@@ -81,11 +81,11 @@ class NGFormTextField extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       decoration: InputDecoration(
-        errorMaxLines: 2,
+        errorMaxLines: 1,
         isCollapsed: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         errorStyle: textTheme.displaySmall?.copyWith(
-          fontSize: 10,
+          fontSize: 0,
           color: Colors.red,
         ),
         hintText: placeholder,
