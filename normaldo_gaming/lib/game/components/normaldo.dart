@@ -89,6 +89,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         CollisionCallbacks,
         HasNgAudio,
         HasGameRef {
+  static const smallHitboxRatio = 0.46;
+  static const bigHitboxRatio = 0.5957;
+
   Normaldo({
     required Vector2 size,
     required this.skin,
@@ -115,14 +118,14 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   // 4DEV
   late final _circle = CircleComponent.relative(
-    0.7,
+    0.46,
     parentSize: size,
     anchor: anchor,
     position: Vector2(size.x / 2 + 10, size.y / 2),
     paint: Paint()..color = Colors.white.withOpacity(0.7),
   );
   late final _hitbox = CircleHitbox.relative(
-    0.7,
+    0.46,
     parentSize: size,
     anchor: anchor,
     position: Vector2(size.x / 2 + 10, size.y / 2),
@@ -249,6 +252,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       }
       _changeFatAnimation(state);
     }
+    if (index >= 2) {
+      setHitboxPositionAndSize(size: size * bigHitboxRatio);
+    }
   }
 
   Future<void> prevFatState() async {
@@ -268,6 +274,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     if (current != state) {
       audio.playSfx(Sfx.weightLoosed);
       _changeFatAnimation(state);
+    }
+    if (index < 2) {
+      setHitboxPositionAndSize(size: size * smallHitboxRatio);
     }
   }
 
@@ -316,7 +325,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     add(effectsController);
 
     // 4DEV
-    // add(_circle);
+    add(_circle);
 
     add(_hitbox);
 

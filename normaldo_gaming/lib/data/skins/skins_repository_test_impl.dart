@@ -2,7 +2,6 @@ import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 // ADD SFX
-// replace cocktail key to slow key
 
 final class SkinsRepositoryTestImpl implements SkinsRepository {
   @override
@@ -11,10 +10,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'basic',
           name: 'NORMALDO',
           rarity: SkinRarity.classic,
-          speed: 1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
             skinny: 'normaldo/normaldo1.png',
             slim: 'normaldo/normaldo2.png',
@@ -33,10 +28,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'batman',
           name: 'HERO MASK',
           rarity: SkinRarity.rare,
-          speed: 1.1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/batman/skinny.png',
               slim: 'normaldo/batman/slim.png',
@@ -49,7 +40,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               dead: 'normaldo/batman/dead.png',
               mask: 'normaldo/batman/mask.png',
               sfx: {
-                'cocktail': ['batman/BATMAN COCTAIL.mp3'],
+                'slow': ['batman/BATMAN COCTAIL.mp3'],
                 'bite': ['batman/BATMAN EAT.mp3'],
                 'hit': ['batman/BATMAN HIT.mp3'],
                 'resist': ['batman/BATMAN LAUGHT.mp3'],
@@ -64,10 +55,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'dracula',
           name: 'DRACULA BLOOD',
           rarity: SkinRarity.epic,
-          speed: 1.2,
-          size: 1.1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/dracula/skinny.png',
               slim: 'normaldo/dracula/slim.png',
@@ -81,7 +68,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               mask: 'normaldo/dracula/mask.png',
               sfx: {
                 'fatUp': ['dracula/VAMP BUPR.mp3'],
-                'cocktail': [
+                'slow': [
                   'dracula/VAMP EAT ENJOY.mp3',
                   'dracula/VAMP EAT ENJOY2.mp3',
                 ],
@@ -114,10 +101,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'glasses',
           name: 'LUXURY GLASSES',
           rarity: SkinRarity.epic,
-          speed: 1,
-          size: 1.1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
             skinny: 'normaldo/glasses/skinny.png',
             slim: 'normaldo/glasses/slim.png',
@@ -130,7 +113,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
             dead: 'normaldo/glasses/dead.png',
             mask: 'normaldo/glasses/mask.png',
             sfx: {
-              'cocktail': ['glasses/DINK COCTAIL.mp3'],
+              'slow': ['glasses/DINK COCTAIL.mp3'],
               'bite': ['glasses/GOLDEN EAT.mp3', 'glasses/GOLDEN EAT 2.mp3'],
               'hit': ['glasses/GOLDEN HIT.mp3'],
               'resist': ['glasses/GOLDEN LAUGHT.mp3'],
@@ -143,10 +126,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'halloween',
           name: 'PUMPKIN HEAD',
           rarity: SkinRarity.rare,
-          speed: 1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/halloween/skinny.png',
               slim: 'normaldo/halloween/slim.png',
@@ -174,10 +153,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'harry_potter',
           name: "POTTA GLASSES",
           rarity: SkinRarity.legendary,
-          speed: 1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/harry_potter/skinny.png',
               slim: 'normaldo/harry_potter/slim.png',
@@ -206,10 +181,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'new_year',
           name: "NEW YEAR HAT",
           rarity: SkinRarity.rare,
-          speed: 1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/new_year/skinny.png',
               slim: 'normaldo/new_year/slim.png',
@@ -238,10 +209,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'pirate',
           name: "PIRATE HAT",
           rarity: SkinRarity.legendary,
-          speed: 1.2,
-          size: 0.9,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1.1,
           assets: SkinAssets(
               skinny: 'normaldo/pirate/skinny.png',
               slim: 'normaldo/pirate/slim.png',
@@ -274,10 +241,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'spider-man',
           name: "THE HUMAN SPIDER \nMASK",
           rarity: SkinRarity.legendary,
-          speed: 1.3,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 0.9,
           assets: SkinAssets(
               skinny: 'normaldo/spider_man/skinny.png',
               slim: 'normaldo/spider_man/slim.png',
@@ -300,7 +263,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                   'spider_man/SPIDER HIT 2.mp3',
                 ],
                 'slowMo': ['spider_man/SPIDER SLOMO.mp3'],
-                'cocktail': [
+                'slow': [
                   'spider_man/SPIDER SIP.mp3',
                   'spider_man/SPIDER SIP  COCTAIL.mp3',
                 ],
@@ -315,10 +278,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'viking',
           name: "VIKING HELMET",
           rarity: SkinRarity.common,
-          speed: 1,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 1,
           assets: SkinAssets(
               skinny: 'normaldo/viking/skinny.png',
               slim: 'normaldo/viking/slim.png',
@@ -339,7 +298,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 ],
                 'resist': ['viking/VIKING LAUGHT.mp3'],
                 'hit': ['viking/VIKINGS  HIT.mp3'],
-                'cocktail': ['viking/VIKINGS COCTAIL.mp3'],
+                'slow': ['viking/VIKINGS COCTAIL.mp3'],
               }),
           resistanceToItems: [
             Items.trashBin,
@@ -349,10 +308,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           uniqueId: 'wizard',
           name: "MAGIC WAND",
           rarity: SkinRarity.rare,
-          speed: 0.9,
-          size: 1,
-          appearanceMultiplier: 1,
-          itemsSpeedMultiplier: 0.8,
           assets: SkinAssets(
               skinny: 'normaldo/wizard/skinny.png',
               slim: 'normaldo/wizard/slim.png',

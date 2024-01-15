@@ -10,14 +10,6 @@ final class Skin {
   final String uniqueId;
   final String name;
   final SkinRarity rarity;
-  // TODO: – Remove field
-  final double speed;
-  // TODO: – Remove field
-  final double size;
-  // TODO: – Remove field
-  final double appearanceMultiplier;
-  // TODO: – Remove field
-  final double itemsSpeedMultiplier;
   final SkinAssets assets;
   final List<Items> resistanceToItems;
 
@@ -25,10 +17,6 @@ final class Skin {
     required this.uniqueId,
     required this.name,
     required this.rarity,
-    required this.speed,
-    required this.size,
-    required this.appearanceMultiplier,
-    required this.itemsSpeedMultiplier,
     required this.assets,
     required this.resistanceToItems,
   });
@@ -37,10 +25,6 @@ final class Skin {
         uniqueId: 'basic',
         name: 'Normaldo',
         rarity: SkinRarity.classic,
-        speed: 1,
-        size: 1,
-        appearanceMultiplier: 1,
-        itemsSpeedMultiplier: 1,
         assets: SkinAssets(
           skinny: 'normaldo/normaldo1.png',
           slim: 'normaldo/normaldo2.png',
