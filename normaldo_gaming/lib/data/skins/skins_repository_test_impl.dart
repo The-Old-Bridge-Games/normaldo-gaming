@@ -8,6 +8,28 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
   @override
   List<Skin> get mySkins => [
         const Skin(
+          uniqueId: 'basic',
+          name: 'NORMALDO',
+          rarity: SkinRarity.classic,
+          speed: 1,
+          size: 1,
+          appearanceMultiplier: 1,
+          itemsSpeedMultiplier: 1,
+          assets: SkinAssets(
+            skinny: 'normaldo/normaldo1.png',
+            slim: 'normaldo/normaldo2.png',
+            fat: 'normaldo/normaldo3.png',
+            superFat: 'normaldo/normaldo4.png',
+            skinnyBite: 'normaldo/normaldo1_eat.png',
+            slimBite: 'normaldo/normaldo2_eat.png',
+            fatBite: 'normaldo/normaldo3_eat.png',
+            superFatBite: 'normaldo/normaldo4_eat.png',
+            dead: 'normaldo/normaldo1_dead.png',
+            mask: 'normaldo/mask.png',
+          ),
+          resistanceToItems: [],
+        ),
+        const Skin(
           uniqueId: 'batman',
           name: 'HERO MASK',
           rarity: SkinRarity.rare,

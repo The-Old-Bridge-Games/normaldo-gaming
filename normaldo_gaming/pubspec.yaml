@@ -148,6 +148,7 @@ flutter:
 
     - assets/audio/
     - assets/audio/sfx/
+    - assets/audio/sfx/ui/
     - assets/audio/skins/batman/
     - assets/audio/skins/glasses/
     - assets/audio/skins/halloween/

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 abstract class NGTheme {
   const NGTheme._();
@@ -7,6 +8,7 @@ abstract class NGTheme {
 
   static const green1 = Color(0xff22B14C);
   static const green2 = Color(0xffB5E61D);
+  static const green3 = Color(0xff22B14C);
   static const bgSemiBlack = Colors.black38;
   static const heartRed = Color(0xffDC0000);
   static const purple1 = Color(0xffA349A4);
@@ -25,6 +27,16 @@ abstract class NGTheme {
   static const auraGreen = green1;
   static const auraRed = Color(0xffDC0000);
   static const auraBlue = Color.fromARGB(255, 103, 179, 254);
+
+  static Color colorOf(SkinRarity rarity) {
+    return switch (rarity) {
+      SkinRarity.classic => classicSkin,
+      SkinRarity.common => commonSkin,
+      SkinRarity.rare => rareSkin,
+      SkinRarity.epic => epicSkin,
+      SkinRarity.legendary => legendarySkin,
+    };
+  }
 
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,
