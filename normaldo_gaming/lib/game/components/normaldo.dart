@@ -46,7 +46,7 @@ enum NormaldoFatState {
   skinnyDead;
 
   int pizzaToFat([int? amount]) {
-    return 2;
+    return 3;
     if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 15,
@@ -121,14 +121,14 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     0.46,
     parentSize: size,
     anchor: anchor,
-    position: Vector2(size.x / 2 + 10, size.y / 2),
+    position: Vector2(size.x / 2, size.y / 2 + size.y * 0.037),
     paint: Paint()..color = Colors.white.withOpacity(0.7),
   );
   late final _hitbox = CircleHitbox.relative(
     0.46,
     parentSize: size,
     anchor: anchor,
-    position: Vector2(size.x / 2 + 10, size.y / 2),
+    position: Vector2(size.x / 2 + 10, size.y / 2 + size.y * 0.037),
   );
 
   void setHitboxPositionAndSize({Vector2? position, Vector2? size}) {
@@ -403,31 +403,6 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
   }
 
-  void _updateHitbox() {
-    switch (current) {
-      case NormaldoFatState.skinny:
-      case NormaldoFatState.skinnyEat:
-      case NormaldoFatState.skinnyDead:
-        setHitboxPositionAndSize(
-            position: Vector2(size.x / 2 + 10, size.y / 2));
-        break;
-      case NormaldoFatState.slim:
-      case NormaldoFatState.slimEat:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
-        break;
-      case NormaldoFatState.fat:
-      case NormaldoFatState.fatEat:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
-        break;
-      case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatEat:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2, size.y / 2));
-        break;
-      default:
-        throw UnexpectedError();
-    }
-  }
-
   void _changeFatAnimation(NormaldoFatState? state) {
     const dur = 0.25;
     const curve = Curves.bounceOut;
@@ -446,9 +421,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
               reverseDuration: dur * 2,
               curve: curve,
               onMax: () {
-                print('on max');
                 current = state;
-                _updateHitbox();
               }))
     ]);
   }
