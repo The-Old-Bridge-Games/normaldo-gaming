@@ -39,7 +39,7 @@ class Punch extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is Normaldo) {
+    if (other is Normaldo && !other.immortal) {
       audio.playSfx(Sfx.binCrash);
       other.takeHit();
       removeFromParent();
