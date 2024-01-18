@@ -8,7 +8,6 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
-import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -19,6 +18,7 @@ import 'package:normaldo_gaming/game/components/effects_controller.dart';
 import 'package:normaldo_gaming/game/components/notification_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
+import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 /* 
 SKINS IMPL
@@ -352,6 +352,18 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
             });
           }
         }));
+
+    if (skin.uniqueId == 'new_year') {
+      game.overlays.add(Overlays.snowfall.name);
+    }
+  }
+
+  @override
+  void onRemove() {
+    if (skin.uniqueId == 'new_year') {
+      game.overlays.remove(Overlays.snowfall.name);
+    }
+    super.onRemove();
   }
 
   @override
