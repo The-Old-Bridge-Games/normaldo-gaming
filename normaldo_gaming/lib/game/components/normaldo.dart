@@ -325,7 +325,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     add(effectsController);
 
     // 4DEV
-    add(_circle);
+    // add(_circle);
 
     add(_hitbox);
 
