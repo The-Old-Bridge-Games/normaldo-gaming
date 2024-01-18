@@ -14,10 +14,16 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
 import 'package:normaldo_gaming/game/components/notification_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
+
+/* 
+SKINS IMPL
+1. Batman ✅
+*/
 
 enum NormaldoHitState {
   idle,
@@ -37,12 +43,10 @@ enum NormaldoFatState {
   uberFatEat,
 
   // dead states
-  skinnyDead,
-  slimDead,
-  fatDead,
-  uberFatDead;
+  skinnyDead;
 
   int pizzaToFat([int? amount]) {
+    return 3;
     if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 15,
@@ -58,15 +62,6 @@ enum NormaldoFatState {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
         return NormaldoFatState.skinnyDead;
-      case NormaldoFatState.slim:
-      case NormaldoFatState.slimEat:
-        return NormaldoFatState.slimDead;
-      case NormaldoFatState.fat:
-      case NormaldoFatState.fatEat:
-        return NormaldoFatState.fatDead;
-      case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatEat:
-        return NormaldoFatState.uberFatDead;
       default:
         return this;
     }
@@ -94,10 +89,16 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         CollisionCallbacks,
         HasNgAudio,
         HasGameRef {
+  static const smallHitboxRatio = 0.46;
+  static const bigHitboxRatio = 0.5957;
+
   Normaldo({
     required Vector2 size,
+    required this.skin,
     this.customPizzaToGetFatter,
   }) : super(size: size, anchor: Anchor.center);
+
+  final Skin skin;
 
   bool _immortal = false;
   bool get immortal => _immortal;
@@ -117,17 +118,17 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   // 4DEV
   late final _circle = CircleComponent.relative(
-    0.7,
+    0.46,
     parentSize: size,
     anchor: anchor,
-    position: Vector2(size.x / 2 + 10, size.y / 2),
+    position: Vector2(size.x / 2, size.y / 2 + size.y * 0.037),
     paint: Paint()..color = Colors.white.withOpacity(0.7),
   );
   late final _hitbox = CircleHitbox.relative(
-    0.7,
+    0.46,
     parentSize: size,
     anchor: anchor,
-    position: Vector2(size.x / 2 + 10, size.y / 2),
+    position: Vector2(size.x / 2 + 10, size.y / 2 + size.y * 0.037),
   );
 
   void setHitboxPositionAndSize({Vector2? position, Vector2? size}) {
@@ -225,6 +226,13 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
     final index = NormaldoFatState.onlyIdle.indexOf(state);
     if (index == 3) {
+      if (skin.assets.sfx['maxFat'] != null) {
+        audio.playSfx(
+          Sfx.weightIncreased,
+          customAssets: skin.assets.sfx['maxFat']!,
+          volume: 1.0,
+        );
+      }
       notify(
         text: 'MAX FAT!'.tr(),
         color: NGTheme.green1,
@@ -236,8 +244,16 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
       }
     }
     if (current != state) {
-      audio.playSfx(Sfx.weightIncreased);
+      if (index != 3 || (skin.assets.sfx['maxFat'] == null && index == 3)) {
+        audio.playSfx(
+          Sfx.weightIncreased,
+          customAssets: skin.assets.sfx['fatUp'],
+        );
+      }
       _changeFatAnimation(state);
+    }
+    if (index >= 2) {
+      setHitboxPositionAndSize(size: size * bigHitboxRatio);
     }
   }
 
@@ -258,6 +274,9 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     if (current != state) {
       audio.playSfx(Sfx.weightLoosed);
       _changeFatAnimation(state);
+    }
+    if (index < 2) {
+      setHitboxPositionAndSize(size: size * smallHitboxRatio);
     }
   }
 
@@ -280,9 +299,13 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   Future<void> onLoad() async {
     super.onLoad();
 
-    sprites = await normaldoSprites();
+    sprites = await normaldoSprites(skin);
 
     current = NormaldoFatState.skinny;
+
+    if (skin.assets.sfx['start'] != null) {
+      audio.playSfx(Sfx.binCrash, customAssets: skin.assets.sfx['start']);
+    }
 
     effectsController =
         EffectsController(onNewState: ((Items item, double duration) {
@@ -380,34 +403,6 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     }
   }
 
-  void _updateHitbox() {
-    switch (current) {
-      case NormaldoFatState.skinny:
-      case NormaldoFatState.skinnyEat:
-      case NormaldoFatState.skinnyDead:
-        setHitboxPositionAndSize(
-            position: Vector2(size.x / 2 + 10, size.y / 2));
-        break;
-      case NormaldoFatState.slim:
-      case NormaldoFatState.slimEat:
-      case NormaldoFatState.slimDead:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
-        break;
-      case NormaldoFatState.fat:
-      case NormaldoFatState.fatEat:
-      case NormaldoFatState.fatDead:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2 + 5, size.y / 2));
-        break;
-      case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatEat:
-      case NormaldoFatState.uberFatDead:
-        setHitboxPositionAndSize(position: Vector2(size.x / 2, size.y / 2));
-        break;
-      default:
-        throw UnexpectedError();
-    }
-  }
-
   void _changeFatAnimation(NormaldoFatState? state) {
     const dur = 0.25;
     const curve = Curves.bounceOut;
@@ -426,9 +421,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
               reverseDuration: dur * 2,
               curve: curve,
               onMax: () {
-                print('on max');
                 current = state;
-                _updateHitbox();
               }))
     ]);
   }

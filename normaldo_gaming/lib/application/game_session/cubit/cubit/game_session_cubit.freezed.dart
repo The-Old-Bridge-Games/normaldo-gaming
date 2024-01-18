@@ -107,11 +107,11 @@ class _$GameSessionStateCopyWithImpl<$Res, $Val extends GameSessionState>
 }
 
 /// @nodoc
-abstract class _$$_GameSessionStateCopyWith<$Res>
+abstract class _$$GameSessionStateImplCopyWith<$Res>
     implements $GameSessionStateCopyWith<$Res> {
-  factory _$$_GameSessionStateCopyWith(
-          _$_GameSessionState value, $Res Function(_$_GameSessionState) then) =
-      __$$_GameSessionStateCopyWithImpl<$Res>;
+  factory _$$GameSessionStateImplCopyWith(_$GameSessionStateImpl value,
+          $Res Function(_$GameSessionStateImpl) then) =
+      __$$GameSessionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -126,11 +126,11 @@ abstract class _$$_GameSessionStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_GameSessionStateCopyWithImpl<$Res>
-    extends _$GameSessionStateCopyWithImpl<$Res, _$_GameSessionState>
-    implements _$$_GameSessionStateCopyWith<$Res> {
-  __$$_GameSessionStateCopyWithImpl(
-      _$_GameSessionState _value, $Res Function(_$_GameSessionState) _then)
+class __$$GameSessionStateImplCopyWithImpl<$Res>
+    extends _$GameSessionStateCopyWithImpl<$Res, _$GameSessionStateImpl>
+    implements _$$GameSessionStateImplCopyWith<$Res> {
+  __$$GameSessionStateImplCopyWithImpl(_$GameSessionStateImpl _value,
+      $Res Function(_$GameSessionStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -145,7 +145,7 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
     Object? revivedWithAd = null,
     Object? level = null,
   }) {
-    return _then(_$_GameSessionState(
+    return _then(_$GameSessionStateImpl(
       score: null == score
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
@@ -184,8 +184,8 @@ class __$$_GameSessionStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GameSessionState implements _GameSessionState {
-  const _$_GameSessionState(
+class _$GameSessionStateImpl implements _GameSessionState {
+  const _$GameSessionStateImpl(
       {required this.score,
       required this.isDead,
       required this.dollars,
@@ -221,7 +221,7 @@ class _$_GameSessionState implements _GameSessionState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GameSessionState &&
+            other is _$GameSessionStateImpl &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.isDead, isDead) || other.isDead == isDead) &&
             (identical(other.dollars, dollars) || other.dollars == dollars) &&
@@ -240,8 +240,9 @@ class _$_GameSessionState implements _GameSessionState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GameSessionStateCopyWith<_$_GameSessionState> get copyWith =>
-      __$$_GameSessionStateCopyWithImpl<_$_GameSessionState>(this, _$identity);
+  _$$GameSessionStateImplCopyWith<_$GameSessionStateImpl> get copyWith =>
+      __$$GameSessionStateImplCopyWithImpl<_$GameSessionStateImpl>(
+          this, _$identity);
 }
 
 abstract class _GameSessionState implements GameSessionState {
@@ -253,7 +254,7 @@ abstract class _GameSessionState implements GameSessionState {
       required final bool hit,
       required final bool revived,
       required final bool revivedWithAd,
-      required final int level}) = _$_GameSessionState;
+      required final int level}) = _$GameSessionStateImpl;
 
   @override
   int get score;
@@ -273,6 +274,6 @@ abstract class _GameSessionState implements GameSessionState {
   int get level;
   @override
   @JsonKey(ignore: true)
-  _$$_GameSessionStateCopyWith<_$_GameSessionState> get copyWith =>
+  _$$GameSessionStateImplCopyWith<_$GameSessionStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

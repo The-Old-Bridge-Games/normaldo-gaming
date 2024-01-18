@@ -1,9 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/data/skins/models/skin_model.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/domain/user/user_repository.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
@@ -120,6 +122,10 @@ class UserCubit extends HydratedCubit<UserState> {
     _userRepository.updateUser(user: state.user);
   }
 
+  void changeSkin(Skin skin) {
+    emit(state.copyWith(skin: skin));
+  }
+
   void addExp(int exp) {
     assert(exp > 0);
     var newExp = state.user.exp + exp;
@@ -157,15 +163,23 @@ class UserCubit extends HydratedCubit<UserState> {
   @override
   UserState? fromJson(Map<String, dynamic> json) {
     return UserState(
-      user: UserModel.fromJson(json).toEntity(),
-      educated: json['educated'],
-    );
+        user: UserModel.fromJson(json).toEntity(),
+        educated: json['educated'],
+        skin: SkinDto.fromJson(
+          json['skin'],
+        ));
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(error, stackTrace);
   }
 
   @override
   Map<String, dynamic>? toJson(UserState state) {
     final user = state.user;
-    return UserModel(
+    final json = UserModel(
       id: user.id,
       name: user.name,
       dollars: user.dollars,
@@ -175,6 +189,10 @@ class UserCubit extends HydratedCubit<UserState> {
       extraLives: state.user.extraLives,
       totalPizzas: state.user.totalPizzas,
     ).toJson()
-      ..addEntries([MapEntry('educated', state.educated)]);
+      ..addEntries([
+        MapEntry('educated', state.educated),
+        MapEntry('skin', SkinDto.toJson(state.skin)),
+      ]);
+    return json;
   }
 }

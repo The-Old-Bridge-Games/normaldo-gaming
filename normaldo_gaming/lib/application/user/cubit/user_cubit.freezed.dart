@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserState {
   User get user => throw _privateConstructorUsedError;
   bool get educated => throw _privateConstructorUsedError;
+  Skin get skin => throw _privateConstructorUsedError;
   NetworkException? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +31,7 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({User user, bool educated, NetworkException? failure});
+  $Res call({User user, bool educated, Skin skin, NetworkException? failure});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? skin = freezed,
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -59,6 +61,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
+      skin: freezed == skin
+          ? _value.skin
+          : skin // ignore: cast_nullable_to_non_nullable
+              as Skin,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -68,21 +74,22 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
 }
 
 /// @nodoc
-abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
-  factory _$$_UserStateCopyWith(
-          _$_UserState value, $Res Function(_$_UserState) then) =
-      __$$_UserStateCopyWithImpl<$Res>;
+abstract class _$$UserStateImplCopyWith<$Res>
+    implements $UserStateCopyWith<$Res> {
+  factory _$$UserStateImplCopyWith(
+          _$UserStateImpl value, $Res Function(_$UserStateImpl) then) =
+      __$$UserStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, bool educated, NetworkException? failure});
+  $Res call({User user, bool educated, Skin skin, NetworkException? failure});
 }
 
 /// @nodoc
-class __$$_UserStateCopyWithImpl<$Res>
-    extends _$UserStateCopyWithImpl<$Res, _$_UserState>
-    implements _$$_UserStateCopyWith<$Res> {
-  __$$_UserStateCopyWithImpl(
-      _$_UserState _value, $Res Function(_$_UserState) _then)
+class __$$UserStateImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$UserStateImpl>
+    implements _$$UserStateImplCopyWith<$Res> {
+  __$$UserStateImplCopyWithImpl(
+      _$UserStateImpl _value, $Res Function(_$UserStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -90,9 +97,10 @@ class __$$_UserStateCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? skin = freezed,
     Object? failure = freezed,
   }) {
-    return _then(_$_UserState(
+    return _then(_$UserStateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -101,6 +109,10 @@ class __$$_UserStateCopyWithImpl<$Res>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
+      skin: freezed == skin
+          ? _value.skin
+          : skin // ignore: cast_nullable_to_non_nullable
+              as Skin,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -111,57 +123,67 @@ class __$$_UserStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserState implements _UserState {
-  const _$_UserState(
-      {required this.user, required this.educated, this.failure});
+class _$UserStateImpl implements _UserState {
+  const _$UserStateImpl(
+      {required this.user,
+      required this.educated,
+      required this.skin,
+      this.failure});
 
   @override
   final User user;
   @override
   final bool educated;
   @override
+  final Skin skin;
+  @override
   final NetworkException? failure;
 
   @override
   String toString() {
-    return 'UserState(user: $user, educated: $educated, failure: $failure)';
+    return 'UserState(user: $user, educated: $educated, skin: $skin, failure: $failure)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserState &&
+            other is _$UserStateImpl &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.educated, educated) ||
                 other.educated == educated) &&
+            const DeepCollectionEquality().equals(other.skin, skin) &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, educated, failure);
+  int get hashCode => Object.hash(runtimeType, user, educated,
+      const DeepCollectionEquality().hash(skin), failure);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserStateCopyWith<_$_UserState> get copyWith =>
-      __$$_UserStateCopyWithImpl<_$_UserState>(this, _$identity);
+  _$$UserStateImplCopyWith<_$UserStateImpl> get copyWith =>
+      __$$UserStateImplCopyWithImpl<_$UserStateImpl>(this, _$identity);
 }
 
 abstract class _UserState implements UserState {
   const factory _UserState(
       {required final User user,
       required final bool educated,
-      final NetworkException? failure}) = _$_UserState;
+      required final Skin skin,
+      final NetworkException? failure}) = _$UserStateImpl;
 
   @override
   User get user;
   @override
   bool get educated;
   @override
+  Skin get skin;
+  @override
   NetworkException? get failure;
   @override
   @JsonKey(ignore: true)
-  _$$_UserStateCopyWith<_$_UserState> get copyWith =>
+  _$$UserStateImplCopyWith<_$UserStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

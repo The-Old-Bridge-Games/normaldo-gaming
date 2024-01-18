@@ -68,25 +68,25 @@ class _$MiniGameCopyWithImpl<$Res, $Val extends MiniGame>
 }
 
 /// @nodoc
-abstract class _$$_ShredderCopyWith<$Res> {
-  factory _$$_ShredderCopyWith(
-          _$_Shredder value, $Res Function(_$_Shredder) then) =
-      __$$_ShredderCopyWithImpl<$Res>;
+abstract class _$$ShredderImplCopyWith<$Res> {
+  factory _$$ShredderImplCopyWith(
+          _$ShredderImpl value, $Res Function(_$ShredderImpl) then) =
+      __$$ShredderImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ShredderCopyWithImpl<$Res>
-    extends _$MiniGameCopyWithImpl<$Res, _$_Shredder>
-    implements _$$_ShredderCopyWith<$Res> {
-  __$$_ShredderCopyWithImpl(
-      _$_Shredder _value, $Res Function(_$_Shredder) _then)
+class __$$ShredderImplCopyWithImpl<$Res>
+    extends _$MiniGameCopyWithImpl<$Res, _$ShredderImpl>
+    implements _$$ShredderImplCopyWith<$Res> {
+  __$$ShredderImplCopyWithImpl(
+      _$ShredderImpl _value, $Res Function(_$ShredderImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Shredder implements _Shredder {
-  const _$_Shredder();
+class _$ShredderImpl implements _Shredder {
+  const _$ShredderImpl();
 
   @override
   String toString() {
@@ -96,7 +96,7 @@ class _$_Shredder implements _Shredder {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Shredder);
+        (other.runtimeType == runtimeType && other is _$ShredderImpl);
   }
 
   @override
@@ -160,5 +160,5 @@ class _$_Shredder implements _Shredder {
 }
 
 abstract class _Shredder implements MiniGame {
-  const factory _Shredder() = _$_Shredder;
+  const factory _Shredder() = _$ShredderImpl;
 }

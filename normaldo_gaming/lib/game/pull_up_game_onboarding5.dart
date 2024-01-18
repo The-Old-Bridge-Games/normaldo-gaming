@@ -12,6 +12,7 @@ import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
@@ -20,7 +21,8 @@ class PullUpGameOnboarding5 extends FlameGame with HasCollisionDetection {
   @override
   FutureOr<void> onLoad() async {
     final normaldoPos = Vector2(size.x * 0.5, size.y / 2);
-    final normaldo = Normaldo(size: Vector2.all(60))..position = normaldoPos;
+    final normaldo = Normaldo(size: Vector2.all(60), skin: Skin.basic())
+      ..position = normaldoPos;
     await add(
       FlameMultiBlocProvider(
         providers: [

@@ -35,9 +35,19 @@ class TrashBin extends PositionComponent
     final gameSessionCubit = (gameRef as PullUpGame).gameSessionCubit;
     if (other is Normaldo) {
       if (other.immortal || gameSessionCubit.state.isDead) return;
+      if (other.skin.resistanceToItems.contains(Items.trashBin)) {
+        audio.playSfx(
+          Sfx.binCrash,
+          customAssets: other.skin.assets.sfx['resist'],
+        );
+      } else {
+        other.takeHit();
+        audio.playSfx(
+          Sfx.binCrash,
+          customAssets: other.skin.assets.sfx['hit'],
+        );
+      }
       removeFromParent();
-      other.takeHit();
-      audio.playSfx(Sfx.binCrash);
     }
 
     super.onCollisionStart(intersectionPoints, other);

@@ -1,7 +1,7 @@
 name: normaldo_gaming
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.14.2+22
+version: 0.14.3+23
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -91,6 +91,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/translations/
     - assets/images/
     - assets/images/2.0x/
@@ -105,6 +106,36 @@ flutter:
     - assets/images/normaldo/
     - assets/images/normaldo/2.0x/
     - assets/images/normaldo/3.0x/
+    - assets/images/normaldo/batman/
+    - assets/images/normaldo/batman/2.0x/
+    - assets/images/normaldo/batman/3.0x/
+    - assets/images/normaldo/dracula/
+    - assets/images/normaldo/dracula/2.0x/
+    - assets/images/normaldo/dracula/3.0x/
+    - assets/images/normaldo/glasses/
+    - assets/images/normaldo/glasses/2.0x/
+    - assets/images/normaldo/glasses/3.0x/
+    - assets/images/normaldo/halloween/
+    - assets/images/normaldo/halloween/2.0x/
+    - assets/images/normaldo/halloween/3.0x/
+    - assets/images/normaldo/harry_potter/
+    - assets/images/normaldo/harry_potter/2.0x/
+    - assets/images/normaldo/harry_potter/3.0x/
+    - assets/images/normaldo/new_year/
+    - assets/images/normaldo/new_year/2.0x/
+    - assets/images/normaldo/new_year/3.0x/
+    - assets/images/normaldo/pirate/
+    - assets/images/normaldo/pirate/2.0x/
+    - assets/images/normaldo/pirate/3.0x/
+    - assets/images/normaldo/spider_man/
+    - assets/images/normaldo/spider_man/2.0x/
+    - assets/images/normaldo/spider_man/3.0x/
+    - assets/images/normaldo/viking/
+    - assets/images/normaldo/viking/2.0x/
+    - assets/images/normaldo/viking/3.0x/
+    - assets/images/normaldo/wizard/
+    - assets/images/normaldo/wizard/2.0x/
+    - assets/images/normaldo/wizard/3.0x/
     - assets/images/stickers/
     - assets/images/stickers/2.0x/
     - assets/images/stickers/3.0x/
@@ -120,6 +151,17 @@ flutter:
 
     - assets/audio/
     - assets/audio/sfx/
+    - assets/audio/sfx/ui/
+    - assets/audio/skins/batman/
+    - assets/audio/skins/glasses/
+    - assets/audio/skins/halloween/
+    - assets/audio/skins/pirate/
+    - assets/audio/skins/harry_potter/
+    - assets/audio/skins/new_year/
+    - assets/audio/skins/spider_man/
+    - assets/audio/skins/dracula/
+    - assets/audio/skins/viking/
+    - assets/audio/skins/wizard/
 
   fonts:
     # - family: HyperStiffRoundBootiedOpossumRegular

@@ -92,24 +92,25 @@ class _$AdsStateCopyWithImpl<$Res, $Val extends AdsState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -119,7 +120,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -207,28 +208,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements AdsState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadingCopyWith<$Res> {
-  factory _$$_LoadingCopyWith(
-          _$_Loading value, $Res Function(_$_Loading) then) =
-      __$$_LoadingCopyWithImpl<$Res>;
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadingCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$_Loading>
-    implements _$$_LoadingCopyWith<$Res> {
-  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Loading implements _Loading {
-  const _$_Loading();
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
 
   @override
   String toString() {
@@ -238,7 +240,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loading);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -326,28 +328,29 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements AdsState {
-  const factory _Loading() = _$_Loading;
+  const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$_ShowingCopyWith<$Res> {
-  factory _$$_ShowingCopyWith(
-          _$_Showing value, $Res Function(_$_Showing) then) =
-      __$$_ShowingCopyWithImpl<$Res>;
+abstract class _$$ShowingImplCopyWith<$Res> {
+  factory _$$ShowingImplCopyWith(
+          _$ShowingImpl value, $Res Function(_$ShowingImpl) then) =
+      __$$ShowingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ShowingCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$_Showing>
-    implements _$$_ShowingCopyWith<$Res> {
-  __$$_ShowingCopyWithImpl(_$_Showing _value, $Res Function(_$_Showing) _then)
+class __$$ShowingImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$ShowingImpl>
+    implements _$$ShowingImplCopyWith<$Res> {
+  __$$ShowingImplCopyWithImpl(
+      _$ShowingImpl _value, $Res Function(_$ShowingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Showing implements _Showing {
-  const _$_Showing();
+class _$ShowingImpl implements _Showing {
+  const _$ShowingImpl();
 
   @override
   String toString() {
@@ -357,7 +360,7 @@ class _$_Showing implements _Showing {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Showing);
+        (other.runtimeType == runtimeType && other is _$ShowingImpl);
   }
 
   @override
@@ -445,27 +448,29 @@ class _$_Showing implements _Showing {
 }
 
 abstract class _Showing implements AdsState {
-  const factory _Showing() = _$_Showing;
+  const factory _Showing() = _$ShowingImpl;
 }
 
 /// @nodoc
-abstract class _$$_FailedCopyWith<$Res> {
-  factory _$$_FailedCopyWith(_$_Failed value, $Res Function(_$_Failed) then) =
-      __$$_FailedCopyWithImpl<$Res>;
+abstract class _$$FailedImplCopyWith<$Res> {
+  factory _$$FailedImplCopyWith(
+          _$FailedImpl value, $Res Function(_$FailedImpl) then) =
+      __$$FailedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FailedCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$_Failed>
-    implements _$$_FailedCopyWith<$Res> {
-  __$$_FailedCopyWithImpl(_$_Failed _value, $Res Function(_$_Failed) _then)
+class __$$FailedImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$FailedImpl>
+    implements _$$FailedImplCopyWith<$Res> {
+  __$$FailedImplCopyWithImpl(
+      _$FailedImpl _value, $Res Function(_$FailedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Failed implements _Failed {
-  const _$_Failed();
+class _$FailedImpl implements _Failed {
+  const _$FailedImpl();
 
   @override
   String toString() {
@@ -475,7 +480,7 @@ class _$_Failed implements _Failed {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Failed);
+        (other.runtimeType == runtimeType && other is _$FailedImpl);
   }
 
   @override
@@ -563,28 +568,29 @@ class _$_Failed implements _Failed {
 }
 
 abstract class _Failed implements AdsState {
-  const factory _Failed() = _$_Failed;
+  const factory _Failed() = _$FailedImpl;
 }
 
 /// @nodoc
-abstract class _$$_SkippedCopyWith<$Res> {
-  factory _$$_SkippedCopyWith(
-          _$_Skipped value, $Res Function(_$_Skipped) then) =
-      __$$_SkippedCopyWithImpl<$Res>;
+abstract class _$$SkippedImplCopyWith<$Res> {
+  factory _$$SkippedImplCopyWith(
+          _$SkippedImpl value, $Res Function(_$SkippedImpl) then) =
+      __$$SkippedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SkippedCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$_Skipped>
-    implements _$$_SkippedCopyWith<$Res> {
-  __$$_SkippedCopyWithImpl(_$_Skipped _value, $Res Function(_$_Skipped) _then)
+class __$$SkippedImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$SkippedImpl>
+    implements _$$SkippedImplCopyWith<$Res> {
+  __$$SkippedImplCopyWithImpl(
+      _$SkippedImpl _value, $Res Function(_$SkippedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Skipped implements _Skipped {
-  const _$_Skipped();
+class _$SkippedImpl implements _Skipped {
+  const _$SkippedImpl();
 
   @override
   String toString() {
@@ -594,7 +600,7 @@ class _$_Skipped implements _Skipped {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Skipped);
+        (other.runtimeType == runtimeType && other is _$SkippedImpl);
   }
 
   @override
@@ -682,5 +688,5 @@ class _$_Skipped implements _Skipped {
 }
 
 abstract class _Skipped implements AdsState {
-  const factory _Skipped() = _$_Skipped;
+  const factory _Skipped() = _$SkippedImpl;
 }

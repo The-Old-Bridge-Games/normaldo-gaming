@@ -7,6 +7,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
@@ -19,7 +20,8 @@ class PullUpGameOnboarding1 extends FlameGame with HasCollisionDetection {
       size: Vector2.all(30),
       sprite: await Sprite.load('finger.png'),
     )..position = fingerPos;
-    final normaldo = Normaldo(size: Vector2.all(60))..position = normaldoPos;
+    final normaldo = Normaldo(size: Vector2.all(60), skin: Skin.basic())
+      ..position = normaldoPos;
     await add(
       FlameMultiBlocProvider(
         providers: [

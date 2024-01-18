@@ -44,8 +44,12 @@ class Molotov extends PositionComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
-      audio.playSfx(Sfx.bomb);
-      other.takeHit();
+      if (other.skin.resistanceToItems.contains(item)) {
+        audio.playSfx(Sfx.bomb, customAssets: other.skin.assets.sfx['molotov']);
+      } else {
+        audio.playSfx(Sfx.bomb);
+        other.takeHit();
+      }
       removeFromParent();
     }
     if (other is! Normaldo && other is! BigBuddyBin && other is! Shredder) {

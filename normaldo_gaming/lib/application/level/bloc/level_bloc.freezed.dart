@@ -105,20 +105,20 @@ class _$LevelEventCopyWithImpl<$Res, $Val extends LevelEvent>
 }
 
 /// @nodoc
-abstract class _$$_ChangeLevelCopyWith<$Res> {
-  factory _$$_ChangeLevelCopyWith(
-          _$_ChangeLevel value, $Res Function(_$_ChangeLevel) then) =
-      __$$_ChangeLevelCopyWithImpl<$Res>;
+abstract class _$$ChangeLevelImplCopyWith<$Res> {
+  factory _$$ChangeLevelImplCopyWith(
+          _$ChangeLevelImpl value, $Res Function(_$ChangeLevelImpl) then) =
+      __$$ChangeLevelImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int level, List<Items> effects});
 }
 
 /// @nodoc
-class __$$_ChangeLevelCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_ChangeLevel>
-    implements _$$_ChangeLevelCopyWith<$Res> {
-  __$$_ChangeLevelCopyWithImpl(
-      _$_ChangeLevel _value, $Res Function(_$_ChangeLevel) _then)
+class __$$ChangeLevelImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$ChangeLevelImpl>
+    implements _$$ChangeLevelImplCopyWith<$Res> {
+  __$$ChangeLevelImplCopyWithImpl(
+      _$ChangeLevelImpl _value, $Res Function(_$ChangeLevelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +127,7 @@ class __$$_ChangeLevelCopyWithImpl<$Res>
     Object? level = null,
     Object? effects = null,
   }) {
-    return _then(_$_ChangeLevel(
+    return _then(_$ChangeLevelImpl(
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -142,8 +142,8 @@ class __$$_ChangeLevelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeLevel implements _ChangeLevel {
-  const _$_ChangeLevel(
+class _$ChangeLevelImpl implements _ChangeLevel {
+  const _$ChangeLevelImpl(
       {required this.level, required final List<Items> effects})
       : _effects = effects;
 
@@ -166,7 +166,7 @@ class _$_ChangeLevel implements _ChangeLevel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeLevel &&
+            other is _$ChangeLevelImpl &&
             (identical(other.level, level) || other.level == level) &&
             const DeepCollectionEquality().equals(other._effects, _effects));
   }
@@ -178,8 +178,8 @@ class _$_ChangeLevel implements _ChangeLevel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeLevelCopyWith<_$_ChangeLevel> get copyWith =>
-      __$$_ChangeLevelCopyWithImpl<_$_ChangeLevel>(this, _$identity);
+  _$$ChangeLevelImplCopyWith<_$ChangeLevelImpl> get copyWith =>
+      __$$ChangeLevelImplCopyWithImpl<_$ChangeLevelImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -277,20 +277,20 @@ class _$_ChangeLevel implements _ChangeLevel {
 abstract class _ChangeLevel implements LevelEvent {
   const factory _ChangeLevel(
       {required final int level,
-      required final List<Items> effects}) = _$_ChangeLevel;
+      required final List<Items> effects}) = _$ChangeLevelImpl;
 
   int get level;
   List<Items> get effects;
   @JsonKey(ignore: true)
-  _$$_ChangeLevelCopyWith<_$_ChangeLevel> get copyWith =>
+  _$$ChangeLevelImplCopyWith<_$ChangeLevelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_StartFigureCopyWith<$Res> {
-  factory _$$_StartFigureCopyWith(
-          _$_StartFigure value, $Res Function(_$_StartFigure) then) =
-      __$$_StartFigureCopyWithImpl<$Res>;
+abstract class _$$StartFigureImplCopyWith<$Res> {
+  factory _$$StartFigureImplCopyWith(
+          _$StartFigureImpl value, $Res Function(_$StartFigureImpl) then) =
+      __$$StartFigureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({FigureEvent figure});
 
@@ -298,11 +298,11 @@ abstract class _$$_StartFigureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_StartFigureCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_StartFigure>
-    implements _$$_StartFigureCopyWith<$Res> {
-  __$$_StartFigureCopyWithImpl(
-      _$_StartFigure _value, $Res Function(_$_StartFigure) _then)
+class __$$StartFigureImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$StartFigureImpl>
+    implements _$$StartFigureImplCopyWith<$Res> {
+  __$$StartFigureImplCopyWithImpl(
+      _$StartFigureImpl _value, $Res Function(_$StartFigureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -310,7 +310,7 @@ class __$$_StartFigureCopyWithImpl<$Res>
   $Res call({
     Object? figure = null,
   }) {
-    return _then(_$_StartFigure(
+    return _then(_$StartFigureImpl(
       figure: null == figure
           ? _value.figure
           : figure // ignore: cast_nullable_to_non_nullable
@@ -329,8 +329,8 @@ class __$$_StartFigureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StartFigure implements _StartFigure {
-  const _$_StartFigure({required this.figure});
+class _$StartFigureImpl implements _StartFigure {
+  const _$StartFigureImpl({required this.figure});
 
   @override
   final FigureEvent figure;
@@ -344,7 +344,7 @@ class _$_StartFigure implements _StartFigure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StartFigure &&
+            other is _$StartFigureImpl &&
             (identical(other.figure, figure) || other.figure == figure));
   }
 
@@ -354,8 +354,8 @@ class _$_StartFigure implements _StartFigure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StartFigureCopyWith<_$_StartFigure> get copyWith =>
-      __$$_StartFigureCopyWithImpl<_$_StartFigure>(this, _$identity);
+  _$$StartFigureImplCopyWith<_$StartFigureImpl> get copyWith =>
+      __$$StartFigureImplCopyWithImpl<_$StartFigureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -452,19 +452,19 @@ class _$_StartFigure implements _StartFigure {
 
 abstract class _StartFigure implements LevelEvent {
   const factory _StartFigure({required final FigureEvent figure}) =
-      _$_StartFigure;
+      _$StartFigureImpl;
 
   FigureEvent get figure;
   @JsonKey(ignore: true)
-  _$$_StartFigureCopyWith<_$_StartFigure> get copyWith =>
+  _$$StartFigureImplCopyWith<_$StartFigureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_StartMiniGameCopyWith<$Res> {
-  factory _$$_StartMiniGameCopyWith(
-          _$_StartMiniGame value, $Res Function(_$_StartMiniGame) then) =
-      __$$_StartMiniGameCopyWithImpl<$Res>;
+abstract class _$$StartMiniGameImplCopyWith<$Res> {
+  factory _$$StartMiniGameImplCopyWith(
+          _$StartMiniGameImpl value, $Res Function(_$StartMiniGameImpl) then) =
+      __$$StartMiniGameImplCopyWithImpl<$Res>;
   @useResult
   $Res call({MiniGame game});
 
@@ -472,11 +472,11 @@ abstract class _$$_StartMiniGameCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_StartMiniGameCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_StartMiniGame>
-    implements _$$_StartMiniGameCopyWith<$Res> {
-  __$$_StartMiniGameCopyWithImpl(
-      _$_StartMiniGame _value, $Res Function(_$_StartMiniGame) _then)
+class __$$StartMiniGameImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$StartMiniGameImpl>
+    implements _$$StartMiniGameImplCopyWith<$Res> {
+  __$$StartMiniGameImplCopyWithImpl(
+      _$StartMiniGameImpl _value, $Res Function(_$StartMiniGameImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -484,7 +484,7 @@ class __$$_StartMiniGameCopyWithImpl<$Res>
   $Res call({
     Object? game = null,
   }) {
-    return _then(_$_StartMiniGame(
+    return _then(_$StartMiniGameImpl(
       game: null == game
           ? _value.game
           : game // ignore: cast_nullable_to_non_nullable
@@ -503,8 +503,8 @@ class __$$_StartMiniGameCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StartMiniGame implements _StartMiniGame {
-  const _$_StartMiniGame({required this.game});
+class _$StartMiniGameImpl implements _StartMiniGame {
+  const _$StartMiniGameImpl({required this.game});
 
   @override
   final MiniGame game;
@@ -518,7 +518,7 @@ class _$_StartMiniGame implements _StartMiniGame {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StartMiniGame &&
+            other is _$StartMiniGameImpl &&
             (identical(other.game, game) || other.game == game));
   }
 
@@ -528,8 +528,8 @@ class _$_StartMiniGame implements _StartMiniGame {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StartMiniGameCopyWith<_$_StartMiniGame> get copyWith =>
-      __$$_StartMiniGameCopyWithImpl<_$_StartMiniGame>(this, _$identity);
+  _$$StartMiniGameImplCopyWith<_$StartMiniGameImpl> get copyWith =>
+      __$$StartMiniGameImplCopyWithImpl<_$StartMiniGameImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -626,34 +626,34 @@ class _$_StartMiniGame implements _StartMiniGame {
 
 abstract class _StartMiniGame implements LevelEvent {
   const factory _StartMiniGame({required final MiniGame game}) =
-      _$_StartMiniGame;
+      _$StartMiniGameImpl;
 
   MiniGame get game;
   @JsonKey(ignore: true)
-  _$$_StartMiniGameCopyWith<_$_StartMiniGame> get copyWith =>
+  _$$StartMiniGameImplCopyWith<_$StartMiniGameImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_FinishMiniGameCopyWith<$Res> {
-  factory _$$_FinishMiniGameCopyWith(
-          _$_FinishMiniGame value, $Res Function(_$_FinishMiniGame) then) =
-      __$$_FinishMiniGameCopyWithImpl<$Res>;
+abstract class _$$FinishMiniGameImplCopyWith<$Res> {
+  factory _$$FinishMiniGameImplCopyWith(_$FinishMiniGameImpl value,
+          $Res Function(_$FinishMiniGameImpl) then) =
+      __$$FinishMiniGameImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FinishMiniGameCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_FinishMiniGame>
-    implements _$$_FinishMiniGameCopyWith<$Res> {
-  __$$_FinishMiniGameCopyWithImpl(
-      _$_FinishMiniGame _value, $Res Function(_$_FinishMiniGame) _then)
+class __$$FinishMiniGameImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$FinishMiniGameImpl>
+    implements _$$FinishMiniGameImplCopyWith<$Res> {
+  __$$FinishMiniGameImplCopyWithImpl(
+      _$FinishMiniGameImpl _value, $Res Function(_$FinishMiniGameImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FinishMiniGame implements _FinishMiniGame {
-  const _$_FinishMiniGame();
+class _$FinishMiniGameImpl implements _FinishMiniGame {
+  const _$FinishMiniGameImpl();
 
   @override
   String toString() {
@@ -663,7 +663,7 @@ class _$_FinishMiniGame implements _FinishMiniGame {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_FinishMiniGame);
+        (other.runtimeType == runtimeType && other is _$FinishMiniGameImpl);
   }
 
   @override
@@ -763,24 +763,24 @@ class _$_FinishMiniGame implements _FinishMiniGame {
 }
 
 abstract class _FinishMiniGame implements LevelEvent {
-  const factory _FinishMiniGame() = _$_FinishMiniGame;
+  const factory _FinishMiniGame() = _$FinishMiniGameImpl;
 }
 
 /// @nodoc
-abstract class _$$_StartRandomFigureCopyWith<$Res> {
-  factory _$$_StartRandomFigureCopyWith(_$_StartRandomFigure value,
-          $Res Function(_$_StartRandomFigure) then) =
-      __$$_StartRandomFigureCopyWithImpl<$Res>;
+abstract class _$$StartRandomFigureImplCopyWith<$Res> {
+  factory _$$StartRandomFigureImplCopyWith(_$StartRandomFigureImpl value,
+          $Res Function(_$StartRandomFigureImpl) then) =
+      __$$StartRandomFigureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<FigureEvent>? figures});
 }
 
 /// @nodoc
-class __$$_StartRandomFigureCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_StartRandomFigure>
-    implements _$$_StartRandomFigureCopyWith<$Res> {
-  __$$_StartRandomFigureCopyWithImpl(
-      _$_StartRandomFigure _value, $Res Function(_$_StartRandomFigure) _then)
+class __$$StartRandomFigureImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$StartRandomFigureImpl>
+    implements _$$StartRandomFigureImplCopyWith<$Res> {
+  __$$StartRandomFigureImplCopyWithImpl(_$StartRandomFigureImpl _value,
+      $Res Function(_$StartRandomFigureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -788,7 +788,7 @@ class __$$_StartRandomFigureCopyWithImpl<$Res>
   $Res call({
     Object? figures = freezed,
   }) {
-    return _then(_$_StartRandomFigure(
+    return _then(_$StartRandomFigureImpl(
       figures: freezed == figures
           ? _value._figures
           : figures // ignore: cast_nullable_to_non_nullable
@@ -799,8 +799,8 @@ class __$$_StartRandomFigureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StartRandomFigure implements _StartRandomFigure {
-  const _$_StartRandomFigure({final List<FigureEvent>? figures})
+class _$StartRandomFigureImpl implements _StartRandomFigure {
+  const _$StartRandomFigureImpl({final List<FigureEvent>? figures})
       : _figures = figures;
 
   final List<FigureEvent>? _figures;
@@ -822,7 +822,7 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StartRandomFigure &&
+            other is _$StartRandomFigureImpl &&
             const DeepCollectionEquality().equals(other._figures, _figures));
   }
 
@@ -833,8 +833,8 @@ class _$_StartRandomFigure implements _StartRandomFigure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StartRandomFigureCopyWith<_$_StartRandomFigure> get copyWith =>
-      __$$_StartRandomFigureCopyWithImpl<_$_StartRandomFigure>(
+  _$$StartRandomFigureImplCopyWith<_$StartRandomFigureImpl> get copyWith =>
+      __$$StartRandomFigureImplCopyWithImpl<_$StartRandomFigureImpl>(
           this, _$identity);
 
   @override
@@ -932,29 +932,29 @@ class _$_StartRandomFigure implements _StartRandomFigure {
 
 abstract class _StartRandomFigure implements LevelEvent {
   const factory _StartRandomFigure({final List<FigureEvent>? figures}) =
-      _$_StartRandomFigure;
+      _$StartRandomFigureImpl;
 
   List<FigureEvent>? get figures;
   @JsonKey(ignore: true)
-  _$$_StartRandomFigureCopyWith<_$_StartRandomFigure> get copyWith =>
+  _$$StartRandomFigureImplCopyWith<_$StartRandomFigureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ChangeSpeedCopyWith<$Res> {
-  factory _$$_ChangeSpeedCopyWith(
-          _$_ChangeSpeed value, $Res Function(_$_ChangeSpeed) then) =
-      __$$_ChangeSpeedCopyWithImpl<$Res>;
+abstract class _$$ChangeSpeedImplCopyWith<$Res> {
+  factory _$$ChangeSpeedImplCopyWith(
+          _$ChangeSpeedImpl value, $Res Function(_$ChangeSpeedImpl) then) =
+      __$$ChangeSpeedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({double speed, List<Items> effects});
 }
 
 /// @nodoc
-class __$$_ChangeSpeedCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_ChangeSpeed>
-    implements _$$_ChangeSpeedCopyWith<$Res> {
-  __$$_ChangeSpeedCopyWithImpl(
-      _$_ChangeSpeed _value, $Res Function(_$_ChangeSpeed) _then)
+class __$$ChangeSpeedImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$ChangeSpeedImpl>
+    implements _$$ChangeSpeedImplCopyWith<$Res> {
+  __$$ChangeSpeedImplCopyWithImpl(
+      _$ChangeSpeedImpl _value, $Res Function(_$ChangeSpeedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -963,7 +963,7 @@ class __$$_ChangeSpeedCopyWithImpl<$Res>
     Object? speed = null,
     Object? effects = null,
   }) {
-    return _then(_$_ChangeSpeed(
+    return _then(_$ChangeSpeedImpl(
       speed: null == speed
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
@@ -978,8 +978,8 @@ class __$$_ChangeSpeedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ChangeSpeed implements _ChangeSpeed {
-  const _$_ChangeSpeed(
+class _$ChangeSpeedImpl implements _ChangeSpeed {
+  const _$ChangeSpeedImpl(
       {required this.speed, required final List<Items> effects})
       : _effects = effects;
 
@@ -1002,7 +1002,7 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChangeSpeed &&
+            other is _$ChangeSpeedImpl &&
             (identical(other.speed, speed) || other.speed == speed) &&
             const DeepCollectionEquality().equals(other._effects, _effects));
   }
@@ -1014,8 +1014,8 @@ class _$_ChangeSpeed implements _ChangeSpeed {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChangeSpeedCopyWith<_$_ChangeSpeed> get copyWith =>
-      __$$_ChangeSpeedCopyWithImpl<_$_ChangeSpeed>(this, _$identity);
+  _$$ChangeSpeedImplCopyWith<_$ChangeSpeedImpl> get copyWith =>
+      __$$ChangeSpeedImplCopyWithImpl<_$ChangeSpeedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1113,35 +1113,35 @@ class _$_ChangeSpeed implements _ChangeSpeed {
 abstract class _ChangeSpeed implements LevelEvent {
   const factory _ChangeSpeed(
       {required final double speed,
-      required final List<Items> effects}) = _$_ChangeSpeed;
+      required final List<Items> effects}) = _$ChangeSpeedImpl;
 
   double get speed;
   List<Items> get effects;
   @JsonKey(ignore: true)
-  _$$_ChangeSpeedCopyWith<_$_ChangeSpeed> get copyWith =>
+  _$$ChangeSpeedImplCopyWith<_$ChangeSpeedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_FinishFigureCopyWith<$Res> {
-  factory _$$_FinishFigureCopyWith(
-          _$_FinishFigure value, $Res Function(_$_FinishFigure) then) =
-      __$$_FinishFigureCopyWithImpl<$Res>;
+abstract class _$$FinishFigureImplCopyWith<$Res> {
+  factory _$$FinishFigureImplCopyWith(
+          _$FinishFigureImpl value, $Res Function(_$FinishFigureImpl) then) =
+      __$$FinishFigureImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FinishFigureCopyWithImpl<$Res>
-    extends _$LevelEventCopyWithImpl<$Res, _$_FinishFigure>
-    implements _$$_FinishFigureCopyWith<$Res> {
-  __$$_FinishFigureCopyWithImpl(
-      _$_FinishFigure _value, $Res Function(_$_FinishFigure) _then)
+class __$$FinishFigureImplCopyWithImpl<$Res>
+    extends _$LevelEventCopyWithImpl<$Res, _$FinishFigureImpl>
+    implements _$$FinishFigureImplCopyWith<$Res> {
+  __$$FinishFigureImplCopyWithImpl(
+      _$FinishFigureImpl _value, $Res Function(_$FinishFigureImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FinishFigure implements _FinishFigure {
-  const _$_FinishFigure();
+class _$FinishFigureImpl implements _FinishFigure {
+  const _$FinishFigureImpl();
 
   @override
   String toString() {
@@ -1151,7 +1151,7 @@ class _$_FinishFigure implements _FinishFigure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_FinishFigure);
+        (other.runtimeType == runtimeType && other is _$FinishFigureImpl);
   }
 
   @override
@@ -1251,7 +1251,7 @@ class _$_FinishFigure implements _FinishFigure {
 }
 
 abstract class _FinishFigure implements LevelEvent {
-  const factory _FinishFigure() = _$_FinishFigure;
+  const factory _FinishFigure() = _$FinishFigureImpl;
 }
 
 /// @nodoc
@@ -1357,25 +1357,25 @@ class _$FigureEventCopyWithImpl<$Res, $Val extends FigureEvent>
 }
 
 /// @nodoc
-abstract class _$$_TrashWallCopyWith<$Res> {
-  factory _$$_TrashWallCopyWith(
-          _$_TrashWall value, $Res Function(_$_TrashWall) then) =
-      __$$_TrashWallCopyWithImpl<$Res>;
+abstract class _$$TrashWallImplCopyWith<$Res> {
+  factory _$$TrashWallImplCopyWith(
+          _$TrashWallImpl value, $Res Function(_$TrashWallImpl) then) =
+      __$$TrashWallImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TrashWallCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_TrashWall>
-    implements _$$_TrashWallCopyWith<$Res> {
-  __$$_TrashWallCopyWithImpl(
-      _$_TrashWall _value, $Res Function(_$_TrashWall) _then)
+class __$$TrashWallImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$TrashWallImpl>
+    implements _$$TrashWallImplCopyWith<$Res> {
+  __$$TrashWallImplCopyWithImpl(
+      _$TrashWallImpl _value, $Res Function(_$TrashWallImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TrashWall implements _TrashWall {
-  const _$_TrashWall();
+class _$TrashWallImpl implements _TrashWall {
+  const _$TrashWallImpl();
 
   @override
   String toString() {
@@ -1385,7 +1385,7 @@ class _$_TrashWall implements _TrashWall {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TrashWall);
+        (other.runtimeType == runtimeType && other is _$TrashWallImpl);
   }
 
   @override
@@ -1497,29 +1497,29 @@ class _$_TrashWall implements _TrashWall {
 }
 
 abstract class _TrashWall implements FigureEvent {
-  const factory _TrashWall() = _$_TrashWall;
+  const factory _TrashWall() = _$TrashWallImpl;
 }
 
 /// @nodoc
-abstract class _$$_GuardedPizzaCopyWith<$Res> {
-  factory _$$_GuardedPizzaCopyWith(
-          _$_GuardedPizza value, $Res Function(_$_GuardedPizza) then) =
-      __$$_GuardedPizzaCopyWithImpl<$Res>;
+abstract class _$$GuardedPizzaImplCopyWith<$Res> {
+  factory _$$GuardedPizzaImplCopyWith(
+          _$GuardedPizzaImpl value, $Res Function(_$GuardedPizzaImpl) then) =
+      __$$GuardedPizzaImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_GuardedPizzaCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_GuardedPizza>
-    implements _$$_GuardedPizzaCopyWith<$Res> {
-  __$$_GuardedPizzaCopyWithImpl(
-      _$_GuardedPizza _value, $Res Function(_$_GuardedPizza) _then)
+class __$$GuardedPizzaImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$GuardedPizzaImpl>
+    implements _$$GuardedPizzaImplCopyWith<$Res> {
+  __$$GuardedPizzaImplCopyWithImpl(
+      _$GuardedPizzaImpl _value, $Res Function(_$GuardedPizzaImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_GuardedPizza implements _GuardedPizza {
-  const _$_GuardedPizza();
+class _$GuardedPizzaImpl implements _GuardedPizza {
+  const _$GuardedPizzaImpl();
 
   @override
   String toString() {
@@ -1529,7 +1529,7 @@ class _$_GuardedPizza implements _GuardedPizza {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GuardedPizza);
+        (other.runtimeType == runtimeType && other is _$GuardedPizzaImpl);
   }
 
   @override
@@ -1641,29 +1641,29 @@ class _$_GuardedPizza implements _GuardedPizza {
 }
 
 abstract class _GuardedPizza implements FigureEvent {
-  const factory _GuardedPizza() = _$_GuardedPizza;
+  const factory _GuardedPizza() = _$GuardedPizzaImpl;
 }
 
 /// @nodoc
-abstract class _$$_CursedPathCopyWith<$Res> {
-  factory _$$_CursedPathCopyWith(
-          _$_CursedPath value, $Res Function(_$_CursedPath) then) =
-      __$$_CursedPathCopyWithImpl<$Res>;
+abstract class _$$CursedPathImplCopyWith<$Res> {
+  factory _$$CursedPathImplCopyWith(
+          _$CursedPathImpl value, $Res Function(_$CursedPathImpl) then) =
+      __$$CursedPathImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_CursedPathCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_CursedPath>
-    implements _$$_CursedPathCopyWith<$Res> {
-  __$$_CursedPathCopyWithImpl(
-      _$_CursedPath _value, $Res Function(_$_CursedPath) _then)
+class __$$CursedPathImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$CursedPathImpl>
+    implements _$$CursedPathImplCopyWith<$Res> {
+  __$$CursedPathImplCopyWithImpl(
+      _$CursedPathImpl _value, $Res Function(_$CursedPathImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_CursedPath implements _CursedPath {
-  const _$_CursedPath();
+class _$CursedPathImpl implements _CursedPath {
+  const _$CursedPathImpl();
 
   @override
   String toString() {
@@ -1673,7 +1673,7 @@ class _$_CursedPath implements _CursedPath {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_CursedPath);
+        (other.runtimeType == runtimeType && other is _$CursedPathImpl);
   }
 
   @override
@@ -1785,29 +1785,29 @@ class _$_CursedPath implements _CursedPath {
 }
 
 abstract class _CursedPath implements FigureEvent {
-  const factory _CursedPath() = _$_CursedPath;
+  const factory _CursedPath() = _$CursedPathImpl;
 }
 
 /// @nodoc
-abstract class _$$_PunchWaveCopyWith<$Res> {
-  factory _$$_PunchWaveCopyWith(
-          _$_PunchWave value, $Res Function(_$_PunchWave) then) =
-      __$$_PunchWaveCopyWithImpl<$Res>;
+abstract class _$$PunchWaveImplCopyWith<$Res> {
+  factory _$$PunchWaveImplCopyWith(
+          _$PunchWaveImpl value, $Res Function(_$PunchWaveImpl) then) =
+      __$$PunchWaveImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_PunchWaveCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_PunchWave>
-    implements _$$_PunchWaveCopyWith<$Res> {
-  __$$_PunchWaveCopyWithImpl(
-      _$_PunchWave _value, $Res Function(_$_PunchWave) _then)
+class __$$PunchWaveImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$PunchWaveImpl>
+    implements _$$PunchWaveImplCopyWith<$Res> {
+  __$$PunchWaveImplCopyWithImpl(
+      _$PunchWaveImpl _value, $Res Function(_$PunchWaveImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_PunchWave implements _PunchWave {
-  const _$_PunchWave();
+class _$PunchWaveImpl implements _PunchWave {
+  const _$PunchWaveImpl();
 
   @override
   String toString() {
@@ -1817,7 +1817,7 @@ class _$_PunchWave implements _PunchWave {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_PunchWave);
+        (other.runtimeType == runtimeType && other is _$PunchWaveImpl);
   }
 
   @override
@@ -1929,29 +1929,29 @@ class _$_PunchWave implements _PunchWave {
 }
 
 abstract class _PunchWave implements FigureEvent {
-  const factory _PunchWave() = _$_PunchWave;
+  const factory _PunchWave() = _$PunchWaveImpl;
 }
 
 /// @nodoc
-abstract class _$$_BigBuddyBinCopyWith<$Res> {
-  factory _$$_BigBuddyBinCopyWith(
-          _$_BigBuddyBin value, $Res Function(_$_BigBuddyBin) then) =
-      __$$_BigBuddyBinCopyWithImpl<$Res>;
+abstract class _$$BigBuddyBinImplCopyWith<$Res> {
+  factory _$$BigBuddyBinImplCopyWith(
+          _$BigBuddyBinImpl value, $Res Function(_$BigBuddyBinImpl) then) =
+      __$$BigBuddyBinImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_BigBuddyBinCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_BigBuddyBin>
-    implements _$$_BigBuddyBinCopyWith<$Res> {
-  __$$_BigBuddyBinCopyWithImpl(
-      _$_BigBuddyBin _value, $Res Function(_$_BigBuddyBin) _then)
+class __$$BigBuddyBinImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$BigBuddyBinImpl>
+    implements _$$BigBuddyBinImplCopyWith<$Res> {
+  __$$BigBuddyBinImplCopyWithImpl(
+      _$BigBuddyBinImpl _value, $Res Function(_$BigBuddyBinImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_BigBuddyBin implements _BigBuddyBin {
-  const _$_BigBuddyBin();
+class _$BigBuddyBinImpl implements _BigBuddyBin {
+  const _$BigBuddyBinImpl();
 
   @override
   String toString() {
@@ -1961,7 +1961,7 @@ class _$_BigBuddyBin implements _BigBuddyBin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_BigBuddyBin);
+        (other.runtimeType == runtimeType && other is _$BigBuddyBinImpl);
   }
 
   @override
@@ -2073,29 +2073,29 @@ class _$_BigBuddyBin implements _BigBuddyBin {
 }
 
 abstract class _BigBuddyBin implements FigureEvent {
-  const factory _BigBuddyBin() = _$_BigBuddyBin;
+  const factory _BigBuddyBin() = _$BigBuddyBinImpl;
 }
 
 /// @nodoc
-abstract class _$$_UnreachablePizzaCopyWith<$Res> {
-  factory _$$_UnreachablePizzaCopyWith(
-          _$_UnreachablePizza value, $Res Function(_$_UnreachablePizza) then) =
-      __$$_UnreachablePizzaCopyWithImpl<$Res>;
+abstract class _$$UnreachablePizzaImplCopyWith<$Res> {
+  factory _$$UnreachablePizzaImplCopyWith(_$UnreachablePizzaImpl value,
+          $Res Function(_$UnreachablePizzaImpl) then) =
+      __$$UnreachablePizzaImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_UnreachablePizzaCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_UnreachablePizza>
-    implements _$$_UnreachablePizzaCopyWith<$Res> {
-  __$$_UnreachablePizzaCopyWithImpl(
-      _$_UnreachablePizza _value, $Res Function(_$_UnreachablePizza) _then)
+class __$$UnreachablePizzaImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$UnreachablePizzaImpl>
+    implements _$$UnreachablePizzaImplCopyWith<$Res> {
+  __$$UnreachablePizzaImplCopyWithImpl(_$UnreachablePizzaImpl _value,
+      $Res Function(_$UnreachablePizzaImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_UnreachablePizza implements _UnreachablePizza {
-  const _$_UnreachablePizza();
+class _$UnreachablePizzaImpl implements _UnreachablePizza {
+  const _$UnreachablePizzaImpl();
 
   @override
   String toString() {
@@ -2105,7 +2105,7 @@ class _$_UnreachablePizza implements _UnreachablePizza {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UnreachablePizza);
+        (other.runtimeType == runtimeType && other is _$UnreachablePizzaImpl);
   }
 
   @override
@@ -2217,29 +2217,29 @@ class _$_UnreachablePizza implements _UnreachablePizza {
 }
 
 abstract class _UnreachablePizza implements FigureEvent {
-  const factory _UnreachablePizza() = _$_UnreachablePizza;
+  const factory _UnreachablePizza() = _$UnreachablePizzaImpl;
 }
 
 /// @nodoc
-abstract class _$$_Only2TimesCopyWith<$Res> {
-  factory _$$_Only2TimesCopyWith(
-          _$_Only2Times value, $Res Function(_$_Only2Times) then) =
-      __$$_Only2TimesCopyWithImpl<$Res>;
+abstract class _$$Only2TimesImplCopyWith<$Res> {
+  factory _$$Only2TimesImplCopyWith(
+          _$Only2TimesImpl value, $Res Function(_$Only2TimesImpl) then) =
+      __$$Only2TimesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_Only2TimesCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_Only2Times>
-    implements _$$_Only2TimesCopyWith<$Res> {
-  __$$_Only2TimesCopyWithImpl(
-      _$_Only2Times _value, $Res Function(_$_Only2Times) _then)
+class __$$Only2TimesImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$Only2TimesImpl>
+    implements _$$Only2TimesImplCopyWith<$Res> {
+  __$$Only2TimesImplCopyWithImpl(
+      _$Only2TimesImpl _value, $Res Function(_$Only2TimesImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Only2Times implements _Only2Times {
-  const _$_Only2Times();
+class _$Only2TimesImpl implements _Only2Times {
+  const _$Only2TimesImpl();
 
   @override
   String toString() {
@@ -2249,7 +2249,7 @@ class _$_Only2Times implements _Only2Times {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Only2Times);
+        (other.runtimeType == runtimeType && other is _$Only2TimesImpl);
   }
 
   @override
@@ -2361,27 +2361,29 @@ class _$_Only2Times implements _Only2Times {
 }
 
 abstract class _Only2Times implements FigureEvent {
-  const factory _Only2Times() = _$_Only2Times;
+  const factory _Only2Times() = _$Only2TimesImpl;
 }
 
 /// @nodoc
-abstract class _$$_SlowMoCopyWith<$Res> {
-  factory _$$_SlowMoCopyWith(_$_SlowMo value, $Res Function(_$_SlowMo) then) =
-      __$$_SlowMoCopyWithImpl<$Res>;
+abstract class _$$SlowMoImplCopyWith<$Res> {
+  factory _$$SlowMoImplCopyWith(
+          _$SlowMoImpl value, $Res Function(_$SlowMoImpl) then) =
+      __$$SlowMoImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SlowMoCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_SlowMo>
-    implements _$$_SlowMoCopyWith<$Res> {
-  __$$_SlowMoCopyWithImpl(_$_SlowMo _value, $Res Function(_$_SlowMo) _then)
+class __$$SlowMoImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$SlowMoImpl>
+    implements _$$SlowMoImplCopyWith<$Res> {
+  __$$SlowMoImplCopyWithImpl(
+      _$SlowMoImpl _value, $Res Function(_$SlowMoImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SlowMo implements _SlowMo {
-  const _$_SlowMo();
+class _$SlowMoImpl implements _SlowMo {
+  const _$SlowMoImpl();
 
   @override
   String toString() {
@@ -2391,7 +2393,7 @@ class _$_SlowMo implements _SlowMo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SlowMo);
+        (other.runtimeType == runtimeType && other is _$SlowMoImpl);
   }
 
   @override
@@ -2503,24 +2505,24 @@ class _$_SlowMo implements _SlowMo {
 }
 
 abstract class _SlowMo implements FigureEvent {
-  const factory _SlowMo() = _$_SlowMo;
+  const factory _SlowMo() = _$SlowMoImpl;
 }
 
 /// @nodoc
-abstract class _$$_WinLabelCopyWith<$Res> {
-  factory _$$_WinLabelCopyWith(
-          _$_WinLabel value, $Res Function(_$_WinLabel) then) =
-      __$$_WinLabelCopyWithImpl<$Res>;
+abstract class _$$WinLabelImplCopyWith<$Res> {
+  factory _$$WinLabelImplCopyWith(
+          _$WinLabelImpl value, $Res Function(_$WinLabelImpl) then) =
+      __$$WinLabelImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Items item});
 }
 
 /// @nodoc
-class __$$_WinLabelCopyWithImpl<$Res>
-    extends _$FigureEventCopyWithImpl<$Res, _$_WinLabel>
-    implements _$$_WinLabelCopyWith<$Res> {
-  __$$_WinLabelCopyWithImpl(
-      _$_WinLabel _value, $Res Function(_$_WinLabel) _then)
+class __$$WinLabelImplCopyWithImpl<$Res>
+    extends _$FigureEventCopyWithImpl<$Res, _$WinLabelImpl>
+    implements _$$WinLabelImplCopyWith<$Res> {
+  __$$WinLabelImplCopyWithImpl(
+      _$WinLabelImpl _value, $Res Function(_$WinLabelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2528,7 +2530,7 @@ class __$$_WinLabelCopyWithImpl<$Res>
   $Res call({
     Object? item = null,
   }) {
-    return _then(_$_WinLabel(
+    return _then(_$WinLabelImpl(
       item: null == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
@@ -2539,8 +2541,8 @@ class __$$_WinLabelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WinLabel implements _WinLabel {
-  const _$_WinLabel({required this.item});
+class _$WinLabelImpl implements _WinLabel {
+  const _$WinLabelImpl({required this.item});
 
   @override
   final Items item;
@@ -2554,7 +2556,7 @@ class _$_WinLabel implements _WinLabel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WinLabel &&
+            other is _$WinLabelImpl &&
             (identical(other.item, item) || other.item == item));
   }
 
@@ -2564,8 +2566,8 @@ class _$_WinLabel implements _WinLabel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WinLabelCopyWith<_$_WinLabel> get copyWith =>
-      __$$_WinLabelCopyWithImpl<_$_WinLabel>(this, _$identity);
+  _$$WinLabelImplCopyWith<_$WinLabelImpl> get copyWith =>
+      __$$WinLabelImplCopyWithImpl<_$WinLabelImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2673,11 +2675,11 @@ class _$_WinLabel implements _WinLabel {
 }
 
 abstract class _WinLabel implements FigureEvent {
-  const factory _WinLabel({required final Items item}) = _$_WinLabel;
+  const factory _WinLabel({required final Items item}) = _$WinLabelImpl;
 
   Items get item;
   @JsonKey(ignore: true)
-  _$$_WinLabelCopyWith<_$_WinLabel> get copyWith =>
+  _$$WinLabelImplCopyWith<_$WinLabelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2763,11 +2765,11 @@ class _$LevelStateCopyWithImpl<$Res, $Val extends LevelState>
 }
 
 /// @nodoc
-abstract class _$$_LevelStateCopyWith<$Res>
+abstract class _$$LevelStateImplCopyWith<$Res>
     implements $LevelStateCopyWith<$Res> {
-  factory _$$_LevelStateCopyWith(
-          _$_LevelState value, $Res Function(_$_LevelState) then) =
-      __$$_LevelStateCopyWithImpl<$Res>;
+  factory _$$LevelStateImplCopyWith(
+          _$LevelStateImpl value, $Res Function(_$LevelStateImpl) then) =
+      __$$LevelStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({LinearLevel level, FigureEvent? figure, MiniGame? miniGame});
@@ -2779,11 +2781,11 @@ abstract class _$$_LevelStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LevelStateCopyWithImpl<$Res>
-    extends _$LevelStateCopyWithImpl<$Res, _$_LevelState>
-    implements _$$_LevelStateCopyWith<$Res> {
-  __$$_LevelStateCopyWithImpl(
-      _$_LevelState _value, $Res Function(_$_LevelState) _then)
+class __$$LevelStateImplCopyWithImpl<$Res>
+    extends _$LevelStateCopyWithImpl<$Res, _$LevelStateImpl>
+    implements _$$LevelStateImplCopyWith<$Res> {
+  __$$LevelStateImplCopyWithImpl(
+      _$LevelStateImpl _value, $Res Function(_$LevelStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2793,7 +2795,7 @@ class __$$_LevelStateCopyWithImpl<$Res>
     Object? figure = freezed,
     Object? miniGame = freezed,
   }) {
-    return _then(_$_LevelState(
+    return _then(_$LevelStateImpl(
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -2812,8 +2814,8 @@ class __$$_LevelStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LevelState implements _LevelState {
-  const _$_LevelState({required this.level, this.figure, this.miniGame});
+class _$LevelStateImpl implements _LevelState {
+  const _$LevelStateImpl({required this.level, this.figure, this.miniGame});
 
   @override
   final LinearLevel level;
@@ -2831,7 +2833,7 @@ class _$_LevelState implements _LevelState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LevelState &&
+            other is _$LevelStateImpl &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.figure, figure) || other.figure == figure) &&
             (identical(other.miniGame, miniGame) ||
@@ -2844,15 +2846,15 @@ class _$_LevelState implements _LevelState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LevelStateCopyWith<_$_LevelState> get copyWith =>
-      __$$_LevelStateCopyWithImpl<_$_LevelState>(this, _$identity);
+  _$$LevelStateImplCopyWith<_$LevelStateImpl> get copyWith =>
+      __$$LevelStateImplCopyWithImpl<_$LevelStateImpl>(this, _$identity);
 }
 
 abstract class _LevelState implements LevelState {
   const factory _LevelState(
       {required final LinearLevel level,
       final FigureEvent? figure,
-      final MiniGame? miniGame}) = _$_LevelState;
+      final MiniGame? miniGame}) = _$LevelStateImpl;
 
   @override
   LinearLevel get level;
@@ -2862,6 +2864,6 @@ abstract class _LevelState implements LevelState {
   MiniGame? get miniGame;
   @override
   @JsonKey(ignore: true)
-  _$$_LevelStateCopyWith<_$_LevelState> get copyWith =>
+  _$$LevelStateImplCopyWith<_$LevelStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

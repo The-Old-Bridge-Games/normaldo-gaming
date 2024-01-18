@@ -69,22 +69,22 @@ class _$SlotMachineStateCopyWithImpl<$Res, $Val extends SlotMachineState>
 }
 
 /// @nodoc
-abstract class _$$_SlotMachineStateCopyWith<$Res>
+abstract class _$$SlotMachineStateImplCopyWith<$Res>
     implements $SlotMachineStateCopyWith<$Res> {
-  factory _$$_SlotMachineStateCopyWith(
-          _$_SlotMachineState value, $Res Function(_$_SlotMachineState) then) =
-      __$$_SlotMachineStateCopyWithImpl<$Res>;
+  factory _$$SlotMachineStateImplCopyWith(_$SlotMachineStateImpl value,
+          $Res Function(_$SlotMachineStateImpl) then) =
+      __$$SlotMachineStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool spinning, int bid, Rolls? winRoll});
 }
 
 /// @nodoc
-class __$$_SlotMachineStateCopyWithImpl<$Res>
-    extends _$SlotMachineStateCopyWithImpl<$Res, _$_SlotMachineState>
-    implements _$$_SlotMachineStateCopyWith<$Res> {
-  __$$_SlotMachineStateCopyWithImpl(
-      _$_SlotMachineState _value, $Res Function(_$_SlotMachineState) _then)
+class __$$SlotMachineStateImplCopyWithImpl<$Res>
+    extends _$SlotMachineStateCopyWithImpl<$Res, _$SlotMachineStateImpl>
+    implements _$$SlotMachineStateImplCopyWith<$Res> {
+  __$$SlotMachineStateImplCopyWithImpl(_$SlotMachineStateImpl _value,
+      $Res Function(_$SlotMachineStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_SlotMachineStateCopyWithImpl<$Res>
     Object? bid = null,
     Object? winRoll = freezed,
   }) {
-    return _then(_$_SlotMachineState(
+    return _then(_$SlotMachineStateImpl(
       spinning: null == spinning
           ? _value.spinning
           : spinning // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_SlotMachineStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SlotMachineState implements _SlotMachineState {
-  const _$_SlotMachineState(
+class _$SlotMachineStateImpl implements _SlotMachineState {
+  const _$SlotMachineStateImpl(
       {required this.spinning, required this.bid, this.winRoll});
 
   @override
@@ -133,7 +133,7 @@ class _$_SlotMachineState implements _SlotMachineState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SlotMachineState &&
+            other is _$SlotMachineStateImpl &&
             (identical(other.spinning, spinning) ||
                 other.spinning == spinning) &&
             (identical(other.bid, bid) || other.bid == bid) &&
@@ -146,15 +146,16 @@ class _$_SlotMachineState implements _SlotMachineState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SlotMachineStateCopyWith<_$_SlotMachineState> get copyWith =>
-      __$$_SlotMachineStateCopyWithImpl<_$_SlotMachineState>(this, _$identity);
+  _$$SlotMachineStateImplCopyWith<_$SlotMachineStateImpl> get copyWith =>
+      __$$SlotMachineStateImplCopyWithImpl<_$SlotMachineStateImpl>(
+          this, _$identity);
 }
 
 abstract class _SlotMachineState implements SlotMachineState {
   const factory _SlotMachineState(
       {required final bool spinning,
       required final int bid,
-      final Rolls? winRoll}) = _$_SlotMachineState;
+      final Rolls? winRoll}) = _$SlotMachineStateImpl;
 
   @override
   bool get spinning;
@@ -164,6 +165,6 @@ abstract class _SlotMachineState implements SlotMachineState {
   Rolls? get winRoll;
   @override
   @JsonKey(ignore: true)
-  _$$_SlotMachineStateCopyWith<_$_SlotMachineState> get copyWith =>
+  _$$SlotMachineStateImplCopyWith<_$SlotMachineStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

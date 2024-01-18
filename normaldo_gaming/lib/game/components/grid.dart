@@ -10,7 +10,9 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
 import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
@@ -29,8 +31,13 @@ class Grid extends PositionComponent
         HasNgAudio {
   static const linesCount = 5;
 
-  Grid({required this.gameSessionCubit, required this.levelBloc});
+  Grid({
+    required this.gameSessionCubit,
+    required this.levelBloc,
+    required this.skin,
+  });
 
+  final Skin skin;
   final GameSessionCubit gameSessionCubit;
   final LevelBloc levelBloc;
 
@@ -79,6 +86,12 @@ class Grid extends PositionComponent
               removeWhere((component) => component is AudioFadeComponent);
             }
           }));
+          if (normaldo.skin.assets.sfx['shredder'] != null) {
+            audio.playSfx(
+              Sfx.binCrash,
+              customAssets: normaldo.skin.assets.sfx['shredder']!,
+            );
+          }
           normaldo.notify(
             text: 'Hmm.. I feel something..'.tr(),
             color: NGTheme.green1,
@@ -165,7 +178,7 @@ class Grid extends PositionComponent
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / linesCount;
-    normaldo = Normaldo(size: Vector2.all(lineSize * 0.9))
+    normaldo = Normaldo(size: Vector2.all(lineSize), skin: skin)
       ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 1; i <= linesCount; i++) {
       _linesCentersY.add(_getCenterOfLine(i));
@@ -260,15 +273,16 @@ class Grid extends PositionComponent
   bool onDragUpdate(DragUpdateEvent event) {
     if (normaldo.effectsController.effectsInProgress
         .any((item) => item == Items.cocktail)) {
-      normaldo.position += event.delta * 0.3;
+      normaldo.position += event.localDelta * 0.3;
     } else {
-      normaldo.position += event.delta * _getFatMultiplier(normaldo);
+      normaldo.position += event.localDelta * _getFatMultiplier(normaldo);
     }
     super.onDragUpdate(event);
     return false;
   }
 
   double _getFatMultiplier(Normaldo normaldo) {
+    if (normaldo.skin.uniqueId == 'glasses') return 1;
     switch (normaldo.current) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.skinnyEat:
@@ -276,15 +290,12 @@ class Grid extends PositionComponent
         return 1;
       case NormaldoFatState.slim:
       case NormaldoFatState.slimEat:
-      case NormaldoFatState.slimDead:
         return 0.7;
       case NormaldoFatState.fat:
       case NormaldoFatState.fatEat:
-      case NormaldoFatState.fatDead:
         return 0.5;
       case NormaldoFatState.uberFat:
       case NormaldoFatState.uberFatEat:
-      case NormaldoFatState.uberFatDead:
         return 0.4;
       case null:
         throw UnexpectedError();
