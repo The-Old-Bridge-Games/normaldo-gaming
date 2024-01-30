@@ -9,7 +9,7 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 class LevelTimerComponent extends TimerComponent
     with FlameBlocReader<LevelBloc, LevelState>, HasGameRef<PullUpGame> {
   LevelTimerComponent()
-      : super(period: LevelBloc.levelChangeDuration, repeat: true);
+      : super(period: LevelBloc.levelChangeDuration / 5, repeat: true);
 
   final random = Random();
   double get _eventPeriod => 30000;

@@ -196,17 +196,17 @@ class Grid extends PositionComponent
 
       // 4DEV
       // line bounds highlights
-      add(RectangleComponent(
-        position: Vector2(0, (i + 1) * lineSize),
-        size: Vector2(size.x, 1),
-        paint: Paint()..color = BasicPalette.yellow.color,
-      ));
-      // centers highlights
-      add(RectangleComponent(
-        position: Vector2(0, lineCenterY),
-        size: Vector2(size.x, 0.5),
-        paint: Paint()..color = BasicPalette.green.color,
-      ));
+      // add(RectangleComponent(
+      //   position: Vector2(0, (i + 1) * lineSize),
+      //   size: Vector2(size.x, 1),
+      //   paint: Paint()..color = BasicPalette.yellow.color,
+      // ));
+      // // centers highlights
+      // add(RectangleComponent(
+      //   position: Vector2(0, lineCenterY),
+      //   size: Vector2(size.x, 0.5),
+      //   paint: Paint()..color = BasicPalette.green.color,
+      // ));
     }
     // add(
     //   TrashBin()

@@ -15,7 +15,7 @@ part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   static const int limitProgressingLevel = 50;
-  static const double levelChangeDuration = 20;
+  static const double levelChangeDuration = 60;
 
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(

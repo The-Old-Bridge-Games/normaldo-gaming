@@ -18,10 +18,7 @@ final class TrashBin extends SpriteComponent
   int get strength => 1;
 
   @override
-  int get damage => 2;
-
-  @override
-  bool get debugMode => true;
+  int get damage => 1;
 
   @override
   Color get debugColor => Colors.blue;

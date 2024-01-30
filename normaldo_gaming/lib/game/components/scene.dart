@@ -3,8 +3,9 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-class Scene extends PositionComponent with HasGameRef {
+class Scene extends PositionComponent with HasGameRef<PullUpGame> {
   Scene({required this.initialSize});
 
   final Vector2 initialSize;
@@ -20,6 +21,14 @@ class Scene extends PositionComponent with HasGameRef {
     //   await Images().load('backgrounds/bg0-sheet.png'),
     //   await AssetsCache().readJson('images/backgrounds/bg0.json'),
     // );
+    final sprite = await Sprite.load('backgrounds/level1.png');
+    _currentBackgrounds.add(SpriteAnimationComponent(
+      animation: SpriteAnimation.spriteList([sprite], stepTime: 10),
+      size: Vector2(sprite.srcSize.x, size.y),
+    ));
+    addAll(_currentBackgrounds);
+    _move();
+    return super.onLoad();
     final imagesList = await Images().loadAll(List.generate(
         44, (index) => 'backgrounds/bg0/normaldo${index + 1}.png'));
     final spriteList = imagesList.map((e) => Sprite(e)).toList();
@@ -67,14 +76,15 @@ class Scene extends PositionComponent with HasGameRef {
   void _move() {
     for (final bg in _currentBackgrounds) {
       bg.add(MoveByEffect(
-          Vector2(-initialSize.x, 0),
+          Vector2(-bg.size.x + initialSize.x, 0),
           EffectController(
               duration: LevelBloc.levelChangeDuration.toDouble(),
               onMax: () {
-                if (bg.position.x <= -initialSize.x) {
-                  _currentBackgrounds.remove(bg);
-                  bg.removeFromParent();
-                }
+                // if (bg.position.x <= -initialSize.x) {
+                //   _currentBackgrounds.remove(bg);
+                //   bg.removeFromParent();
+                // }
+                game.grid.stopAllLines();
               })));
     }
   }
