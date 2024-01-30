@@ -49,7 +49,7 @@ final class RoadSign extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    super.onLoad();
     sprite = await Sprite.load('road_sign.png');
-    return super.onLoad();
   }
 }

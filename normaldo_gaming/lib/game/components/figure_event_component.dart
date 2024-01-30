@@ -367,25 +367,23 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       bigBuddyBin: () {
         final item = matrix.first.first;
-        final itemSize = item.item.getSize(lineSize);
-        add((item.item.component() as Item)
-          ..anchor = Anchor.topCenter
-          ..size = itemSize
-          ..position = Vector2(
-            size.x + itemSize.x,
-            linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
-          ));
+        // final itemSize = item.item.getSize(lineSize);
+        final component = item.item.component();
+        component.position = Vector2(
+          size.x + component.size.x,
+          linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
+        );
+        add(component..anchor = Anchor.topCenter);
       },
       only2Lines: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
-            final itemSize = Items.trashBin.getSize(lineSize);
+            final itemSize = Items.cone.getSize(lineSize);
             add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
-                  size.x * 1.3 +
-                      (xOffset * Items.trashBin.getSize(lineSize).x * 2),
+                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 2),
                   linesCentersY[item.line ?? 0]));
           }
         }

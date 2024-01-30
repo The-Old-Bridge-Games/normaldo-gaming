@@ -246,6 +246,18 @@ mixin PizzaGivingItem on Item {
     game.grid.normaldo.increaseFatPoints(1);
     removeFromParent();
   }
+
+  @override
+  FutureOr<void> onLoad() {
+    add(ScaleEffect.to(
+        Vector2.all(1.2),
+        EffectController(
+          infinite: true,
+          duration: 0.3,
+          reverseDuration: 0.3,
+        )));
+    return super.onLoad();
+  }
 }
 
 // ✅

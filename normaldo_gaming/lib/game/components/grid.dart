@@ -125,16 +125,15 @@ class Grid extends PositionComponent
         onTick: () {
           // return;
           if (state.figure != null) return;
-          final items = state.level
-              .next()
-              .map((e) => e.item.component()
-                ..size = e.item.getSize(lineSize)
-                ..position = Vector2(
-                  gameRef.size.x + e.item.getSize(lineSize).x * 2,
-                  _linesCentersY[
-                      e.line ?? Random().nextInt(_linesCentersY.length)],
-                ))
-              .toList();
+          final items = state.level.next().map((e) {
+            final component = e.item.component();
+            component.size = e.item.getSize(lineSize);
+            component.position = Vector2(
+                gameRef.size.x + component.size.x * 2,
+                _linesCentersY[
+                    e.line ?? Random().nextInt(_linesCentersY.length)]);
+            return component;
+          }).toList();
           items.removeWhere(
               (item) => _stoppedLines.values.contains(item.position.y));
           addAll(items);
@@ -190,8 +189,7 @@ class Grid extends PositionComponent
     size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / linesCount;
     normaldo = Normaldo(size: Vector2.all(lineSize), skin: skin)
-      ..position = size;
-    // ..position = Vector2(size.x / 2, size.y / 2);
+      ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 0; i < linesCount; i++) {
       final lineCenterY = lineSize * i + lineSize / 2;
       _linesCentersY.add(lineCenterY);
@@ -222,16 +220,15 @@ class Grid extends PositionComponent
         onTick: () {
           // return;
           if (levelBloc.state.figure != null) return;
-          final items = levelBloc.state.level
-              .next()
-              .map((e) => e.item.component()
-                ..size = e.item.getSize(lineSize)
-                ..position = Vector2(
-                  gameRef.size.x + e.item.getSize(lineSize).x * 2,
-                  _linesCentersY[
-                      e.line ?? Random().nextInt(_linesCentersY.length)],
-                ))
-              .toList();
+          final items = levelBloc.state.level.next().map((e) {
+            final component = e.item.component();
+            component.size = e.item.getSize(lineSize);
+            component.position = Vector2(
+                gameRef.size.x + component.size.x * 2,
+                _linesCentersY[
+                    e.line ?? Random().nextInt(_linesCentersY.length)]);
+            return component;
+          }).toList();
           items.removeWhere(
               (item) => _stoppedLines.values.contains(item.position.y));
           addAll(items);

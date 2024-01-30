@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/all_in.dart';
@@ -208,13 +210,12 @@ enum Items {
   Vector2 getSize(double lineSize) {
     switch (this) {
       case Items.trashBin:
-        return Vector2(lineSize * 6, lineSize * 4);
-      // case Items.trashBin:
-      // return Vector2(lineSize * 4, lineSize * 6);
+        final height = lineSize * (2 + Random().nextInt(3));
+        return Vector2(height * _widthFactor, height);
       case Items.pizza:
-        return Vector2(lineSize * 0.65, lineSize * 0.65);
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.dollar:
-        return Vector2(lineSize * 0.6, lineSize * 0.6);
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.fatPizza:
         return Vector2(lineSize, lineSize);
       // case Items.fatPizza:
@@ -304,17 +305,27 @@ enum Items {
       case Items.shipPart:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.cone:
-        return Vector2(lineSize * 0.5, lineSize * 0.7);
+        return Vector2(lineSize * _widthFactor, lineSize);
       case Items.stone:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.letterBottle:
         return Vector2(lineSize * 0.6, lineSize * 0.8);
       case Items.roadSign:
-        return Vector2(lineSize * 3, lineSize * 3);
+        final height = lineSize * 2.5;
+        return Vector2(height * _widthFactor, height);
       // case Items.roadSign:
       //   return Vector2(lineSize, lineSize);
       case Items.umbrella:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
     }
   }
+
+  double get _widthFactor => switch (this) {
+        trashBin => 1.295,
+        cone => 1,
+        homeless => 1,
+        roadSign => 1,
+        bananaPeel => 1,
+        _ => 1,
+      };
 }
