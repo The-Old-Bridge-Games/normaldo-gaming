@@ -4,7 +4,7 @@ part of 'level_bloc.dart';
 abstract class LevelEvent with _$LevelEvent {
   const factory LevelEvent.changeLevel({
     required int level,
-    required List<Items> effects,
+    required List<ItemEffect> effects,
   }) = _ChangeLevel;
   const factory LevelEvent.startFigure({
     required FigureEvent figure,
@@ -18,7 +18,7 @@ abstract class LevelEvent with _$LevelEvent {
   }) = _StartRandomFigure;
   const factory LevelEvent.changeSpeed({
     required double speed,
-    required List<Items> effects,
+    required List<ItemEffect> effects,
   }) = _ChangeSpeed;
   const factory LevelEvent.finishFigure() = _FinishFigure;
 }

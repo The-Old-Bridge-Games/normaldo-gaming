@@ -73,8 +73,8 @@ class FatCounter extends PositionComponent with HasGameRef {
   @override
   void update(double dt) {
     final fPoints = (gameRef as PullUpGame).grid.normaldo.fatPoints;
-    final fatState = (gameRef as PullUpGame).grid.normaldo.current;
-    if (fatState != _normaldoFatState && fatState != null) {
+    final fatState = (gameRef as PullUpGame).grid.normaldo.fatIterator.current;
+    if (fatState != _normaldoFatState) {
       normaldoFatState = fatState;
     }
 

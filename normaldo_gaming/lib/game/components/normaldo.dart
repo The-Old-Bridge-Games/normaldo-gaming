@@ -8,22 +8,19 @@ import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/eatable.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
+import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/notification_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/normaldo_sprites_fixture.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
-
-/* 
-SKINS IMPL
-1. Batman ✅
-*/
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 enum NormaldoHitState {
   idle,
@@ -82,10 +79,56 @@ enum NormaldoFatState {
       ];
 }
 
-class Normaldo extends SpriteGroupComponent<NormaldoFatState>
+class FatStateIterator {
+  FatStateIterator(this.current)
+      : assert(NormaldoFatState.onlyIdle.contains(current));
+
+  final onlyIdle = NormaldoFatState.onlyIdle;
+
+  int get currIndex => onlyIdle.indexOf(current);
+
+  NormaldoFatState current;
+
+  bool deadlyDamage(int step) {
+    return currIndex - step < 0;
+  }
+
+  NormaldoFatState next({int step = 1}) {
+    assert(step > 0);
+    for (int i = 0; i < step; i++) {
+      current = _next();
+    }
+    return current;
+  }
+
+  NormaldoFatState prev({int step = 1}) {
+    assert(step > 0);
+    for (int i = 0; i < step; i++) {
+      current = _prev();
+    }
+    return current;
+  }
+
+  NormaldoFatState _next() {
+    var newIndex = currIndex + 1;
+    if (newIndex >= onlyIdle.length) {
+      newIndex = onlyIdle.length - 1;
+    }
+    return onlyIdle[newIndex];
+  }
+
+  NormaldoFatState _prev() {
+    var newIndex = currIndex - 1;
+    if (newIndex < 0) {
+      newIndex = 0;
+    }
+    return onlyIdle[newIndex];
+  }
+}
+
+class Normaldo extends PositionComponent
     with
         FlameBlocReader<GameSessionCubit, GameSessionState>,
-        _StateActions,
         CollisionCallbacks,
         HasNgAudio,
         HasGameRef {
@@ -100,20 +143,74 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   final Skin skin;
 
+  final FatStateIterator fatIterator =
+      FatStateIterator(NormaldoFatState.skinny);
+
   bool _immortal = false;
   bool get immortal => _immortal;
 
+  Set<Items> _immuneTo = {};
+
+  bool hasImmuneTo(Items item) {
+    return _immuneTo.contains(item);
+  }
+
+  void addImmuneTo(List<Items> items) {
+    _immuneTo.addAll(items);
+  }
+
+  void removeImmuneTo(List<Items> items) {
+    _immuneTo.removeAll(items);
+  }
+
+  set immortal(bool newValue) {
+    _immortal = newValue;
+  }
+
+  double speedMultiplier = 1;
+  double get speed {
+    if (skin.uniqueId == 'glasses') return 1;
+    double speed;
+    switch (nComponent.current) {
+      case NormaldoFatState.skinny:
+      case NormaldoFatState.skinnyEat:
+      case NormaldoFatState.skinnyDead:
+        speed = 1;
+      case NormaldoFatState.slim:
+      case NormaldoFatState.slimEat:
+        speed = 0.7;
+      case NormaldoFatState.fat:
+      case NormaldoFatState.fatEat:
+        speed = 0.5;
+      case NormaldoFatState.uberFat:
+      case NormaldoFatState.uberFatEat:
+        speed = 0.4;
+      case null:
+        throw UnexpectedError();
+    }
+    return speed * speedMultiplier;
+  }
+
   final int? customPizzaToGetFatter;
   late final EffectsController effectsController;
+  late final SpriteGroupComponent<NormaldoFatState> nComponent;
 
   var _state = NormaldoHitState.idle;
 
-  int? get pizzaToGetFatter => current?.pizzaToFat(customPizzaToGetFatter);
+  int? get pizzaToGetFatter =>
+      nComponent.current?.pizzaToFat(customPizzaToGetFatter);
 
-  void takeHit() {
-    if (_state == NormaldoHitState.idle) {
-      decreaseFatPoints(current?.pizzaToFat(customPizzaToGetFatter) ?? 0);
+  void takeHit({int damage = 1}) {
+    if (_immortal) return;
+    if (fatIterator.deadlyDamage(damage)) {
+      nComponent.current = NormaldoFatState.skinnyDead;
+      bloc.die();
+      return;
     }
+
+    _pizzaEaten = 0;
+    final newFatState = fatIterator.prev(step: damage);
+    _changeFatAnimation(newFatState);
   }
 
   // 4DEV
@@ -124,7 +221,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     position: Vector2(size.x / 2, size.y / 2 + size.y * 0.037),
     paint: Paint()..color = Colors.white.withOpacity(0.7),
   );
-  late final _hitbox = CircleHitbox.relative(
+  late final hitbox = CircleHitbox.relative(
     0.46,
     parentSize: size,
     anchor: anchor,
@@ -133,11 +230,11 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   void setHitboxPositionAndSize({Vector2? position, Vector2? size}) {
     if (position != null) {
-      _hitbox.position = position;
+      hitbox.position = position;
       _circle.position = position;
     }
     if (size != null) {
-      _hitbox.size = size;
+      hitbox.size = size;
       _circle.size = size;
     }
   }
@@ -146,20 +243,22 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   int get fatPoints => _pizzaEaten;
 
   bool get isUberFat =>
-      current == NormaldoFatState.uberFat ||
-      current == NormaldoFatState.uberFatEat;
+      nComponent.current == NormaldoFatState.uberFat ||
+      nComponent.current == NormaldoFatState.uberFatEat;
   bool get isSkinny =>
-      current == NormaldoFatState.skinny ||
-      current == NormaldoFatState.skinnyEat;
+      nComponent.current == NormaldoFatState.skinny ||
+      nComponent.current == NormaldoFatState.skinnyEat;
 
   bool get isSlim =>
-      current == NormaldoFatState.slim || current == NormaldoFatState.slimEat;
+      nComponent.current == NormaldoFatState.slim ||
+      nComponent.current == NormaldoFatState.slimEat;
 
   bool get isFat =>
-      current == NormaldoFatState.fat || current == NormaldoFatState.fatEat;
+      nComponent.current == NormaldoFatState.fat ||
+      nComponent.current == NormaldoFatState.fatEat;
 
   bool get isPreEating {
-    switch (current) {
+    switch (nComponent.current) {
       case NormaldoFatState.skinny:
       case NormaldoFatState.slim:
       case NormaldoFatState.fat:
@@ -174,43 +273,78 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     switch (newState) {
       case NormaldoHitState.idle:
         _immortal = false;
-        _stopFlick();
+        stopImmortalityFlick();
         break;
       case NormaldoHitState.hit:
         _immortal = true;
-        _startFlick();
+        startImmortalityFlick();
         break;
+    }
+  }
+
+  final List<NormaldoFatState> _fatCounter = [];
+
+  NormaldoFatState _nextFat() {
+    if (_fatCounter.isNotEmpty) {
+      final current = _fatCounter.last;
+      final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current);
+      if (indexOfCurrent + 1 == NormaldoFatState.onlyIdle.length) {
+        return current;
+      } else {
+        final nextFat = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
+        if (nextFat != nComponent.current) {
+          return nextFat;
+        }
+      }
+    }
+    final indexOfCurrent =
+        NormaldoFatState.onlyIdle.indexOf(nComponent.current!);
+    if (indexOfCurrent + 1 == NormaldoFatState.onlyIdle.length) {
+      return nComponent.current!;
+    } else {
+      return NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
   }
 
   void increaseFatPoints(int by) {
     assert(by > 0);
-    final pizzaToGetFatter = current!.pizzaToFat(customPizzaToGetFatter);
+    final pizzaToGetFatter =
+        nComponent.current!.pizzaToFat(customPizzaToGetFatter);
     _pizzaEaten += by;
     if (_pizzaEaten >= pizzaToGetFatter && !isFat && !isUberFat) {
       _pizzaEaten = _pizzaEaten % pizzaToGetFatter;
-      nextFatState();
+      final nextFat = _nextFat();
+      _fatCounter.add(nextFat);
     } else if (_pizzaEaten >= pizzaToGetFatter && isFat) {
       _pizzaEaten = NormaldoFatState.uberFat.pizzaToFat();
-      nextFatState();
+      final nextFat = _nextFat();
+      _fatCounter.add(nextFat);
     } else if (_pizzaEaten >= pizzaToGetFatter && isUberFat) {
       _pizzaEaten = NormaldoFatState.uberFat.pizzaToFat();
     }
   }
 
-  void decreaseFatPoints(int by) {
+  Future<void> decreaseFatPoints(int by) async {
     assert(by > 0);
     _pizzaEaten -= by;
     bloc.takeHit();
     if (_pizzaEaten <= 0 && !isSlim && !isSkinny) {
       _pizzaEaten = 0;
-      prevFatState();
+      await prevFatState();
     } else if (_pizzaEaten <= 0 && isSlim) {
       _pizzaEaten = 0;
-      prevFatState();
+      await prevFatState();
     } else if (_pizzaEaten <= 0 && isSkinny) {
       _pizzaEaten = 0;
       bloc.die();
+    }
+  }
+
+  void _handleFat() {
+    if (_fatCounter.isNotEmpty) {
+      final nextFat = _fatCounter.last;
+      _changeFatAnimation(nextFat);
+      _fatCounter.clear();
     }
   }
 
@@ -218,9 +352,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     NormaldoFatState state;
     await Future.delayed(const Duration(milliseconds: 200));
     toIdleFatState();
-    final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current!);
+    final indexOfCurrent =
+        NormaldoFatState.onlyIdle.indexOf(nComponent.current!);
     if (indexOfCurrent + 1 == NormaldoFatState.onlyIdle.length) {
-      state = current!;
+      state = nComponent.current!;
     } else {
       state = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
@@ -243,7 +378,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
       }
     }
-    if (current != state) {
+    if (nComponent.current != state) {
       if (index != 3 || (skin.assets.sfx['maxFat'] == null && index == 3)) {
         audio.playSfx(
           Sfx.weightIncreased,
@@ -251,6 +386,7 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
         );
       }
       _changeFatAnimation(state);
+      fatIterator.current = state;
     }
     if (index >= 2) {
       setHitboxPositionAndSize(size: size * bigHitboxRatio);
@@ -261,9 +397,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     NormaldoFatState state;
     await Future.delayed(const Duration(milliseconds: 200));
     toIdleFatState();
-    final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current!);
+    final indexOfCurrent =
+        NormaldoFatState.onlyIdle.indexOf(nComponent.current!);
     if (indexOfCurrent - 1 < 0) {
-      state = current!;
+      state = nComponent.current!;
     } else {
       state = NormaldoFatState.onlyIdle[indexOfCurrent - 1];
     }
@@ -271,13 +408,99 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
     if (customPizzaToGetFatter == null) {
       notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
     }
-    if (current != state) {
+    if (nComponent.current != state) {
       audio.playSfx(Sfx.weightLoosed);
       _changeFatAnimation(state);
+      // final changed = _changeFatAnimation(state);
+      // if (!changed) {
+      //   nComponent.current = state;
+      // }
     }
     if (index < 2) {
       setHitboxPositionAndSize(size: size * smallHitboxRatio);
     }
+  }
+
+  List<Items> _satellites = [];
+
+  void removeSatellite(Items item) {
+    if (_satellites.contains(item)) {
+      final timerKey = '${item.name}_timer';
+      _satellites.remove(item);
+      game.findByKeyName<TimerComponent>(timerKey)?.removeFromParent();
+      game.findByKeyName<SpriteComponent>(item.name)?.removeFromParent();
+    }
+  }
+
+  Future<void> addSatellite(Items item) async {
+    if (_satellites.contains(item)) return;
+    const duration = 0.5;
+    _satellites.add(item);
+    final spritePath = switch (item) {
+      Items.caseyMask => 'kasey mask2 flipped.png',
+      Items.magicHat => 'magic 3.png',
+      _ => throw UnexpectedError(),
+    };
+    final timerKey = '${item.name}_timer';
+    final itemKey = item.name;
+    final scale = Vector2.all(0.7);
+    final component = SpriteComponent(
+      key: ComponentKey.named(itemKey),
+      sprite: (await Sprite.load(spritePath)),
+      size: Vector2(25, 25),
+      anchor: anchor,
+      priority: 1,
+      scale: Vector2.all(0.85),
+    );
+    final path = Utils.getSatellitePath2(Vector2(size.x, size.y * 0.9));
+    addAll([
+      component
+        ..addAll([
+          MoveAlongPathEffect(
+            path,
+            EffectController(
+              duration: duration,
+              infinite: true,
+            ),
+          ),
+          SequenceEffect(
+            [
+              ScaleEffect.to(
+                  Vector2.all(1),
+                  EffectController(
+                    duration: 0.75,
+                  )),
+              ScaleEffect.to(
+                  Vector2.all(0.85),
+                  EffectController(
+                    duration: 0.75,
+                  )),
+              ScaleEffect.to(
+                  scale,
+                  EffectController(
+                    duration: 0.75,
+                  )),
+              ScaleEffect.to(
+                  Vector2.all(0.85),
+                  EffectController(
+                    duration: 0.75,
+                  )),
+            ],
+            infinite: true,
+          ),
+        ]),
+      TimerComponent(
+          period: duration / 2,
+          key: ComponentKey.named(timerKey),
+          repeat: true,
+          onTick: () {
+            if (component.priority > 0) {
+              component.priority = 0;
+            } else {
+              component.priority = 2;
+            }
+          }),
+    ]);
   }
 
   void notify({
@@ -296,38 +519,66 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   }
 
   @override
+  bool get debugMode => false;
+
+  @override
   Future<void> onLoad() async {
     super.onLoad();
 
-    sprites = await normaldoSprites(skin);
+    nComponent = SpriteGroupComponent<NormaldoFatState>(
+      anchor: anchor,
+      size: size,
+      position: size / 2,
+      priority: 1,
+    );
 
-    current = NormaldoFatState.skinny;
+    nComponent.sprites = await normaldoSprites(skin);
+
+    nComponent.current = NormaldoFatState.skinny;
+
+    add(nComponent);
 
     if (skin.assets.sfx['start'] != null) {
       audio.playSfx(Sfx.binCrash, customAssets: skin.assets.sfx['start']);
     }
 
     effectsController =
-        EffectsController(onNewState: ((Items item, double duration) {
+        EffectsController(onNewState: ((ItemEffect effect, double duration) {
       final durString = duration.toInt().toString();
-      final text = switch (item) {
-        Items.cocktail => '${'Poisoned'.tr()} $durString',
-        Items.hourglass => '${'Slow mo'.tr()} $durString',
-        _ => '',
+      final text = switch (effect) {
+        ItemEffect.slow => '${'Poisoned'.tr()} $durString',
+        ItemEffect.slowMo => '${'Slow mo'.tr()} $durString',
+        ItemEffect.immortality => 'IMMORTALDO $durString',
+        ItemEffect.disorient => 'DISORIENTED $durString',
+        ItemEffect.speedUp => 'FLASH $durString',
+        ItemEffect.immuneToSlowingItems => 'SLOW IMMUNITY $durString',
+        ItemEffect.immuneToAttackingItems => 'DAMAGE IMMUNITY $durString',
       };
-      final color = switch (item) {
-        Items.cocktail => Colors.purple,
-        Items.hourglass => Colors.orange,
-        _ => null,
+      final color = switch (effect) {
+        ItemEffect.slow => Colors.purple,
+        ItemEffect.slowMo => Colors.orange,
+        ItemEffect.immortality => Colors.red,
+        ItemEffect.disorient => Colors.blueGrey,
+        ItemEffect.speedUp => Colors.yellow[600],
+        ItemEffect.immuneToSlowingItems => Colors.deepPurple[400],
+        ItemEffect.immuneToAttackingItems => Colors.redAccent[300],
       };
       notify(text: text, color: color);
     }));
     add(effectsController);
 
+    // fat handler
+
+    add(TimerComponent(
+      period: 0.5,
+      repeat: true,
+      onTick: _handleFat,
+    ));
+
     // 4DEV
     // add(_circle);
 
-    add(_hitbox);
+    add(hitbox);
 
     await add(FlameBlocListener<GameSessionCubit, GameSessionState>(
         listenWhen: (prevState, newState) => prevState.hit != newState.hit,
@@ -343,10 +594,10 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
             prevState.isDead != newState.isDead,
         onNewState: (gameState) {
           if (gameState.isDead) {
-            current = current?.dead;
+            nComponent.current = nComponent.current?.dead;
             state = NormaldoHitState.hit;
           } else {
-            current = NormaldoFatState.skinny;
+            nComponent.current = NormaldoFatState.skinny;
             Future.delayed(const Duration(seconds: 2)).whenComplete(() {
               state = NormaldoHitState.idle;
             });
@@ -368,28 +619,43 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
     if (other is Eatable && !isPreEating) {
       toEatingState();
       Future.delayed(const Duration(milliseconds: 200))
           .whenComplete(() => toIdleFatState());
     }
+    if (!_immortal && _immuneTo.isNotEmpty) {
+      if (other is Item) {
+        if (_immuneTo.contains(other.item) && nComponent.opacity == 1) {
+          nComponent.add(OpacityEffect.to(
+              0.5,
+              EffectController(
+                duration: 0.3,
+                reverseDuration: 0.3,
+                atMaxDuration: 0.5,
+              )));
+        }
+      }
+    }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   void toEatingState() {
-    switch (current) {
+    switch (nComponent.current) {
       case NormaldoFatState.skinny:
-        current = NormaldoFatState.skinnyEat;
+        nComponent.current = NormaldoFatState.skinnyEat;
         break;
       case NormaldoFatState.slim:
-        current = NormaldoFatState.slimEat;
+        nComponent.current = NormaldoFatState.slimEat;
         break;
       case NormaldoFatState.fat:
-        current = NormaldoFatState.fatEat;
+        nComponent.current = NormaldoFatState.fatEat;
         break;
       case NormaldoFatState.uberFat:
-        current = NormaldoFatState.uberFatEat;
+        nComponent.current = NormaldoFatState.uberFatEat;
         break;
       default:
         break;
@@ -397,25 +663,25 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
   }
 
   void toIdleFatState() {
-    switch (current) {
+    switch (nComponent.current) {
       case NormaldoFatState.skinnyEat:
-        current = NormaldoFatState.skinny;
+        nComponent.current = NormaldoFatState.skinny;
         break;
       case NormaldoFatState.slimEat:
-        current = NormaldoFatState.slim;
+        nComponent.current = NormaldoFatState.slim;
         break;
       case NormaldoFatState.fatEat:
-        current = NormaldoFatState.fat;
+        nComponent.current = NormaldoFatState.fat;
         break;
       case NormaldoFatState.uberFatEat:
-        current = NormaldoFatState.uberFat;
+        nComponent.current = NormaldoFatState.uberFat;
         break;
       default:
         break;
     }
   }
 
-  void _changeFatAnimation(NormaldoFatState? state) {
+  void _changeFatAnimation(NormaldoFatState state) {
     const dur = 0.25;
     const curve = Curves.bounceOut;
     addAll([
@@ -433,24 +699,23 @@ class Normaldo extends SpriteGroupComponent<NormaldoFatState>
               reverseDuration: dur * 2,
               curve: curve,
               onMax: () {
-                current = state;
+                nComponent.current = state;
+                fatIterator.current = state;
               }))
     ]);
   }
-}
 
-mixin _StateActions on SpriteGroupComponent<NormaldoFatState> {
-  Future<void> _startFlick() async {
+  Future<void> startImmortalityFlick() async {
     final controller = EffectController(
       duration: 0.1,
       reverseDuration: 0.1,
-      infinite: true,
+      repeatCount: 30,
     );
-    add(OpacityEffect.to(0, controller));
+    nComponent.add(OpacityEffect.to(0, controller));
   }
 
-  Future<void> _stopFlick() async {
-    opacity = 1;
-    removeWhere((component) => component is OpacityEffect);
+  Future<void> stopImmortalityFlick() async {
+    nComponent.removeWhere((component) => component is OpacityEffect);
+    nComponent.add(OpacityEffect.to(1, EffectController(duration: 0.1)));
   }
 }

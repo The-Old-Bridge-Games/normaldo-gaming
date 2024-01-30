@@ -1,23 +1,25 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
+import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
-import 'package:normaldo_gaming/game/components/game_object.dart';
+import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/road_sign.dart';
+import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
 
 import 'normaldo.dart';
@@ -50,9 +52,13 @@ class Grid extends PositionComponent
   List<double> _linesCentersY = [];
   List<double> get linesCentersY => _linesCentersY;
 
+  bool _controlInverted = false;
+
   List<double> lineXAllocation(double xSize) {
-    return List.generate(size.x ~/ (xSize / 2),
-        (index) => (size.x / (xSize / 2) * index) + (xSize));
+    const padding = 1.2;
+    final width = xSize * padding;
+    return List.generate(size.x ~/ width,
+        (index) => (((size.x) / 8 * (index + 1))) + (width / 2));
   }
 
   TimerComponent? _itemsCreator;
@@ -102,10 +108,10 @@ class Grid extends PositionComponent
               removeOnFinish: true,
               onTick: () {
                 removeAllItems();
-                add(BombExplosionComponent()..size = size);
-                add(Shredder(audioId: audioId)
-                  ..size = Items.shredder.getSize(lineSize)
-                  ..position = Vector2(0, -100));
+                add(ExplosionComponent()..size = size);
+                // add(Shredder(audioId: audioId)
+                //   ..size = Items.shredder.getSize(lineSize)
+                //   ..position = Vector2(0, -100));
               }));
         },
       );
@@ -117,17 +123,21 @@ class Grid extends PositionComponent
         period: state.level.frequency,
         repeat: true,
         onTick: () {
+          // return;
           if (state.figure != null) return;
-          add(FlameBlocProvider<LevelBloc, LevelState>.value(
-              value: levelBloc,
-              children: [
-                ...state.level.next().map((e) => e.item.component()
-                  ..size = e.item.getSize(lineSize)
-                  ..position = Vector2(
-                      gameRef.size.x + e.item.getSize(lineSize).x * 2,
-                      _linesCentersY[
-                          e.line ?? Random().nextInt(_linesCentersY.length)]))
-              ]));
+          final items = state.level
+              .next()
+              .map((e) => e.item.component()
+                ..size = e.item.getSize(lineSize)
+                ..position = Vector2(
+                  gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                  _linesCentersY[
+                      e.line ?? Random().nextInt(_linesCentersY.length)],
+                ))
+              .toList();
+          items.removeWhere(
+              (item) => _stoppedLines.values.contains(item.position.y));
+          addAll(items);
         },
       );
       if (state.figure != null) _itemsCreator?.timer.pause();
@@ -135,22 +145,26 @@ class Grid extends PositionComponent
     }
   }
 
+  void stopAllLines() {
+    for (int i = 0; i < _linesCentersY.length; i++) {
+      stopLine(i);
+    }
+  }
+
   void stopLine(int index) {
     assert(index >= 0 && index < 5, 'Your index – $index');
     if (_stoppedLines.keys.contains(index)) return;
-    _stoppedLines[index] = _linesCentersY.removeAt(index);
+    _stoppedLines[index] = _linesCentersY[index];
   }
 
   void resumeLines() {
     final toRemove = <int>[];
     for (final entry in _stoppedLines.entries) {
-      _linesCentersY.add(entry.value);
       toRemove.add(entry.key);
     }
     for (final key in toRemove) {
       _stoppedLines.remove(key);
     }
-    _linesCentersY.sort();
   }
 
   void removeAllItems({List<Component> exclude = const []}) {
@@ -165,11 +179,8 @@ class Grid extends PositionComponent
           }
           return false;
         }
-        return ((component is FlameBlocProvider &&
-                    component.children
-                        .every((element) => element is GameObject) ||
-                component is FigureEventComponent) ||
-            component is GameObject);
+        return ((component is FigureEventComponent || component is Item) &&
+            !exclude.contains(component));
       },
     );
   }
@@ -179,32 +190,51 @@ class Grid extends PositionComponent
     size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / linesCount;
     normaldo = Normaldo(size: Vector2.all(lineSize), skin: skin)
-      ..position = Vector2(size.x / 2, size.y / 2);
-    for (int i = 1; i <= linesCount; i++) {
-      _linesCentersY.add(_getCenterOfLine(i));
+      ..position = size;
+    // ..position = Vector2(size.x / 2, size.y / 2);
+    for (int i = 0; i < linesCount; i++) {
+      final lineCenterY = lineSize * i + lineSize / 2;
+      _linesCentersY.add(lineCenterY);
 
       // 4DEV
-      // add(RectangleComponent(
-      //   position: Vector2(0, i * lineSize),
-      //   size: Vector2(size.x, 1),
-      //   paint: Paint()..color = BasicPalette.yellow.color,
-      // ));
+      // line bounds highlights
+      add(RectangleComponent(
+        position: Vector2(0, (i + 1) * lineSize),
+        size: Vector2(size.x, 1),
+        paint: Paint()..color = BasicPalette.yellow.color,
+      ));
+      // centers highlights
+      add(RectangleComponent(
+        position: Vector2(0, lineCenterY),
+        size: Vector2(size.x, 0.5),
+        paint: Paint()..color = BasicPalette.green.color,
+      ));
     }
+    // add(
+    //   TrashBin()
+    //     ..position = Vector2(size.x / 2, _linesCentersY[2])
+    //     ..size = Items.trashBin.getSize(lineSize)
+    //     ..moving = false,
+    // );
     _itemsCreator = TimerComponent(
         period: levelBloc.state.level.frequency,
         repeat: true,
         onTick: () {
+          // return;
           if (levelBloc.state.figure != null) return;
-          add(FlameBlocProvider<LevelBloc, LevelState>.value(
-              value: levelBloc,
-              children: [
-                ...levelBloc.state.level.next().map((e) => e.item.component()
-                  ..size = e.item.getSize(lineSize)
-                  ..position = Vector2(
-                      size.x + e.item.getSize(lineSize).x * 2,
-                      _linesCentersY[
-                          e.line ?? Random().nextInt(_linesCentersY.length)]))
-              ]));
+          final items = levelBloc.state.level
+              .next()
+              .map((e) => e.item.component()
+                ..size = e.item.getSize(lineSize)
+                ..position = Vector2(
+                  gameRef.size.x + e.item.getSize(lineSize).x * 2,
+                  _linesCentersY[
+                      e.line ?? Random().nextInt(_linesCentersY.length)],
+                ))
+              .toList();
+          items.removeWhere(
+              (item) => _stoppedLines.values.contains(item.position.y));
+          addAll(items);
         });
     add(_itemsCreator!);
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
@@ -248,6 +278,10 @@ class Grid extends PositionComponent
     return super.onLoad();
   }
 
+  void invertControl() {
+    _controlInverted = !_controlInverted;
+  }
+
   @override
   void update(double dt) {
     final rightSideX = normaldo.position.x + normaldo.size.x / 2;
@@ -271,58 +305,12 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateEvent event) {
-    if (normaldo.effectsController.effectsInProgress
-        .any((item) => item == Items.cocktail)) {
-      normaldo.position += event.localDelta * 0.3;
+    if (_controlInverted) {
+      normaldo.position -= event.localDelta * normaldo.speed;
     } else {
-      normaldo.position += event.localDelta * _getFatMultiplier(normaldo);
+      normaldo.position += event.localDelta * normaldo.speed;
     }
     super.onDragUpdate(event);
     return false;
-  }
-
-  double _getFatMultiplier(Normaldo normaldo) {
-    if (normaldo.skin.uniqueId == 'glasses') return 1;
-    switch (normaldo.current) {
-      case NormaldoFatState.skinny:
-      case NormaldoFatState.skinnyEat:
-      case NormaldoFatState.skinnyDead:
-        return 1;
-      case NormaldoFatState.slim:
-      case NormaldoFatState.slimEat:
-        return 0.7;
-      case NormaldoFatState.fat:
-      case NormaldoFatState.fatEat:
-        return 0.5;
-      case NormaldoFatState.uberFat:
-      case NormaldoFatState.uberFatEat:
-        return 0.4;
-      case null:
-        throw UnexpectedError();
-    }
-  }
-
-  double _getCenterOfLine(int line) {
-    int multiplier;
-    switch (line) {
-      case 1:
-        multiplier = 1;
-        break;
-      case 2:
-        multiplier = 3;
-        break;
-      case 3:
-        multiplier = 5;
-        break;
-      case 4:
-        multiplier = 7;
-        break;
-      case 5:
-        multiplier = 9;
-        break;
-      default:
-        throw UnexpectedError();
-    }
-    return (size.y / linesCount / 2 * multiplier);
   }
 }

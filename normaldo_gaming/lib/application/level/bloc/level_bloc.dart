@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mini_games/mini_game.dart';
+import 'package:normaldo_gaming/game/components/effects_controller.dart';
 
 part 'level_bloc.freezed.dart';
 part 'level_event.dart';
@@ -42,8 +44,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     return frequency;
   }
 
-  double speed(int level, List<Items> effects) {
-    if (effects.contains(Items.hourglass)) {
+  double speed(int level, List<ItemEffect> effects) {
+    if (effects.contains(ItemEffect.slowMo)) {
       return state.level.speed;
     }
     var speed = (200 + (15 * level)).toDouble();
@@ -55,7 +57,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
 
   void _onChangeSpeed(
     double speed,
-    List<Items> effects,
+    List<ItemEffect> effects,
     Emitter<LevelState> emit,
   ) {
     final level = state.level.copyWith(speed: speed);
@@ -64,7 +66,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
 
   void _onChangeLevel(
     int level,
-    List<Items> effects,
+    List<ItemEffect> effects,
     Emitter<LevelState> emit,
   ) {
     emit(state.copyWith(
@@ -73,6 +75,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
       frequency: frequency(level),
       speed: speed(level, effects),
       itemsChances: _itemsAppearingByLevel[level] ?? state.level.itemsChances,
+      itemRoller: _itemRollers[level] ?? state.level.itemRoller,
     )));
   }
 

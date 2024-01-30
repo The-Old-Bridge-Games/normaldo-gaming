@@ -49,7 +49,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   $Res call({
     Object? user = null,
     Object? educated = null,
-    Object? skin = freezed,
+    Object? skin = null,
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -61,7 +61,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
-      skin: freezed == skin
+      skin: null == skin
           ? _value.skin
           : skin // ignore: cast_nullable_to_non_nullable
               as Skin,
@@ -97,7 +97,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? educated = null,
-    Object? skin = freezed,
+    Object? skin = null,
     Object? failure = freezed,
   }) {
     return _then(_$UserStateImpl(
@@ -109,7 +109,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
               as bool,
-      skin: freezed == skin
+      skin: null == skin
           ? _value.skin
           : skin // ignore: cast_nullable_to_non_nullable
               as Skin,
@@ -152,13 +152,12 @@ class _$UserStateImpl implements _UserState {
             (identical(other.user, user) || other.user == user) &&
             (identical(other.educated, educated) ||
                 other.educated == educated) &&
-            const DeepCollectionEquality().equals(other.skin, skin) &&
+            (identical(other.skin, skin) || other.skin == skin) &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, educated,
-      const DeepCollectionEquality().hash(skin), failure);
+  int get hashCode => Object.hash(runtimeType, user, educated, skin, failure);
 
   @JsonKey(ignore: true)
   @override

@@ -11,7 +11,7 @@ extension on Items {
         Items.fatPizza => 'assets/images/pizza_pack1.png',
         Items.homeless => 'assets/images/homeless1.png',
         Items.moneyBag => 'assets/images/money_bag.png',
-        Items.bomb => 'assets/images/bomb.png',
+        Items.boombox => 'assets/images/boombox1.png',
         Items.cocktail => 'assets/images/cocktail.png',
         Items.molotov => 'assets/images/molotov1.png',
         Items.hourglass => 'assets/images/hourglass.png',

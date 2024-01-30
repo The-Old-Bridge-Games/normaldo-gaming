@@ -46,8 +46,12 @@ class PullUpGame extends FlameGame
   late final Grid grid;
 
   final _levelManager = injector.get<LevelManager>();
+  LevelManager get levelManager => _levelManager;
 
   double get _notificationXOffset => (size.x / 2) - 150;
+
+  @override
+  bool get debugMode => false;
 
   @override
   Future<void> onLoad() async {
@@ -65,17 +69,16 @@ class PullUpGame extends FlameGame
       period: 0.5,
       removeOnFinish: true,
       onTick: () {
-        _showMissions();
+        // _showMissions();
       },
     ));
     add(TimerComponent(
       period: 0.1,
       removeOnFinish: true,
       onTick: () {
-        if (!userCubit.state.educated) {
-          pauseEngine();
-          overlays.add(Overlays.onboarding.name);
-        }
+        // if (!userCubit.state.educated) {
+        //   pauseEngine();
+        // }
       },
     ));
 

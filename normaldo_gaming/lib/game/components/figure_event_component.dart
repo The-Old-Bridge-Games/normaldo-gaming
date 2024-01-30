@@ -5,9 +5,8 @@ import 'package:flame/components.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
-import 'package:normaldo_gaming/game/components/game_object.dart';
+import 'package:normaldo_gaming/game/components/item_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 import 'grid.dart';
@@ -34,30 +33,32 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
     // add(RectangleComponent(
     //     size: size,
     //     paint: Paint()..color = BasicPalette.blue.color.withOpacity(0.5)));
-    final List<List<Item>> matrix = figure.when(
+    final List<List<LineItem>> matrix = figure.when(
       trashWall: () => [
-        [Item(item: Items.bomb, line: Random().nextInt(Grid.linesCount))],
         [
-          const Item(item: Items.trashBin, line: 0),
-          const Item(item: Items.trashBin, line: 1),
-          const Item(item: Items.trashBin, line: 2),
-          const Item(item: Items.trashBin, line: 3),
-          const Item(item: Items.trashBin, line: 4),
+          LineItem(item: Items.boombox, line: Random().nextInt(Grid.linesCount))
+        ],
+        [
+          const LineItem(item: Items.trashBin, line: 0),
+          const LineItem(item: Items.trashBin, line: 1),
+          const LineItem(item: Items.trashBin, line: 2),
+          const LineItem(item: Items.trashBin, line: 3),
+          const LineItem(item: Items.trashBin, line: 4),
         ]
       ],
       guardedPizza: () {
         final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
         return [
-          [Item(item: Items.trashBin, line: firstLine)],
+          [LineItem(item: Items.trashBin, line: firstLine)],
           [
-            Item(item: Items.trashBin, line: firstLine - 1),
-            Item(item: Items.fatPizza, line: firstLine),
-            Item(item: Items.trashBin, line: firstLine + 1),
+            LineItem(item: Items.trashBin, line: firstLine - 1),
+            LineItem(item: Items.fatPizza, line: firstLine),
+            LineItem(item: Items.trashBin, line: firstLine + 1),
           ],
           [
-            Item(item: Items.trashBin, line: firstLine - 1),
-            Item(item: Items.trashBin, line: firstLine),
-            Item(item: Items.trashBin, line: firstLine + 1),
+            LineItem(item: Items.trashBin, line: firstLine - 1),
+            LineItem(item: Items.trashBin, line: firstLine),
+            LineItem(item: Items.trashBin, line: firstLine + 1),
           ],
         ];
       },
@@ -84,12 +85,12 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             livingPath.length,
             (columnIndex) => List.generate(Grid.linesCount, (index) {
                   if (index != livingPath[columnIndex]) {
-                    return Item(item: Items.trashBin, line: index);
+                    return LineItem(item: Items.trashBin, line: index);
                   }
                   if (columnIndex != eventLength - 1) {
-                    return Item(item: Items.pizza, line: index);
+                    return LineItem(item: Items.pizza, line: index);
                   } else {
-                    return Item(item: Items.cocktail, line: index);
+                    return LineItem(item: Items.cocktail, line: index);
                   }
                 }));
       },
@@ -103,7 +104,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           alreadyUsed.add(excludedLine);
           return List.generate(
               Grid.linesCount - 1,
-              (index) => Item(
+              (index) => LineItem(
                     item: Items.punch,
                     line: index >= excludedLine ? index + 1 : index,
                   ));
@@ -111,7 +112,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       bigBuddyBin: () {
         return [
-          [Item(item: Items.bigBuddyBin, line: Random().nextInt(3))],
+          [LineItem(item: Items.hugeItem, line: Random().nextInt(3))],
         ];
       },
       only2Lines: () {
@@ -137,8 +138,8 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         return List.generate(8, (index) {
           final list = List.generate(
               Grid.linesCount,
-              (index) => Item(
-                    item: Items.bigBuddyBin,
+              (index) => LineItem(
+                    item: Items.trashBin,
                     line: index,
                   ));
           list.removeWhere((e) {
@@ -151,104 +152,104 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
         return [
           [
-            Item(item: Items.bomb, line: firstLine - 1),
-            Item(item: Items.bomb, line: firstLine),
-            Item(item: Items.bomb, line: firstLine + 1),
+            LineItem(item: Items.boombox, line: firstLine - 1),
+            LineItem(item: Items.boombox, line: firstLine),
+            LineItem(item: Items.boombox, line: firstLine + 1),
           ],
           [
-            Item(item: Items.bomb, line: firstLine - 1),
-            Item(item: Items.fatPizza, line: firstLine),
-            Item(item: Items.bomb, line: firstLine + 1),
+            LineItem(item: Items.boombox, line: firstLine - 1),
+            LineItem(item: Items.fatPizza, line: firstLine),
+            LineItem(item: Items.boombox, line: firstLine + 1),
           ],
           [
-            Item(item: Items.bomb, line: firstLine - 1),
-            Item(item: Items.bomb, line: firstLine),
-            Item(item: Items.bomb, line: firstLine + 1),
+            LineItem(item: Items.boombox, line: firstLine - 1),
+            LineItem(item: Items.boombox, line: firstLine),
+            LineItem(item: Items.boombox, line: firstLine + 1),
           ],
         ];
       },
       slowMo: () {
         return [
           List.generate(Grid.linesCount,
-              (index) => Item(item: Items.cocktail, line: index)),
+              (index) => LineItem(item: Items.cocktail, line: index)),
           ...List.generate(
               Random().nextInt(6) + 5,
               (index) => List.generate(Grid.linesCount,
-                  (index) => Item(item: Items.pizza, line: index))),
+                  (index) => LineItem(item: Items.pizza, line: index))),
         ];
       },
       winLabel: (item) => [
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 1),
-          Item(item: item, line: 2),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 1),
+          LineItem(item: item, line: 2),
         ],
         [
-          Item(item: item, line: 3),
+          LineItem(item: item, line: 3),
         ],
         [
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 2),
-          Item(item: item, line: 3),
+          LineItem(item: item, line: 2),
+          LineItem(item: item, line: 3),
         ],
         [
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 3),
+          LineItem(item: item, line: 3),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 1),
-          Item(item: item, line: 2),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 1),
+          LineItem(item: item, line: 2),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 1),
-          Item(item: item, line: 2),
-          Item(item: item, line: 3),
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 1),
+          LineItem(item: item, line: 2),
+          LineItem(item: item, line: 3),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 1),
-          Item(item: item, line: 2),
-          Item(item: item, line: 3),
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 1),
+          LineItem(item: item, line: 2),
+          LineItem(item: item, line: 3),
+          LineItem(item: item, line: 4),
         ],
         [
-          Item(item: item, line: 0),
+          LineItem(item: item, line: 0),
         ],
         [
-          Item(item: item, line: 1),
+          LineItem(item: item, line: 1),
         ],
         [
-          Item(item: item, line: 2),
+          LineItem(item: item, line: 2),
         ],
         [
-          Item(item: item, line: 3),
+          LineItem(item: item, line: 3),
         ],
         [
-          Item(item: item, line: 0),
-          Item(item: item, line: 1),
-          Item(item: item, line: 2),
-          Item(item: item, line: 3),
-          Item(item: item, line: 4),
+          LineItem(item: item, line: 0),
+          LineItem(item: item, line: 1),
+          LineItem(item: item, line: 2),
+          LineItem(item: item, line: 3),
+          LineItem(item: item, line: 4),
         ],
       ],
     );
 
-    _addItemsFromMatrix(matrix);
+    _addLineItemsFromMatrix(matrix);
 
     return super.onLoad();
   }
@@ -256,7 +257,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   @override
   void update(double dt) {
     if (!_initiated) return;
-    final gameObjects = children.whereType<GameObject>();
+    final gameObjects = children.whereType<Item>();
     if (gameObjects.isEmpty && _finished) removeFromParent();
     figure.maybeWhen(punchWave: () {
       if ((gameObjects.every((e) =>
@@ -295,7 +296,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
     super.onRemove();
   }
 
-  void _addItemsFromMatrix(List<List<Item>> matrix) {
+  void _addLineItemsFromMatrix(List<List<LineItem>> matrix) {
     (gameRef as PullUpGame).grid.resumeLines();
     figure.when(
       trashWall: () {
@@ -367,16 +368,13 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       bigBuddyBin: () {
         final item = matrix.first.first;
         final itemSize = item.item.getSize(lineSize);
-        add((item.item.component() as GameObject)
+        add((item.item.component() as Item)
           ..anchor = Anchor.topCenter
           ..size = itemSize
           ..position = Vector2(
             size.x + itemSize.x,
             linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
           ));
-        final bigBuddy = (children
-            .firstWhere((element) => element is BigBuddyBin) as BigBuddyBin);
-        bigBuddy.exploding = true;
       },
       only2Lines: () {
         for (final column in matrix) {
@@ -391,7 +389,6 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
                   linesCentersY[item.line ?? 0]));
           }
         }
-        children.whereType<BigBuddyBin>().forEach((element) {});
       },
       slowMo: () {
         for (final column in matrix) {
@@ -407,8 +404,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           }
         }
         children.whereType<Pizza>().forEach((element) {
-          element.hearsBloc = false;
-          element.speed *= 2;
+          element.speedMultiplier = 2;
         });
       },
       unreachablePizza: () {

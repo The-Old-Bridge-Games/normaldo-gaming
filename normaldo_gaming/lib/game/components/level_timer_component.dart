@@ -7,18 +7,19 @@ import 'package:normaldo_gaming/domain/pull_up_game/mini_games/mini_game.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class LevelTimerComponent extends TimerComponent
-    with FlameBlocReader<LevelBloc, LevelState>, HasGameRef {
+    with FlameBlocReader<LevelBloc, LevelState>, HasGameRef<PullUpGame> {
   LevelTimerComponent()
       : super(period: LevelBloc.levelChangeDuration, repeat: true);
 
   final random = Random();
-  double get _eventPeriod => (15 + Random().nextInt(16)).toDouble();
+  double get _eventPeriod => 30000;
+  // double get _eventPeriod => (15 + Random().nextInt(16)).toDouble();
 
   void _onTick() {
     if (bloc.state.miniGame != null) return;
     if (bloc.state.figure == null) {
-      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.only2Lines()));
-      bloc.add(const LevelEvent.startRandomFigure());
+      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.bigBuddyBin()));
+      // bloc.add(const LevelEvent.startRandomFigure());
     }
     add(TimerComponent(
       period: _eventPeriod,
@@ -50,11 +51,7 @@ class LevelTimerComponent extends TimerComponent
   void onTick() {
     bloc.add(LevelEvent.changeLevel(
       level: bloc.state.level.index + 1,
-      effects: (gameRef as PullUpGame)
-          .grid
-          .normaldo
-          .effectsController
-          .effectsInProgress,
+      effects: game.grid.normaldo.effectsController.effectsInProgress,
     ));
   }
 }

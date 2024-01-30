@@ -1,61 +1,124 @@
 part of 'level_bloc.dart';
 
-const _itemsAppearingByLevel = {
+final Map<int, Roller<Items>> _itemRollers = {
+  0: Roller<Items>([
+    (Items.pizza, 10),
+    (Items.dollar, 3),
+    (Items.bananaPeel, 20),
+  ]),
+  1: Roller<Items>([
+    (Items.pizza, 10),
+    (Items.dollar, 3),
+    (Items.bananaPeel, 20),
+    (Items.roadSign, 10),
+  ]),
+  2: Roller<Items>([
+    (Items.pizza, 10),
+    (Items.dollar, 3),
+    (Items.bananaPeel, 20),
+    (Items.roadSign, 10),
+    (Items.trashBin, 10),
+  ]),
+  3: Roller<Items>([
+    (Items.pizza, 10),
+    (Items.dollar, 3),
+    (Items.bananaPeel, 20),
+    (Items.roadSign, 10),
+    (Items.trashBin, 10),
+  ]),
+  5: Roller<Items>([
+    (Items.pizza, 10),
+    (Items.dollar, 3),
+    (Items.bananaPeel, 20),
+    (Items.roadSign, 10),
+    (Items.trashBin, 10),
+    (Items.homeless, 10),
+  ]),
+};
+
+final Map<int, Map<Items, double>> _itemsAppearingByLevel = {
   0: {
-    Items.trashBin: 0.3,
-    Items.hourglass: 0.2,
-    Items.cocktail: 0.2,
+    Items.roadSign: 0.2,
     Items.pizza: 0.3,
-  },
-  1: {
-    Items.trashBin: 0.400,
-    Items.pizza: 0.425,
-    Items.dollar: 0.048,
-    Items.moneyBag: 0.002,
-    Items.homeless: 0.100,
-    Items.punch: 0.025,
-  },
-  2: {
-    Items.trashBin: 0.375,
-    Items.pizza: 0.375,
-    Items.dollar: 0.050,
-    Items.moneyBag: 0.002,
-    Items.homeless: 0.052,
-    Items.cocktail: 0.048,
-    Items.bomb: 0.048,
-    Items.punch: 0.050,
-  },
-  4: {
-    Items.trashBin: 0.392,
-    Items.pizza: 0.350,
-    Items.dollar: 0.050,
-    Items.moneyBag: 0.002,
-    Items.homeless: 0.010,
-    Items.cocktail: 0.048,
-    Items.bomb: 0.048,
-    Items.molotov: 0.100
-  },
-  5: {
-    Items.trashBin: 0.412,
-    Items.pizza: 0.370,
-    Items.dollar: 0.044,
-    Items.moneyBag: 0.002,
-    Items.homeless: 0.012,
-    Items.cocktail: 0.050,
-    Items.bomb: 0.050,
-    Items.molotov: 0.050,
-    Items.punch: 0.010,
-  },
-  6: {
-    Items.trashBin: 0.372,
-    Items.pizza: 0.370,
-    Items.dollar: 0.034,
-    Items.moneyBag: 0.002,
-    Items.homeless: 0.012,
-    Items.cocktail: 0.050,
-    Items.bomb: 0.050,
-    Items.molotov: 0.055,
-    Items.punch: 0.050,
-    Items.hourglass: 0.005,
-  },
+    Items.caseyMask: 0.1,
+    Items.bananaPeel: 0.3,
+    Items.trashBin: 0.1,
+    // Items.magicHat: 0.5,
+  }
+  // 0: Map<Items, double>.fromEntries(Items.values
+  //     .where((item) =>
+  //         item != Items.shredder &&
+  //         item != Items.shredderSword &&
+  //         item != Items.shuriken &&
+  //         item != Items.fatPizza)
+  //     .map((e) {
+  //   final itemsCount = Items.values.length - 4;
+  //   return MapEntry<Items, double>(
+  //     e,
+  //     1 / itemsCount,
+  //   );
+  // }))
+  // {
+  // Items.trashBin: 0.1,
+  // Items.hourglass: 0.1,
+  // Items.pizza: 0.1,
+  // Items.dollar: 0.1,
+  // Items.moneyBag: 0.1,
+  // Items.homeless: 0.1,
+  // Items.punch: 0.1,
+  // Items.cocktail: 0.1,
+  // Items.molotov: 0.1,
+  // Items.boombox: 0.1,
+  // },
+  // 1: {
+  //   Items.trashBin: 0.400,
+  //   Items.pizza: 0.425,
+  //   Items.dollar: 0.048,
+  //   Items.moneyBag: 0.002,
+  //   Items.homeless: 0.100,
+  //   Items.punch: 0.025,
+  // },
+  // 2: {
+  //   Items.trashBin: 0.375,
+  //   Items.pizza: 0.375,
+  //   Items.dollar: 0.050,
+  //   Items.moneyBag: 0.002,
+  //   Items.homeless: 0.052,
+  //   Items.cocktail: 0.048,
+  //   Items.bomb: 0.048,
+  //   Items.punch: 0.050,
+  // },
+  // 4: {
+  //   Items.trashBin: 0.392,
+  //   Items.pizza: 0.350,
+  //   Items.dollar: 0.050,
+  //   Items.moneyBag: 0.002,
+  //   Items.homeless: 0.010,
+  //   Items.cocktail: 0.048,
+  //   Items.bomb: 0.048,
+  //   Items.molotov: 0.100
+  // },
+  // 5: {
+  //   Items.trashBin: 0.412,
+  //   Items.pizza: 0.370,
+  //   Items.dollar: 0.044,
+  //   Items.moneyBag: 0.002,
+  //   Items.homeless: 0.012,
+  //   Items.cocktail: 0.050,
+  //   Items.bomb: 0.050,
+  //   Items.molotov: 0.050,
+  //   Items.punch: 0.010,
+  // },
+  // 6: {
+  //   Items.trashBin: 0.372,
+  //   Items.pizza: 0.370,
+  //   Items.dollar: 0.034,
+  //   Items.moneyBag: 0.002,
+  //   Items.homeless: 0.012,
+  //   Items.cocktail: 0.050,
+  //   Items.bomb: 0.050,
+  //   Items.molotov: 0.055,
+  //   Items.punch: 0.050,
+  //   Items.hourglass: 0.005,
+  // },
 };

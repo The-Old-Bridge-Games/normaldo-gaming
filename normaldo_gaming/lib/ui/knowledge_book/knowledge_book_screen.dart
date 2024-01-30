@@ -19,7 +19,7 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
 
   final gudItems = [
     Items.pizza,
-    Items.bomb,
+    Items.boombox,
     Items.hourglass,
     Items.dollar,
     Items.moneyBag,

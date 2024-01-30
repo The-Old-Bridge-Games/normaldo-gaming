@@ -1,48 +1,108 @@
 import 'package:flame/components.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/big_buddy_bin.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bomb.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/bosses/shredder/shredder.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/cocktail.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/dollar.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/homeless.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/fat_pizza.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/hourglass.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/molotov.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/money_bag.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/pizza.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/punch.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/shredder_sword.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/shuriken.dart';
-import 'package:normaldo_gaming/game/components/buffs&debuffs/trash_bin.dart';
+import 'package:normaldo_gaming/game/components/item_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/all_in.dart';
+import 'package:normaldo_gaming/game/components/item_components/angry_dog.dart';
+import 'package:normaldo_gaming/game/components/item_components/banana_peel.dart';
+import 'package:normaldo_gaming/game/components/item_components/beer.dart';
+import 'package:normaldo_gaming/game/components/item_components/bird.dart';
+import 'package:normaldo_gaming/game/components/item_components/boombox.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/shredder.dart';
+import 'package:normaldo_gaming/game/components/item_components/bubbles.dart';
+import 'package:normaldo_gaming/game/components/item_components/cannibal.dart';
+import 'package:normaldo_gaming/game/components/item_components/casey_mask.dart';
+import 'package:normaldo_gaming/game/components/item_components/casino_chip.dart';
+import 'package:normaldo_gaming/game/components/item_components/cocktail.dart';
+import 'package:normaldo_gaming/game/components/item_components/compass.dart';
+import 'package:normaldo_gaming/game/components/item_components/cone.dart';
+import 'package:normaldo_gaming/game/components/item_components/dollar.dart';
+import 'package:normaldo_gaming/game/components/item_components/energizer.dart';
+import 'package:normaldo_gaming/game/components/item_components/girl.dart';
+import 'package:normaldo_gaming/game/components/item_components/gold_clocks.dart';
+import 'package:normaldo_gaming/game/components/item_components/green_poison.dart';
+import 'package:normaldo_gaming/game/components/item_components/gun.dart';
+import 'package:normaldo_gaming/game/components/item_components/handcuffs.dart';
+import 'package:normaldo_gaming/game/components/item_components/homeless.dart';
+import 'package:normaldo_gaming/game/components/item_components/fat_pizza.dart';
+import 'package:normaldo_gaming/game/components/item_components/hourglass.dart';
+import 'package:normaldo_gaming/game/components/item_components/huge_item.dart';
+import 'package:normaldo_gaming/game/components/item_components/letter_bottle.dart';
+import 'package:normaldo_gaming/game/components/item_components/loser_ticket.dart';
+import 'package:normaldo_gaming/game/components/item_components/magic_box.dart';
+import 'package:normaldo_gaming/game/components/item_components/magic_hat.dart';
+import 'package:normaldo_gaming/game/components/item_components/magnet.dart';
+import 'package:normaldo_gaming/game/components/item_components/molotov.dart';
+import 'package:normaldo_gaming/game/components/item_components/money_bag.dart';
+import 'package:normaldo_gaming/game/components/item_components/note.dart';
+import 'package:normaldo_gaming/game/components/item_components/note2.dart';
+import 'package:normaldo_gaming/game/components/item_components/phone.dart';
+import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
+import 'package:normaldo_gaming/game/components/item_components/police_alarm.dart';
+import 'package:normaldo_gaming/game/components/item_components/policeman.dart';
+import 'package:normaldo_gaming/game/components/item_components/punch.dart';
+import 'package:normaldo_gaming/game/components/item_components/road_sign.dart';
+import 'package:normaldo_gaming/game/components/item_components/security.dart';
+import 'package:normaldo_gaming/game/components/item_components/ship_part.dart';
+import 'package:normaldo_gaming/game/components/item_components/shredder_sword.dart';
+import 'package:normaldo_gaming/game/components/item_components/shuriken.dart';
+import 'package:normaldo_gaming/game/components/item_components/snake.dart';
+import 'package:normaldo_gaming/game/components/item_components/spades_card.dart';
+import 'package:normaldo_gaming/game/components/item_components/stone.dart';
+import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
+import 'package:normaldo_gaming/game/components/item_components/umbrella.dart';
 
 enum Items {
-  // CHECK THAT SUM OF CHANCES MUST ALWAYS BE == 1000 (or refactor it)
   trashBin,
   pizza,
   dollar,
   fatPizza,
   homeless,
   moneyBag,
-  bomb,
+  boombox,
   cocktail,
   molotov,
   hourglass,
   punch,
-  bigBuddyBin,
+  hugeItem,
+  allIn,
+  angryDog,
+  bananaPeel,
+  beer,
+  cannibal,
+  casinoChip,
+  greenPoison,
+  compass,
+  energizer,
+  bird,
+  snake,
+  policeAlarm,
+  gun,
+  bubbles,
+  girl,
+  goldClocks,
+  handcuffs,
+  caseyMask,
+  loserTicket,
+  magicHat,
+  magicBox,
+  magnet,
+  note,
+  note2,
+  phone,
+  spadesCard,
+  policeman,
+  security,
+  shipPart,
+  cone,
+  stone,
+  letterBottle,
+  roadSign,
+  umbrella,
+  // BOSSES&ATTACKS
   shredder,
   shuriken,
   shredderSword;
-  // trashBin(0, 1),
-  // pizza(250, 0),
-  // dollar(0, 0),
-  // fatPizza(250, 0),
-  // dumbbell(0, 3),
-  // moneyBag(0, 0),
-  // bomb(0, 5),
-  // cocktail(0, 10),
-  // molotov(500, 0); // 15 startLevel
 
-  PositionComponent component() {
+  Item component() {
     switch (this) {
       case Items.trashBin:
         return TrashBin();
@@ -56,43 +116,115 @@ enum Items {
         return Homeless();
       case Items.moneyBag:
         return MoneyBag();
-      case Items.bomb:
-        return Bomb();
+      case Items.boombox:
+        return Boombox();
       case Items.cocktail:
-        return Cocktail();
+        return PurpleCocktail();
       case Items.molotov:
         return Molotov();
       case Items.hourglass:
         return Hourglass();
       case Items.punch:
         return Punch();
-      case bigBuddyBin:
-        return BigBuddyBin();
       case shredder:
         return Shredder();
       case shuriken:
         return Shuriken();
       case shredderSword:
         return ShredderSword();
+      case hugeItem:
+        return HugeItem();
+      case allIn:
+        return AllIn();
+      case angryDog:
+        return AngryDog();
+      case bananaPeel:
+        return BananaPeel();
+      case beer:
+        return Beer();
+      case cannibal:
+        return Cannibal();
+      case casinoChip:
+        return CasinoChip();
+      case greenPoison:
+        return GreenPoison();
+      case compass:
+        return Compass();
+      case energizer:
+        return Energizer();
+      case bird:
+        return Bird();
+      case snake:
+        return Snake();
+      case policeAlarm:
+        return PoliceAlarm();
+      case gun:
+        return Gun();
+      case bubbles:
+        return Bubbles();
+      case girl:
+        return Girl();
+      case goldClocks:
+        return GoldClocks();
+      case handcuffs:
+        return Handcuffs();
+      case caseyMask:
+        return CaseyMask();
+      case loserTicket:
+        return LoserTicket();
+      case magicHat:
+        return MagicHat();
+      case magicBox:
+        return MagicBox();
+      case magnet:
+        return Magnet();
+      case note:
+        return Note();
+      case note2:
+        return Note2();
+      case phone:
+        return Phone();
+      case spadesCard:
+        return SpadesCard();
+      case policeman:
+        return Policeman();
+      case security:
+        return Security();
+      case shipPart:
+        return ShipPart();
+      case cone:
+        return Cone();
+      case stone:
+        return Stone();
+      case letterBottle:
+        return LetterBottle();
+      case roadSign:
+        return RoadSign();
+      case umbrella:
+        return Umbrella();
     }
   }
 
   Vector2 getSize(double lineSize) {
     switch (this) {
       case Items.trashBin:
-        return Vector2(lineSize * 0.9, lineSize * 0.6);
+        return Vector2(lineSize * 6, lineSize * 4);
+      // case Items.trashBin:
+      // return Vector2(lineSize * 4, lineSize * 6);
       case Items.pizza:
         return Vector2(lineSize * 0.65, lineSize * 0.65);
       case Items.dollar:
         return Vector2(lineSize * 0.6, lineSize * 0.6);
       case Items.fatPizza:
-        return Vector2(lineSize * 0.8, lineSize * 0.8);
+        return Vector2(lineSize, lineSize);
+      // case Items.fatPizza:
+      //   return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.homeless:
         return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.moneyBag:
         return Vector2(lineSize / 2, lineSize / 2);
-      case Items.bomb:
-        return Vector2(lineSize / 1.5, lineSize / 1.5);
+      case Items.boombox:
+        return Vector2(lineSize, lineSize * 0.7);
       case Items.cocktail:
         return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.molotov:
@@ -101,7 +233,7 @@ enum Items {
         return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.punch:
         return Vector2(lineSize, lineSize * 0.6);
-      case bigBuddyBin:
+      case hugeItem:
         return Vector2(lineSize * 6 / 1.2, lineSize * 3 * 0.95);
       case shredder:
         return Vector2(lineSize * 0.8, lineSize * 0.8);
@@ -109,6 +241,80 @@ enum Items {
         return Vector2(lineSize / 2, lineSize / 2);
       case shredderSword:
         return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case allIn:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case angryDog:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case bananaPeel:
+        return Vector2(lineSize, lineSize);
+      // case bananaPeel:
+      //   return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case beer:
+        return Vector2(lineSize * 0.6, lineSize * 0.8);
+      case Items.cannibal:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case Items.casinoChip:
+        return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.greenPoison:
+        return Vector2(lineSize * 0.6, lineSize * 0.8);
+      case Items.compass:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.energizer:
+        return Vector2(lineSize * 0.6, lineSize * 0.8);
+      case Items.bird:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.snake:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.policeAlarm:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.gun:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.bubbles:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.girl:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case Items.goldClocks:
+        return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.handcuffs:
+        return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.caseyMask:
+        return Vector2(lineSize, lineSize);
+      // case Items.caseyMask:
+      //   return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.loserTicket:
+        return Vector2(lineSize * 0.8, lineSize * 0.6);
+      case Items.magicHat:
+        return Vector2(lineSize * 0.6, lineSize * 0.6);
+      case Items.magicBox:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.magnet:
+        return Vector2(lineSize * 0.7, lineSize * 0.55);
+      case Items.note:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.note2:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.phone:
+        return Vector2(lineSize * 0.7, lineSize * 0.6);
+      case Items.spadesCard:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.policeman:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
+      case Items.security:
+        return Vector2(lineSize, lineSize);
+      case Items.shipPart:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.cone:
+        return Vector2(lineSize * 0.5, lineSize * 0.7);
+      case Items.stone:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.letterBottle:
+        return Vector2(lineSize * 0.6, lineSize * 0.8);
+      case Items.roadSign:
+        return Vector2(lineSize * 3, lineSize * 3);
+      // case Items.roadSign:
+      //   return Vector2(lineSize, lineSize);
+      case Items.umbrella:
+        return Vector2(lineSize * 0.7, lineSize * 0.7);
     }
   }
 }

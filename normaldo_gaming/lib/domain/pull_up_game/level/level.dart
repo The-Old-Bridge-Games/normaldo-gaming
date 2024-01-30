@@ -1,16 +1,17 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
+import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 
-class Item {
+class LineItem {
   final Items item;
 
   /// null means that line should be randomized
   final int? line;
 
-  const Item({required this.item, this.line})
+  const LineItem({required this.item, this.line})
       : assert((line ?? 0) >= 0 && (line ?? 0) < Grid.linesCount);
 }
 
@@ -19,7 +20,7 @@ abstract class Level extends Equatable {
   double get frequency;
   double get speed;
 
-  List<Item> next();
+  List<LineItem> next();
 
   @override
   bool? get stringify => true;
@@ -29,6 +30,7 @@ class LinearLevel implements Level {
   LinearLevel({
     required this.index,
     required this.itemsChances,
+    required this.itemRoller,
     required this.frequency,
     required this.speed,
   }) : assert(
@@ -41,6 +43,7 @@ class LinearLevel implements Level {
 
   /// Items => chance
   final Map<Items, double> itemsChances;
+  final Roller<Items> itemRoller;
   final _random = Random();
 
   @override
@@ -55,21 +58,23 @@ class LinearLevel implements Level {
   final List<Items> _itemsPool = [];
 
   @override
-  List<Item> next() {
-    if (_itemsPool.isNotEmpty) {
-      final nextItem = _itemsPool.removeAt(_random.nextInt(_itemsPool.length));
-      return [Item(item: nextItem)];
-    }
-    final pool = itemsChances.entries.fold<List<Items>>(
-        [],
-        (previousValue, element) => previousValue
-          ..addAll(List.generate(
-              (element.value * 1000).toInt(), (index) => element.key)));
-    pool.shuffle(_random);
-    _itemsPool.clear();
-    _itemsPool.addAll(pool);
+  List<LineItem> next() {
+    final nextItem = itemRoller.roll();
+    return [LineItem(item: nextItem)];
+    // if (_itemsPool.isNotEmpty) {
+    //   final nextItem = _itemsPool.removeAt(_random.nextInt(_itemsPool.length));
+    //   return [LineItem(item: nextItem)];
+    // }
+    // final pool = itemsChances.entries.fold<List<Items>>(
+    //     [],
+    //     (previousValue, element) => previousValue
+    //       ..addAll(List.generate(
+    //           (element.value * 1000).toInt(), (index) => element.key)));
+    // pool.shuffle(_random);
+    // _itemsPool.clear();
+    // _itemsPool.addAll(pool);
 
-    return next();
+    // return next();
   }
 
   LinearLevel copyWith({
@@ -79,12 +84,19 @@ class LinearLevel implements Level {
       LinearLevel(
         index: index,
         itemsChances: itemsChances,
+        itemRoller: itemRoller,
         frequency: frequency ?? this.frequency,
         speed: speed ?? this.speed,
       );
 
   @override
-  List<Object?> get props => [speed, frequency, itemsChances, index];
+  List<Object?> get props => [
+        speed,
+        frequency,
+        itemsChances,
+        index,
+        itemRoller,
+      ];
 
   @override
   bool? get stringify => true;

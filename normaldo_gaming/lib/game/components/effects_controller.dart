@@ -1,70 +1,120 @@
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
+enum ItemEffect {
+  slow,
+  slowMo,
+  immortality,
+  disorient,
+  speedUp,
+  immuneToSlowingItems,
+  immuneToAttackingItems,
+}
+
 class EffectsController extends PositionComponent
-    with FlameBlocReader<LevelBloc, LevelState>, HasGameRef {
+    with FlameBlocReader<LevelBloc, LevelState>, HasGameRef<PullUpGame> {
   /// item => current duration
-  final void Function(Items item, double duration) onNewState;
+  final void Function(ItemEffect effect, double duration) onNewState;
 
-  EffectsController({required this.onNewState});
+  EffectsController({
+    required this.onNewState,
+  });
 
-  final Map<Items, double> _current = {};
-  final Map<Items, TimerComponent> _timers = {};
+  final Map<ItemEffect, double> _current = {};
+  final Map<ItemEffect, TimerComponent> _timers = {};
 
-  List<Items> get effectsInProgress => _timers.keys.toList();
+  List<ItemEffect> get effectsInProgress => _timers.keys.toList();
 
-  void addEffect(Items item, double duration) {
-    if (effectsInProgress.contains(item)) {
-      final newDuration = _current[item]! + duration;
-      onNewState(item, newDuration);
-      _current[item] = newDuration;
-      _timers[item]?.timer.stop();
-      _addNewTimer(item);
+  void addEffect(ItemEffect effect, double duration) {
+    if (effectsInProgress.contains(effect)) {
+      final newDuration = _current[effect]! + duration;
+      onNewState(effect, newDuration);
+      _current[effect] = newDuration;
+      _timers[effect]?.timer.stop();
+      _addNewTimer(effect);
     } else {
-      onNewState(item, duration);
-      _current[item] = duration;
-      _addNewTimer(item);
-      _handleEffect(item);
+      onNewState(effect, duration);
+      _current[effect] = duration;
+      _addNewTimer(effect);
+      _handleEffect(effect);
     }
   }
 
-  void _handleEffect(Items item) {
+  void _handleEffect(ItemEffect item) {
+    final normaldo = game.grid.normaldo;
     switch (item) {
-      case Items.hourglass:
+      case ItemEffect.slowMo:
         bloc.add(LevelEvent.changeSpeed(
           speed: bloc.state.level.speed / 2,
-          effects: (gameRef as PullUpGame)
-              .grid
-              .normaldo
-              .effectsController
-              .effectsInProgress,
+          effects: normaldo.effectsController.effectsInProgress,
         ));
-      default:
-        break;
+      case ItemEffect.slow:
+        normaldo.speedMultiplier = 0.5;
+      case ItemEffect.immortality:
+        normaldo.immortal = true;
+        normaldo.startImmortalityFlick();
+      case ItemEffect.disorient:
+        game.grid.invertControl();
+      case ItemEffect.speedUp:
+        normaldo.speedMultiplier = 1.3;
+      case ItemEffect.immuneToSlowingItems:
+        normaldo.addImmuneTo(
+          Items.values.where((e) => e.component() is SlowingItem).toList(),
+        );
+        normaldo.addSatellite(Items.magicHat);
+      case ItemEffect.immuneToAttackingItems:
+        normaldo.addImmuneTo(
+          Items.values
+              .where(
+                (e) =>
+                    e.component() is AttackingItem ||
+                    e.component() is KillingItem,
+              )
+              .toList(),
+        );
+        normaldo.addSatellite(Items.caseyMask);
     }
   }
 
-  void _stopEffect(Items item) {
-    switch (item) {
-      case Items.hourglass:
+  void _stopEffect(ItemEffect effect) {
+    final normaldo = game.grid.normaldo;
+    switch (effect) {
+      case ItemEffect.slowMo:
         bloc.add(LevelEvent.changeSpeed(
           speed: bloc.state.level.speed * 2,
-          effects: (gameRef as PullUpGame)
-              .grid
-              .normaldo
-              .effectsController
-              .effectsInProgress,
+          effects: normaldo.effectsController.effectsInProgress,
         ));
-      default:
-        break;
+      case ItemEffect.slow:
+        normaldo.speedMultiplier = 1;
+      case ItemEffect.immortality:
+        normaldo.immortal = false;
+        normaldo.stopImmortalityFlick();
+      case ItemEffect.disorient:
+        game.grid.invertControl();
+      case ItemEffect.speedUp:
+        normaldo.speedMultiplier = 1;
+      case ItemEffect.immuneToSlowingItems:
+        normaldo.removeImmuneTo(
+          Items.values.where((e) => e.component() is SlowingItem).toList(),
+        );
+        normaldo.removeSatellite(Items.magicHat);
+      case ItemEffect.immuneToAttackingItems:
+        normaldo.removeImmuneTo(Items.values
+            .where(
+              (e) =>
+                  e.component() is AttackingItem ||
+                  e.component() is KillingItem,
+            )
+            .toList());
+        normaldo.removeSatellite(Items.caseyMask);
     }
   }
 
-  void _addNewTimer(Items item) {
+  void _addNewTimer(ItemEffect item) {
     final timer = TimerComponent(
       period: 1,
       repeat: true,
