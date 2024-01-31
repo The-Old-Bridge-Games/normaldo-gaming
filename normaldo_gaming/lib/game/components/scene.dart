@@ -24,7 +24,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame> {
     final sprite = await Sprite.load('backgrounds/level1.png');
     _currentBackgrounds.add(SpriteAnimationComponent(
       animation: SpriteAnimation.spriteList([sprite], stepTime: 10),
-      size: Vector2(sprite.srcSize.x, size.y),
+      size: Vector2(size.y * 26.225, size.y),
     ));
     addAll(_currentBackgrounds);
     _move();
