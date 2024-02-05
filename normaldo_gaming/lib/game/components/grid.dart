@@ -21,6 +21,7 @@ import 'package:normaldo_gaming/game/components/item_components/explosion_compon
 import 'package:normaldo_gaming/game/components/item_components/road_sign.dart';
 import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 import 'normaldo.dart';
 
@@ -31,8 +32,6 @@ class Grid extends PositionComponent
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState>,
         HasNgAudio {
-  static const linesCount = 5;
-
   Grid({
     required this.gameSessionCubit,
     required this.levelBloc,
@@ -53,6 +52,7 @@ class Grid extends PositionComponent
   List<double> get linesCentersY => _linesCentersY;
 
   bool _controlInverted = false;
+  bool controlTurnedOff = false;
 
   List<double> lineXAllocation(double xSize) {
     const padding = 1.2;
@@ -187,10 +187,10 @@ class Grid extends PositionComponent
   @override
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
-    _lineSize = size.y / linesCount;
+    _lineSize = size.y / Utils.linesCount;
     normaldo = Normaldo(size: Vector2.all(lineSize), skin: skin)
       ..position = Vector2(size.x / 2, size.y / 2);
-    for (int i = 0; i < linesCount; i++) {
+    for (int i = 0; i < Utils.linesCount; i++) {
       final lineCenterY = lineSize * i + lineSize / 2;
       _linesCentersY.add(lineCenterY);
 
@@ -302,10 +302,12 @@ class Grid extends PositionComponent
 
   @override
   bool onDragUpdate(DragUpdateEvent event) {
-    if (_controlInverted) {
-      normaldo.position -= event.localDelta * normaldo.speed;
-    } else {
-      normaldo.position += event.localDelta * normaldo.speed;
+    if (!controlTurnedOff) {
+      if (_controlInverted) {
+        normaldo.position -= event.localDelta * normaldo.speed;
+      } else {
+        normaldo.position += event.localDelta * normaldo.speed;
+      }
     }
     super.onDragUpdate(event);
     return false;

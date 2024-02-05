@@ -148,6 +148,9 @@ flutter:
     - assets/images/ui/auth/
     - assets/images/ui/auth/2.0x/
     - assets/images/ui/auth/3.0x/
+    - assets/images/bosses/
+    - assets/images/bosses/2.0x/
+    - assets/images/bosses/3.0x/
 
     - assets/audio/
     - assets/audio/sfx/

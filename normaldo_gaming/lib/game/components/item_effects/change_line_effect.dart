@@ -19,7 +19,9 @@ mixin ChangeLineEffect on Item {
         Vector2(x - 100, _nextY),
         EffectController(
           speed: speed,
-        )));
+        ), onComplete: () {
+      _lineChanged = false;
+    }));
   }
 
   @override

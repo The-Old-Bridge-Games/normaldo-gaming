@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
@@ -44,6 +46,7 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   late final FatCounter fatCounter;
   late final Grid grid;
+  late final CameraComponent _bossesCamera;
 
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;
@@ -55,6 +58,12 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    camera.moveTo(size / 2);
+    add(TimerComponent(
+      period: 1,
+      removeOnFinish: true,
+      onTick: () {},
+    ));
     fatCounter = FatCounter(skin: userCubit.state.skin);
     _initializeComponents();
 
@@ -70,15 +79,6 @@ class PullUpGame extends FlameGame
       removeOnFinish: true,
       onTick: () {
         // _showMissions();
-      },
-    ));
-    add(TimerComponent(
-      period: 0.1,
-      removeOnFinish: true,
-      onTick: () {
-        // if (!userCubit.state.educated) {
-        //   pauseEngine();
-        // }
       },
     ));
 
@@ -136,7 +136,9 @@ class PullUpGame extends FlameGame
   }
 
   void _initializeComponents() {
-    scene = Scene(initialSize: Vector2(size.x, size.x));
+    scene = Scene(
+      initialSize: Vector2(size.x, size.x),
+    );
     scene.size = size;
     balance.position =
         Vector2(scoreLabel.x, scoreLabel.y + scoreLabel.size.y + 8);
@@ -162,7 +164,7 @@ class PullUpGame extends FlameGame
       }
     });
 
-    await add(FlameBlocProvider<LevelBloc, LevelState>.value(
+    await camera.viewfinder.add(FlameBlocProvider<LevelBloc, LevelState>.value(
         value: levelBloc,
         children: [
           scene,
@@ -174,7 +176,7 @@ class PullUpGame extends FlameGame
             ..size = Vector2(size.x, size.y)
             ..position = Vector2(0, 0),
         ]));
-    await add(
+    await camera.viewfinder.add(
       FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
         value: gameSessionCubit,
         children: [

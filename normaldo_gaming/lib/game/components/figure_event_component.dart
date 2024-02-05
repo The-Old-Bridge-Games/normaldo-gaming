@@ -8,8 +8,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
-
-import 'grid.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 class FigureEventComponent extends PositionComponent with HasGameRef {
   FigureEventComponent({
@@ -36,7 +35,8 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
     final List<List<LineItem>> matrix = figure.when(
       trashWall: () => [
         [
-          LineItem(item: Items.boombox, line: Random().nextInt(Grid.linesCount))
+          LineItem(
+              item: Items.boombox, line: Random().nextInt(Utils.linesCount))
         ],
         [
           const LineItem(item: Items.trashBin, line: 0),
@@ -65,14 +65,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       cursedPath: () {
         final random = Random();
         final eventLength = random.nextInt(6) + 5;
-        var livingIndex = random.nextInt(Grid.linesCount);
+        var livingIndex = random.nextInt(Utils.linesCount);
         final livingPath = List.generate(eventLength, (index) {
           if (index == 0) {
             return livingIndex;
           } else {
             if (livingIndex == 0) {
               livingIndex++;
-            } else if (livingIndex == Grid.linesCount - 1) {
+            } else if (livingIndex == Utils.linesCount - 1) {
               livingIndex--;
             } else {
               livingIndex =
@@ -83,7 +83,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         });
         return List.generate(
             livingPath.length,
-            (columnIndex) => List.generate(Grid.linesCount, (index) {
+            (columnIndex) => List.generate(Utils.linesCount, (index) {
                   if (index != livingPath[columnIndex]) {
                     return LineItem(item: Items.trashBin, line: index);
                   }
@@ -97,13 +97,13 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       punchWave: () {
         final alreadyUsed = <int>[];
         return List.generate(3, (index) {
-          var excludedLine = Random().nextInt(Grid.linesCount);
+          var excludedLine = Random().nextInt(Utils.linesCount);
           while (alreadyUsed.contains(excludedLine)) {
-            excludedLine = Random().nextInt(Grid.linesCount);
+            excludedLine = Random().nextInt(Utils.linesCount);
           }
           alreadyUsed.add(excludedLine);
           return List.generate(
-              Grid.linesCount - 1,
+              Utils.linesCount - 1,
               (index) => LineItem(
                     item: Items.punch,
                     line: index >= excludedLine ? index + 1 : index,
@@ -118,7 +118,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       only2Lines: () {
         final List<int> usedIndexes = [];
         int getLineYIndex({List<int>? exclude}) {
-          final indexes = List.generate(Grid.linesCount, (index) => index);
+          final indexes = List.generate(Utils.linesCount, (index) => index);
           for (final exclusion in exclude ?? []) {
             if (indexes.contains(exclusion)) {
               indexes.remove(exclusion);
@@ -137,7 +137,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
 
         return List.generate(8, (index) {
           final list = List.generate(
-              Grid.linesCount,
+              Utils.linesCount,
               (index) => LineItem(
                     item: Items.trashBin,
                     line: index,
@@ -170,11 +170,11 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       slowMo: () {
         return [
-          List.generate(Grid.linesCount,
+          List.generate(Utils.linesCount,
               (index) => LineItem(item: Items.cocktail, line: index)),
           ...List.generate(
               Random().nextInt(6) + 5,
-              (index) => List.generate(Grid.linesCount,
+              (index) => List.generate(Utils.linesCount,
                   (index) => LineItem(item: Items.pizza, line: index))),
         ];
       },

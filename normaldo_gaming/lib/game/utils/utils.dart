@@ -8,6 +8,8 @@ abstract class Utils {
 
   static const bigBuddyBinSpeedMultiplier = 1.5;
 
+  static const linesCount = 5;
+
   static double generateCocktailDuration() => Random().nextInt(5) + 2;
   static double generateHourglassDuration() => generateCocktailDuration();
 

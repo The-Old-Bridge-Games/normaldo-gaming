@@ -3,9 +3,12 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/game/components/boss_attacks/attack.dart';
+import 'package:normaldo_gaming/game/components/effects/effects.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-class Scene extends PositionComponent with HasGameRef<PullUpGame> {
+class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
   Scene({required this.initialSize});
 
   final Vector2 initialSize;
@@ -76,15 +79,55 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame> {
   void _move() {
     for (final bg in _currentBackgrounds) {
       bg.add(MoveByEffect(
-          Vector2(-bg.size.x + initialSize.x, 0),
+          Vector2(-bg.size.x + initialSize.x * 2, 0),
           EffectController(
               duration: LevelBloc.levelChangeDuration.toDouble(),
               onMax: () {
-                // if (bg.position.x <= -initialSize.x) {
-                //   _currentBackgrounds.remove(bg);
-                //   bg.removeFromParent();
-                // }
+                // Preparing to boss
+                const vanishDuration = 0.3;
+                final normaldo = game.grid.normaldo;
                 game.grid.stopAllLines();
+                game.grid.removeAllItems();
+                game.grid.controlTurnedOff = true;
+                normaldo.nComponent.add(fadeOutEffect(
+                    duration: vanishDuration,
+                    onComplete: () {
+                      normaldo.position =
+                          Vector2(normaldo.size.x * 2, game.size.y / 2);
+                      normaldo.nComponent
+                          .add(fadeInEffect(duration: vanishDuration));
+                    }));
+                add(TimerComponent(
+                    period: 1,
+                    removeOnFinish: true,
+                    onTick: () async {
+                      // Creating a boss component
+                      final grid = game.grid;
+                      final cloneSprites = {
+                        await Sprite.load('bosses/ninja foot1.png'),
+                      };
+                      final ninjaFoot = NinjaFoot([
+                        CloneAttack(
+                          cloneSprites: cloneSprites,
+                          wavesPeriod: 1,
+                          wavesAmount: 10,
+                        ),
+                        CloneAttack(
+                          cloneSprites: cloneSprites,
+                          wavesPeriod: 1,
+                          wavesAmount: 20,
+                        ),
+                        CloneAttack(
+                          cloneSprites: cloneSprites,
+                          wavesPeriod: 0.8,
+                          wavesAmount: 20,
+                        ),
+                      ]);
+                      grid.add(ninjaFoot
+                        ..position =
+                            Vector2(grid.size.x + 50, grid.size.y / 2));
+                      ninjaFoot.start();
+                    }));
               })));
     }
   }

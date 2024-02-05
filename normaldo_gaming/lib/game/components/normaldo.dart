@@ -85,7 +85,9 @@ class FatStateIterator {
 
   final onlyIdle = NormaldoFatState.onlyIdle;
 
-  int get currIndex => onlyIdle.indexOf(current);
+  int get currIndex {
+    return onlyIdle.indexOf(current);
+  }
 
   NormaldoFatState current;
 
@@ -209,6 +211,7 @@ class Normaldo extends PositionComponent
     }
 
     _pizzaEaten = 0;
+    state = NormaldoHitState.hit;
     final newFatState = fatIterator.prev(step: damage);
     _changeFatAnimation(newFatState);
   }
@@ -568,6 +571,7 @@ class Normaldo extends PositionComponent
     add(effectsController);
 
     // fat handler
+    increaseFatPoints(20);
 
     add(TimerComponent(
       period: 0.5,
@@ -709,9 +713,12 @@ class Normaldo extends PositionComponent
     final controller = EffectController(
       duration: 0.1,
       reverseDuration: 0.1,
-      repeatCount: 30,
+      repeatCount: 20,
     );
-    nComponent.add(OpacityEffect.to(0, controller));
+    nComponent.add(
+      OpacityEffect.to(0, controller,
+          onComplete: () => state = NormaldoHitState.idle),
+    );
   }
 
   Future<void> stopImmortalityFlick() async {

@@ -9,6 +9,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -70,7 +71,9 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
       levelManager.checkHit(hitItem: item);
     }
     if (other is KillingItem ||
-        (other is AttackingItem && this is! AttackingItem)) {
+        (other is AttackingItem &&
+            this is! AttackingItem &&
+            this is! NormaldoAttack)) {
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
@@ -108,11 +111,12 @@ mixin AttackingItem on Item {
   int get damage;
 
   void attack(PositionComponent other) {
+    if (other is NormaldoAttack) return;
     if (other is Normaldo && !other.immortal && !other.hasImmuneTo(item)) {
       other.takeHit(damage: damage);
       removeFromParent();
     }
-    if (other is AttackingItem) {
+    if (other is AttackingItem && other.collidable && strength > 0) {
       if (other.strength >= strength) {
         removeFromParent();
       }
@@ -265,6 +269,10 @@ mixin CustomEffectItem on Item {
   void applyEffect(void Function() onEffect) {
     onEffect();
   }
+}
+
+mixin NormaldoAttack on Item {
+  void attack(Boss boss);
 }
 
 mixin Eatable on Item {}

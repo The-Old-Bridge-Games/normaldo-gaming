@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-import 'package:normaldo_gaming/game/components/grid.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 class LineItem {
   final Items item;
@@ -12,7 +12,7 @@ class LineItem {
   final int? line;
 
   const LineItem({required this.item, this.line})
-      : assert((line ?? 0) >= 0 && (line ?? 0) < Grid.linesCount);
+      : assert((line ?? 0) >= 0 && (line ?? 0) < Utils.linesCount);
 }
 
 abstract class Level extends Equatable {
