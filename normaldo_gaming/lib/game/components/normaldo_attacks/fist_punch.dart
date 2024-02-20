@@ -50,7 +50,7 @@ final class FistPunch extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     paint = Paint()..color = Colors.red;
-    _fistSprite = await Sprite.load('bosses/ninja_foot_fist.png');
+    _fistSprite = await Sprite.load('knukl 1.png');
     sprite = await Sprite.load('slakebake.png');
     return super.onLoad();
   }
