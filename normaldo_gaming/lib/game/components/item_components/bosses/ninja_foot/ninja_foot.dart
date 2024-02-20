@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/game/components/boss_attacks/attack.dart';
+
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';

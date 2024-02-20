@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:normaldo_gaming/game/components/boss_hp.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 mixin Boss on PositionComponent, HasGameRef<PullUpGame> {
@@ -48,6 +49,8 @@ mixin Boss on PositionComponent, HasGameRef<PullUpGame> {
   @override
   FutureOr<void> onLoad() {
     anchor = Anchor.center;
+    gameRef.camera.viewfinder.add(BossHp(boss: this)
+      ..position = Vector2(gameRef.size.x / 2 - hp * 48 / 2, 16));
     return super.onLoad();
   }
 }

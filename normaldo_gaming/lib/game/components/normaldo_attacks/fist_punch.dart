@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/game/components/boss_hp.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
@@ -115,6 +116,9 @@ final class FistPunch extends SpriteComponent
             boss.add(fadeOutEffect(duration: 0.3));
             boss.stopAttack();
             boss.hp--;
+            (gameRef.camera.viewfinder.children
+                    .firstWhere((element) => element is BossHp) as BossHp)
+                .decrease();
             if (boss.hp <= 0) {
               boss.die();
             }
