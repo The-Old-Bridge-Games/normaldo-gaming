@@ -10,7 +10,7 @@ class UserState with _$UserState {
   }) = _UserState;
 
   factory UserState.initial() => UserState(
-        user: const User(
+        user: User(
           id: 'no_user',
           name: '',
           highScore: 0,
@@ -19,6 +19,9 @@ class UserState with _$UserState {
           exp: 0,
           extraLives: 0,
           totalPizzas: 0,
+          mySkins: [
+            Skin.basic(),
+          ],
         ),
         educated: false,
         skin: Skin.basic(),

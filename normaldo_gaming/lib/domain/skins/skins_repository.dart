@@ -1,7 +1,8 @@
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 abstract class SkinsRepository {
-  List<Skin> get mySkins;
+  List<Skin> get skinsData;
+  Skin getSkinById(String uniqueId);
 }
 
 enum SkinRarity { classic, common, rare, epic, legendary }
@@ -35,7 +36,7 @@ final class Skin {
           fatBite: 'normaldo/normaldo3_eat.png',
           superFatBite: 'normaldo/normaldo4_eat.png',
           dead: 'normaldo/normaldo1_dead.png',
-          mask: '',
+          mask: 'normaldo/mask.png',
         ),
         resistanceToItems: [],
       );

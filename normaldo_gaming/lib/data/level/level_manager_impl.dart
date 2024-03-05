@@ -113,6 +113,7 @@ class LevelManagerImpl implements LevelManager {
       exp: 0,
       extraLives: 0,
       totalPizzas: 0,
+      mySkins: [],
     ));
   }
 

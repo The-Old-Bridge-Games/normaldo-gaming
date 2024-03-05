@@ -8,17 +8,15 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 import 'package:normaldo_gaming/ui/widgets/wheel_scroll_view_x.dart';
 
 class SkinPicker extends StatefulWidget {
-  const SkinPicker(
-    this._repository, {
+  const SkinPicker({
     this.initId,
     super.key,
   });
-
-  final SkinsRepository _repository;
   final String? initId;
 
   @override
@@ -30,6 +28,8 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
 
   late int _currentPage;
 
+  User get user => context.read<UserCubit>().state.user;
+
   bool _pageSelectedBySkin(Skin skin) {
     return _currentPage == _indexOfSkin(skin);
   }
@@ -38,11 +38,10 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
     return _currentPage == _indexOfUniqueId(uniqueId);
   }
 
-  int _indexOfSkin(Skin skin) => widget._repository.mySkins.indexOf(skin);
+  int _indexOfSkin(Skin skin) => user.mySkins.indexOf(skin);
 
-  int _indexOfUniqueId(String uniqueId) =>
-      widget._repository.mySkins.indexOf(widget._repository.mySkins
-          .firstWhere((skin) => skin.uniqueId == uniqueId));
+  int _indexOfUniqueId(String uniqueId) => user.mySkins
+      .indexOf(user.mySkins.firstWhere((skin) => skin.uniqueId == uniqueId));
 
   String _rarityTitleOf(Skin skin) {
     return switch (skin.rarity) {
@@ -55,7 +54,7 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
   }
 
   Skin _skinFrom(int page) {
-    return widget._repository.mySkins[page];
+    return user.mySkins[page];
   }
 
   void _selectSkin() {
@@ -71,9 +70,9 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
   @override
   void initState() {
     if (widget.initId != null) {
-      final skin = widget._repository.mySkins
+      final skin = user.mySkins
           .firstWhere((element) => element.uniqueId == widget.initId);
-      _currentPage = widget._repository.mySkins.indexOf(skin);
+      _currentPage = user.mySkins.indexOf(skin);
     } else {
       _currentPage = 0;
     }
@@ -108,7 +107,7 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
                 width: MediaQuery.of(context).size.width,
                 child: ListWheelScrollViewX(
                   itemExtent: 180,
-                  itemCount: widget._repository.mySkins.length,
+                  itemCount: user.mySkins.length,
                   scrollDirection: Axis.horizontal,
                   controller: _controller,
                   onSelectedItemChanged: (index) {
@@ -118,7 +117,7 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
                     audio.playAudio('sfx/button1.mp3', volume: 1);
                   },
                   builder: (context, index) {
-                    final skin = widget._repository.mySkins[index];
+                    final skin = user.mySkins[index];
                     return GestureDetector(
                       onTap: () {
                         final itemIndex = _indexOfSkin(skin);

@@ -1,11 +1,18 @@
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
-// ADD SFX
-
 final class SkinsRepositoryTestImpl implements SkinsRepository {
   @override
-  List<Skin> get mySkins => [
+  Skin getSkinById(String uniqueId) {
+    return skinsData.firstWhere(
+      (element) => element.uniqueId == uniqueId,
+      orElse: () => throw UnexpectedError(),
+    );
+  }
+
+  @override
+  List<Skin> get skinsData => [
         const Skin(
           uniqueId: 'basic',
           name: 'NORMALDO',

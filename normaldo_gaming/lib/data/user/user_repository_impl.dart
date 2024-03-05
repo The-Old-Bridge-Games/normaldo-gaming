@@ -26,6 +26,7 @@ final class UserRepositoryImpl implements UserRepository {
       exp: userJson['experience'] as int,
       extraLives: userJson['extraLives'] as int,
       totalPizzas: 0,
+      mySkins: [],
     ).toEntity();
   }
 
@@ -54,5 +55,6 @@ final class UserRepositoryImpl implements UserRepository {
         exp: json['experience'] as int,
         extraLives: json['extraLives'] as int,
         totalPizzas: 0,
+        mySkins: [],
       );
 }

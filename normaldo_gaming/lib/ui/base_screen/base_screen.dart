@@ -133,14 +133,12 @@ class _BaseScreenState extends State<BaseScreen> {
     const dimension = 80.0;
     return GestureDetector(
       onTap: () {
-        final skinsRepo = injector.get<SkinsRepository>(key: 'skins_test');
         showDialog(
             context: context,
             useSafeArea: false,
             barrierColor: Colors.black87,
             builder: (context) {
               return SkinPicker(
-                skinsRepo,
                 initId: skin.uniqueId,
               );
             }).whenComplete(() => setState(() {}));

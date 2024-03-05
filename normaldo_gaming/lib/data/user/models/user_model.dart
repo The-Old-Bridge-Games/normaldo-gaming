@@ -1,3 +1,5 @@
+import 'package:normaldo_gaming/data/user/models/skin_model.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 
 final class UserModel {
@@ -9,6 +11,7 @@ final class UserModel {
   final int exp;
   final int extraLives;
   final int totalPizzas;
+  final List<Skin> mySkins;
 
   UserModel({
     required this.id,
@@ -19,6 +22,7 @@ final class UserModel {
     required this.exp,
     required this.extraLives,
     required this.totalPizzas,
+    required this.mySkins,
   });
 
   UserModel.fromEntity(User user)
@@ -29,7 +33,8 @@ final class UserModel {
         level = user.level,
         exp = user.exp,
         extraLives = user.extraLives,
-        totalPizzas = user.totalPizzas;
+        totalPizzas = user.totalPizzas,
+        mySkins = user.mySkins;
 
   User toEntity() {
     return User(
@@ -41,18 +46,23 @@ final class UserModel {
       exp: exp,
       extraLives: extraLives,
       totalPizzas: totalPizzas,
+      mySkins: mySkins,
     );
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-      id: json['id'],
-      name: json['name'],
-      dollars: json['dollars'],
-      highScore: json['highScore'],
-      level: json['level'],
-      exp: json['exp'],
-      extraLives: json['extraLives'],
-      totalPizzas: json['totalPizzas']);
+        id: json['id'],
+        name: json['name'],
+        dollars: json['dollars'],
+        highScore: json['highScore'],
+        level: json['level'],
+        exp: json['exp'],
+        extraLives: json['extraLives'],
+        totalPizzas: json['totalPizzas'],
+        mySkins: (json['mySkins'] as List)
+            .map((e) => SkinModel.fromJson(e).toEntity())
+            .toList(),
+      );
 
   Map<String, dynamic> toJson() {
     return {
@@ -64,6 +74,8 @@ final class UserModel {
       'exp': exp,
       'extraLives': extraLives,
       'totalPizzas': totalPizzas,
+      'mySkins':
+          mySkins.map((skin) => SkinModel.fromEntity(skin).toJson()).toList(),
     };
   }
 
@@ -75,6 +87,7 @@ final class UserModel {
     int? exp,
     int? extraLives,
     int? totalPizzas,
+    List<Skin>? mySkins,
   }) =>
       UserModel(
         id: id,
@@ -85,5 +98,6 @@ final class UserModel {
         exp: exp ?? this.exp,
         extraLives: extraLives ?? this.extraLives,
         totalPizzas: totalPizzas ?? this.totalPizzas,
+        mySkins: mySkins ?? this.mySkins,
       );
 }

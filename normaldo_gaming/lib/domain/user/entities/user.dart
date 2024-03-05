@@ -1,3 +1,5 @@
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+
 final class User {
   final String id;
   final String name;
@@ -7,6 +9,7 @@ final class User {
   final int exp;
   final int extraLives;
   final int totalPizzas;
+  final List<Skin> mySkins;
 
   const User({
     required this.id,
@@ -17,5 +20,6 @@ final class User {
     required this.exp,
     required this.extraLives,
     required this.totalPizzas,
+    required this.mySkins,
   });
 }
