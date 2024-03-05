@@ -9,6 +9,9 @@ import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
+import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 import 'package:normaldo_gaming/ui/widgets/wheel_scroll_view_x.dart';
 
@@ -266,6 +269,25 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
                         )),
               const Spacer(flex: 1),
             ],
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: BouncingButton(
+              onPressed: () => context.go(NGRoutes.shop.path),
+              child: Container(
+                height: 70,
+                padding: const EdgeInsets.only(left: 32, top: 24, right: 32),
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  border: Border(
+                    left: Utils.uiBoxBorderSide,
+                    bottom: Utils.uiBoxBorderSide,
+                  ),
+                ),
+                child: Text('${'toShop'.tr()} >>',
+                    style: Theme.of(context).textTheme.displayLarge),
+              ),
+            ),
           ),
         ],
       ),

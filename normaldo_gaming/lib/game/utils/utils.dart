@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 
 abstract class Utils {
   const Utils._();
@@ -9,6 +11,11 @@ abstract class Utils {
   static const bigBuddyBinSpeedMultiplier = 1.5;
 
   static const linesCount = 5;
+
+  static const uiBoxBorderSide = BorderSide(
+    width: 3,
+    color: NGTheme.purple2,
+  );
 
   static double generateCocktailDuration() => Random().nextInt(5) + 2;
   static double generateHourglassDuration() => generateCocktailDuration();
