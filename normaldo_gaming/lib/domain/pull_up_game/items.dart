@@ -51,7 +51,6 @@ import 'package:normaldo_gaming/game/components/item_components/spades_card.dart
 import 'package:normaldo_gaming/game/components/item_components/stone.dart';
 import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/item_components/umbrella.dart';
-import 'package:normaldo_gaming/game/components/normaldo_attacks/fist_punch.dart';
 
 enum Items {
   trashBin,
@@ -103,9 +102,7 @@ enum Items {
   // BOSSES&ATTACKS
   shredder,
   shuriken,
-  shredderSword,
-  // NORMALDO ATTACKS
-  fistPunch;
+  shredderSword;
 
   Item component() {
     switch (this) {
@@ -132,7 +129,7 @@ enum Items {
       case Items.punch:
         return Punch();
       case shredder:
-        return Shredder();
+        return Cone();
       case shuriken:
         return Shuriken();
       case shredderSword:
@@ -207,8 +204,6 @@ enum Items {
         return RoadSign();
       case umbrella:
         return Umbrella();
-      case fistPunch:
-        return FistPunch();
     }
   }
 
@@ -321,8 +316,6 @@ enum Items {
       // case Items.roadSign:
       //   return Vector2(lineSize, lineSize);
       case Items.umbrella:
-        return Vector2(lineSize * 0.7, lineSize * 0.7);
-      case Items.fistPunch:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
     }
   }

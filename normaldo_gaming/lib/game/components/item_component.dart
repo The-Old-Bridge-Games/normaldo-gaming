@@ -24,6 +24,12 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   double get speed => game.levelBloc.state.level.speed * _speedMultiplier;
   PositionComponent get hitbox;
 
+  late double _speed = game.levelBloc.state.level.speed;
+
+  set speed(double newValue) {
+    _speed = newValue;
+  }
+
   set speedMultiplier(double newValue) {
     _speedMultiplier = newValue;
   }
@@ -112,6 +118,7 @@ mixin AttackingItem on Item {
 
   void attack(PositionComponent other) {
     if (other is NormaldoAttack) return;
+    if (other is Boss) return;
     if (other is Normaldo && !other.immortal && !other.hasImmuneTo(item)) {
       other.takeHit(damage: damage);
       removeFromParent();

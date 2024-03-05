@@ -522,7 +522,7 @@ class Normaldo extends PositionComponent
   }
 
   @override
-  bool get debugMode => false;
+  bool get debugMode => true;
 
   @override
   Future<void> onLoad() async {

@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-import 'package:normaldo_gaming/game/components/boss_attacks/attack.dart';
+import 'package:normaldo_gaming/game/components/boss_attacks/clone_attack.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -103,26 +103,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
                     onTick: () async {
                       // Creating a boss component
                       final grid = game.grid;
-                      final cloneSprites = {
-                        await Sprite.load('bosses/ninja foot1.png'),
-                      };
-                      final ninjaFoot = NinjaFoot([
-                        CloneAttack(
-                          cloneSprites: cloneSprites,
-                          wavesPeriod: 1,
-                          wavesAmount: 10,
-                        ),
-                        CloneAttack(
-                          cloneSprites: cloneSprites,
-                          wavesPeriod: 1,
-                          wavesAmount: 20,
-                        ),
-                        CloneAttack(
-                          cloneSprites: cloneSprites,
-                          wavesPeriod: 0.8,
-                          wavesAmount: 20,
-                        ),
-                      ]);
+                      final ninjaFoot = NinjaFoot();
                       grid.add(ninjaFoot
                         ..position =
                             Vector2(grid.size.x + 50, grid.size.y / 2));

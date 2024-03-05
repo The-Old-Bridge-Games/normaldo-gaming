@@ -1,52 +1,28 @@
-// import 'dart:async';
-
 // import 'package:flame/collisions.dart';
 // import 'package:flame/components.dart';
 // import 'package:flame_bloc/flame_bloc.dart';
 // import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+// import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 // import 'package:normaldo_gaming/domain/app/sfx.dart';
 // import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-// import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
+// import 'package:normaldo_gaming/game/components/item_component.dart';
 // import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/predator_attack.dart';
-// import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shredder_attack.dart';
 // import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
-// import 'package:normaldo_gaming/game/components/game_object.dart';
 // import 'package:normaldo_gaming/game/components/normaldo.dart';
 // import 'package:normaldo_gaming/game/pull_up_game.dart';
-
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-import 'package:normaldo_gaming/game/components/item_component.dart';
-import 'package:normaldo_gaming/game/pull_up_game.dart';
-
-final class Shredder extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<PullUpGame>, Item {
-  @override
-  // TODO: implement hitbox
-  ShapeHitbox get hitbox => throw UnimplementedError();
-
-  @override
-  // TODO: implement item
-  Items get item => throw UnimplementedError();
-}
 
 // class Shredder extends PositionComponent
 //     with
 //         CollisionCallbacks,
-//         HasGameRef,
-//         GameObject,
-//         FlameBlocListenable<LevelBloc, LevelState> {
+//         HasGameRef<PullUpGame>,
+//         FlameBlocListenable<LevelBloc, LevelState>,
+//         Item,
+//         HasNgAudio {
 //   Shredder({this.audioId}) : super(anchor: Anchor.center);
 
 //   final int? audioId;
 
-//   late final eatingHitbox = RectangleHitbox.relative(
-//     Vector2.all(0.9),
-//     parentSize: size,
-//   )..collisionType = CollisionType.active;
-
-//   final List<ShredderAttack> _attacks = [];
+//   final List<SAttack> _attacks = [];
 
 //   late final SpriteComponent shredderSprite;
 
@@ -104,7 +80,6 @@ final class Shredder extends SpriteComponent
 //       bloc.add(
 //           LevelEvent.startFigure(figure: FigureEvent.winLabel(item: item)));
 //     };
-//     disabled = true;
 //     speed = (gameRef as PullUpGame).levelBloc.state.level.speed;
 //     shredderSprite = SpriteComponent(
 //       size: size,
@@ -114,7 +89,7 @@ final class Shredder extends SpriteComponent
 
 //     add(eatingHitbox);
 
-//     final grid = (gameRef as PullUpGame).grid;
+//     final grid = gameRef.grid;
 //     _attacks.addAll([
 //       ShurikenShowerAttack(),
 //       ShurikenShowerAttack(),
@@ -143,7 +118,7 @@ final class Shredder extends SpriteComponent
 //       if (_attacks.first.completed) {
 //         _attacks.removeAt(0);
 //         if (_attacks.isNotEmpty) {
-//           _attacks.first.start(this, (gameRef as PullUpGame).grid);
+//           _attacks.first.start(this, gameRef.grid);
 //         }
 //       }
 //     } else {
@@ -152,8 +127,8 @@ final class Shredder extends SpriteComponent
 //   }
 
 //   @override
-//   bool get isSoloSpawn => true;
+//   Items get item => Items.shredder;
 
 //   @override
-//   Items get item => Items.shredder;
+//   PositionComponent get hitbox => throw UnimplementedError();
 // }

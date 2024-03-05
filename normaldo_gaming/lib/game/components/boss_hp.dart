@@ -27,7 +27,7 @@ final class BossHp extends PositionComponent
   @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Normaldo && hpComp.first.opacity == 1) {
+    if (other is Normaldo && hpComp.isNotEmpty && hpComp.first.opacity == 1) {
       for (var element in hpComp) {
         element.add(OpacityEffect.to(0.7, EffectController(duration: 0.3)));
       }

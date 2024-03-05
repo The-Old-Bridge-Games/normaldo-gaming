@@ -1,44 +1,24 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:normaldo_gaming/game/components/boss_attacks/attack.dart';
 
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/predator_attack.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-final class NinjaFoot extends SpriteComponent
+enum NinjaFootState {
+  idle,
+  attack1,
+  attack2,
+  attack3,
+}
+
+final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
     with HasGameRef<PullUpGame>, Boss, Effects {
-  NinjaFoot(this._attacks) {
-    add(TimerComponent(
-        period: 1,
-        repeat: true,
-        onTick: () {
-          if (!bossWarned) return;
-          if (_attacks.isNotEmpty) {
-            final attack = _attacks.first;
-            if (!attack.inProgress && !attack.finished) {
-              attack.run(this);
-              return;
-            }
-            if (attack.finished) {
-              _attacks.removeAt(0);
-              return;
-            }
-          }
-        }));
-  }
-
-  final List<Attack> _attacks;
-
-  @override
-  void pauseAttack() {
-    _attacks.first.pause(this);
-  }
-
-  @override
-  void stopAttack() {
-    _attacks.first.stop(this);
+  NinjaFoot() {
+    debugMode = true;
   }
 
   @override
@@ -107,9 +87,48 @@ final class NinjaFoot extends SpriteComponent
   }
 
   @override
+  void update(double dt) {
+    super.update(dt);
+
+    if (bossWarned) {
+      if (opacity == 0) {
+        opacity = 1;
+      }
+      if (attacks.isNotEmpty) {
+        if (attacks.first.completed) {
+          attacks.removeAt(0);
+          if (attacks.isNotEmpty) {
+            attacks.first.start(this, gameRef.grid);
+          }
+        } else if (!attacks.first.inProgress) {
+          attacks.first.start(this, gameRef.grid);
+        }
+      }
+    }
+  }
+
+  @override
   FutureOr<void> onLoad() async {
     size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
-    sprite = await Sprite.load('bosses/ninja foot1.png');
+    sprites = {
+      NinjaFootState.idle: await Sprite.load('bosses/ninja foot1.png'),
+      NinjaFootState.attack1: await Sprite.load('bosses/ninja foot1.png'),
+      NinjaFootState.attack2: await Sprite.load('bosses/ninja foot1.png'),
+      NinjaFootState.attack3: await Sprite.load('bosses/ninja foot1.png'),
+    };
+    current = NinjaFootState.idle;
+    attacks = [
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+    ]..shuffle();
     return super.onLoad();
   }
 
