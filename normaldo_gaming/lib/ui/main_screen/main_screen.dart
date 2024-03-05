@@ -190,7 +190,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: _buildMissionsHitbox(),
                   ),
                   Align(
-                    alignment: Alignment.topRight,
+                    alignment: Alignment.topLeft,
                     child: _buildUserLevel(),
                   ),
                   Align(
@@ -219,8 +219,8 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   AnimatedAlign(
                     alignment: _tab == Tabs.idle
-                        ? const Alignment(0, 2)
-                        : const Alignment(0, 1),
+                        ? const Alignment(2, -1)
+                        : const Alignment(1, -1),
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.linearToEaseOut,
                     child: _buildNavigationClue(),
@@ -265,13 +265,12 @@ class _MainScreenState extends State<MainScreen> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         height: 70,
-        padding: const EdgeInsets.only(left: 32, top: 8, right: 32),
+        padding: const EdgeInsets.only(left: 32, top: 24, right: 32),
         decoration: const BoxDecoration(
           color: Colors.black,
           border: Border(
             left: borderSide,
-            top: borderSide,
-            right: borderSide,
+            bottom: borderSide,
           ),
         ),
         child: Text('${_tab.name.tr()}  >', style: textTheme.displayLarge),
@@ -311,10 +310,11 @@ class _MainScreenState extends State<MainScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
           .add(const EdgeInsets.only(right: 32)),
       decoration: const BoxDecoration(
+          color: Colors.black,
           border: Border(
-        bottom: borderSide,
-        left: borderSide,
-      )),
+            bottom: borderSide,
+            right: borderSide,
+          )),
       child: UserLevelBar(
         levelManager: injector.get(),
         barWidth: 100,
