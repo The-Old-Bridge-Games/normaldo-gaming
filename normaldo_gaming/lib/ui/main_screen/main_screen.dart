@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
+import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
@@ -47,6 +50,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  bool _buildingsPlaying = false;
+  Timer? _buildingsPlayTimer;
+  int _buildingsPlayCount = 0;
+
   static void _newLevelListener(BuildContext context, UserState state) async {
     await Future.delayed(const Duration(milliseconds: 500));
     final rewards =
@@ -72,6 +79,7 @@ class _MainScreenState extends State<MainScreen> {
   String get tabAsset => _tab.assetPath;
 
   void _onTrashBinPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.trash) {
       // context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
       //       () => tab = Tabs.idle,
@@ -82,6 +90,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onStartPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.play) {
       context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
             () => tab = Tabs.idle,
@@ -92,6 +101,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onMissionsPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.basement) {
       context
           .pushNamed(NGRoutes.basement.name)
@@ -102,6 +112,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onSettingsPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.settings) {
       // context
       //     .pushNamed(NGRoutes.settings.name)
@@ -112,6 +123,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onShopPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.shop) {
       context.pushNamed(NGRoutes.shop.name).whenComplete(
             () => tab = Tabs.idle,
@@ -122,6 +134,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onSlotsPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.slots) {
       context
           .pushNamed(NGRoutes.slots.name)
@@ -132,6 +145,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onKnowledgeBookPressed() {
+    _buildingsPlaying = false;
     if (_tab == Tabs.pizzeria) {
       context.pushNamed(NGRoutes.knowledgeBook.name).whenComplete(
             () => tab = Tabs.idle,
@@ -154,11 +168,42 @@ class _MainScreenState extends State<MainScreen> {
     FlutterNativeSplash.remove();
     context.read<UserCubit>().load();
 
+    _buildingsPlayTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (!_buildingsPlaying && _buildingsPlayCount == 0 && _tab == Tabs.idle) {
+        _buildingsPlaying = true;
+        _startBuildingsPlay();
+      }
+    });
+
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       for (final tab in Tabs.values) {
         precacheImage(AssetImage(tab.assetPath), context);
       }
     });
+  }
+
+  Future<void> _startBuildingsPlay() async {
+    if (_buildingsPlayCount == Tabs.values.length) {
+      _buildingsPlayCount = 0;
+      _buildingsPlaying = false;
+    }
+    if (!_buildingsPlaying) return;
+    var tabs = List<Tabs>.from(Tabs.values)
+      ..remove(_tab)
+      ..remove(Tabs.idle)
+      ..remove(Tabs.trash);
+    final roller = Roller<Tabs>(tabs.map((e) => (e, 1.0)).toList());
+    tab = roller.roll();
+    await Future.delayed(Duration(seconds: 1 + Random().nextInt(3)));
+    _buildingsPlayCount++;
+    _startBuildingsPlay();
+  }
+
+  @override
+  void dispose() {
+    _buildingsPlayTimer?.cancel();
+    _buildingsPlayTimer = null;
+    super.dispose();
   }
 
   @override
