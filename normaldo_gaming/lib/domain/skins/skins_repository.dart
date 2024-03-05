@@ -22,6 +22,14 @@ final class Skin {
     required this.resistanceToItems,
   });
 
+  int get price => switch (rarity) {
+        SkinRarity.classic => 0,
+        SkinRarity.common => 500,
+        SkinRarity.rare => 2000,
+        SkinRarity.epic => 5000,
+        SkinRarity.legendary => 9999,
+      };
+
   factory Skin.basic() => const Skin(
         uniqueId: 'basic',
         name: 'Normaldo',

@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/shop/entities/shop_item.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class ShopItemCard extends StatelessWidget {
@@ -41,16 +43,35 @@ class _DollarAdForItemCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return BouncingButton(
       onPressed: onPressed,
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          boxShadow: [
+            BoxShadow(
+              color: NGTheme.colorOf(SkinRarity.classic),
+              blurRadius: 10,
+              spreadRadius: 1,
+            )
+          ],
+          borderRadius: BorderRadius.circular(20),
+          border:
+              Border.all(width: 5, color: NGTheme.colorOf(SkinRarity.classic)),
+        ),
+        height: 200,
+        width: 200,
         child: Column(
           children: [
-            Flexible(child: Image.asset(item.imagePath)),
-            Text(item.title.tr(), style: textTheme.bodyLarge),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(item.description.tr(), style: textTheme.bodyMedium),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(item.imagePath),
+              ),
             ),
+            Expanded(
+                child: Text(item.title.tr(),
+                    style:
+                        textTheme.titleLarge?.copyWith(color: Colors.white))),
           ],
         ),
       ),

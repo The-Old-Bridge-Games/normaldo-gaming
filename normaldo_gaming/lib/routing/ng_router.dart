@@ -102,7 +102,7 @@ abstract class NGRouter {
                           create: (context) => injector.get()..loadList()),
                       BlocProvider<AdsCubit>(
                           create: (context) => injector.get()),
-                    ], child: const ShopScreen()),
+                    ], child: ShopScreen(injector.get(key: 'skins_test'))),
                   ),
                   GoRoute(
                     path: NGRoutes.knowledgeBook.name,
@@ -112,7 +112,7 @@ abstract class NGRouter {
                   GoRoute(
                     path: NGRoutes.basement.name,
                     name: NGRoutes.basement.name,
-                    builder: (context, state) => BaseScreen(),
+                    builder: (context, state) => const BaseScreen(),
                   ),
                 ]),
             GoRoute(

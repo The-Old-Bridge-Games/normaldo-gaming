@@ -15,9 +15,13 @@ part 'user_state.dart';
 part 'user_cubit.freezed.dart';
 
 class UserCubit extends HydratedCubit<UserState> {
-  UserCubit(this._userRepository) : super(UserState.initial());
+  UserCubit(
+    this._userRepository,
+    this._skinsRepository,
+  ) : super(UserState.initial());
 
   final UserRepository _userRepository;
+  final SkinsRepository _skinsRepository;
 
   final _levelManager = injector.get<LevelManager>();
 
@@ -28,6 +32,21 @@ class UserCubit extends HydratedCubit<UserState> {
     } on NetworkException catch (e) {
       emit(state.copyWith(failure: e));
     }
+  }
+
+  void buySkin(String uniqueId) {
+    final skin = _skinsRepository.getSkinById(uniqueId);
+    if (state.user.dollars < skin.price) throw UnexpectedError();
+    final newMySkins = List<Skin>.from(state.user.mySkins);
+    newMySkins.add(skin);
+    emit(state.copyWith(
+      user: UserModel.fromEntity(state.user)
+          .copyWith(
+            dollars: state.user.dollars - skin.price,
+            mySkins: newMySkins,
+          )
+          .toEntity(),
+    ));
   }
 
   void changeHighScore(int highScore) {

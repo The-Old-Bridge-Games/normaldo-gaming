@@ -6,7 +6,10 @@ import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubi
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
 import 'package:normaldo_gaming/domain/shop/entities/shop_item.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/ui/shop/widgets/shop_skin_card.dart';
 import 'package:normaldo_gaming/ui/widgets/ads_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/earn_dollars_dialog.dart';
@@ -14,8 +17,17 @@ import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 import 'widgets/shop_item_card.dart';
 
-class ShopScreen extends StatelessWidget {
-  const ShopScreen({super.key});
+class ShopScreen extends StatefulWidget {
+  final SkinsRepository skinsRepository;
+
+  const ShopScreen(this.skinsRepository, {super.key});
+
+  @override
+  State<ShopScreen> createState() => _ShopScreenState();
+}
+
+class _ShopScreenState extends State<ShopScreen> {
+  User get user => context.read<UserCubit>().state.user;
 
   Future<void> _onItemPressed(BuildContext context, ShopItem item) async {
     final textTheme = Theme.of(context).textTheme;
@@ -121,18 +133,54 @@ class ShopScreen extends StatelessWidget {
               success: (items) => SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
-                  child: GridView.builder(
-                    itemCount: items.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return ShopItemCard(
-                        item: item,
-                        onPressed: () => _onItemPressed(context, item),
-                      );
-                    },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text('- TV -',
+                            style:
+                                textTheme.displayLarge?.copyWith(fontSize: 40)),
+                        const SizedBox(height: 16),
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          itemCount: items.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 4 / 3,
+                          ),
+                          itemBuilder: (context, index) {
+                            final item = items[index];
+                            return ShopItemCard(
+                              item: item,
+                              onPressed: () => _onItemPressed(context, item),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 32),
+                        Text('- СКИНЫ -',
+                            style:
+                                textTheme.displayLarge?.copyWith(fontSize: 40)),
+                        const SizedBox(height: 16),
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              widget.skinsRepository.skinsData.length - 1,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 32,
+                          ),
+                          itemBuilder: (context, index) {
+                            final skin =
+                                widget.skinsRepository.skinsData[index + 1];
+                            return ShopSkinCard(skin: skin);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

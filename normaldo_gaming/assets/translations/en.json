@@ -110,5 +110,8 @@
   "HERE WE GO": "HERE WE GO",
   "NEW SKIN!": "NEW SKIN!",
   "NEW RANK!": "NEW RANK!",
-  "toShop": "Store"
+  "toShop": "Store",
+  "Buy": "Buy",
+  "BOUGHT": "BOUGHT",
+  "notEnoughFunds": "Not enough funds!"
 }

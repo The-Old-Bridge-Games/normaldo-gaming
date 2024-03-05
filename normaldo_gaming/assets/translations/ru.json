@@ -145,5 +145,8 @@
   "THE HUMAN SPIDER \nMASK": "МАСКА\nПАУКА-САПИЕНСА",
   "VIKING HELMET": "ШЛЕМ ВИКИНГА",
   "MAGIC WAND": "ЖЕЗЛ МАГИИ",
-  "toShop": "Магазин"
+  "toShop": "Магазин",
+  "Buy": "Купить",
+  "BOUGHT": "КУПЛЕНО",
+  "notEnoughFunds": "Недостаточно средств!"
 }

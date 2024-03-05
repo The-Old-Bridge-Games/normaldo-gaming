@@ -38,7 +38,10 @@ final injector = Injector();
 
 void initializeInjector(Config config) {
   // Cubits&Blocs
-  injector.map<UserCubit>((injector) => UserCubit(injector.get()));
+  injector.map<UserCubit>((injector) => UserCubit(
+        injector.get(),
+        injector.get(key: 'skins_test'),
+      ));
   injector.map<GameSessionCubit>((injector) => GameSessionCubit());
   injector.map<LevelBloc>((injector) => LevelBloc());
   injector.map<SlotMachineCubit>((injector) => SlotMachineCubit());
