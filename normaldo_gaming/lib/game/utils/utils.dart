@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 abstract class Utils {
   const Utils._();
@@ -135,4 +136,56 @@ abstract class Utils {
     path_0.close();
     return path_0;
   }
+
+  static String itemImagePath(Items item) => switch (item) {
+        Items.trashBin => 'assets/images/trash_bin.png',
+        Items.pizza => 'assets/images/pizza.png',
+        Items.dollar => 'assets/images/dollar.png',
+        Items.fatPizza => 'assets/images/pizza_pack1.png',
+        Items.homeless => 'assets/images/homeless1.png',
+        Items.moneyBag => 'assets/images/money_bag.png',
+        Items.boombox => 'assets/images/boombox1.png',
+        Items.cocktail => 'assets/images/cocktail.png',
+        Items.molotov => 'assets/images/molotov1.png',
+        Items.hourglass => 'assets/images/hourglass.png',
+        Items.punch => 'assets/images/punch.png',
+        Items.shredder => 'assets/images/shredder.png',
+        Items.shuriken => 'assets/images/shuriken.png',
+        Items.allIn => 'assets/images/ALLIN 2.png',
+        Items.angryDog => 'assets/images/angry dog 2.png',
+        Items.bananaPeel => 'assets/images/bananas 2.png',
+        Items.beer => 'assets/images/beer (2) 2.png',
+        Items.bird => 'assets/images/Frame 70.png',
+        Items.bubbles => 'assets/images/Frame 74.png',
+        Items.cannibal => 'assets/images/canibal.png',
+        Items.caseyMask => 'assets/images/kasey mask2 2.png',
+        Items.casinoChip => 'assets/images/cazinocaps.png',
+        Items.compass => 'assets/images/compas 2.png',
+        Items.cone => 'assets/images/Sprite-conus1.png',
+        Items.energizer => 'assets/images/energeticl.png',
+        Items.girl => 'assets/images/girls3.png',
+        Items.goldClocks => 'assets/images/gold clock 3.png',
+        Items.greenPoison => 'assets/images/colba.png',
+        Items.gun => 'assets/images/Frame 73.png',
+        Items.handcuffs => 'assets/images/jail 2.png',
+        Items.letterBottle => 'assets/images/letter_bottle.png',
+        Items.loserTicket => 'assets/images/loser ticket.png',
+        Items.magicBox => 'assets/images/magic box 2.png',
+        Items.magicHat => 'assets/images/magic 3.png',
+        Items.magnet => 'assets/images/magnetp 2.png',
+        Items.note => 'assets/images/nota.png',
+        Items.note2 => 'assets/images/nota2.png',
+        Items.phone => 'assets/images/phone 3.png',
+        Items.policeAlarm => 'assets/images/Frame 72.png',
+        Items.policeman => 'assets/images/policeman.png',
+        Items.roadSign => 'assets/images/road_sign.png',
+        Items.security => 'assets/images/securiti.png',
+        Items.shipPart => 'assets/images/shippart.png',
+        Items.snake => 'assets/images/Frame 71.png',
+        Items.spadesCard => 'assets/images/pickyCard 2.png',
+        Items.stone => 'assets/images/stone 2.png',
+        Items.umbrella => 'assets/images/umbrella.png',
+        Items.hugeItem => 'assets/images/umbrella.png',
+        Items.shredderSword => 'assets/images/umbrella.png',
+      };
 }

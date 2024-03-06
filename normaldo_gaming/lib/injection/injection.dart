@@ -28,6 +28,7 @@ import 'package:normaldo_gaming/data/user/user_repository_impl.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/auth/auth_repository.dart';
+import 'package:normaldo_gaming/domain/knowledge/knowledge_repository.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository.dart';
 import 'package:normaldo_gaming/domain/shop/shop_repository.dart';
@@ -56,6 +57,7 @@ void initializeInjector(Config config) {
   // Repositories
   injector.map<MissionsRepository>((injector) => LocalMissionsRepository());
   injector.map<ShopRepository>((injector) => ShopRepositoryImpl());
+  injector.map<KnowledgeRepository>((injector) => KnowledgeRepositoryImpl());
   injector.map<UserRepository>((injector) => UserRepositoryImpl(
         injector.get<ChopperClient>().getService<UserApiService>(),
       ));

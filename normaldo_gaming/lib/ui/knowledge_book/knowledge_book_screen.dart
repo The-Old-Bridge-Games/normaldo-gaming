@@ -1,11 +1,19 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
-import 'package:normaldo_gaming/ui/knowledge_book/widgets/item_list_tile.dart';
+
+import 'package:normaldo_gaming/domain/knowledge/item_description.dart';
+import 'package:normaldo_gaming/domain/knowledge/knowledge_repository.dart';
+
+import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/ui/knowledge_book/widgets/detailed_item_card.dart';
+import 'package:normaldo_gaming/ui/knowledge_book/widgets/item_card.dart';
+
 import 'package:normaldo_gaming/ui/knowledge_book/widgets/type_picker.dart';
+import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
+
+// 1. написать все на русском
+// 2. добить развернутую карточку
 
 class KnowledgeBookScreen extends StatefulWidget {
   const KnowledgeBookScreen({super.key});
@@ -17,22 +25,14 @@ class KnowledgeBookScreen extends StatefulWidget {
 class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
   Types _type = Types.good;
 
-  final gudItems = [
-    Items.pizza,
-    Items.boombox,
-    Items.hourglass,
-    Items.dollar,
-    Items.moneyBag,
-  ];
+  final _repository = injector.get<KnowledgeRepository>();
 
-  final badItems = [
-    Items.trashBin,
-    Items.cocktail,
-    Items.homeless,
-    Items.molotov,
-    Items.punch,
-    Items.shuriken,
-  ];
+  ItemDescription? _pickedItem;
+
+  List<ItemDescription> get gudItems =>
+      _repository.itemDescriptions.where((element) => element.isGood).toList();
+  List<ItemDescription> get badItems =>
+      _repository.itemDescriptions.where((element) => !element.isGood).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,7 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
         child: Column(
           children: [
             _buildAppBar(context),
+            const SizedBox(height: 12),
             _buildItemsList(),
           ],
         ),
@@ -52,22 +53,55 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
 
   Widget _buildItemsList() {
     final items = _type == Types.good ? gudItems : badItems;
-    return Expanded(
-      child: ListView.separated(
-        key: ValueKey(_type),
-        shrinkWrap: true,
-        itemCount: items.length,
-        separatorBuilder: (context, index) => const Divider(
-          indent: 110,
-          color: NGTheme.purple2,
-          thickness: 1,
+    if (_pickedItem == null) {
+      return Expanded(
+        child: _buildGrid(items: items, crossAxisCount: 8),
+      );
+    } else {
+      return Expanded(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: _buildGrid(items: items, crossAxisCount: 5),
+            ),
+            const SizedBox(width: 32),
+            Expanded(
+              flex: 2,
+              child: DetailedItemCard(
+                item: _pickedItem!,
+              ),
+            ),
+          ],
         ),
+      );
+    }
+  }
+
+  GridView _buildGrid({
+    required List<ItemDescription> items,
+    required int crossAxisCount,
+  }) {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+        ),
+        itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return ItemListTile(item: item);
-        },
-      ),
-    );
+          return BouncingButton(
+            onPressed: () {
+              setState(() => _pickedItem = item);
+            },
+            child: ItemCard(
+              isGud: _type == Types.good,
+              item: item.item,
+              selected: _pickedItem == item,
+            ),
+          );
+        });
   }
 
   Row _buildAppBar(BuildContext context) {
@@ -88,15 +122,18 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
         ),
         Column(
           children: [
-            const SizedBox(height: 8),
-            Text(
-              'Book of Knowledge'.tr(),
-              style: textTheme.displayLarge,
-            ),
-            const SizedBox(height: 8),
+            // const SizedBox(height: 8),
+            // Text(
+            //   'Book of Knowledge'.tr(),
+            //   style: textTheme.displayLarge,
+            // ),
+            // const SizedBox(height: 8),
             TypePicker(
               onChanged: (type) {
                 setState(() {
+                  if (_type != type) {
+                    _pickedItem = null;
+                  }
                   _type = type;
                 });
               },

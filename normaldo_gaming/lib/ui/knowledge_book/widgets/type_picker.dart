@@ -32,13 +32,17 @@ class _TypePickerState extends State<TypePicker> {
                 });
                 widget.onChanged(Types.good);
               },
-              child: Container(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
                 height: containerHeight,
                 width: containerWidth,
                 decoration: BoxDecoration(
-                    color: _type == Types.good ? NGTheme.purple2 : Colors.black,
+                    color:
+                        _type == Types.good ? NGTheme.green1 : NGTheme.purple2,
                     border: Border.all(
-                      color: NGTheme.purple2,
+                      color: _type == Types.good
+                          ? NGTheme.green1
+                          : NGTheme.auraRed,
                       width: 2,
                     ),
                     borderRadius: const BorderRadius.only(
@@ -65,9 +69,11 @@ class _TypePickerState extends State<TypePicker> {
                 height: containerHeight,
                 width: containerWidth,
                 decoration: BoxDecoration(
-                    color: _type == Types.bad ? NGTheme.purple2 : Colors.black,
+                    color:
+                        _type == Types.bad ? NGTheme.auraRed : NGTheme.purple2,
                     border: Border.all(
-                      color: NGTheme.purple2,
+                      color:
+                          _type == Types.bad ? NGTheme.auraRed : NGTheme.green1,
                       width: 2,
                     ),
                     borderRadius: const BorderRadius.only(
