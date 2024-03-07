@@ -121,7 +121,7 @@ OS Version: ${Platform.operatingSystemVersion}
       fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AuthCubit>(create: (context) => injector.get()..auth()),
+          // BlocProvider<AuthCubit>(create: (context) => injector.get()..auth()),
           BlocProvider<UserCubit>(create: (context) => injector.get()),
           BlocProvider<SignUpCubit>(create: (context) => injector.get()),
           BlocProvider<SignInCubit>(create: (context) => injector.get()),

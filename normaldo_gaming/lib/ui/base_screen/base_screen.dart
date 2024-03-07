@@ -202,7 +202,7 @@ class _BaseScreenState extends State<BaseScreen> {
                     ActionChip(
                       onPressed: () async {
                         context.pop();
-                        context.read<AuthCubit>().logout();
+                        // context.read<AuthCubit>().logout();
                       },
                       label: const Text('Yep',
                           style: TextStyle(color: Colors.red)),

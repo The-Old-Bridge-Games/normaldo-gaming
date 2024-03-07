@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
@@ -17,6 +18,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _nickController = TextEditingController();
+
   void _blocListener(BuildContext context, SignUpState state) {
     if (state.failure != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -67,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 SizedBox(
                                   width: textFieldWidth,
                                   child: NGFormTextField(
+                                    controller: _nickController,
                                     validator: (value) =>
                                         !state.nickname.validate() ? '' : null,
                                     onChanged: (value) =>
@@ -74,47 +78,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     placeholder: 'Nickname..'.tr(),
                                   ),
                                 ),
-                                const SizedBox(height: 16),
-                                SizedBox(
-                                  width: textFieldWidth,
-                                  child: NGFormTextField(
-                                    validator: (value) =>
-                                        !state.email.validate()
-                                            ? 'incorrect email'.tr()
-                                            : null,
-                                    onChanged: (value) =>
-                                        cubit.changeEmail(value),
-                                    placeholder: 'Email..',
-                                    keyboardType: TextInputType.emailAddress,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                SizedBox(
-                                  width: textFieldWidth,
-                                  child: NGFormTextField(
-                                    validator: (value) => !state.password
-                                            .validate()
-                                        ? 'password must be 6 chars at least'
-                                            .tr()
-                                        : null,
-                                    onChanged: (value) =>
-                                        cubit.changePassword(value),
-                                    placeholder: 'Password'.tr(),
-                                    obscureText: true,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                SizedBox(
-                                  width: textFieldWidth,
-                                  child: NGFormTextField(
-                                    validator: (value) =>
-                                        !state.passwordsMatch ? "" : null,
-                                    onChanged: (value) =>
-                                        cubit.changeRepeatPassword(value),
-                                    placeholder: 'Repeat password..'.tr(),
-                                    obscureText: true,
-                                  ),
-                                ),
+                                // const SizedBox(height: 16),
+                                // SizedBox(
+                                //   width: textFieldWidth,
+                                //   child: NGFormTextField(
+                                //     validator: (value) =>
+                                //         !state.email.validate()
+                                //             ? 'incorrect email'.tr()
+                                //             : null,
+                                //     onChanged: (value) =>
+                                //         cubit.changeEmail(value),
+                                //     placeholder: 'Email..',
+                                //     keyboardType: TextInputType.emailAddress,
+                                //   ),
+                                // ),
+                                // const SizedBox(height: 16),
+                                // SizedBox(
+                                //   width: textFieldWidth,
+                                //   child: NGFormTextField(
+                                //     validator: (value) => !state.password
+                                //             .validate()
+                                //         ? 'password must be 6 chars at least'
+                                //             .tr()
+                                //         : null,
+                                //     onChanged: (value) =>
+                                //         cubit.changePassword(value),
+                                //     placeholder: 'Password'.tr(),
+                                //     obscureText: true,
+                                //   ),
+                                // ),
+                                // const SizedBox(height: 16),
+                                // SizedBox(
+                                //   width: textFieldWidth,
+                                //   child: NGFormTextField(
+                                //     validator: (value) =>
+                                //         !state.passwordsMatch ? "" : null,
+                                //     onChanged: (value) =>
+                                //         cubit.changeRepeatPassword(value),
+                                //     placeholder: 'Repeat password..'.tr(),
+                                //     obscureText: true,
+                                //   ),
+                                // ),
                                 const SizedBox(height: 16),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
@@ -128,33 +132,62 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             .displayMedium
                                             ?.copyWith(color: Colors.white),
                                         onPressed: () async {
-                                          final success = await context
-                                              .read<SignUpCubit>()
-                                              .signUp();
-                                          if (success) {
-                                            context.read<AuthCubit>().auth();
+                                          if (!state.nickname.validate()) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    behavior: SnackBarBehavior
+                                                        .floating,
+                                                    backgroundColor:
+                                                        NGTheme.purple2,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    content: Text(
+                                                      'nickname must be 3 chars at least'
+                                                          .tr(),
+                                                      style: textTheme
+                                                          .displayMedium,
+                                                    )));
+                                            return;
                                           }
+                                          context
+                                              .read<UserCubit>()
+                                              .changeName(_nickController.text);
+                                          context.pop();
+                                          // with api
+                                          // final success = await context
+                                          //     .read<SignUpCubit>()
+                                          //     .signUp();
+                                          // if (success) {
+                                          //   context.read<AuthCubit>().auth();
+                                          // }
                                         },
                                       ),
-                                      const SizedBox(width: 32),
-                                      Container(
-                                        decoration:
-                                            const BoxDecoration(boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 50,
-                                            spreadRadius: 10,
-                                          )
-                                        ]),
-                                        child: NGTextButton(
-                                          text: 'Sign In'.tr(),
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .displayMedium
-                                              ?.copyWith(color: Colors.white),
-                                          onPressed: () => context
-                                              .push(NGRoutes.signIn.path),
-                                        ),
-                                      )
+                                      // const SizedBox(width: 32),
+                                      // Container(
+                                      //   decoration:
+                                      //       const BoxDecoration(boxShadow: [
+                                      //     BoxShadow(
+                                      //       blurRadius: 50,
+                                      //       spreadRadius: 10,
+                                      //     )
+                                      //   ]),
+                                      //   child: NGTextButton(
+                                      //     text: 'Sign In'.tr(),
+                                      //     textStyle: Theme.of(context)
+                                      //         .textTheme
+                                      //         .displayMedium
+                                      //         ?.copyWith(color: Colors.white),
+                                      //     onPressed: () => context
+                                      //         .push(NGRoutes.signIn.path),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ),

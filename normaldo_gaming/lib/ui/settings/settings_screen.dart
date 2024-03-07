@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -80,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ActionChip(
                       onPressed: () async {
                         context.pop();
-                        context.read<AuthCubit>().logout();
+                        // context.read<AuthCubit>().logout();
                       },
                       label: const Text('Yep',
                           style: TextStyle(color: Colors.red)),

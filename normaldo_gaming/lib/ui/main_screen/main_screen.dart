@@ -8,7 +8,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -157,7 +156,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void _failureListener(BuildContext context, UserState state) {
     if (state.failure?.statusCode == HttpStatus.unauthorized) {
-      context.read<AuthCubit>().logout();
+      // context.read<AuthCubit>().logout();
     }
   }
 
@@ -166,7 +165,6 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     FlutterNativeSplash.remove();
-    context.read<UserCubit>().load();
 
     _buildingsPlayTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (!_buildingsPlaying && _buildingsPlayCount == 0 && _tab == Tabs.idle) {

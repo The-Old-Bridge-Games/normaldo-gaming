@@ -3,7 +3,7 @@ import 'package:normaldo_gaming/domain/utils/validator.dart';
 final class NicknameValidator extends Validator<String> {
   NicknameValidator(super.input);
 
-  final _regExp = RegExp(r'^[a-zA-Zа-яА-я0-9]{2,16}$');
+  final _regExp = RegExp(r'^[a-zA-Zа-яА-я0-9]{3,16}$');
 
   @override
   bool validate() {

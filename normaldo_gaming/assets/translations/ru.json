@@ -107,7 +107,7 @@
   "Repeat password..": "Повторите пароль..",
   "Sign In": "Войти",
   "Login": "Вход",
-  "nickname must be 3 chars at least": "ник должен содержать хотя бы 2 символа",
+  "nickname must be 3 chars at least": "ник должен содержать хотя бы 3 символа",
   "incorrect email": "некорректный email",
   "password must be 6 chars at least": "пароль должен быть хотя бы 6 символов",
   "passwords don't match": "пароли не совпадают",

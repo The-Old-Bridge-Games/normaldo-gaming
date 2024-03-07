@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/skins/models/skin_model.dart';
-import 'package:normaldo_gaming/data/user/models/skin_model.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -24,15 +23,6 @@ class UserCubit extends HydratedCubit<UserState> {
   final SkinsRepository _skinsRepository;
 
   final _levelManager = injector.get<LevelManager>();
-
-  Future<void> load() async {
-    try {
-      final user = await _userRepository.getUserInfo();
-      emit(state.copyWith(user: user));
-    } on NetworkException catch (e) {
-      emit(state.copyWith(failure: e));
-    }
-  }
 
   void buySkin(String uniqueId) {
     final skin = _skinsRepository.getSkinById(uniqueId);
@@ -56,7 +46,7 @@ class UserCubit extends HydratedCubit<UserState> {
           .copyWith(highScore: highScore)
           .toEntity(),
     ));
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void addDollars(int dollars) {
@@ -66,7 +56,7 @@ class UserCubit extends HydratedCubit<UserState> {
           .copyWith(dollars: state.user.dollars + dollars)
           .toEntity(),
     ));
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void takeDollars(int dollars) {
@@ -78,9 +68,9 @@ class UserCubit extends HydratedCubit<UserState> {
             .toEntity(),
       ),
     );
-    _userRepository.updateUser(user: state.user).catchError((e) {
-      print(e);
-    });
+    // _userRepository.updateUser(user: state.user).catchError((e) {
+    //   print(e);
+    // });
   }
 
   void applyRewards(List<Reward> rewards) {
@@ -115,7 +105,7 @@ class UserCubit extends HydratedCubit<UserState> {
             .toEntity(),
       ),
     );
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void educate() {
@@ -131,7 +121,7 @@ class UserCubit extends HydratedCubit<UserState> {
             .toEntity(),
       ),
     );
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void changeName(String name) {
@@ -139,7 +129,7 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(state.copyWith(
       user: UserModel.fromEntity(state.user).copyWith(name: name).toEntity(),
     ));
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void changeSkin(Skin skin) {
@@ -173,7 +163,7 @@ class UserCubit extends HydratedCubit<UserState> {
           )
           .toEntity(),
     ));
-    _userRepository.updateUser(user: state.user);
+    // _userRepository.updateUser(user: state.user);
   }
 
   void reset() {
