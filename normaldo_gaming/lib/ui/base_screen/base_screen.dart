@@ -3,7 +3,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -40,91 +39,116 @@ class _BaseScreenState extends State<BaseScreen> {
     final cubit = context.read<UserCubit>();
     final user = cubit.state.user;
     final skin = cubit.state.skin;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        centerTitle: true,
-        leadingWidth: 100,
-        leading: BouncingButton(
-          onPressed: () => context.pop(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '< back',
-                style: textTheme.displaySmall,
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-        elevation: 0,
-        title: Text('basement'.tr(), style: textTheme.displayLarge),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
+    return GestureDetector(
+      onDoubleTap: () {
+        context.read<UserCubit>().addExp(10);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 16),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: _buildSkin(skin)),
+                          _buildBackButton(context, textTheme),
                           Expanded(
-                            flex: 3,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  '${user.name} ${_levelManager.rank(user).tr()}',
-                                  style: textTheme.displaySmall,
-                                ),
-                                const SizedBox(height: 8),
-                                UserLevelBar(
-                                  levelManager: _levelManager,
-                                  barWidth: screenSize.width / 4,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  barHeight: 20,
-                                  includeRank: false,
-                                ),
-                              ],
+                            child: Center(
+                              child: Text(
+                                'basement'.tr(),
+                                style: textTheme.displayLarge,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      _buildMissions(),
-                      const SizedBox(height: 16),
-                      BouncingButton(
-                        onPressed: _onChangeLocalePressed,
-                        child: Text(
-                          'Language'.tr(
-                            args: [context.locale.languageCode],
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 32),
+                              Row(
+                                children: [
+                                  Expanded(child: _buildSkin(skin)),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          '${user.name} ${_levelManager.rank(user).tr()}',
+                                          style: textTheme.displaySmall,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        UserLevelBar(
+                                          levelManager: _levelManager,
+                                          barWidth: screenSize.width / 4,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          barHeight: 20,
+                                          includeRank: false,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              _buildMissions(),
+                              const SizedBox(height: 16),
+                              BouncingButton(
+                                onPressed: _onChangeLocalePressed,
+                                child: Text(
+                                  'Language'.tr(
+                                    args: [context.locale.languageCode],
+                                  ),
+                                  style: textTheme.displayMedium,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildLogoutButton(context, textTheme),
+                              const SizedBox(height: 16),
+                            ],
                           ),
-                          style: textTheme.displayMedium,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      _buildLogoutButton(context, textTheme),
-                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: ThePath(),
-              ),
-            ],
+                const Expanded(
+                  flex: 2,
+                  child: ThePath(),
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  BouncingButton _buildBackButton(BuildContext context, TextTheme textTheme) {
+    return BouncingButton(
+      onPressed: () => context.pop(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '< back',
+            style: textTheme.displaySmall,
+          ),
+        ],
       ),
     );
   }

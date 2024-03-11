@@ -223,6 +223,7 @@ class LevelManagerImpl implements LevelManager {
           const BucksReward(amount: 40),
           const ExtraLiveReward(amount: 2),
           RankReward(rank: rankFromLvl(5)),
+          const SkinReward('viking'),
         ],
         // 6 lvl
         [const BucksReward(amount: 60)],
@@ -239,7 +240,7 @@ class LevelManagerImpl implements LevelManager {
         // 10 lvl
         [
           const BucksReward(amount: 300),
-          const SkinReward(),
+          const SkinReward('batman'),
           const ExtraLiveReward(amount: 5),
           RankReward(rank: rankFromLvl(10)),
         ],
@@ -267,6 +268,7 @@ class LevelManagerImpl implements LevelManager {
         [
           const BucksReward(amount: 500),
           RankReward(rank: rankFromLvl(17)),
+          const SkinReward('dracula'),
           const ExtraLiveReward(amount: 3),
         ],
         // 18 lvl
@@ -313,6 +315,7 @@ class LevelManagerImpl implements LevelManager {
         [
           const BucksReward(amount: 500),
           RankReward(rank: rankFromLvl(30)),
+          const SkinReward('spider-man'),
           const ExtraLiveReward(amount: 1),
         ],
         // 31 lvl

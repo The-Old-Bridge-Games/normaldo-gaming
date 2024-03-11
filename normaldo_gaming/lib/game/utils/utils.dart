@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
@@ -136,6 +137,20 @@ abstract class Utils {
     path_0.close();
     return path_0;
   }
+
+  static String maskImagePath(String uniqueId) => switch (uniqueId) {
+        'basic' => 'assets/images/normaldo/mask.png',
+        'batman' => 'assets/images/normaldo/batman/mask.png',
+        'dracula' => 'assets/images/normaldo/dracula/mask.png',
+        'glasses' => 'assets/images/normaldo/glasses/mask.png',
+        'halloween' => 'assets/images/normaldo/halloween/mask.png',
+        'harry_potter' => 'assets/images/normaldo/harry_potter/mask.png',
+        'new_year' => 'assets/images/normaldo/new_year/mask.png',
+        'spider-man' => 'assets/images/normaldo/spider_man/mask.png',
+        'viking' => 'assets/images/normaldo/viking/mask.png',
+        'wizard' => 'assets/images/normaldo/wizard/mask.png',
+        _ => throw UnexpectedError(),
+      };
 
   static String itemImagePath(Items item) => switch (item) {
         Items.trashBin => 'assets/images/trash_bin.png',

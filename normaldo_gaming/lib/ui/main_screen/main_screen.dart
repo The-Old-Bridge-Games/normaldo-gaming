@@ -53,11 +53,9 @@ class _MainScreenState extends State<MainScreen> {
   Timer? _buildingsPlayTimer;
   int _buildingsPlayCount = 0;
 
-  static void _newLevelListener(BuildContext context, UserState state) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+  static void _newLevelListener(BuildContext context, UserState state) {
     final rewards =
         injector.get<LevelManager>().levelUpRewards[state.user.level - 1];
-    // ignore: use_build_context_synchronously
     showDialog(
         context: context,
         barrierDismissible: false,

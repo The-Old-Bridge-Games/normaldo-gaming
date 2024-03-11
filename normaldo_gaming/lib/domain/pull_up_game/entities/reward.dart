@@ -14,9 +14,9 @@ final class BucksReward extends Reward with ConsumableReward {
 }
 
 final class SkinReward extends Reward {
-  const SkinReward();
+  const SkinReward(this.uniqueId);
 
-  // final Skin skin;
+  final String uniqueId;
 }
 
 final class ExtraLiveReward extends Reward with ConsumableReward {

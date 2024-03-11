@@ -76,6 +76,7 @@ class UserCubit extends HydratedCubit<UserState> {
   void applyRewards(List<Reward> rewards) {
     var bucksRewarded = 0;
     var extraLivesRewarded = 0;
+    List<Skin> newSkins = [];
     for (final reward in rewards) {
       switch (reward) {
         case BucksReward():
@@ -83,7 +84,7 @@ class UserCubit extends HydratedCubit<UserState> {
         case ExtraLiveReward():
           extraLivesRewarded += reward.amount;
         case SkinReward():
-          continue;
+          newSkins.add(_skinsRepository.getSkinById(reward.uniqueId));
         default:
           continue;
       }
@@ -91,8 +92,10 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(state.copyWith(
         user: UserModel.fromEntity(state.user)
             .copyWith(
-                dollars: state.user.dollars + bucksRewarded,
-                extraLives: state.user.extraLives + extraLivesRewarded)
+              dollars: state.user.dollars + bucksRewarded,
+              extraLives: state.user.extraLives + extraLivesRewarded,
+              mySkins: (newSkins..addAll(state.user.mySkins)).toSet().toList(),
+            )
             .toEntity()));
   }
 
