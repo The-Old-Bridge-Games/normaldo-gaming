@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-import 'package:normaldo_gaming/game/components/boss_attacks/clone_attack.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -13,6 +13,8 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
 
   final Vector2 initialSize;
   final _currentBackgrounds = <SpriteAnimationComponent>[];
+  var _currentLocationIndex = 0;
+  int get currentLocationIndex => _currentLocationIndex;
 
   @override
   Future<void> onLoad() async {
@@ -31,6 +33,17 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
     ));
     addAll(_currentBackgrounds);
     _move();
+    add(TimerComponent(
+        period: 3,
+        repeat: true,
+        onTick: () {
+          final locationIndex =
+              (_currentBackgrounds.first.position.x / size.x).abs().toInt();
+          if (_currentLocationIndex != locationIndex) {
+            _currentLocationIndex = locationIndex;
+            gameRef.missionCubit.applyProgress(MissionType.reachLocation);
+          }
+        }));
     return super.onLoad();
     final imagesList = await Images().loadAll(List.generate(
         44, (index) => 'backgrounds/bg0/normaldo${index + 1}.png'));

@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
-import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -23,21 +22,22 @@ import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
-import 'components/mission_notification_component.dart';
 
 class PullUpGame extends FlameGame
     with TapCallbacks, DragCallbacks, HasCollisionDetection, HasNgAudio {
   static final menuIconSize = Vector2.all(30);
 
+  final UserCubit userCubit;
+  final GameSessionCubit gameSessionCubit;
+  final LevelBloc levelBloc;
+  final MissionCubit missionCubit;
+
   PullUpGame({
     required this.userCubit,
     required this.gameSessionCubit,
     required this.levelBloc,
+    required this.missionCubit,
   });
-
-  final UserCubit userCubit;
-  final GameSessionCubit gameSessionCubit;
-  final LevelBloc levelBloc;
 
   // Components
   late final Scene scene;
@@ -46,7 +46,6 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   late final FatCounter fatCounter;
   late final Grid grid;
-  late final CameraComponent _bossesCamera;
 
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;
@@ -69,11 +68,6 @@ class PullUpGame extends FlameGame
 
     await _initBloc();
 
-    _levelManager.completedMissions.listen((completedMission) {
-      print('COMPLETED: $completedMission');
-      _showCompletedMission(completedMission);
-    });
-
     add(TimerComponent(
       period: 0.5,
       removeOnFinish: true,
@@ -87,40 +81,18 @@ class PullUpGame extends FlameGame
 
   void _showMissions() {
     audio.playSfx(Sfx.missionCompleted);
-    void showMission(Mission mission) {
-      final component = MissionNotificationComponent(
-        mission: mission,
-        completed: false,
-      );
-      add(component
-        ..anchor = Anchor.topCenter
-        ..position = Vector2(_notificationXOffset, -100)
-        ..add(_missionDismissEffect(onComplete: () {
-          remove(component);
-        })));
-    }
 
-    for (final mission in _levelManager.missions) {
-      add(TimerComponent(
-        period: 2.6 * _levelManager.missions.indexOf(mission),
-        removeOnFinish: true,
-        onTick: () => showMission(mission),
-      ));
-    }
+    // for (final mission in _levelManager.missions) {
+    //   add(TimerComponent(
+    //     period: 2.6 * _levelManager.missions.indexOf(mission),
+    //     removeOnFinish: true,
+    //     onTick: () => showMission(mission),
+    //   ));
+    // }
   }
 
   void _showCompletedMission(Mission mission) {
     audio.playSfx(Sfx.missionCompleted);
-    final missionNotificationComponent =
-        MissionNotificationComponent(mission: mission);
-    add(missionNotificationComponent
-      ..anchor = Anchor.topCenter
-      ..position = Vector2(_notificationXOffset, -100)
-      ..add(
-        _missionDismissEffect(onComplete: () {
-          remove(missionNotificationComponent);
-        }),
-      ));
   }
 
   Effect _missionDismissEffect({required void Function() onComplete}) {

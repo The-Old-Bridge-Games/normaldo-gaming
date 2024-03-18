@@ -113,5 +113,25 @@
   "toShop": "Store",
   "Buy": "Buy",
   "BOUGHT": "BOUGHT",
-  "notEnoughFunds": "Not enough funds!"
+  "notEnoughFunds": "Not enough funds!",
+  "collect pizza in one game": {
+    "other": "Collect {} pizza in one game"
+  },
+  "collect pizza over games": {
+    "other": "Collect {} pizza total"
+  },
+  "crash item in one game": {
+    "other": "Crash {} {} times in one game"
+  },
+  "crash item over games": {
+    "other": "Crash {} {} times total"
+  },
+  "pass item in one game": {
+    "other": "pass {} {} times in one game"
+  },
+  "pass item over games": {
+    "other": "pass {} {} times total"
+  },
+  "reach location": "Reach {}",
+  "finish game at location": "Finish game at {}"
 }

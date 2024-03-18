@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
 import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
@@ -49,6 +50,8 @@ abstract class NGRouter {
                         BlocProvider<GameSessionCubit>(
                             create: (context) => injector.get()),
                         BlocProvider<LevelBloc>(
+                            create: (context) => injector.get()),
+                        BlocProvider<MissionCubit>(
                             create: (context) => injector.get()),
                       ],
                       child: const PullUpGameWidget(),

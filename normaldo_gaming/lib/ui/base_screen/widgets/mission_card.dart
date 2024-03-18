@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
-import 'package:normaldo_gaming/game/utils/mission_tr_ext.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
 
 class MissionCard extends StatelessWidget {
-  MissionCard({
+  const MissionCard({
     super.key,
     required this.mission,
-    this.progress = true,
+    this.showProgress = true,
   });
 
   final Mission mission;
-  final bool progress;
-
-  final _levelManager = injector.get<LevelManager>();
+  final bool showProgress;
 
   @override
   Widget build(BuildContext context) {
     const bgOpacity = 0.2;
     final textTheme = Theme.of(context).textTheme;
-    final progress = mission.type == MissionType.finishGame
-        ? null
-        : _levelManager.progressOf(mission) ?? 0;
     return Card(
       color: NGTheme.purple2,
       child: Padding(
@@ -61,9 +53,9 @@ class MissionCard extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Text(
-                this.progress
-                    ? mission.trDescription()
-                    : '${mission.trDescription()} $progress',
+                showProgress && !mission.isOneGame
+                    ? '${mission.description} ${mission.progressText}'
+                    : mission.description,
                 maxLines: 5,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,

@@ -203,4 +203,20 @@ abstract class Utils {
         Items.hugeItem => 'assets/images/umbrella.png',
         Items.shredderSword => 'assets/images/umbrella.png',
       };
+
+  static const locationExp = {
+    'gleb piece': 1,
+    'slot machine': 2,
+    'ufo': 2,
+    'sewers exit': 3,
+  };
+  static const locationIndexes = {
+    'gleb piece': 3,
+    'slot machine': 7,
+    'ufo': 8,
+    'sewers exit': 10,
+  };
+
+  static final locationIndexToString =
+      locationIndexes.map((key, value) => MapEntry(value, key));
 }

@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
@@ -87,24 +88,21 @@ class _MissionsScreenState extends State<MissionsScreen> {
                   const SizedBox(height: 16),
                   Stack(
                     children: [
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          itemCount: _levelManager.missions.length,
-                          itemBuilder: (context, index) {
-                            final mission = _levelManager.missions[index];
-                            final progress =
-                                mission.type == MissionType.finishGame
-                                    ? null
-                                    : _levelManager.progressOf(mission) ?? 0;
-                            return MissionTile(
-                              mission: _levelManager.missions[index],
-                              progressText: progress == null
-                                  ? null
-                                  : '($progress/${mission.value})',
-                            );
-                          }),
+                      BlocBuilder<MissionCubit, MissionState>(
+                          builder: (context, state) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 24.0),
+                            itemCount: state.missions.length,
+                            itemBuilder: (context, index) {
+                              final mission = state.missions.toList()[index];
+                              return MissionTile(
+                                mission: mission,
+                              );
+                            });
+                      }),
                     ],
                   )
                 ],

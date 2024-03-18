@@ -158,34 +158,34 @@ class _PauseMenuState extends State<PauseMenu> {
             visible: !_unpausing,
             child: Text('Missions'.tr(), style: textTheme.displayLarge),
           ),
-          Visibility(
-            visible: !_unpausing,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Row(
-                  children: _levelManager.missions.map((mission) {
-                    final progress = mission.type == MissionType.finishGame
-                        ? null
-                        : _levelManager.progressOf(mission) ?? 0;
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: MissionTile(
-                          mission: mission,
-                          progressText: progress == null
-                              ? null
-                              : '($progress/${mission.value})',
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
+          // Visibility(
+          //   visible: !_unpausing,
+          //   child: SizedBox(
+          //     width: MediaQuery.of(context).size.width,
+          //     height: 100,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          //       child: Row(
+          //         children: _levelManager.missions.map((mission) {
+          //           final progress = mission.type == MissionType.finishGame
+          //               ? null
+          //               : _levelManager.progressOf(mission) ?? 0;
+          //           return Expanded(
+          //             child: Padding(
+          //               padding: const EdgeInsets.only(right: 16.0),
+          //               child: MissionTile(
+          //                 mission: mission,
+          //                 progressText: progress == null
+          //                     ? null
+          //                     : '($progress/${mission.value})',
+          //               ),
+          //             ),
+          //           );
+          //         }).toList(),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

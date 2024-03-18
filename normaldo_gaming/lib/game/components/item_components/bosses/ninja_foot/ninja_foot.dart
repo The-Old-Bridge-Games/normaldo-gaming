@@ -18,7 +18,7 @@ enum NinjaFootState {
 final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
     with HasGameRef<PullUpGame>, Boss, Effects {
   NinjaFoot() {
-    debugMode = true;
+    debugMode = false;
   }
 
   @override

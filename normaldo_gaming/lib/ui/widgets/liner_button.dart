@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 
 enum LinerSide { top, right, bottom, left }
@@ -73,6 +74,25 @@ class LinerButton extends StatelessWidget {
         ),
         child: child,
       ),
+    );
+  }
+}
+
+class NGBackButton extends StatelessWidget {
+  final LinerSide side;
+
+  const NGBackButton({
+    super.key,
+    this.side = LinerSide.top,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return LinerButton(
+      side: side,
+      onPressed: () => context.pop(),
+      child: Text('<', style: textTheme.displayLarge),
     );
   }
 }

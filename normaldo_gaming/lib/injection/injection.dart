@@ -5,6 +5,7 @@ import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/pre_death/pre_death_cubit.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
@@ -20,7 +21,7 @@ import 'package:normaldo_gaming/data/auth/services/auth_local_storage.dart';
 import 'package:normaldo_gaming/data/core/interceptors/auth_interceptor.dart';
 import 'package:normaldo_gaming/data/core/interceptors/token_interceptor.dart';
 import 'package:normaldo_gaming/data/level/level_manager_impl.dart';
-import 'package:normaldo_gaming/data/pull_up_game/missions/local_missions_repository.dart';
+import 'package:normaldo_gaming/data/mission/missions_repository_impl.dart';
 import 'package:normaldo_gaming/data/shop/shop_repository_impl.dart';
 import 'package:normaldo_gaming/data/skins/skins_repository_test_impl.dart';
 import 'package:normaldo_gaming/data/user/services/user_api_service.dart';
@@ -53,9 +54,16 @@ void initializeInjector(Config config) {
   injector.map<AuthCubit>((injector) => AuthCubit(injector.get()));
   injector.map<SignUpCubit>((injector) => SignUpCubit(injector.get()));
   injector.map<SignInCubit>((injector) => SignInCubit(injector.get()));
+  injector.map<MissionCubit>(
+    (injector) => MissionCubit(
+      injector.get(),
+      injector.get(),
+    ),
+    allowFutureReassignment: true,
+  );
 
   // Repositories
-  injector.map<MissionsRepository>((injector) => LocalMissionsRepository());
+  injector.map<MissionsRepository>((injector) => MissionsRepositoryImpl());
   injector.map<ShopRepository>((injector) => ShopRepositoryImpl());
   injector.map<KnowledgeRepository>((injector) => KnowledgeRepositoryImpl());
   injector.map<UserRepository>((injector) => UserRepositoryImpl(
@@ -83,7 +91,7 @@ void initializeInjector(Config config) {
   // Managers
   injector.map<BaseAdManager>((injector) => AdManager(config));
   injector.map<LevelManager>(
-    (injector) => LevelManagerImpl(injector.get()),
+    (injector) => LevelManagerImpl(),
     isSingleton: true,
   );
 

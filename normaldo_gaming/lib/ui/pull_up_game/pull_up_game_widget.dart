@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/snowfall_widget/snowfall_widget.dart';
+import 'package:normaldo_gaming/ui/missions/notification_overlay.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pause_menu.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/pre_death_screen.dart';
 
@@ -62,30 +63,36 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
       onWillPop: () async {
         return false;
       },
-      child: GameWidget(
-        game: PullUpGame(
-          gameSessionCubit: context.read<GameSessionCubit>(),
-          levelBloc: context.read<LevelBloc>(),
-          userCubit: context.read(),
-        ),
-        overlayBuilderMap: {
-          Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
-          Overlays.deathScreen.name: (context, game) =>
-              BlocProvider<PreDeathCubit>(
-                create: (context) => injector.get(),
-                child: const PreDeathScreen(),
-              ),
-          Overlays.snowfall.name: (context, PullUpGame game) =>
-              const IgnorePointer(
-                child: SnowfallWidget(
-                  isRunning: true,
-                  totalSnow: 100,
-                  speed: 0.2,
-                  maxRadius: 4,
-                  snowColor: Colors.white,
-                ),
-              ),
-        },
+      child: Stack(
+        children: [
+          GameWidget(
+            game: PullUpGame(
+              gameSessionCubit: context.read<GameSessionCubit>(),
+              levelBloc: context.read<LevelBloc>(),
+              userCubit: context.read(),
+              missionCubit: context.read(),
+            ),
+            overlayBuilderMap: {
+              Overlays.pauseMenu.name: (context, game) => const PauseMenu(),
+              Overlays.deathScreen.name: (context, game) =>
+                  BlocProvider<PreDeathCubit>(
+                    create: (context) => injector.get(),
+                    child: const PreDeathScreen(),
+                  ),
+              Overlays.snowfall.name: (context, PullUpGame game) =>
+                  const IgnorePointer(
+                    child: SnowfallWidget(
+                      isRunning: true,
+                      totalSnow: 100,
+                      speed: 0.2,
+                      maxRadius: 4,
+                      snowColor: Colors.white,
+                    ),
+                  ),
+            },
+          ),
+          const IgnorePointer(child: MissionNotificationOverlay())
+        ],
       ),
     );
   }

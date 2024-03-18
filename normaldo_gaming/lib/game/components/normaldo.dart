@@ -133,7 +133,7 @@ class Normaldo extends PositionComponent
         FlameBlocReader<GameSessionCubit, GameSessionState>,
         CollisionCallbacks,
         HasNgAudio,
-        HasGameRef {
+        HasGameRef<PullUpGame> {
   static const smallHitboxRatio = 0.46;
   static const bigHitboxRatio = 0.5957;
 
@@ -206,7 +206,7 @@ class Normaldo extends PositionComponent
     if (_immortal) return;
     if (fatIterator.deadlyDamage(damage)) {
       nComponent.current = NormaldoFatState.skinnyDead;
-      bloc.die();
+      bloc.die(gameRef.missionCubit, gameRef.scene.currentLocationIndex);
       return;
     }
 
@@ -339,7 +339,7 @@ class Normaldo extends PositionComponent
       await prevFatState();
     } else if (_pizzaEaten <= 0 && isSkinny) {
       _pizzaEaten = 0;
-      bloc.die();
+      bloc.die(gameRef.missionCubit, gameRef.scene.currentLocationIndex);
     }
   }
 
@@ -522,7 +522,7 @@ class Normaldo extends PositionComponent
   }
 
   @override
-  bool get debugMode => true;
+  bool get debugMode => false;
 
   @override
   Future<void> onLoad() async {

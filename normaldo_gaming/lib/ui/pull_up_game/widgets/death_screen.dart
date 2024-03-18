@@ -56,65 +56,58 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
       });
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final textTheme = Theme.of(context).textTheme;
-      await Future.delayed(const Duration(seconds: 2));
-      final missions = List.from(_levelManager.missions);
-      final removeIndexes = missions
-          .where((m) => m.completed)
-          .map((e) => missions.indexOf(e))
-          .toList();
-      for (final index in removeIndexes) {
-        _animatedListKey.currentState?.removeItem(
-          index,
-          duration: const Duration(seconds: 2),
-          (context, animation) {
-            return FadeTransition(
-              opacity: animation.drive(TweenSequence([
-                TweenSequenceItem(
-                    tween: Tween(begin: 1.0, end: 1.0), weight: 0.7),
-                TweenSequenceItem(
-                    tween: Tween(begin: 1.0, end: 0.0), weight: 0.3),
-              ])),
-              child: Container(
-                height: MissionTile.height,
-                decoration: BoxDecoration(
-                  color: NGTheme.orange1,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                margin: const EdgeInsets.only(bottom: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 4.0),
-                      child: Text(
-                        '+ ${missions[index].exp} EXP',
-                        style: textTheme.displayMedium,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-        userCubit.addExp(missions[index].exp);
-        _levelManager.remove(missions[index]);
-        await Future.delayed(const Duration(seconds: 2));
-        _levelManager.insertNewMission(index);
-        _animatedListKey.currentState
-            ?.insertItem(index, duration: const Duration(milliseconds: 300));
-        await Future.delayed(const Duration(seconds: 1));
-      }
+      // for (final index in removeIndexes) {
+      //   _animatedListKey.currentState?.removeItem(
+      //     index,
+      //     duration: const Duration(seconds: 2),
+      //     (context, animation) {
+      //       return FadeTransition(
+      //         opacity: animation.drive(TweenSequence([
+      //           TweenSequenceItem(
+      //               tween: Tween(begin: 1.0, end: 1.0), weight: 0.7),
+      //           TweenSequenceItem(
+      //               tween: Tween(begin: 1.0, end: 0.0), weight: 0.3),
+      //         ])),
+      //         child: Container(
+      //           height: MissionTile.height,
+      //           decoration: BoxDecoration(
+      //             color: NGTheme.orange1,
+      //             borderRadius: BorderRadius.circular(4.0),
+      //           ),
+      //           margin: const EdgeInsets.only(bottom: 8.0),
+      //           child: Row(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             crossAxisAlignment: CrossAxisAlignment.center,
+      //             children: [
+      //               Padding(
+      //                 padding: const EdgeInsets.only(bottom: 4.0),
+      //                 child: Text(
+      //                   '+ ${missions[index].exp} EXP',
+      //                   style: textTheme.displayMedium,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   );
+      //   userCubit.addExp(missions[index].exp);
+      //   _levelManager.remove(missions[index]);
+      //   await Future.delayed(const Duration(seconds: 2));
+      //   _levelManager.insertNewMission(index);
+      //   _animatedListKey.currentState
+      //       ?.insertItem(index, duration: const Duration(milliseconds: 300));
+      //   await Future.delayed(const Duration(seconds: 1));
+      // }
     });
   }
 
   @override
   void dispose() {
     audio.stopAudio(_audioId);
-    _levelManager.cleanProgress();
     super.dispose();
   }
 
@@ -254,29 +247,29 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
       children: [
         Text('Missions'.tr(), style: textTheme.displayLarge),
         const SizedBox(height: 18),
-        AnimatedList(
-          key: _animatedListKey,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          initialItemCount: _levelManager.missions.length,
-          itemBuilder: (context, index, animation) {
-            final mission = _levelManager.missions[index];
-            final progress = mission.type == MissionType.finishGame
-                ? null
-                : _levelManager.progressOf(mission) ?? 0;
-            return FadeTransition(
-              key: UniqueKey(),
-              opacity: animation.drive(Tween(
-                begin: 0,
-                end: 1,
-              )),
-              child: MissionTile(
-                  mission: mission,
-                  progressText:
-                      progress == null ? null : '($progress/${mission.value})'),
-            );
-          },
-        ),
+        // AnimatedList(
+        //   key: _animatedListKey,
+        //   shrinkWrap: true,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   initialItemCount: _levelManager.missions.length,
+        //   itemBuilder: (context, index, animation) {
+        //     final mission = _levelManager.missions[index];
+        //     final progress = mission.type == MissionType.finishGame
+        //         ? null
+        //         : _levelManager.progressOf(mission) ?? 0;
+        //     return FadeTransition(
+        //       key: UniqueKey(),
+        //       opacity: animation.drive(Tween(
+        //         begin: 0,
+        //         end: 1,
+        //       )),
+        //       child: MissionTile(
+        //           mission: mission,
+        //           progressText:
+        //               progress == null ? null : '($progress/${mission.value})'),
+        //     );
+        //   },
+        // ),
       ],
     );
   }

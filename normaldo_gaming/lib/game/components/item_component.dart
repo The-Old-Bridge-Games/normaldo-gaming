@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
@@ -74,7 +75,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   ) {
     if (!collidable) return;
     if (other is Normaldo && !other.immortal) {
-      levelManager.checkHit(hitItem: item);
+      gameRef.missionCubit.applyProgress(MissionType.crashItem, item: item);
     }
     if (other is KillingItem ||
         (other is AttackingItem &&
@@ -99,6 +100,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
     }
     if (autoRemove) {
       if (position.x < -size.x) {
+        gameRef.missionCubit.applyProgress(MissionType.passItem, item: item);
         removeFromParent();
       }
     }
@@ -170,7 +172,10 @@ mixin CleanScreenItem on Item {
 // ✅
 mixin KillingItem on Item {
   void kill() {
-    game.gameSessionCubit.die();
+    game.gameSessionCubit.die(
+      gameRef.missionCubit,
+      gameRef.scene.currentLocationIndex,
+    );
   }
 }
 
@@ -254,6 +259,7 @@ mixin SlowMoItem on Item {
 mixin PizzaGivingItem on Item {
   void givePizza() {
     game.gameSessionCubit.eatPizza();
+    gameRef.missionCubit.applyProgress(MissionType.collectPizza, item: item);
     game.grid.normaldo.increaseFatPoints(1);
     removeFromParent();
   }

@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -12,6 +13,7 @@ import 'package:normaldo_gaming/ui/base_screen/widgets/mission_card.dart';
 import 'package:normaldo_gaming/ui/base_screen/widgets/skin_picker.dart';
 import 'package:normaldo_gaming/ui/base_screen/widgets/the_path.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -62,65 +64,68 @@ class _BaseScreenState extends State<BaseScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _buildBackButton(context, textTheme),
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                'basement'.tr(),
-                                style: textTheme.displayLarge,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 32),
-                              Row(
-                                children: [
-                                  Expanded(child: _buildSkin(skin)),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          '${user.name} ${_levelManager.rank(user).tr()}',
-                                          style: textTheme.displaySmall,
-                                        ),
-                                        const SizedBox(height: 8),
-                                        UserLevelBar(
-                                          levelManager: _levelManager,
-                                          barWidth: screenSize.width / 4,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          barHeight: 20,
-                                          includeRank: false,
-                                        ),
-                                      ],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16),
+                            // Skin&Level
+                            Card(
+                              color: NGTheme.purple2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  side: const BorderSide(
+                                    color: NGTheme.purple3,
+                                    width: 4,
+                                  )),
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(child: _buildSkin(skin)),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            '${user.name} ${_levelManager.rank(user).tr()}',
+                                            style: textTheme.displaySmall,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          UserLevelBar(
+                                            levelManager: _levelManager,
+                                            barWidth: screenSize.width / 4,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            barHeight: 20,
+                                            includeRank: false,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              _buildMissions(),
-                              const SizedBox(height: 16),
-                              BouncingButton(
-                                onPressed: _onChangeLocalePressed,
-                                child: Text(
-                                  'Language'.tr(
-                                    args: [context.locale.languageCode],
-                                  ),
-                                  style: textTheme.displayMedium,
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 16),
-                              _buildLogoutButton(context, textTheme),
-                              const SizedBox(height: 16),
-                            ],
-                          ),
+                            ),
+                            const Spacer(),
+                            _buildMissions(),
+                            // const SizedBox(height: 16),
+                            // BouncingButton(
+                            //   onPressed: _onChangeLocalePressed,
+                            //   child: Text(
+                            //     'Language'.tr(
+                            //       args: [context.locale.languageCode],
+                            //     ),
+                            //     style: textTheme.displayMedium,
+                            //   ),
+                            // ),
+                            // const SizedBox(height: 16),
+                            // _buildLogoutButton(context, textTheme),
+                            // const SizedBox(height: 16),
+                          ],
                         ),
                       ),
                     ],
@@ -141,14 +146,9 @@ class _BaseScreenState extends State<BaseScreen> {
   BouncingButton _buildBackButton(BuildContext context, TextTheme textTheme) {
     return BouncingButton(
       onPressed: () => context.pop(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '< back',
-            style: textTheme.displaySmall,
-          ),
-        ],
+      child: Text(
+        '< back',
+        style: textTheme.displaySmall,
       ),
     );
   }
@@ -179,10 +179,10 @@ class _BaseScreenState extends State<BaseScreen> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
-                      radius: 0.6,
+                      radius: 0.5,
                       colors: [
                         NGTheme.colorOf(skin.rarity),
-                        Colors.transparent,
+                        NGTheme.purple2,
                       ],
                     )),
               ),
@@ -197,14 +197,6 @@ class _BaseScreenState extends State<BaseScreen> {
                 ),
               ),
             ],
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              skin.name.tr(),
-              style: NGTheme.displaySmall.copyWith(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
           ),
         ],
       ),
@@ -249,43 +241,42 @@ class _BaseScreenState extends State<BaseScreen> {
 
   Widget _buildMissions() {
     final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () => setState(() => _missionsExpandController.toggle()),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Missions'.tr(),
-                style: textTheme.displayMedium,
+    return Card(
+      color: NGTheme.purple2,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(
+            color: NGTheme.purple3,
+            width: 4,
+          )),
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8),
+              child: GestureDetector(
+                onTap: () => setState(() => _missionsExpandController.toggle()),
+                child: Text(
+                  'Missions'.tr(),
+                  style: textTheme.displayMedium,
+                ),
               ),
-              const SizedBox(width: 16),
-              AnimatedRotation(
-                duration: const Duration(milliseconds: 300),
-                turns: _missionsExpandController.value ? 0.25 : 0,
-                child: Text('>',
-                    style: textTheme.displayLarge?.copyWith(fontSize: 28)),
-              ),
-            ],
-          ),
-        ),
-        Expandable(
-          controller: _missionsExpandController,
-          collapsed: const SizedBox.shrink(),
-          expanded: SizedBox(
-            height: 125,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: _levelManager.missions
-                  .map((mission) =>
-                      Expanded(child: MissionCard(mission: mission)))
-                  .toList(),
             ),
-          ),
+            BlocBuilder<MissionCubit, MissionState>(builder: (context, state) {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.missions.length,
+                  itemBuilder: (context, index) {
+                    final mission = state.missions.toList()[index];
+                    return MissionTile(mission: mission);
+                  });
+            }),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
