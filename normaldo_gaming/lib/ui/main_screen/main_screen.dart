@@ -111,9 +111,9 @@ class _MainScreenState extends State<MainScreen> {
   void _onSettingsPressed() {
     _buildingsPlaying = false;
     if (_tab == Tabs.settings) {
-      // context
-      //     .pushNamed(NGRoutes.settings.name)
-      //     .whenComplete(() => tab = Tabs.idle);
+      context
+          .pushNamed(NGRoutes.settings.name)
+          .whenComplete(() => tab = Tabs.idle);
     } else {
       tab = Tabs.settings;
     }

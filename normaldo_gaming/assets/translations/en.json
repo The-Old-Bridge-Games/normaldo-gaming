@@ -105,7 +105,7 @@
   "trash": "Just a trash bin",
   "shop": "Store",
   "slots": "Entertainment",
-  "settings": "Just a building",
+  "settings": "Settings",
   "play": "TO THE GAME!",
   "HERE WE GO": "HERE WE GO",
   "NEW SKIN!": "NEW SKIN!",
@@ -133,5 +133,7 @@
     "other": "pass {} {} times total"
   },
   "reach location": "Reach {}",
-  "finish game at location": "Finish game at {}"
+  "finish game at location": "Finish game at {}",
+  "reset": "Reset",
+  "intro": "Intro"
 }

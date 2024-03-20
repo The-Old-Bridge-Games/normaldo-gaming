@@ -122,7 +122,7 @@
   "trash": "Какая-то мусорка..",
   "shop": "Магазин",
   "slots": "Развлечения",
-  "settings": "Строение",
+  "settings": "Настройки",
   "play": "В ИГРУ!",
   "HERE WE GO": "Поехали!",
   "NEW SKIN!": "НОВЫЙ СКИН!",
@@ -198,5 +198,7 @@
     "other": "Пролети {} {} раз"
   },
   "reach location": "Долети до {}",
-  "finish game at location": "Закончи игру около {}"
+  "finish game at location": "Закончи игру около {}",
+  "reset": "Сброс",
+  "intro": "Интро"
 }
