@@ -103,7 +103,15 @@ class Mission with _$Mission {
   }) = _FinishGameMission;
 
   bool get completed => currentValue >= completeValue || adsViewed >= exp;
-  String get progressText => '($currentValue/$completeValue)';
+  String get progressText => maybeWhen(
+        reachLocation: (exp, description, adsViewed, completeValue, isOneGame,
+                type, currentValue) =>
+            '(${completed ? 1 : 0}/1)',
+        finishGame: (exp, description, adsViewed, completeValue, isOneGame,
+                type, currentValue) =>
+            '(${completed ? 1 : 0}/1)',
+        orElse: () => '($currentValue/$completeValue)',
+      );
 
   factory Mission.fromJson(Map<String, dynamic> json) =>
       _$MissionFromJson(json);

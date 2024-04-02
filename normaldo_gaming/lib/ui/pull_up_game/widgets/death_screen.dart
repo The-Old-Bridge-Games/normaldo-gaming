@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,11 +8,10 @@ import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
-import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
+import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 import 'package:normaldo_gaming/ui/slot_machine/slot_machine_screen.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
@@ -32,8 +30,6 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   final _levelManager = injector.get<LevelManager>();
 
   double _opacity = 0.0;
-
-  final _animatedListKey = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -55,54 +51,6 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
         _opacity = 1.0;
       });
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final textTheme = Theme.of(context).textTheme;
-      // for (final index in removeIndexes) {
-      //   _animatedListKey.currentState?.removeItem(
-      //     index,
-      //     duration: const Duration(seconds: 2),
-      //     (context, animation) {
-      //       return FadeTransition(
-      //         opacity: animation.drive(TweenSequence([
-      //           TweenSequenceItem(
-      //               tween: Tween(begin: 1.0, end: 1.0), weight: 0.7),
-      //           TweenSequenceItem(
-      //               tween: Tween(begin: 1.0, end: 0.0), weight: 0.3),
-      //         ])),
-      //         child: Container(
-      //           height: MissionTile.height,
-      //           decoration: BoxDecoration(
-      //             color: NGTheme.orange1,
-      //             borderRadius: BorderRadius.circular(4.0),
-      //           ),
-      //           margin: const EdgeInsets.only(bottom: 8.0),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             crossAxisAlignment: CrossAxisAlignment.center,
-      //             children: [
-      //               Padding(
-      //                 padding: const EdgeInsets.only(bottom: 4.0),
-      //                 child: Text(
-      //                   '+ ${missions[index].exp} EXP',
-      //                   style: textTheme.displayMedium,
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       );
-      //     },
-      //   );
-      //   userCubit.addExp(missions[index].exp);
-      //   _levelManager.remove(missions[index]);
-      //   await Future.delayed(const Duration(seconds: 2));
-      //   _levelManager.insertNewMission(index);
-      //   _animatedListKey.currentState
-      //       ?.insertItem(index, duration: const Duration(milliseconds: 300));
-      //   await Future.delayed(const Duration(seconds: 1));
-      // }
-    });
   }
 
   @override
@@ -119,113 +67,155 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
       body: AnimatedOpacity(
         opacity: _opacity,
         duration: const Duration(seconds: 1),
-        child: Center(
-          child: Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(horizontal: 65, vertical: 16),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: NGTheme.purple3, width: 3),
-            ),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      child: Row(
+        child: Stack(
+          children: [
+            SafeArea(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  UserLevelBar(
-                                    levelManager: _levelManager,
-                                    barWidth: 223,
-                                  ),
-                                  const SizedBox(height: 32.0),
-                                  _buildScore(context, cubit.state.score),
-                                  const SizedBox(height: 32.0),
-                                  _buildDollars(context, cubit.state.dollars),
-                                  const Spacer(),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(child: _buildMissions()),
+                          _buildMissions(),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          BouncingButton(
-                            onPressed: () => context.pop(),
-                            child: Image.asset(
-                              'assets/images/menu_bubble_button.png',
-                            ),
-                          ),
-                          const SizedBox(width: 32),
-                          BouncingButton(
-                            onPressed: () async {
-                              await audio.stopBgm();
-                              // ignore: use_build_context_synchronously
-                              context.pushReplacement(NGRoutes.pullUpGame.path);
-                            },
-                            child: Image.asset(
-                              'assets/images/retry_bubble_button.png',
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Align(
-                  alignment: const Alignment(-0.3, 1),
-                  child: BouncingButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                BlocProvider<SlotMachineCubit>(
-                                  create: (context) => injector.get(),
-                                  child: const SlotMachineScreen(),
-                                ))),
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          'assets/images/slot_machine.png',
-                          width: 80,
-                          height: 160,
-                          fit: BoxFit.contain,
-                        ),
-                        Positioned(
-                            top: 42,
-                            left: 22,
-                            child: Image.asset(
-                              'assets/images/normaldo/normaldo2.png',
-                              width: 30,
-                              height: 30,
-                            ))
-                      ],
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: NGTheme.purple3, width: 3),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12.0,
+                        horizontal: 8.0,
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Column(
+                        children: [
+                          UserLevelBar(
+                            levelManager: _levelManager,
+                            barWidth: 180,
+                          ),
+                          const SizedBox(height: 32.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              _buildScore(context, cubit.state.score),
+                              _buildDollars(context, cubit.state.dollars),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          _buildNewRecordText(),
+                          const Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BouncingButton(
+                                onPressed: () => context.pop(),
+                                child: Image.asset(
+                                    'assets/images/menu_bubble_button.png'),
+                              ),
+                              BouncingButton(
+                                onPressed: () {
+                                  audio.stopBgm().whenComplete(() =>
+                                      context.pushReplacement(
+                                          NGRoutes.pullUpGame.path));
+                                },
+                                child: Image.asset(
+                                    'assets/images/retry_bubble_button.png'),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            Positioned(
+              left: 24,
+              bottom: 0,
+              child: _buildBuildings(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBuildings() {
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width / 2,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0)
+              .add(const EdgeInsets.only(left: 32.0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              BouncingButton(
+                onPressed: () => context.push(NGRoutes.shop.path),
+                // onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) =>
+                //         ShopScreen(injector.get(key: 'skins_test')))),
+                child: Image.asset('assets/images/main_screen/shop.png'),
+              ),
+              BouncingButton(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => BlocProvider<SlotMachineCubit>(
+                          create: (context) => injector.get(),
+                          child: const SlotMachineScreen(),
+                        ))),
+                child: Image.asset('assets/images/main_screen/slots.png'),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
+  Widget _buildSlots() {
+    return BouncingButton(
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BlocProvider<SlotMachineCubit>(
+                create: (context) => injector.get(),
+                child: const SlotMachineScreen(),
+              ))),
+      child: Stack(
+        children: [
+          Center(
+            child: Image.asset(
+              'assets/images/slot_machine.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+          Align(
+              alignment: const Alignment(-0.005, -0.35),
+              child: Image.asset(
+                'assets/images/normaldo/normaldo2.png',
+                width: 30,
+                height: 30,
+              ))
+        ],
+      ),
+    );
+  }
+
   Widget _buildNewRecordText() {
+    print(
+        'CURRENT GAME SCORE: ${context.read<GameSessionCubit>().state.score}');
     final textTheme = Theme.of(context).textTheme;
     return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
       return Visibility(
@@ -242,35 +232,8 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   }
 
   Widget _buildMissions() {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        Text('Missions'.tr(), style: textTheme.displayLarge),
-        const SizedBox(height: 18),
-        // AnimatedList(
-        //   key: _animatedListKey,
-        //   shrinkWrap: true,
-        //   physics: const NeverScrollableScrollPhysics(),
-        //   initialItemCount: _levelManager.missions.length,
-        //   itemBuilder: (context, index, animation) {
-        //     final mission = _levelManager.missions[index];
-        //     final progress = mission.type == MissionType.finishGame
-        //         ? null
-        //         : _levelManager.progressOf(mission) ?? 0;
-        //     return FadeTransition(
-        //       key: UniqueKey(),
-        //       opacity: animation.drive(Tween(
-        //         begin: 0,
-        //         end: 1,
-        //       )),
-        //       child: MissionTile(
-        //           mission: mission,
-        //           progressText:
-        //               progress == null ? null : '($progress/${mission.value})'),
-        //     );
-        //   },
-        // ),
-      ],
+    return const MissionsList(
+      padding: EdgeInsets.symmetric(vertical: 12.0),
     );
   }
 
@@ -278,7 +241,6 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
     final textTheme = Theme.of(context).textTheme;
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Image.asset(
           'assets/images/pizza.png',
@@ -290,8 +252,6 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
           score.toString(),
           style: textTheme.displayLarge,
         ),
-        const Spacer(),
-        _buildNewRecordText(),
       ],
     );
   }

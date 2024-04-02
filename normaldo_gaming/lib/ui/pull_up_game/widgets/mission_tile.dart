@@ -1,16 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 
 class MissionTile extends StatelessWidget {
   final Mission mission;
   final bool showProgress;
+  final VoidCallback? onCompletePressed;
 
   const MissionTile({
     super.key,
     required this.mission,
-    this.showProgress = false,
+    this.showProgress = true,
+    this.onCompletePressed,
   });
 
   @override
@@ -18,34 +22,43 @@ class MissionTile extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return ListTile(
       leading: _buildExp(context),
+      tileColor: NGTheme.purple2,
+      trailing: false
+          ? IconButton(
+              onPressed: onCompletePressed,
+              icon: const Icon(
+                Icons.done,
+                color: NGTheme.green1,
+              ))
+          : null,
       title: Text(
           mission.when(
-            collectPizza: (exp, completeValue, isOneGame, description,
-                    adsViewed, type, currentValue) =>
-                mission.description
-                    .plural(completeValue, args: [completeValue.toString()]),
-            crashItem: (exp, completeValue, isOneGame, description, adsViewed,
-                    item, type, currentValue) =>
-                mission.description.plural(completeValue,
-                    args: [item.name, completeValue.toString()]),
-            passItem: (exp, completeValue, isOneGame, description, adsViewed,
-                    item, type, currentValue) =>
-                mission.description.plural(completeValue,
-                    args: [item.name, completeValue.toString()]),
-            reachLocation: (exp, description, adsViewed, completeValue,
-                    isOneGame, type, currentValue) =>
-                mission.description.tr(args: [
-              Utils.locationIndexToString[completeValue] ?? 'UNKNOWN'
-            ]),
-            finishGame: (exp, description, adsViewed, completeValue, isOneGame,
-                    type, currentValue) =>
-                mission.description.tr(args: [
-              Utils.locationIndexToString[completeValue] ?? 'UNKNOWN'
-            ]),
-          ),
-          style: textTheme.displayMedium),
-      subtitle:
-          showProgress && !mission.isOneGame ? _buildSubtitle(context) : null,
+                collectPizza: (exp, completeValue, isOneGame, description,
+                        adsViewed, type, currentValue) =>
+                    mission.description.plural(completeValue,
+                        args: [completeValue.toString()]),
+                crashItem: (exp, completeValue, isOneGame, description,
+                        adsViewed, item, type, currentValue) =>
+                    mission.description.plural(completeValue,
+                        args: [item.name.tr(), completeValue.toString()]),
+                passItem: (exp, completeValue, isOneGame, description,
+                        adsViewed, item, type, currentValue) =>
+                    mission.description.plural(completeValue,
+                        args: [item.name.tr(), completeValue.toString()]),
+                reachLocation: (exp, description, adsViewed, completeValue,
+                        isOneGame, type, currentValue) =>
+                    mission.description.tr(args: [
+                  Utils.locationIndexToString[completeValue]?.tr() ?? 'UNKNOWN'
+                ]),
+                finishGame: (exp, description, adsViewed, completeValue,
+                        isOneGame, type, currentValue) =>
+                    mission.description.tr(args: [
+                  Utils.locationIndexToString[completeValue]?.tr() ?? 'UNKNOWN'
+                ]),
+              ) +
+              (showProgress ? ' ${mission.progressText}' : ''),
+          style: textTheme.displaySmall
+              ?.copyWith(color: mission.completed ? NGTheme.green1 : null)),
     );
   }
 
@@ -61,14 +74,11 @@ class MissionTile extends StatelessWidget {
           height: 25,
         ),
         const SizedBox(width: 8),
-        Text(mission.exp.toString(), style: textTheme.displayMedium),
+        Text(mission.exp.toString(),
+            style: textTheme.displayMedium
+                ?.copyWith(color: mission.completed ? NGTheme.green1 : null)),
       ],
     );
-  }
-
-  Widget _buildSubtitle(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Text(mission.progressText, style: textTheme.displaySmall);
   }
 }
 

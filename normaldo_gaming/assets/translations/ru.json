@@ -35,7 +35,6 @@
     "many": "Ударься о {} {} в одной игре",
     "other": "Ударься об {} {} в одной игре"
   },
-  "trashBin": "бочка",
   "pizza": "пицца",
   "dollar": "доллар",
   "fatPizza": "коробка пиццы",
@@ -91,7 +90,6 @@
   "Exit": "Выход",
   "WIN ROLLS": "КОМБИНАЦИИ",
   "Book of Knowledge": "Книга Знаний",
-  "homeless": "бомж",
   "shuriken": "сюрикен",
   "like any rooftop-hitting beverage, the cocktail complicates Normaldo's flight, making his movement more challenging. Be careful to avoid collisions with obstacles!": "подобно любому крышесносному напитку, коктейль усложняет полет NORMALDO, делая его движение более каменным. Будь внимателен, чтобы избежать столкновения с препятствиями!",
   "a crumpled bin filled with a pile of garbage, perhaps the most negative item in this story, because you will encounter it until you reach the GAME OVER point. Masters of quick reactions, welcome aboard! And to those who are just starting their journey, don't worry, everything will be NORMALDO!": "помятый бак,  набитый кучей мусора , пожалуй самый отрицательный предмет этой истории , потому что его вы будете встречать до той  самой  точки GAME OVER. Мастера высокой реакции, добро пожаловать на борт! А тем, кто только начинает свой путь, не волнуйтесь все будет NORMALDO! переведи на английский",
@@ -200,5 +198,16 @@
   "reach location": "Долети до {}",
   "finish game at location": "Закончи игру около {}",
   "reset": "Сброс",
-  "intro": "Интро"
+  "intro": "Интро",
+  "gleb piece": "кусок Глеба",
+  "slot machine": "игровые автоматы",
+  "ufo": "НЛО",
+  "sewers exit": "выхода из канализации",
+  "bananaPeel": "кожура банана",
+  "trashBin": "мусорка",
+  "roadSign": "дорожный знак",
+  "cone": "конус",
+  "homeless": "бомж",
+  "Resume": "Продолжить",
+  "SKINS": "СКИНЫ"
 }

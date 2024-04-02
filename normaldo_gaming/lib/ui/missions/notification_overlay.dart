@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 class MissionNotificationOverlay extends StatefulWidget {
   const MissionNotificationOverlay({super.key});
@@ -103,9 +106,12 @@ class _MissionNotificationState extends State<MissionNotificationOverlay>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(13),
-                ),
+                    color: NGTheme.purple2,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: NGTheme.purple3,
+                      width: 4,
+                    )),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -114,7 +120,69 @@ class _MissionNotificationState extends State<MissionNotificationOverlay>
                       style: textTheme.displayMedium,
                     ),
                     Text(
-                      _lastCompleted?.description ?? '',
+                      _lastCompleted?.when(
+                            collectPizza: (exp,
+                                    completeValue,
+                                    isOneGame,
+                                    description,
+                                    adsViewed,
+                                    type,
+                                    currentValue) =>
+                                _lastCompleted?.description.plural(
+                                    completeValue,
+                                    args: [completeValue.toString()]),
+                            crashItem: (exp,
+                                    completeValue,
+                                    isOneGame,
+                                    description,
+                                    adsViewed,
+                                    item,
+                                    type,
+                                    currentValue) =>
+                                _lastCompleted?.description
+                                    .plural(completeValue, args: [
+                              item.name.tr(),
+                              completeValue.toString()
+                            ]),
+                            passItem: (exp,
+                                    completeValue,
+                                    isOneGame,
+                                    description,
+                                    adsViewed,
+                                    item,
+                                    type,
+                                    currentValue) =>
+                                _lastCompleted?.description
+                                    .plural(completeValue, args: [
+                              item.name.tr(),
+                              completeValue.toString()
+                            ]),
+                            reachLocation: (exp,
+                                    description,
+                                    adsViewed,
+                                    completeValue,
+                                    isOneGame,
+                                    type,
+                                    currentValue) =>
+                                _lastCompleted?.description.tr(args: [
+                              Utils.locationIndexToString[completeValue]
+                                      ?.tr() ??
+                                  'UNKNOWN'
+                            ]),
+                            finishGame: (exp,
+                                    description,
+                                    adsViewed,
+                                    completeValue,
+                                    isOneGame,
+                                    type,
+                                    currentValue) =>
+                                _lastCompleted?.description.tr(args: [
+                              Utils.locationIndexToString[completeValue]
+                                      ?.tr() ??
+                                  'UNKNOWN'
+                            ]),
+                          ) ??
+                          '',
                       style: textTheme.bodySmall,
                     ),
                   ],

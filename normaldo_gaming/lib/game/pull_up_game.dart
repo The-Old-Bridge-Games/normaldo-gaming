@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
@@ -12,9 +11,7 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
@@ -50,10 +47,14 @@ class PullUpGame extends FlameGame
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;
 
-  double get _notificationXOffset => (size.x / 2) - 150;
-
   @override
   bool get debugMode => false;
+
+  @override
+  void onRemove() {
+    missionCubit.resetOneGames();
+    super.onRemove();
+  }
 
   @override
   Future<void> onLoad() async {
@@ -76,35 +77,9 @@ class PullUpGame extends FlameGame
       },
     ));
 
+    overlays.add(Overlays.missions.name);
+
     return super.onLoad();
-  }
-
-  void _showMissions() {
-    audio.playSfx(Sfx.missionCompleted);
-
-    // for (final mission in _levelManager.missions) {
-    //   add(TimerComponent(
-    //     period: 2.6 * _levelManager.missions.indexOf(mission),
-    //     removeOnFinish: true,
-    //     onTick: () => showMission(mission),
-    //   ));
-    // }
-  }
-
-  void _showCompletedMission(Mission mission) {
-    audio.playSfx(Sfx.missionCompleted);
-  }
-
-  Effect _missionDismissEffect({required void Function() onComplete}) {
-    return MoveEffect.to(
-      Vector2(_notificationXOffset, 8.0),
-      EffectController(
-        duration: .3,
-        atMaxDuration: 2,
-        reverseDuration: .3,
-      ),
-      onComplete: onComplete,
-    );
   }
 
   void _initializeComponents() {

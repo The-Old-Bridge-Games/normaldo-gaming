@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
@@ -13,6 +15,7 @@ import 'package:normaldo_gaming/ui/shop/widgets/shop_skin_card.dart';
 import 'package:normaldo_gaming/ui/widgets/ads_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/earn_dollars_dialog.dart';
+import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 import 'widgets/shop_item_card.dart';
@@ -27,6 +30,8 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  final _scrollController = ScrollController();
+
   User get user => context.read<UserCubit>().state.user;
 
   Future<void> _onItemPressed(BuildContext context, ShopItem item) async {
@@ -71,16 +76,40 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(milliseconds: 300))
+          .whenComplete(() => _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(seconds: 30),
+                curve: Curves.linear,
+              ));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return AdsOverlay(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+          backgroundColor: Colors.black,
+          automaticallyImplyLeading: false,
           title: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
             return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(width: 32),
+                BouncingButton(
+                  onPressed: () => context.pop(),
+                  child: Text(
+                    '< back',
+                    style: textTheme.displaySmall,
+                  ),
+                ),
+                const SizedBox(width: 32),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
@@ -92,7 +121,10 @@ class _ShopScreenState extends State<ShopScreen> {
                       style: textTheme.displayLarge,
                     ),
                   ],
-                )
+                ),
+                const Spacer(flex: 2),
+                Text('shop'.tr(), style: textTheme.displayLarge),
+                const Spacer(),
               ],
             );
           }),
@@ -131,56 +163,53 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
               ),
               success: (items) => SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text('- TV -',
-                            style:
-                                textTheme.displayLarge?.copyWith(fontSize: 40)),
-                        const SizedBox(height: 16),
-                        GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          itemCount: items.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 4 / 3,
-                          ),
-                          itemBuilder: (context, index) {
-                            final item = items[index];
-                            return ShopItemCard(
-                              item: item,
-                              onPressed: () => _onItemPressed(context, item),
-                            );
-                          },
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
+                    children: [
+                      Text('- TV -',
+                          style:
+                              textTheme.displayLarge?.copyWith(fontSize: 40)),
+                      const SizedBox(height: 16),
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        itemCount: items.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 4 / 3,
                         ),
-                        const SizedBox(height: 32),
-                        Text('- СКИНЫ -',
-                            style:
-                                textTheme.displayLarge?.copyWith(fontSize: 40)),
-                        const SizedBox(height: 16),
-                        GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              widget.skinsRepository.skinsData.length - 1,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 32,
-                          ),
-                          itemBuilder: (context, index) {
-                            final skin =
-                                widget.skinsRepository.skinsData[index + 1];
-                            return ShopSkinCard(skin: skin);
-                          },
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return ShopItemCard(
+                            item: item,
+                            onPressed: () => _onItemPressed(context, item),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 32),
+                      Text('- ${'SKINS'.tr()} -',
+                          style:
+                              textTheme.displayLarge?.copyWith(fontSize: 40)),
+                      const SizedBox(height: 16),
+                      GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: widget.skinsRepository.skinsData.length - 1,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 32,
                         ),
-                      ],
-                    ),
+                        itemBuilder: (context, index) {
+                          final skin =
+                              widget.skinsRepository.skinsData[index + 1];
+                          return ShopSkinCard(skin: skin);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),

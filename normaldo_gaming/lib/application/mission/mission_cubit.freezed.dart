@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MissionState {
   Set<Mission> get missions => throw _privateConstructorUsedError;
+  bool get completing => throw _privateConstructorUsedError;
+  List<int> get newIndexes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MissionStateCopyWith<MissionState> get copyWith =>
@@ -29,7 +31,7 @@ abstract class $MissionStateCopyWith<$Res> {
           MissionState value, $Res Function(MissionState) then) =
       _$MissionStateCopyWithImpl<$Res, MissionState>;
   @useResult
-  $Res call({Set<Mission> missions});
+  $Res call({Set<Mission> missions, bool completing, List<int> newIndexes});
 }
 
 /// @nodoc
@@ -46,12 +48,22 @@ class _$MissionStateCopyWithImpl<$Res, $Val extends MissionState>
   @override
   $Res call({
     Object? missions = null,
+    Object? completing = null,
+    Object? newIndexes = null,
   }) {
     return _then(_value.copyWith(
       missions: null == missions
           ? _value.missions
           : missions // ignore: cast_nullable_to_non_nullable
               as Set<Mission>,
+      completing: null == completing
+          ? _value.completing
+          : completing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newIndexes: null == newIndexes
+          ? _value.newIndexes
+          : newIndexes // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -64,7 +76,7 @@ abstract class _$$MissionStateImplCopyWith<$Res>
       __$$MissionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Set<Mission> missions});
+  $Res call({Set<Mission> missions, bool completing, List<int> newIndexes});
 }
 
 /// @nodoc
@@ -79,12 +91,22 @@ class __$$MissionStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? missions = null,
+    Object? completing = null,
+    Object? newIndexes = null,
   }) {
     return _then(_$MissionStateImpl(
       missions: null == missions
           ? _value._missions
           : missions // ignore: cast_nullable_to_non_nullable
               as Set<Mission>,
+      completing: null == completing
+          ? _value.completing
+          : completing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newIndexes: null == newIndexes
+          ? _value._newIndexes
+          : newIndexes // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -92,8 +114,12 @@ class __$$MissionStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MissionStateImpl implements _MissionState {
-  const _$MissionStateImpl({required final Set<Mission> missions})
-      : _missions = missions;
+  const _$MissionStateImpl(
+      {required final Set<Mission> missions,
+      required this.completing,
+      required final List<int> newIndexes})
+      : _missions = missions,
+        _newIndexes = newIndexes;
 
   final Set<Mission> _missions;
   @override
@@ -104,8 +130,18 @@ class _$MissionStateImpl implements _MissionState {
   }
 
   @override
+  final bool completing;
+  final List<int> _newIndexes;
+  @override
+  List<int> get newIndexes {
+    if (_newIndexes is EqualUnmodifiableListView) return _newIndexes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newIndexes);
+  }
+
+  @override
   String toString() {
-    return 'MissionState(missions: $missions)';
+    return 'MissionState(missions: $missions, completing: $completing, newIndexes: $newIndexes)';
   }
 
   @override
@@ -113,12 +149,19 @@ class _$MissionStateImpl implements _MissionState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MissionStateImpl &&
-            const DeepCollectionEquality().equals(other._missions, _missions));
+            const DeepCollectionEquality().equals(other._missions, _missions) &&
+            (identical(other.completing, completing) ||
+                other.completing == completing) &&
+            const DeepCollectionEquality()
+                .equals(other._newIndexes, _newIndexes));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_missions));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_missions),
+      completing,
+      const DeepCollectionEquality().hash(_newIndexes));
 
   @JsonKey(ignore: true)
   @override
@@ -128,11 +171,17 @@ class _$MissionStateImpl implements _MissionState {
 }
 
 abstract class _MissionState implements MissionState {
-  const factory _MissionState({required final Set<Mission> missions}) =
-      _$MissionStateImpl;
+  const factory _MissionState(
+      {required final Set<Mission> missions,
+      required final bool completing,
+      required final List<int> newIndexes}) = _$MissionStateImpl;
 
   @override
   Set<Mission> get missions;
+  @override
+  bool get completing;
+  @override
+  List<int> get newIndexes;
   @override
   @JsonKey(ignore: true)
   _$$MissionStateImplCopyWith<_$MissionStateImpl> get copyWith =>

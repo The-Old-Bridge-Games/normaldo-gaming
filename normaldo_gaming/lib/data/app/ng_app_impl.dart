@@ -113,10 +113,6 @@ OS Version: ${Platform.operatingSystemVersion}
     await injector.get<NgAudio>().init();
     const supportedLocales = [Locale('ru'), Locale('en')];
     final userCubit = injector.get<UserCubit>();
-    injector.map<MissionCubit>((injector) => MissionCubit(
-          userCubit,
-          injector.get(),
-        ));
     runApp(EasyLocalization(
       useOnlyLangCode: true,
       supportedLocales: supportedLocales,
@@ -128,9 +124,7 @@ OS Version: ${Platform.operatingSystemVersion}
           BlocProvider<UserCubit>(create: (context) => userCubit),
           BlocProvider<SignUpCubit>(create: (context) => injector.get()),
           BlocProvider<SignInCubit>(create: (context) => injector.get()),
-          BlocProvider<MissionCubit>(
-              create: (context) =>
-                  injector.get()..rearrangeCompletedMissions()),
+          BlocProvider<MissionCubit>(create: (context) => injector.get()),
         ],
         child: ConfigInheritedWidget(
           config: config,

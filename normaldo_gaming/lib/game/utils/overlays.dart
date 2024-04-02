@@ -1,5 +1,6 @@
 enum Overlays {
   pauseMenu,
   deathScreen,
-  snowfall;
+  snowfall,
+  missions;
 }

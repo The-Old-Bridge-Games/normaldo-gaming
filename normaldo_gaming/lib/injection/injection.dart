@@ -55,10 +55,7 @@ void initializeInjector(Config config) {
   injector.map<SignUpCubit>((injector) => SignUpCubit(injector.get()));
   injector.map<SignInCubit>((injector) => SignInCubit(injector.get()));
   injector.map<MissionCubit>(
-    (injector) => MissionCubit(
-      injector.get(),
-      injector.get(),
-    ),
+    (injector) => MissionCubit(injector.get()),
     allowFutureReassignment: true,
   );
 

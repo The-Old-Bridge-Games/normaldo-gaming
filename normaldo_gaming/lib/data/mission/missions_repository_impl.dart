@@ -5,6 +5,8 @@ import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/missions/missions_repository.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 
+// 1. миссию на исследование
+
 final class MissionsRepositoryImpl implements MissionsRepository {
   final _rnd = Random();
 
@@ -230,7 +232,7 @@ final class MissionsRepositoryImpl implements MissionsRepository {
     final location =
         Utils.locationExp.keys.toList()[_rnd.nextInt(Utils.locationExp.length)];
 
-    return Mission.reachLocation(
+    return Mission.finishGame(
       exp: expFromLocation(location),
       completeValue: completeValueFromLocation(location),
       description: 'finish game at location',

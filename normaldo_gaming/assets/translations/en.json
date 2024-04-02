@@ -21,7 +21,6 @@
   "End game at a club entrance": "End game at a club entrance",
   "Collect pizzas in one game": "Collect {} pizzas in one game",
   "Crash item in one game": "Crash {} {} in one game",
-  "trashBin": "trash bin",
   "pizza": "pizza",
   "dollar": "dollar",
   "fatPizza": "pizza pack",
@@ -74,7 +73,6 @@
   "Exit": "Exit",
   "WIN ROLLS": "WIN ROLLS",
   "Book of Knowledge": "Book of Knowledge",
-  "homeless": "homeless",
   "shuriken": "shuriken",
   "like any rooftop-hitting beverage, the cocktail complicates Normaldo's flight, making his movement more challenging. Be careful to avoid collisions with obstacles!": "like any rooftop-hitting beverage, the cocktail complicates Normaldo's flight, making his movement more challenging. Be careful to avoid collisions with obstacles!",
   "a crumpled bin filled with a pile of garbage, perhaps the most negative item in this story, because you will encounter it until you reach the GAME OVER point. Masters of quick reactions, welcome aboard! And to those who are just starting their journey, don't worry, everything will be NORMALDO!": "a crumpled bin filled with a pile of garbage, perhaps the most negative item in this story, because you will encounter it until you reach the GAME OVER point. Masters of quick reactions, welcome aboard! And to those who are just starting their journey, don't worry, everything will be NORMALDO!",
@@ -135,5 +133,14 @@
   "reach location": "Reach {}",
   "finish game at location": "Finish game at {}",
   "reset": "Reset",
-  "intro": "Intro"
+  "intro": "Intro",
+  "gleb piece": "Gleb's piece",
+  "slot machine": "slots",
+  "ufo": "UFO",
+  "sewers exit": "sewers exit",
+  "bananaPeel": "banana peel",
+  "trashBin": "bin",
+  "roadSign": "road sign",
+  "cone": "cone",
+  "homeless": "homeless"
 }

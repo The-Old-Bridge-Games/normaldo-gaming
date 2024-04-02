@@ -151,13 +151,11 @@ class _ShopSkinCardState extends State<ShopSkinCard> {
             ),
           )
         else
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: NGButton(
-                text: '${'Buy'.tr()} ${widget.skin.price}\$',
-                onPressed: _buySkin,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: NGButton(
+              text: '${'Buy'.tr()} ${widget.skin.price}\$',
+              onPressed: _buySkin,
             ),
           ),
       ],

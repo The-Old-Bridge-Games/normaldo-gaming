@@ -36,7 +36,7 @@ class LevelTimerComponent extends TimerComponent
         removeOnFinish: true,
         onTick: () {
           if (random.nextBool()) {
-            bloc.add(const LevelEvent.startMiniGame(game: MiniGame.shredder()));
+            // bloc.add(const LevelEvent.startMiniGame(game: MiniGame.shredder()));
           }
         }));
     add(TimerComponent(
