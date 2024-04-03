@@ -47,47 +47,43 @@ class _PauseMenuState extends State<PauseMenu> {
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: NGTheme.green1, width: 3),
+                  border: Border.all(color: NGTheme.purple2, width: 3),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Are you sure??'.tr(),
+                      'U sure??'.tr(),
                       style: textTheme.displayLarge,
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'All game results will be dropped..'.tr(),
-                      style: textTheme.displaySmall,
+                      style: textTheme.bodySmall,
                     ),
                     const SizedBox(height: 32),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ActionChip(
+                        TextButton(
                             onPressed: () {
                               Vibrate.feedback(FeedbackType.light);
                               context.pop();
-                              context.pop();
                             },
-                            label: Text(
-                              "let's do it!".tr(),
-                              style: textTheme.bodySmall
-                                  ?.copyWith(color: Colors.red),
+                            child: Text(
+                              'Back to game'.tr(),
+                              style: textTheme.displaySmall,
                             )),
                         const SizedBox(width: 8),
-                        ActionChip(
-                            onPressed: () {
-                              Vibrate.feedback(FeedbackType.light);
-                              context.pop();
-                            },
-                            label: Text(
-                              'Nope'.tr(),
-                              style: textTheme.bodySmall
-                                  ?.copyWith(color: NGTheme.green1),
-                            )),
+                        NGButton(
+                          onPressed: () {
+                            Vibrate.feedback(FeedbackType.light);
+                            context.pop();
+                            context.pop();
+                          },
+                          text: 'Exit'.tr(),
+                        ),
                       ],
                     )
                   ],

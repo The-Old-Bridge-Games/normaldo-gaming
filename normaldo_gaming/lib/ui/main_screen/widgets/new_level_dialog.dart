@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -8,9 +7,7 @@ import 'package:normaldo_gaming/core/widgets/blinking_text.dart';
 import 'package:normaldo_gaming/core/widgets/blinking_widget.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
-import 'package:normaldo_gaming/game/utils/utils.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
-import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
 class NewLevelDialog extends StatelessWidget {
@@ -42,7 +39,7 @@ class NewLevelDialog extends StatelessWidget {
         child: Column(
           children: [
             BlinkingText(
-              'NEW LEVEL!',
+              'NEW LEVEL!'.tr(),
               duration: const Duration(milliseconds: 500),
               endDelay: const Duration(seconds: 2),
               style: textTheme.displayLarge
