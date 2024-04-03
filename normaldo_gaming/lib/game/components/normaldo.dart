@@ -570,9 +570,6 @@ class Normaldo extends PositionComponent
     }));
     add(effectsController);
 
-    // fat handler
-    increaseFatPoints(20);
-
     add(TimerComponent(
       period: 0.5,
       repeat: true,
