@@ -2,21 +2,24 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/flame.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/predator_attack.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/smoke_attack.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 enum NinjaFootState {
   idle,
   predator,
   predator2,
+  smoke,
 }
 
-final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
+final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
     with HasGameRef<PullUpGame>, CollisionCallbacks, Boss, Effects {
   NinjaFoot() {
     debugMode = false;
@@ -120,9 +123,11 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
       case NinjaFootState.idle:
         size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
       case NinjaFootState.predator:
-        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+        size = Vector2(game.grid.lineSize * 1.5, game.grid.lineSize);
       case NinjaFootState.predator2:
-        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+        size = Vector2(game.grid.lineSize * 1.5, game.grid.lineSize);
+      case NinjaFootState.smoke:
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize);
       default:
         break;
     }
@@ -132,30 +137,51 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
   @override
   FutureOr<void> onLoad() async {
     size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
-    sprites = {
-      NinjaFootState.idle: await Sprite.load('bosses/ninja foot1.png'),
+    final idleSprite = await Sprite.load('bosses/ninja foot1.png');
+    final predatorSprite = await Sprite.load('bosses/ninja_foot_predator2.png');
+    final predator2Sprite = await Sprite.load('bosses/ninja_foot_predator.png');
+    final smokeAnimation = SpriteAnimation.fromFrameData(
+      await Flame.images.load('bosses/ninja_foot_smoke.png'),
+      SpriteAnimationData.sequenced(
+        amount: 8,
+        stepTime: 0.2,
+        textureSize: Vector2(426, 245),
+        loop: false,
+      ),
+    );
+    animations = {
+      NinjaFootState.idle: SpriteAnimation.spriteList(
+        [idleSprite],
+        stepTime: 5,
+      ),
       NinjaFootState.predator:
-          await Sprite.load('bosses/ninja_foot_predator2.png'),
+          SpriteAnimation.spriteList([predatorSprite], stepTime: 5),
       NinjaFootState.predator2:
-          await Sprite.load('bosses/ninja_foot_predator.png'),
+          SpriteAnimation.spriteList([predator2Sprite], stepTime: 5),
+      NinjaFootState.smoke: smokeAnimation
     };
     current = NinjaFootState.idle;
     add(RectangleHitbox());
     attacks = [
       ShurikenShowerAttack(),
       ShurikenShowerAttack(),
-      // ShurikenShowerAttack(),
-      // ShurikenShowerAttack(),
-      // PredatorAttack(),
-      // PredatorAttack(),
-      // PredatorAttack(),
-      // PredatorAttack(),
-      // ShurikenShowerAttack(),
-      // PredatorAttack(),
-      // ShurikenShowerAttack(),
-      // PredatorAttack(),
-      // ShurikenShowerAttack(),
-      // PredatorAttack(),
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+      SmokeAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      ShurikenShowerAttack(),
+      SmokeAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
+      PredatorAttack(),
     ];
     return super.onLoad();
   }

@@ -27,8 +27,8 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
   @override
   bool get inProgress => _inProgress;
 
-  SpriteGroupComponent<NinjaFootState> bossComp(Boss boss) =>
-      boss as SpriteGroupComponent<NinjaFootState>;
+  SpriteAnimationGroupComponent<NinjaFootState> bossComp(Boss boss) =>
+      boss as SpriteAnimationGroupComponent<NinjaFootState>;
 
   @override
   void start(Boss boss, Grid grid) {
@@ -91,6 +91,7 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
             speed: 500,
             curve: Curves.linear,
           ), onComplete: () {
+        boss.angle = 0;
         _completed = true;
         _inProgress = false;
         bossComp(boss).current = NinjaFootState.idle;

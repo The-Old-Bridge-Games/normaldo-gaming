@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/game/components/item_components/banana_peel.dart
 import 'package:normaldo_gaming/game/components/item_components/beer.dart';
 import 'package:normaldo_gaming/game/components/item_components/bird.dart';
 import 'package:normaldo_gaming/game/components/item_components/boombox.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/smoke.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/shredder.dart';
 import 'package:normaldo_gaming/game/components/item_components/bubbles.dart';
 import 'package:normaldo_gaming/game/components/item_components/cannibal.dart';
@@ -102,7 +103,8 @@ enum Items {
   // BOSSES&ATTACKS
   shredder,
   shuriken,
-  shredderSword;
+  shredderSword,
+  smoke;
 
   Item component() {
     switch (this) {
@@ -204,6 +206,8 @@ enum Items {
         return RoadSign();
       case umbrella:
         return Umbrella();
+      case smoke:
+        return Smoke(corners: []);
     }
   }
 
@@ -317,6 +321,8 @@ enum Items {
       //   return Vector2(lineSize, lineSize);
       case Items.umbrella:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
+      case Items.smoke:
+        return Vector2(lineSize * 0.5, lineSize * 0.5);
     }
   }
 

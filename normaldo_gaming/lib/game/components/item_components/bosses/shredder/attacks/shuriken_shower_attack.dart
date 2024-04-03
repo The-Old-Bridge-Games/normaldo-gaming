@@ -1,3 +1,4 @@
+import 'dart:js_util';
 import 'dart:math';
 
 import 'package:flame/components.dart';
@@ -92,8 +93,13 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
       ),
       ScaleEffect.to(Vector2.zero(), EffectController(duration: fadeInDuration),
           onComplete: () {
-        _completed = true;
-        _inProgress = false;
+        boss.add(TimerComponent(
+            period: 4,
+            removeOnFinish: true,
+            onTick: () {
+              _completed = true;
+              _inProgress = false;
+            }));
       }),
     ]));
   }

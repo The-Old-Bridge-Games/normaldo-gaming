@@ -202,6 +202,7 @@ abstract class Utils {
         Items.umbrella => 'assets/images/umbrella.png',
         Items.hugeItem => 'assets/images/umbrella.png',
         Items.shredderSword => 'assets/images/umbrella.png',
+        Items.smoke => 'assets/images/bosses/smoke.png',
       };
 
   static const locationExp = {
