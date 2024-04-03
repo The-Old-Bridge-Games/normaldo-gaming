@@ -1,28 +1,26 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-class BlinkingText extends StatefulWidget {
-  const BlinkingText(
-    this.text, {
+class BlinkingWidget extends StatefulWidget {
+  const BlinkingWidget({
+    required this.child,
     required this.duration,
-    this.style,
     this.startDelay,
     this.endDelay,
     super.key,
   });
 
-  final String text;
+  final Widget child;
   final Duration duration;
-  final TextStyle? style;
   final Duration? startDelay;
   final Duration? endDelay;
 
   @override
-  State<BlinkingText> createState() => _BlinkingTextState();
+  State<BlinkingWidget> createState() => _BlinkingTextState();
 }
 
-class _BlinkingTextState extends State<BlinkingText> {
+class _BlinkingTextState extends State<BlinkingWidget> {
   Timer? _timer;
   double _opacity = 0.0;
 
@@ -69,7 +67,7 @@ class _BlinkingTextState extends State<BlinkingText> {
     return AnimatedOpacity(
       opacity: _opacity,
       duration: widget.duration,
-      child: Text(widget.text, style: widget.style),
+      child: widget.child,
     );
   }
 }
