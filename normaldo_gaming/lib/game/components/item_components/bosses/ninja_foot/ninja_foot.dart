@@ -107,6 +107,9 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
         } else if (!attacks.first.inProgress) {
           attacks.first.start(this, gameRef.grid);
         }
+      } else {
+        gameRef.grid.resumeLines();
+        print('speed: ' + gameRef.levelBloc.state.level.speed.toString());
       }
     }
   }
@@ -141,18 +144,18 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
     attacks = [
       ShurikenShowerAttack(),
       ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
+      // ShurikenShowerAttack(),
+      // ShurikenShowerAttack(),
+      // PredatorAttack(),
+      // PredatorAttack(),
+      // PredatorAttack(),
+      // PredatorAttack(),
+      // ShurikenShowerAttack(),
+      // PredatorAttack(),
+      // ShurikenShowerAttack(),
+      // PredatorAttack(),
+      // ShurikenShowerAttack(),
+      // PredatorAttack(),
     ];
     return super.onLoad();
   }

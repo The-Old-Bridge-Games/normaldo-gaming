@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/mini_games/mini_game.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class LevelTimerComponent extends TimerComponent
     with FlameBlocReader<LevelBloc, LevelState>, HasGameRef<PullUpGame> {
-  LevelTimerComponent()
-      : super(period: LevelBloc.levelChangeDuration / 5, repeat: true);
+  LevelTimerComponent() : super(period: 30, repeat: true);
+
+  int _currentLocationIndex = 0;
 
   final random = Random();
   double get _eventPeriod => 30000;
@@ -49,9 +49,13 @@ class LevelTimerComponent extends TimerComponent
 
   @override
   void onTick() {
-    bloc.add(LevelEvent.changeLevel(
-      level: bloc.state.level.index + 1,
-      effects: game.grid.normaldo.effectsController.effectsInProgress,
-    ));
+    if (gameRef.scene.currentLocationIndex > _currentLocationIndex) {
+      _currentLocationIndex = gameRef.scene.currentLocationIndex;
+
+      bloc.add(LevelEvent.changeLevel(
+        level: bloc.state.level.index + 1,
+        effects: game.grid.normaldo.effectsController.effectsInProgress,
+      ));
+    }
   }
 }
