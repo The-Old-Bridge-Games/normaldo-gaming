@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
@@ -10,16 +12,18 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 enum NinjaFootState {
   idle,
-  attack1,
-  attack2,
-  attack3,
+  predator,
+  predator2,
 }
 
 final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
-    with HasGameRef<PullUpGame>, Boss, Effects {
+    with HasGameRef<PullUpGame>, CollisionCallbacks, Boss, Effects {
   NinjaFoot() {
     debugMode = false;
   }
+
+  @override
+  List<Items> get immuneToItems => [Items.shuriken];
 
   @override
   int hp = 3;
@@ -108,15 +112,32 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
   }
 
   @override
+  set current(NinjaFootState? value) {
+    switch (value) {
+      case NinjaFootState.idle:
+        size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
+      case NinjaFootState.predator:
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+      case NinjaFootState.predator2:
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+      default:
+        break;
+    }
+    super.current = value;
+  }
+
+  @override
   FutureOr<void> onLoad() async {
     size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
     sprites = {
       NinjaFootState.idle: await Sprite.load('bosses/ninja foot1.png'),
-      NinjaFootState.attack1: await Sprite.load('bosses/ninja foot1.png'),
-      NinjaFootState.attack2: await Sprite.load('bosses/ninja foot1.png'),
-      NinjaFootState.attack3: await Sprite.load('bosses/ninja foot1.png'),
+      NinjaFootState.predator:
+          await Sprite.load('bosses/ninja_foot_predator2.png'),
+      NinjaFootState.predator2:
+          await Sprite.load('bosses/ninja_foot_predator.png'),
     };
     current = NinjaFootState.idle;
+    add(RectangleHitbox());
     attacks = [
       ShurikenShowerAttack(),
       ShurikenShowerAttack(),
@@ -126,9 +147,13 @@ final class NinjaFoot extends SpriteGroupComponent<NinjaFootState>
       PredatorAttack(),
       PredatorAttack(),
       PredatorAttack(),
+      ShurikenShowerAttack(),
       PredatorAttack(),
+      ShurikenShowerAttack(),
       PredatorAttack(),
-    ]..shuffle();
+      ShurikenShowerAttack(),
+      PredatorAttack(),
+    ];
     return super.onLoad();
   }
 

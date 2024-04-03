@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/components/item_components/shredder_sword.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'boss_attack.dart';
@@ -25,6 +26,9 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
 
   @override
   bool get inProgress => _inProgress;
+
+  SpriteGroupComponent<NinjaFootState> bossComp(Boss boss) =>
+      boss as SpriteGroupComponent<NinjaFootState>;
 
   @override
   void start(Boss boss, Grid grid) {
@@ -53,22 +57,43 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
     while (destination.y > 0 && destination.y < grid.size.y) {
       destination += distinction;
     }
+    if (destination.y > grid.size.y + boss.size.y) {
+      destination.y = grid.size.y + boss.size.y;
+    }
+    if (destination.y < -boss.size.y) {
+      destination.y = -boss.size.y;
+    }
     audio.playSfx(Sfx.shredderPredator);
-    boss.add(RotateEffect.by(
-        (boss.isFlippedHorizontally ? pi : -pi) * 2,
-        EffectController(
-          duration: 0.5,
-        )));
+    bossComp(boss).current = NinjaFootState.predator;
+    bossComp(boss).lookAt(grid.normaldo.position);
+    boss.add(TimerComponent(
+        period: 0.5,
+        onTick: () {
+          bossComp(boss).current = NinjaFootState.predator2;
+        }));
+    boss.add(SizeEffect.to(
+      boss.size * 1.6,
+      EffectController(
+        duration: 0.3,
+        startDelay: 0.5,
+        reverseDuration: 0.3,
+      ),
+      onComplete: () {
+        if (bossComp(boss).current != NinjaFootState.idle) {
+          bossComp(boss).current = NinjaFootState.predator;
+        }
+      },
+    ));
     boss.add(
       MoveToEffect(
           destination,
           EffectController(
-            duration: 2,
+            speed: 500,
             curve: Curves.linear,
           ), onComplete: () {
         _completed = true;
         _inProgress = false;
-        boss.removeWhere((component) => component is ShredderSword);
+        bossComp(boss).current = NinjaFootState.idle;
       }),
     );
   }

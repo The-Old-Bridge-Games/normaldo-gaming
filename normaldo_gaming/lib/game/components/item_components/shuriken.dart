@@ -9,7 +9,9 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Shuriken extends PositionComponent
     with CollisionCallbacks, HasGameRef<PullUpGame>, Item, AttackingItem {
-  Shuriken() : super(anchor: Anchor.center) {
+  final double startDelay;
+
+  Shuriken({this.startDelay = 0}) : super(anchor: Anchor.center) {
     moving = false;
   }
 
@@ -25,7 +27,6 @@ class Shuriken extends PositionComponent
   @override
   Future<void> onLoad() async {
     const fadeInDuration = 0.3;
-    // speed = gameRef.levelBloc.state.level.speed;
     speed = 30;
     scale = Vector2.all(0);
     final grid = gameRef.grid;
@@ -46,7 +47,7 @@ class Shuriken extends PositionComponent
           startDelay: fadeInDuration,
         )));
     add(TimerComponent(
-        period: fadeInDuration,
+        period: fadeInDuration + startDelay,
         removeOnFinish: true,
         onTick: () {
           final nPosition = grid.normaldo.position;
@@ -54,7 +55,7 @@ class Shuriken extends PositionComponent
           final destination = nPosition + (distinction * 3);
           add(MoveToEffect(
             destination,
-            EffectController(speed: 1000),
+            EffectController(speed: 700),
             onComplete: () => removeFromParent(),
           ));
         }));

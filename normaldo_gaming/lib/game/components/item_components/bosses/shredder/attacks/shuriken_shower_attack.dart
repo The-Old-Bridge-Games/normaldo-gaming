@@ -106,10 +106,10 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
           Shuriken()
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x * 2, boss.size.y - 30),
-          Shuriken()
+          Shuriken(startDelay: 0.2)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x * 2, boss.size.y + 30),
-          Shuriken()
+          Shuriken(startDelay: 0.4)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x, boss.size.y + 60)
         ];
@@ -119,11 +119,11 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x * 2 - 20, boss.size.y - 30),
-          Shuriken()
+          Shuriken(startDelay: 0.2)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x * 2, boss.size.y + 35),
-          Shuriken()
+          Shuriken(startDelay: 0.4)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x - 30, boss.size.y * 2)
@@ -134,11 +134,11 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x - 30, grid.size.y - boss.size.y * 2),
-          Shuriken()
+          Shuriken(startDelay: 0.2)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x * 2, grid.size.y - boss.size.y - 30),
-          Shuriken()
+          Shuriken(startDelay: 0.4)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x * 2, grid.size.y - boss.size.y / 2),
@@ -149,11 +149,11 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2 - 50, grid.size.y - boss.size.y * 2),
-          Shuriken()
+          Shuriken(startDelay: 0.2)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2, grid.size.y - boss.size.y - 30),
-          Shuriken()
+          Shuriken(startDelay: 0.4)
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2 + 15, grid.size.y - boss.size.y / 2)
