@@ -15,7 +15,7 @@ part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   static const int limitProgressingLevel = 50;
-  static const double levelChangeDuration = 180;
+  static const double levelChangeDuration = 2;
 
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(
@@ -37,9 +37,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   List<FigureEvent> _figuresPool = [];
 
   double frequency(int level) {
-    var frequency = pow(0.9, level + 1).toDouble();
-    if (level > 15) {
-      frequency = pow(0.9, 15).toDouble();
+    var frequency = pow(0.8, level + 1).toDouble();
+    if (level > 7) {
+      frequency = pow(0.8, 15).toDouble();
     }
     return frequency;
   }

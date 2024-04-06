@@ -46,10 +46,10 @@ enum NormaldoFatState {
     // return 3;
     if (amount != null) return amount;
     return switch (this) {
-      skinny || skinnyEat => 15,
-      slim || slimEat => 30,
-      fat || fatEat => 40,
-      uberFat || uberFatEat => 60,
+      skinny || skinnyEat => 10,
+      slim || slimEat => 20,
+      fat || fatEat => 30,
+      uberFat || uberFatEat => 50,
       _ => 1
     };
   }

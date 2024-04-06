@@ -11,10 +11,14 @@ import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
 
 final class SmokeAttack extends BossAttack with HasNgAudio, Effects {
-  SmokeAttack()
-      : _completed = false,
+  SmokeAttack({
+    required this.action,
+    this.duration = 5,
+  })  : _completed = false,
         _inProgress = false;
 
+  final SmokeAction action;
+  final double duration;
   final List<Corner> corners = [];
 
   bool _completed;
@@ -54,7 +58,11 @@ final class SmokeAttack extends BossAttack with HasNgAudio, Effects {
           period: 8 * 0.1,
           removeOnFinish: true,
           onTick: () {
-            grid.add(Smoke(corners: corners)
+            grid.add(Smoke(
+              corners: corners,
+              duration: duration,
+              action: action,
+            )
               ..size = Items.smoke.getSize(grid.lineSize)
               ..position = boss.position);
             boss.add(TimerComponent(
