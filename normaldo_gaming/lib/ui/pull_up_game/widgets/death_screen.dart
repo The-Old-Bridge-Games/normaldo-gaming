@@ -63,7 +63,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   Widget build(BuildContext context) {
     final cubit = context.read<GameSessionCubit>();
     return Scaffold(
-      backgroundColor: NGTheme.bgSemiBlack,
+      backgroundColor: Colors.black45,
       body: AnimatedOpacity(
         opacity: _opacity,
         duration: const Duration(seconds: 1),
