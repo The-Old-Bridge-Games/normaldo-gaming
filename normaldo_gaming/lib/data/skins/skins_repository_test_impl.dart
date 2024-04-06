@@ -310,6 +310,10 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           resistanceToItems: [
             Items.trashBin,
             Items.cone,
+            Items.shipPart,
+            Items.stone,
+            Items.umbrella,
+            Items.roadSign,
           ],
         ),
         const Skin(
