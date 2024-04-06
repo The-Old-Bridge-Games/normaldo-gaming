@@ -5,6 +5,7 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.pizza, 10),
     (Items.dollar, 3),
     (Items.bananaPeel, 20),
+    (Items.cone, 200),
   ]),
   1: Roller<Items>([
     (Items.pizza, 10),

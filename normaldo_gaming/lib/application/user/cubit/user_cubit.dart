@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/data/skins/models/skin_model.dart';
+import 'package:normaldo_gaming/data/user/models/skin_model.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -178,9 +179,9 @@ class UserCubit extends HydratedCubit<UserState> {
     return UserState(
         user: UserModel.fromJson(json).toEntity(),
         educated: json['educated'],
-        skin: SkinDto.fromJson(
+        skin: SkinModel.fromJson(
           json['skin'],
-        ));
+        ).toEntity());
   }
 
   @override
@@ -205,7 +206,10 @@ class UserCubit extends HydratedCubit<UserState> {
     ).toJson()
       ..addEntries([
         MapEntry('educated', state.educated),
-        MapEntry('skin', SkinDto.toJson(state.skin)),
+        MapEntry(
+          'skin',
+          SkinModel.fromEntity(state.skin).toJson(),
+        ),
       ]);
     return json;
   }

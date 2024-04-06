@@ -74,6 +74,10 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
     PositionComponent other,
   ) {
     if (!collidable) return;
+    if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      removeFromParent();
+      return;
+    }
     if (other is Normaldo && !other.immortal) {
       gameRef.missionCubit.applyProgress(MissionType.crashItem, item: item);
     }
@@ -119,8 +123,11 @@ mixin AttackingItem on Item {
   int get damage;
 
   void attack(PositionComponent other) {
-    if (other is NormaldoAttack) return;
     if (other is Boss) return;
+    if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      removeFromParent();
+      return;
+    }
     if (other is Normaldo && !other.immortal && !other.hasImmuneTo(item)) {
       other.takeHit(damage: damage);
       removeFromParent();
