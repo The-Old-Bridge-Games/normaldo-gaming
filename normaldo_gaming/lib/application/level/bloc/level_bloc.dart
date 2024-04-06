@@ -15,7 +15,7 @@ part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   static const int limitProgressingLevel = 50;
-  static const double levelChangeDuration = 2;
+  static const double levelChangeDuration = 180;
 
   LevelBloc() : super(LevelState.initial()) {
     on<LevelEvent>((event, emit) => event.when(
@@ -48,7 +48,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     if (effects.contains(ItemEffect.slowMo)) {
       return state.level.speed;
     }
-    var speed = (200 + (15 * level)).toDouble();
+    var speed = (200 + (50 * level)).toDouble();
     if (level > limitProgressingLevel) {
       speed = (200 + (15 * 12)).toDouble();
     }
@@ -69,6 +69,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     List<ItemEffect> effects,
     Emitter<LevelState> emit,
   ) {
+    print('SPEED: ${speed(level, effects)}');
     emit(state.copyWith(
         level: LinearLevel(
       index: level,

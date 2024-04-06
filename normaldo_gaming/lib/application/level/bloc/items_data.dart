@@ -11,6 +11,7 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.dollar, 3),
     (Items.bananaPeel, 20),
     (Items.cone, 10),
+    (Items.homeless, 10),
   ]),
   2: Roller<Items>([
     (Items.pizza, 10),
@@ -18,7 +19,7 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.bananaPeel, 20),
     (Items.roadSign, 10),
     (Items.cone, 10),
-    (Items.trashBin, 5),
+    (Items.homeless, 5),
   ]),
   3: Roller<Items>([
     (Items.pizza, 10),
@@ -27,6 +28,9 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.roadSign, 10),
     (Items.trashBin, 5),
     (Items.cone, 10),
+    (Items.homeless, 10),
+    (Items.cone, 10),
+    (Items.punch, 10),
   ]),
   5: Roller<Items>([
     (Items.pizza, 10),
@@ -36,6 +40,7 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.trashBin, 5),
     (Items.homeless, 10),
     (Items.cone, 10),
+    (Items.punch, 10),
   ]),
 };
 
