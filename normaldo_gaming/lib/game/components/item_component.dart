@@ -22,7 +22,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   void Function()? get onRemoved => null;
   bool get collidable => _collidable;
   bool get moving => _moving;
-  double get speed => game.levelBloc.state.level.speed * _speedMultiplier;
+  double get speed => _speed * _speedMultiplier;
   PositionComponent get hitbox;
 
   late double _speed = game.levelBloc.state.level.speed;

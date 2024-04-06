@@ -11,7 +11,9 @@ class Shuriken extends PositionComponent
     with CollisionCallbacks, HasGameRef<PullUpGame>, Item, AttackingItem {
   final double startDelay;
 
-  Shuriken({this.startDelay = 0}) : super(anchor: Anchor.center) {
+  Shuriken({
+    this.startDelay = 0,
+  }) : super(anchor: Anchor.center) {
     moving = false;
   }
 
@@ -27,7 +29,6 @@ class Shuriken extends PositionComponent
   @override
   Future<void> onLoad() async {
     const fadeInDuration = 0.3;
-    speed = 30;
     scale = Vector2.all(0);
     final grid = gameRef.grid;
     add(SpriteComponent(
@@ -55,7 +56,7 @@ class Shuriken extends PositionComponent
           final destination = nPosition + (distinction * 3);
           add(MoveToEffect(
             destination,
-            EffectController(speed: 700),
+            EffectController(speed: speed),
             onComplete: () => removeFromParent(),
           ));
         }));

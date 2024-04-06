@@ -123,14 +123,17 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
       case NinjaFootState.idle:
         size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
       case NinjaFootState.predator:
-        size = Vector2(game.grid.lineSize * 1.5, game.grid.lineSize);
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
       case NinjaFootState.predator2:
-        size = Vector2(game.grid.lineSize * 1.5, game.grid.lineSize);
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
       case NinjaFootState.smoke:
         size = Vector2(game.grid.lineSize * 2, game.grid.lineSize);
       default:
         break;
     }
+    children.whereType<RectangleHitbox>().forEach((element) {
+      element.size = size * 0.9;
+    });
     super.current = value;
   }
 
@@ -161,27 +164,41 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
       NinjaFootState.smoke: smokeAnimation
     };
     current = NinjaFootState.idle;
-    add(RectangleHitbox());
+    add(RectangleHitbox.relative(
+      Vector2.all(0.8),
+      parentSize: size,
+      anchor: anchor,
+    ));
     attacks = [
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
-      ShurikenShowerAttack(),
-      PredatorAttack(),
+      ShurikenShowerAttack(speed: 500, endDelay: 1),
+      ShurikenShowerAttack(speed: 500, endDelay: 1),
+      ShurikenShowerAttack(speed: 500, endDelay: 1),
+      PredatorAttack(speed: 500),
+      PredatorAttack(speed: 500),
+      PredatorAttack(speed: 500),
+      ShurikenShowerAttack(speed: 500),
+      PredatorAttack(speed: 500),
+      ShurikenShowerAttack(speed: 500),
+      PredatorAttack(speed: 500),
       SmokeAttack(),
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      ShurikenShowerAttack(),
-      SmokeAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
-      PredatorAttack(),
+      ShurikenShowerAttack(speed: 800),
+      ShurikenShowerAttack(speed: 800),
+      ShurikenShowerAttack(speed: 800),
+      ShurikenShowerAttack(speed: 800),
+      ShurikenShowerAttack(speed: 800),
+      PredatorAttack(speed: 800),
+      PredatorAttack(speed: 800),
+      PredatorAttack(speed: 800),
+      PredatorAttack(speed: 800),
+      PredatorAttack(speed: 800),
+      ShurikenShowerAttack(speed: 800),
+      PredatorAttack(speed: 900),
+      ShurikenShowerAttack(speed: 800),
+      PredatorAttack(speed: 900),
+      ShurikenShowerAttack(speed: 800),
+      PredatorAttack(speed: 900),
+      ShurikenShowerAttack(speed: 900),
+      PredatorAttack(speed: 1000),
     ];
     return super.onLoad();
   }

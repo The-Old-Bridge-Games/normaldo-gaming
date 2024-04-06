@@ -1,4 +1,3 @@
-import 'dart:js_util';
 import 'dart:math';
 
 import 'package:flame/components.dart';
@@ -24,10 +23,14 @@ final class Corner {
 }
 
 final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
-  ShurikenShowerAttack()
-      : _completed = false,
+  ShurikenShowerAttack({
+    required this.speed,
+    this.endDelay = 0.5,
+  })  : _completed = false,
         _inProgress = false;
 
+  final double speed;
+  final double endDelay;
   final List<Corner> corners = [];
 
   bool _completed;
@@ -42,7 +45,6 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
   @override
   void start(Boss boss, Grid grid) {
     _inProgress = true;
-    boss.scale = Vector2.all(1);
     corners.addAll([
       Corner(position: boss.size, corner: Corners.topLeft),
       Corner(
@@ -94,7 +96,7 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
       ScaleEffect.to(Vector2.zero(), EffectController(duration: fadeInDuration),
           onComplete: () {
         boss.add(TimerComponent(
-            period: 4,
+            period: endDelay,
             removeOnFinish: true,
             onTick: () {
               _completed = true;
@@ -110,26 +112,32 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
       case Corners.topLeft:
         shurikens = [
           Shuriken()
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x * 2, boss.size.y - 30),
           Shuriken(startDelay: 0.2)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x * 2, boss.size.y + 30),
           Shuriken(startDelay: 0.4)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(boss.size.x, boss.size.y + 60)
         ];
       case Corners.topRight:
         shurikens = [
           Shuriken()
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x * 2 - 20, boss.size.y - 30),
           Shuriken(startDelay: 0.2)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x * 2, boss.size.y + 35),
           Shuriken(startDelay: 0.4)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(grid.size.x - boss.size.x - 30, boss.size.y * 2)
@@ -137,14 +145,17 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
       case Corners.bottomRight:
         shurikens = [
           Shuriken()
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x - 30, grid.size.y - boss.size.y * 2),
           Shuriken(startDelay: 0.2)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x * 2, grid.size.y - boss.size.y - 30),
           Shuriken(startDelay: 0.4)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position = Vector2(
                 grid.size.x - boss.size.x * 2, grid.size.y - boss.size.y / 2),
@@ -152,14 +163,17 @@ final class ShurikenShowerAttack extends BossAttack with HasNgAudio {
       case Corners.bottomLeft:
         shurikens = [
           Shuriken()
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2 - 50, grid.size.y - boss.size.y * 2),
           Shuriken(startDelay: 0.2)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2, grid.size.y - boss.size.y - 30),
           Shuriken(startDelay: 0.4)
+            ..speed = speed
             ..size = Items.shuriken.getSize(grid.lineSize)
             ..position =
                 Vector2(boss.size.x * 2 + 15, grid.size.y - boss.size.y / 2)

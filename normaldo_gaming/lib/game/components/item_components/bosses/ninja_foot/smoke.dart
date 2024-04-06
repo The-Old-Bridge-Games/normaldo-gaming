@@ -77,10 +77,14 @@ class Smoke extends PositionComponent
                         onTick: () {
                           smokeComp.flipVerticallyAroundCenter();
                         }),
-                    OpacityEffect.fadeOut(DelayedEffectController(
-                      EffectController(duration: 1),
-                      delay: 5,
-                    ))
+                    OpacityEffect.fadeOut(
+                        DelayedEffectController(
+                          EffectController(duration: 1),
+                          delay: 24,
+                        ), onComplete: () {
+                      smokeComp.removeFromParent();
+                      removeFromParent();
+                    })
                   ]));
               },
             )));

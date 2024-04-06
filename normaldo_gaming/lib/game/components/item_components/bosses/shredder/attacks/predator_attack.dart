@@ -5,18 +5,20 @@ import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
-import 'package:normaldo_gaming/game/components/item_components/shredder_sword.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'boss_attack.dart';
 
 final class PredatorAttack extends BossAttack with HasNgAudio {
-  PredatorAttack()
-      : _completed = false,
+  PredatorAttack({
+    required this.speed,
+  })  : _completed = false,
         _inProgress = false;
+
+  final double speed;
 
   bool _completed;
   bool _inProgress;
@@ -27,30 +29,31 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
   @override
   bool get inProgress => _inProgress;
 
+  final corners = <Corner>[];
+
   SpriteAnimationGroupComponent<NinjaFootState> bossComp(Boss boss) =>
       boss as SpriteAnimationGroupComponent<NinjaFootState>;
 
   @override
   void start(Boss boss, Grid grid) {
     _inProgress = true;
-    final rndXPos =
-        (-100 + (Random().nextInt(grid.size.x.toInt() + 100)).toDouble());
-    final topRndPosition = Vector2(rndXPos, -boss.size.y);
-    final bottomRndPosition = Vector2(rndXPos, grid.size.y + boss.size.y);
-    final fromTop = Random().nextBool();
-    boss.position = fromTop ? topRndPosition : bottomRndPosition;
+    if (corners.isEmpty) {
+      corners.addAll([
+        Corner(position: boss.size, corner: Corners.topLeft),
+        Corner(
+            position: Vector2(grid.size.x - boss.size.x, boss.size.y),
+            corner: Corners.topRight),
+        Corner(position: grid.size - boss.size, corner: Corners.bottomRight),
+        Corner(
+            position: Vector2(boss.size.x, grid.size.y - boss.size.y),
+            corner: Corners.bottomLeft),
+      ]);
+    }
+    corners.shuffle();
+    boss.scale = Vector2.all(0);
+    boss.position = corners.removeAt(0).position;
     boss.scale = Vector2.all(1);
     _flipIfNeeded(boss, grid.normaldo);
-    final sword = ShredderSword();
-    boss.add(sword
-      ..size = Items.shredderSword.getSize(grid.lineSize)
-      ..position = boss.isFlippedHorizontally
-          ? Vector2(boss.size.x + 10, 10)
-          : Vector2(-boss.size.x / 2 + 20, 10)
-      ..angle = boss.isFlippedHorizontally ? -0.4 : 0.4);
-    if (boss.isFlippedHorizontally) {
-      sword.flipHorizontallyAroundCenter();
-    }
     final nPosition = grid.normaldo.position;
     final distinction = nPosition - boss.position;
     var destination = nPosition + distinction;
@@ -62,6 +65,12 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
     }
     if (destination.y < -boss.size.y) {
       destination.y = -boss.size.y;
+    }
+    if (destination.x > grid.size.x + boss.size.x) {
+      destination.x = grid.size.x + boss.size.x;
+    }
+    if (destination.x < -boss.size.x) {
+      destination.x = -boss.size.x;
     }
     audio.playSfx(Sfx.shredderPredator);
     bossComp(boss).current = NinjaFootState.predator;
@@ -88,7 +97,7 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
       MoveToEffect(
           destination,
           EffectController(
-            speed: 500,
+            speed: speed,
             curve: Curves.linear,
           ), onComplete: () {
         boss.angle = 0;
