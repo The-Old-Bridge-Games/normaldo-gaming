@@ -119,7 +119,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
                       final ninjaFoot = NinjaFoot();
                       grid.add(ninjaFoot
                         ..position =
-                            Vector2(grid.size.x + 50, grid.size.y / 2));
+                            Vector2(grid.size.x + 100, grid.size.y / 2));
                       ninjaFoot.start();
                     }));
               })));

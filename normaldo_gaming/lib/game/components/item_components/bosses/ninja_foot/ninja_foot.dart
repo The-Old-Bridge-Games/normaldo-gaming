@@ -34,20 +34,20 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
 
   @override
   void start() {
-    const double moveFromRightSideDur = 3;
+    const double moveFromRightSideDur = 1;
     final grid = game.grid;
+    scale = Vector2.all(4);
     // Move boss from outside of screen to the right side
     addAll([
       MoveEffect.to(
-          Vector2(grid.size.x - size.x * 2, grid.size.y / 2),
+          Vector2(grid.size.x - size.x / 2, grid.size.y / 2),
           EffectController(
             duration: moveFromRightSideDur,
           ), onComplete: () {
         // Normaldo takes his position when boss talking
-        if (grid.normaldo.position !=
-            Vector2(position.x - size.x * 5, position.y)) {
+        if (grid.normaldo.position != grid.center) {
           grid.normaldo.addAll(jumpToEffect(
-            position: Vector2(position.x - size.x * 4.5, position.y),
+            position: grid.center,
           ));
         }
       }),
@@ -56,40 +56,31 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
           0.05,
           EffectController(
             repeatCount: moveFromRightSideDur.toInt(),
-            duration: 0.5,
-            reverseDuration: 0.5,
+            duration: 1,
+            reverseDuration: 1,
           ), onComplete: () {
-        game.camera.viewfinder.add(ScaleEffect.to(
-            Vector2.all(2),
+        // Boss shaking his head when talking
+        add(RotateEffect.by(
+            0.05,
             EffectController(
-              duration: 1,
+              repeatCount: 1,
+              duration: 0.4,
+              reverseDuration: 1,
             ), onComplete: () {
-          // Boss shaking his head when talking
-          add(RotateEffect.by(
-              0.05,
+          // boss warning
+          warn();
+          // boss moving backwards
+          add(MoveByEffect(
+            Vector2(size.x * 3, 0),
+            EffectController(duration: moveFromRightSideDur),
+          ));
+          game.camera.moveTo(game.size / 2, speed: 500);
+          game.camera.viewfinder.add(ScaleEffect.to(
+              Vector2.all(1),
               EffectController(
-                repeatCount: 1,
-                duration: 0.2,
-                reverseDuration: 0.5,
-              ), onComplete: () {
-            // boss warning
-            warn();
-            grid.normaldo.addAll(jumpToEffect(
-              position: Vector2(grid.normaldo.size.x, position.y),
-            ));
-            add(fadeOutEffect());
-            game.camera.moveTo(game.size / 2, speed: 500);
-            game.camera.viewfinder.add(ScaleEffect.to(
-                Vector2.all(1),
-                EffectController(
-                  duration: 0.5,
-                )));
-          }));
+                duration: 0.5,
+              )));
         }));
-        game.camera.moveTo(
-          Vector2(position.x - size.x * 2, position.y),
-          speed: 300,
-        );
       })
     ]);
   }
