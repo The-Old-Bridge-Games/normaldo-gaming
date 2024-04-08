@@ -71,13 +71,14 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
       destination.x = -boss.size.x;
     }
     audio.playSfx(Sfx.shredderPredator);
-    bossComp(boss).current = NinjaFootState.predator;
+    final predator = ([
+      NinjaFootState.predator1,
+      NinjaFootState.predator2,
+      NinjaFootState.predator3,
+    ]..shuffle())
+        .removeAt(0);
+    bossComp(boss).current = predator;
     bossComp(boss).lookAt(grid.normaldo.position);
-    boss.add(TimerComponent(
-        period: 0.5,
-        onTick: () {
-          bossComp(boss).current = NinjaFootState.predator2;
-        }));
     boss.add(SizeEffect.to(
       boss.size * 1.6,
       EffectController(
@@ -85,11 +86,6 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
         startDelay: 0.5,
         reverseDuration: 0.3,
       ),
-      onComplete: () {
-        if (bossComp(boss).current != NinjaFootState.idle) {
-          bossComp(boss).current = NinjaFootState.predator;
-        }
-      },
     ));
     boss.add(
       MoveToEffect(

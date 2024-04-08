@@ -95,7 +95,9 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
     add(hitbox..position = Vector2(size.x / 2, size.y / 2));
     anchor = anchor;
     game.levelBloc.stream.listen((state) {
-      _speed = state.level.speed;
+      if (_moving) {
+        _speed = state.level.speed;
+      }
     });
     return super.onLoad();
   }

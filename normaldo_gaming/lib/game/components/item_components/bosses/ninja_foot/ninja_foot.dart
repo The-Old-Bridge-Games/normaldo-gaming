@@ -15,8 +15,9 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 enum NinjaFootState {
   idle,
-  predator,
+  predator1,
   predator2,
+  predator3,
   smoke,
 }
 
@@ -114,10 +115,13 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
     switch (value) {
       case NinjaFootState.idle:
         size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
-      case NinjaFootState.predator:
-        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+      case NinjaFootState.predator1:
+        size =
+            Vector2(game.grid.lineSize * 1.5, game.grid.lineSize * 1.5 * 1.99);
       case NinjaFootState.predator2:
-        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 1.5);
+        size = Vector2(game.grid.lineSize * 2, game.grid.lineSize * 2 * 1.24);
+      case NinjaFootState.predator3:
+        size = Vector2(game.grid.lineSize * 2 * 1.34, game.grid.lineSize * 2);
       case NinjaFootState.smoke:
         size = Vector2(game.grid.lineSize * 2, game.grid.lineSize);
       default:
@@ -133,8 +137,12 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
   FutureOr<void> onLoad() async {
     size = Vector2(game.grid.lineSize * 0.755, game.grid.lineSize);
     final idleSprite = await Sprite.load('bosses/ninja foot1.png');
-    final predatorSprite = await Sprite.load('bosses/ninja_foot_predator2.png');
-    final predator2Sprite = await Sprite.load('bosses/ninja_foot_predator.png');
+    final predatorSprite = await Sprite.load('bosses/nf_predator1.png');
+    final predator2Sprite = await Sprite.load('bosses/nf_predator2.png');
+    final predator3Sprite = await Sprite.load('bosses/nf_predator3.png');
+    final predator4Sprite = await Sprite.load('bosses/nf_predator4.png');
+    final predator5Sprite = await Sprite.load('bosses/nf_predator5.png');
+    final predator6Sprite = await Sprite.load('bosses/nf_predator6.png');
     final smokeAnimation = SpriteAnimation.fromFrameData(
       await Flame.images.load('bosses/ninja_foot_smoke.png'),
       SpriteAnimationData.sequenced(
@@ -149,10 +157,27 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
         [idleSprite],
         stepTime: 5,
       ),
-      NinjaFootState.predator:
-          SpriteAnimation.spriteList([predatorSprite], stepTime: 5),
-      NinjaFootState.predator2:
-          SpriteAnimation.spriteList([predator2Sprite], stepTime: 5),
+      NinjaFootState.predator1: SpriteAnimation.spriteList(
+        [predatorSprite, predator2Sprite],
+        stepTime: 0.5,
+        loop: false,
+      ),
+      NinjaFootState.predator2: SpriteAnimation.spriteList(
+        [predator3Sprite, predator6Sprite],
+        stepTime: 0.5,
+        loop: false,
+      ),
+      NinjaFootState.predator3: SpriteAnimation.spriteList(
+        [predator4Sprite, predator5Sprite],
+        stepTime: 0.5,
+        loop: false,
+      ),
+      // NinjaFootState.predator3:
+      //     SpriteAnimation.spriteList([predator3Sprite], stepTime: 5),
+      // NinjaFootState.predator4:
+      //     SpriteAnimation.spriteList([predator4Sprite], stepTime: 5),
+      // NinjaFootState.predator5:
+      //     SpriteAnimation.spriteList([predator5Sprite], stepTime: 5),
       NinjaFootState.smoke: smokeAnimation
     };
     current = NinjaFootState.idle;
