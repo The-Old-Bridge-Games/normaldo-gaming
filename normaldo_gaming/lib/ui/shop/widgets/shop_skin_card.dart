@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
+import 'package:normaldo_gaming/ui/shop/skin_info_screen.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
 class ShopSkinCard extends StatefulWidget {
@@ -57,84 +59,99 @@ class _ShopSkinCardState extends State<ShopSkinCard> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              boxShadow: [
-                BoxShadow(
-                  color: NGTheme.colorOf(widget.skin.rarity),
-                  blurRadius: 10,
-                  spreadRadius: 1,
-                )
-              ],
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                  width: 5, color: NGTheme.colorOf(widget.skin.rarity)),
-            ),
-            height: 200,
-            width: 200,
-            child: Stack(
-              clipBehavior: Clip.none,
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        radius: 0.5,
-                        colors: [
-                          NGTheme.colorOf(widget.skin.rarity),
-                          Colors.transparent,
-                        ],
-                      )),
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).push(PageRouteBuilder(
+              opaque: false,
+              barrierColor: Colors.black87,
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  FadeTransition(
+                opacity: animation,
+                child: SkinInfoScreen(skin: widget.skin, fromShop: true),
+              ),
+            )),
+            child: Hero(
+              tag: widget.skin.uniqueId,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  boxShadow: [
+                    BoxShadow(
+                      color: NGTheme.colorOf(widget.skin.rarity),
+                      blurRadius: 10,
+                      spreadRadius: 1,
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                      width: 5, color: NGTheme.colorOf(widget.skin.rarity)),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                height: 200,
+                width: 200,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  fit: StackFit.expand,
                   children: [
-                    const SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4).add(
-                          EdgeInsets.only(
-                              top: widget.skin.rarity == SkinRarity.legendary
-                                  ? 4
-                                  : 0)),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          _rarityTitleOf(widget.skin),
-                          textAlign: TextAlign.center,
-                          style: NGTheme.rareSkinStyle.copyWith(
-                              color: NGTheme.colorOf(widget.skin.rarity)),
-                        ),
-                      ),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(
+                            radius: 0.5,
+                            colors: [
+                              NGTheme.colorOf(widget.skin.rarity),
+                              Colors.transparent,
+                            ],
+                          )),
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: Image.asset(
-                        'assets/images/${widget.skin.assets.mask}',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const Spacer(),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            widget.skin.name.tr(),
-                            style: NGTheme.displaySmall
-                                .copyWith(color: Colors.white),
-                            textAlign: TextAlign.center,
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4)
+                              .add(EdgeInsets.only(
+                                  top:
+                                      widget.skin.rarity == SkinRarity.legendary
+                                          ? 4
+                                          : 0)),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              Utils.rarityTitleOf(widget.skin),
+                              textAlign: TextAlign.center,
+                              style: NGTheme.rareSkinStyle.copyWith(
+                                  color: NGTheme.colorOf(widget.skin.rarity)),
+                            ),
                           ),
                         ),
-                      ),
+                        Expanded(
+                          flex: 4,
+                          child: Image.asset(
+                            'assets/images/${widget.skin.assets.mask}',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                widget.skin.name.tr(),
+                                style: NGTheme.displaySmall
+                                    .copyWith(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -154,21 +171,11 @@ class _ShopSkinCardState extends State<ShopSkinCard> {
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: NGButton(
-              text: '${'Buy'.tr()} ${widget.skin.price}\$',
+              text: '${widget.skin.price}\$',
               onPressed: _buySkin,
             ),
           ),
       ],
     );
-  }
-
-  String _rarityTitleOf(Skin skin) {
-    return switch (skin.rarity) {
-      SkinRarity.classic => 'CLASSIC'.tr(),
-      SkinRarity.common => 'COMMON'.tr(),
-      SkinRarity.rare => 'RARE'.tr(),
-      SkinRarity.epic => 'EPIC'.tr(),
-      SkinRarity.legendary => 'LEGENDARY'.tr(),
-    };
   }
 }

@@ -16,6 +16,7 @@ _$SkinModelImpl _$$SkinModelImplFromJson(Map<String, dynamic> json) =>
       resistanceToItems: (json['resistanceToItems'] as List<dynamic>)
           .map((e) => $enumDecode(_$ItemsEnumMap, e))
           .toList(),
+      uniqueSkill: json['uniqueSkill'] as String?,
     );
 
 Map<String, dynamic> _$$SkinModelImplToJson(_$SkinModelImpl instance) =>
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$SkinModelImplToJson(_$SkinModelImpl instance) =>
       'assetsModel': instance.assetsModel,
       'resistanceToItems':
           instance.resistanceToItems.map((e) => _$ItemsEnumMap[e]!).toList(),
+      'uniqueSkill': instance.uniqueSkill,
     };
 
 const _$SkinRarityEnumMap = {
@@ -86,6 +88,7 @@ const _$ItemsEnumMap = {
   Items.shredder: 'shredder',
   Items.shuriken: 'shuriken',
   Items.shredderSword: 'shredderSword',
+  Items.smoke: 'smoke',
 };
 
 _$SkinAssetsModelImpl _$$SkinAssetsModelImplFromJson(

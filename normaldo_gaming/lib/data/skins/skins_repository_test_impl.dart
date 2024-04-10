@@ -59,76 +59,76 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           ],
         ),
         const Skin(
-          uniqueId: 'dracula',
-          name: 'DRACULA BLOOD',
-          rarity: SkinRarity.epic,
-          assets: SkinAssets(
-              skinny: 'normaldo/dracula/skinny.png',
-              slim: 'normaldo/dracula/slim.png',
-              fat: 'normaldo/dracula/fat.png',
-              superFat: 'normaldo/dracula/super_fat.png',
-              skinnyBite: 'normaldo/dracula/skinny_bite.png',
-              slimBite: 'normaldo/dracula/slim_bite.png',
-              fatBite: 'normaldo/dracula/fat_bite.png',
-              superFatBite: 'normaldo/dracula/super_fat_bite.png',
-              dead: 'normaldo/dracula/dead.png',
-              mask: 'normaldo/dracula/mask.png',
-              sfx: {
-                'fatUp': ['dracula/VAMP BUPR.mp3'],
-                'slow': [
-                  'dracula/VAMP EAT ENJOY.mp3',
-                  'dracula/VAMP EAT ENJOY2.mp3',
-                ],
-                'molotov': [
-                  'dracula/VAMP EAT ENJOY.mp3',
-                  'dracula/VAMP EAT ENJOY2.mp3',
-                ],
-                'bite': [
-                  'dracula/VAMP EAT 1.mp3',
-                  'dracula/VAMP EAT WSHH.mp3',
-                  'dracula/VAMP EAT WSGGGG.mp3',
-                ],
-                'resist': [
-                  'dracula/VAMP EAT 1.mp3',
-                  'dracula/VAMP EAT WSHH.mp3',
-                  'dracula/VAMP EAT WSGGGG.mp3',
-                ],
-                'hit': ['dracula/VAMP HIT.mp3'],
-                'start': ['dracula/VAMP LAUGHT.mp3'],
-                'slowMo': ['dracula/VAMPIRE SLOMO.mp3'],
-                'shredder': ['dracula/VAMP RAW LAUGHT.mp3'],
-                'maxFat': ['dracula/VAMP MAX FAT BLOODY.mp3']
-              }),
-          resistanceToItems: [
-            Items.cocktail,
-            Items.molotov,
-          ],
-        ),
+            uniqueId: 'dracula',
+            name: 'DRACULA BLOOD',
+            rarity: SkinRarity.epic,
+            assets: SkinAssets(
+                skinny: 'normaldo/dracula/skinny.png',
+                slim: 'normaldo/dracula/slim.png',
+                fat: 'normaldo/dracula/fat.png',
+                superFat: 'normaldo/dracula/super_fat.png',
+                skinnyBite: 'normaldo/dracula/skinny_bite.png',
+                slimBite: 'normaldo/dracula/slim_bite.png',
+                fatBite: 'normaldo/dracula/fat_bite.png',
+                superFatBite: 'normaldo/dracula/super_fat_bite.png',
+                dead: 'normaldo/dracula/dead.png',
+                mask: 'normaldo/dracula/mask.png',
+                sfx: {
+                  'fatUp': ['dracula/VAMP BUPR.mp3'],
+                  'slow': [
+                    'dracula/VAMP EAT ENJOY.mp3',
+                    'dracula/VAMP EAT ENJOY2.mp3',
+                  ],
+                  'molotov': [
+                    'dracula/VAMP EAT ENJOY.mp3',
+                    'dracula/VAMP EAT ENJOY2.mp3',
+                  ],
+                  'bite': [
+                    'dracula/VAMP EAT 1.mp3',
+                    'dracula/VAMP EAT WSHH.mp3',
+                    'dracula/VAMP EAT WSGGGG.mp3',
+                  ],
+                  'resist': [
+                    'dracula/VAMP EAT 1.mp3',
+                    'dracula/VAMP EAT WSHH.mp3',
+                    'dracula/VAMP EAT WSGGGG.mp3',
+                  ],
+                  'hit': ['dracula/VAMP HIT.mp3'],
+                  'start': ['dracula/VAMP LAUGHT.mp3'],
+                  'slowMo': ['dracula/VAMPIRE SLOMO.mp3'],
+                  'shredder': ['dracula/VAMP RAW LAUGHT.mp3'],
+                  'maxFat': ['dracula/VAMP MAX FAT BLOODY.mp3']
+                }),
+            resistanceToItems: [
+              Items.cocktail,
+              Items.molotov,
+            ],
+            uniqueSkill: 'gets some fat from eating human beings'),
         const Skin(
-          uniqueId: 'glasses',
-          name: 'LUXURY GLASSES',
-          rarity: SkinRarity.epic,
-          assets: SkinAssets(
-            skinny: 'normaldo/glasses/skinny.png',
-            slim: 'normaldo/glasses/slim.png',
-            fat: 'normaldo/glasses/fat.png',
-            superFat: 'normaldo/glasses/super_fat.png',
-            skinnyBite: 'normaldo/glasses/skinny_bite.png',
-            slimBite: 'normaldo/glasses/slim_bite.png',
-            fatBite: 'normaldo/glasses/fat_bite.png',
-            superFatBite: 'normaldo/glasses/super_fat_bite.png',
-            dead: 'normaldo/glasses/dead.png',
-            mask: 'normaldo/glasses/mask.png',
-            sfx: {
-              'slow': ['glasses/DINK COCTAIL.mp3'],
-              'bite': ['glasses/GOLDEN EAT.mp3', 'glasses/GOLDEN EAT 2.mp3'],
-              'hit': ['glasses/GOLDEN HIT.mp3'],
-              'resist': ['glasses/GOLDEN LAUGHT.mp3'],
-              'maxFat': ['glasses/GOLDEN MAX FAT.mp3']
-            },
-          ),
-          resistanceToItems: [],
-        ),
+            uniqueId: 'glasses',
+            name: 'LUXURY GLASSES',
+            rarity: SkinRarity.epic,
+            assets: SkinAssets(
+              skinny: 'normaldo/glasses/skinny.png',
+              slim: 'normaldo/glasses/slim.png',
+              fat: 'normaldo/glasses/fat.png',
+              superFat: 'normaldo/glasses/super_fat.png',
+              skinnyBite: 'normaldo/glasses/skinny_bite.png',
+              slimBite: 'normaldo/glasses/slim_bite.png',
+              fatBite: 'normaldo/glasses/fat_bite.png',
+              superFatBite: 'normaldo/glasses/super_fat_bite.png',
+              dead: 'normaldo/glasses/dead.png',
+              mask: 'normaldo/glasses/mask.png',
+              sfx: {
+                'slow': ['glasses/DINK COCTAIL.mp3'],
+                'bite': ['glasses/GOLDEN EAT.mp3', 'glasses/GOLDEN EAT 2.mp3'],
+                'hit': ['glasses/GOLDEN HIT.mp3'],
+                'resist': ['glasses/GOLDEN LAUGHT.mp3'],
+                'maxFat': ['glasses/GOLDEN MAX FAT.mp3']
+              },
+            ),
+            resistanceToItems: [],
+            uniqueSkill: "ain't getting slower after fat up"),
         const Skin(
           uniqueId: 'halloween',
           name: 'PUMPKIN HEAD',
@@ -183,6 +183,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'maxFat': ['harry_potter/POTTER MAX FAT.mp3']
               }),
           resistanceToItems: [],
+          uniqueSkill: 'vanishing trick+',
         ),
         const Skin(
           uniqueId: 'new_year',
@@ -211,39 +212,43 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'moneyBag': ['new_year/SANTA TAKE MONEY OR COCTAIL.mp3'],
               }),
           resistanceToItems: [],
+          uniqueSkill: 'causes cozy snowfall',
         ),
         const Skin(
-          uniqueId: 'pirate',
-          name: "PIRATE HAT",
-          rarity: SkinRarity.legendary,
-          assets: SkinAssets(
-              skinny: 'normaldo/pirate/skinny.png',
-              slim: 'normaldo/pirate/slim.png',
-              fat: 'normaldo/pirate/fat.png',
-              superFat: 'normaldo/pirate/super_fat.png',
-              skinnyBite: 'normaldo/pirate/skinny_bite.png',
-              slimBite: 'normaldo/pirate/slim_bite.png',
-              fatBite: 'normaldo/pirate/fat_bite.png',
-              superFatBite: 'normaldo/pirate/super_fat_bite.png',
-              dead: 'normaldo/pirate/dead.png',
-              mask: 'normaldo/pirate/mask.png',
-              sfx: {
-                'bite': ['pirate/PIRATE  EAT 2.mp3', 'pirate/PIRATE EAT1.mp3'],
-                'slowMo': ['pirate/PIRATE BRIIZZ SLOMO.mp3'],
-                'shredder': ['pirate/PIRATE HEHEY.mp3'],
-                'hit': ['pirate/PIRATE HITwav.mp3'],
-                'resist': [
-                  'pirate/PIRATE PIRAT COCTAIL ENJOING.mp3',
-                  'pirate/PIRATE LAUGHT.mp3',
-                  'pirate/PIRATE LAUGHTLONG.mp3',
-                ],
-                'maxFat': ['pirate/PIRATE MAXFAT.mp3'],
-              }),
-          resistanceToItems: [
-            Items.homeless,
-            Items.cocktail,
-          ],
-        ),
+            uniqueId: 'pirate',
+            name: "PIRATE HAT",
+            rarity: SkinRarity.legendary,
+            assets: SkinAssets(
+                skinny: 'normaldo/pirate/skinny.png',
+                slim: 'normaldo/pirate/slim.png',
+                fat: 'normaldo/pirate/fat.png',
+                superFat: 'normaldo/pirate/super_fat.png',
+                skinnyBite: 'normaldo/pirate/skinny_bite.png',
+                slimBite: 'normaldo/pirate/slim_bite.png',
+                fatBite: 'normaldo/pirate/fat_bite.png',
+                superFatBite: 'normaldo/pirate/super_fat_bite.png',
+                dead: 'normaldo/pirate/dead.png',
+                mask: 'normaldo/pirate/mask.png',
+                sfx: {
+                  'bite': [
+                    'pirate/PIRATE  EAT 2.mp3',
+                    'pirate/PIRATE EAT1.mp3'
+                  ],
+                  'slowMo': ['pirate/PIRATE BRIIZZ SLOMO.mp3'],
+                  'shredder': ['pirate/PIRATE HEHEY.mp3'],
+                  'hit': ['pirate/PIRATE HITwav.mp3'],
+                  'resist': [
+                    'pirate/PIRATE PIRAT COCTAIL ENJOING.mp3',
+                    'pirate/PIRATE LAUGHT.mp3',
+                    'pirate/PIRATE LAUGHTLONG.mp3',
+                  ],
+                  'maxFat': ['pirate/PIRATE MAXFAT.mp3'],
+                }),
+            resistanceToItems: [
+              Items.homeless,
+              Items.cocktail,
+            ],
+            uniqueSkill: 'accidentally takes x3 dollars or pizza'),
         const Skin(
           uniqueId: 'spider-man',
           name: "THE HUMAN SPIDER \nMASK",
@@ -280,6 +285,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
             Items.homeless,
             Items.trashBin,
           ],
+          uniqueSkill: 'spidey sense',
         ),
         const Skin(
           uniqueId: 'viking',
@@ -319,7 +325,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
         const Skin(
           uniqueId: 'wizard',
           name: "MAGIC WAND",
-          rarity: SkinRarity.rare,
+          rarity: SkinRarity.epic,
           assets: SkinAssets(
               skinny: 'normaldo/wizard/skinny.png',
               slim: 'normaldo/wizard/slim.png',
@@ -349,6 +355,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           resistanceToItems: [
             Items.cocktail,
           ],
+          uniqueSkill: 'vanishing trick',
         ),
       ]..sort((a, b) => a.rarity.index - b.rarity.index);
 }

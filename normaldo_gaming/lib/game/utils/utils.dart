@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 abstract class Utils {
   const Utils._();
@@ -204,6 +206,18 @@ abstract class Utils {
         Items.shredderSword => 'assets/images/umbrella.png',
         Items.smoke => 'assets/images/bosses/smoke.png',
       };
+
+  static String skinSfxWrapper(String sfxPath) => 'skins/$sfxPath';
+
+  static String rarityTitleOf(Skin skin) {
+    return switch (skin.rarity) {
+      SkinRarity.classic => 'CLASSIC'.tr(),
+      SkinRarity.common => 'COMMON'.tr(),
+      SkinRarity.rare => 'RARE'.tr(),
+      SkinRarity.epic => 'EPIC'.tr(),
+      SkinRarity.legendary => 'LEGENDARY'.tr(),
+    };
+  }
 
   static const locationExp = {
     'gleb piece': 1,

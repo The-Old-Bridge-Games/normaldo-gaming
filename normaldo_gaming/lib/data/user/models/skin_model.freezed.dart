@@ -25,6 +25,7 @@ mixin _$SkinModel {
   SkinRarity get rarity => throw _privateConstructorUsedError;
   SkinAssetsModel get assetsModel => throw _privateConstructorUsedError;
   List<Items> get resistanceToItems => throw _privateConstructorUsedError;
+  String? get uniqueSkill => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $SkinModelCopyWith<$Res> {
       String name,
       SkinRarity rarity,
       SkinAssetsModel assetsModel,
-      List<Items> resistanceToItems});
+      List<Items> resistanceToItems,
+      String? uniqueSkill});
 
   $SkinAssetsModelCopyWith<$Res> get assetsModel;
 }
@@ -65,6 +67,7 @@ class _$SkinModelCopyWithImpl<$Res, $Val extends SkinModel>
     Object? rarity = null,
     Object? assetsModel = null,
     Object? resistanceToItems = null,
+    Object? uniqueSkill = freezed,
   }) {
     return _then(_value.copyWith(
       uniqueId: null == uniqueId
@@ -87,6 +90,10 @@ class _$SkinModelCopyWithImpl<$Res, $Val extends SkinModel>
           ? _value.resistanceToItems
           : resistanceToItems // ignore: cast_nullable_to_non_nullable
               as List<Items>,
+      uniqueSkill: freezed == uniqueSkill
+          ? _value.uniqueSkill
+          : uniqueSkill // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -112,7 +119,8 @@ abstract class _$$SkinModelImplCopyWith<$Res>
       String name,
       SkinRarity rarity,
       SkinAssetsModel assetsModel,
-      List<Items> resistanceToItems});
+      List<Items> resistanceToItems,
+      String? uniqueSkill});
 
   @override
   $SkinAssetsModelCopyWith<$Res> get assetsModel;
@@ -134,6 +142,7 @@ class __$$SkinModelImplCopyWithImpl<$Res>
     Object? rarity = null,
     Object? assetsModel = null,
     Object? resistanceToItems = null,
+    Object? uniqueSkill = freezed,
   }) {
     return _then(_$SkinModelImpl(
       uniqueId: null == uniqueId
@@ -156,6 +165,10 @@ class __$$SkinModelImplCopyWithImpl<$Res>
           ? _value._resistanceToItems
           : resistanceToItems // ignore: cast_nullable_to_non_nullable
               as List<Items>,
+      uniqueSkill: freezed == uniqueSkill
+          ? _value.uniqueSkill
+          : uniqueSkill // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -168,7 +181,8 @@ class _$SkinModelImpl extends _SkinModel {
       required this.name,
       required this.rarity,
       required this.assetsModel,
-      required final List<Items> resistanceToItems})
+      required final List<Items> resistanceToItems,
+      this.uniqueSkill})
       : _resistanceToItems = resistanceToItems,
         super._();
 
@@ -193,8 +207,11 @@ class _$SkinModelImpl extends _SkinModel {
   }
 
   @override
+  final String? uniqueSkill;
+
+  @override
   String toString() {
-    return 'SkinModel(uniqueId: $uniqueId, name: $name, rarity: $rarity, assetsModel: $assetsModel, resistanceToItems: $resistanceToItems)';
+    return 'SkinModel(uniqueId: $uniqueId, name: $name, rarity: $rarity, assetsModel: $assetsModel, resistanceToItems: $resistanceToItems, uniqueSkill: $uniqueSkill)';
   }
 
   @override
@@ -209,13 +226,21 @@ class _$SkinModelImpl extends _SkinModel {
             (identical(other.assetsModel, assetsModel) ||
                 other.assetsModel == assetsModel) &&
             const DeepCollectionEquality()
-                .equals(other._resistanceToItems, _resistanceToItems));
+                .equals(other._resistanceToItems, _resistanceToItems) &&
+            (identical(other.uniqueSkill, uniqueSkill) ||
+                other.uniqueSkill == uniqueSkill));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uniqueId, name, rarity,
-      assetsModel, const DeepCollectionEquality().hash(_resistanceToItems));
+  int get hashCode => Object.hash(
+      runtimeType,
+      uniqueId,
+      name,
+      rarity,
+      assetsModel,
+      const DeepCollectionEquality().hash(_resistanceToItems),
+      uniqueSkill);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +262,8 @@ abstract class _SkinModel extends SkinModel {
       required final String name,
       required final SkinRarity rarity,
       required final SkinAssetsModel assetsModel,
-      required final List<Items> resistanceToItems}) = _$SkinModelImpl;
+      required final List<Items> resistanceToItems,
+      final String? uniqueSkill}) = _$SkinModelImpl;
   const _SkinModel._() : super._();
 
   factory _SkinModel.fromJson(Map<String, dynamic> json) =
@@ -253,6 +279,8 @@ abstract class _SkinModel extends SkinModel {
   SkinAssetsModel get assetsModel;
   @override
   List<Items> get resistanceToItems;
+  @override
+  String? get uniqueSkill;
   @override
   @JsonKey(ignore: true)
   _$$SkinModelImplCopyWith<_$SkinModelImpl> get copyWith =>

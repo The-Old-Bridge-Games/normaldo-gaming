@@ -191,42 +191,6 @@ class _BaseScreenState extends State<BaseScreen> {
     );
   }
 
-  BouncingButton _buildLogoutButton(
-    BuildContext context,
-    TextTheme textTheme,
-  ) {
-    return BouncingButton(
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: Text('Are you sure?'.tr()),
-                  content: Text("You're going to logout your account".tr()),
-                  actions: [
-                    ActionChip(
-                      onPressed: () async {
-                        context.pop();
-                        // context.read<AuthCubit>().logout();
-                      },
-                      label: const Text('Yep',
-                          style: TextStyle(color: Colors.red)),
-                    ),
-                    ActionChip(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      label: const Text('Nope'),
-                    ),
-                  ],
-                ));
-      },
-      child: Text(
-        'Sign out'.tr(),
-        style: textTheme.displayMedium?.copyWith(color: Colors.red[900]),
-      ),
-    );
-  }
-
   Widget _buildMissions() {
     return const MissionsList(showProgress: false);
   }

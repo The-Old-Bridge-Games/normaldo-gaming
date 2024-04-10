@@ -35,6 +35,7 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
 
   @override
   void start() {
+    gameRef.bossInProgress = true;
     const double moveFromRightSideDur = 1;
     final grid = game.grid;
     scale = Vector2.all(4);
@@ -105,7 +106,7 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
         }
       } else {
         gameRef.grid.resumeLines();
-        print('speed: ' + gameRef.levelBloc.state.level.speed.toString());
+        gameRef.bossInProgress = false;
       }
     }
   }

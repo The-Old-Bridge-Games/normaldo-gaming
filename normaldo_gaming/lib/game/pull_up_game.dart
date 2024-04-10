@@ -47,6 +47,8 @@ class PullUpGame extends FlameGame
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;
 
+  bool bossInProgress = false;
+
   @override
   bool get debugMode => false;
 

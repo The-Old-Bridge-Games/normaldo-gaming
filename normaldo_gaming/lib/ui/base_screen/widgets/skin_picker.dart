@@ -11,6 +11,7 @@ import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/shop/skin_info_screen.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 import 'package:normaldo_gaming/ui/widgets/wheel_scroll_view_x.dart';
@@ -131,7 +132,16 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
                             curve: Curves.linearToEaseOut,
                           );
                         } else {
-                          _selectSkin();
+                          Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            barrierColor: Colors.black87,
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    FadeTransition(
+                              opacity: animation,
+                              child: SkinInfoScreen(skin: skin),
+                            ),
+                          ));
                         }
                       },
                       child: Column(

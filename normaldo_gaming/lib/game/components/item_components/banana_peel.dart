@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/rendering.dart';
-import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -34,8 +32,6 @@ final class BananaPeel extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    final decorator = PaintDecorator.tint(Colors.red);
-    decorator.addLast(decorator);
     sprite = await Sprite.load('bananas 2.png');
     return super.onLoad();
   }

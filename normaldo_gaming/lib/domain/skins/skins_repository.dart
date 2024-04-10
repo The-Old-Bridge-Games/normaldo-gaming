@@ -1,3 +1,4 @@
+import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 abstract class SkinsRepository {
@@ -13,6 +14,7 @@ final class Skin {
   final SkinRarity rarity;
   final SkinAssets assets;
   final List<Items> resistanceToItems;
+  final String? uniqueSkill;
 
   const Skin({
     required this.uniqueId,
@@ -20,6 +22,7 @@ final class Skin {
     required this.rarity,
     required this.assets,
     required this.resistanceToItems,
+    this.uniqueSkill,
   });
 
   int get price => switch (rarity) {
@@ -79,4 +82,24 @@ final class SkinAssets {
   final String mask;
 
   final Map<String, List<String>> sfx;
+
+  String fatFromIndex(int index) {
+    return switch (index) {
+      0 => skinny,
+      1 => slim,
+      2 => fat,
+      3 => superFat,
+      _ => throw UnexpectedError(),
+    };
+  }
+
+  String fatBiteFromIndex(int index) {
+    return switch (index) {
+      0 => skinnyBite,
+      1 => slimBite,
+      2 => fatBite,
+      3 => superFatBite,
+      _ => throw UnexpectedError(),
+    };
+  }
 }

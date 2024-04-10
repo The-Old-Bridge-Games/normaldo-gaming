@@ -12,14 +12,14 @@ class LevelTimerComponent extends TimerComponent
   int _currentLocationIndex = 0;
 
   final random = Random();
-  double get _eventPeriod => 30000;
+  double get _eventPeriod => 20;
   // double get _eventPeriod => (15 + Random().nextInt(16)).toDouble();
 
   void _onTick() {
     if (bloc.state.miniGame != null) return;
-    if (bloc.state.figure == null) {
+    if (bloc.state.figure == null && !gameRef.bossInProgress) {
       // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.bigBuddyBin()));
-      // bloc.add(const LevelEvent.startRandomFigure());
+      bloc.add(const LevelEvent.startRandomFigure());
     }
     add(TimerComponent(
       period: _eventPeriod,

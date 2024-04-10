@@ -120,6 +120,7 @@ const _$ItemsEnumMap = {
   Items.shredder: 'shredder',
   Items.shuriken: 'shuriken',
   Items.shredderSword: 'shredderSword',
+  Items.smoke: 'smoke',
 };
 
 _$PassItemMissionImpl _$$PassItemMissionImplFromJson(

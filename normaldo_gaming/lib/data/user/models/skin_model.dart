@@ -15,6 +15,7 @@ class SkinModel with _$SkinModel {
     required SkinRarity rarity,
     required SkinAssetsModel assetsModel,
     required List<Items> resistanceToItems,
+    String? uniqueSkill,
   }) = _SkinModel;
 
   Skin toEntity() => Skin(
@@ -23,6 +24,7 @@ class SkinModel with _$SkinModel {
         rarity: rarity,
         assets: assetsModel.toEntity(),
         resistanceToItems: resistanceToItems,
+        uniqueSkill: uniqueSkill,
       );
 
   factory SkinModel.fromEntity(Skin skin) => SkinModel(
@@ -31,6 +33,7 @@ class SkinModel with _$SkinModel {
         rarity: skin.rarity,
         assetsModel: SkinAssetsModel.fromEntity(skin.assets),
         resistanceToItems: skin.resistanceToItems,
+        uniqueSkill: skin.uniqueSkill,
       );
 
   factory SkinModel.fromJson(Map<String, dynamic> json) =>
