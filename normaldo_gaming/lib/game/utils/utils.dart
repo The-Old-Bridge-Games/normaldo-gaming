@@ -151,6 +151,7 @@ abstract class Utils {
         'spider-man' => 'assets/images/normaldo/spider_man/mask.png',
         'viking' => 'assets/images/normaldo/viking/mask.png',
         'wizard' => 'assets/images/normaldo/wizard/mask.png',
+        'pirate' => 'assets/images/normaldo/pirate/mask.png',
         _ => throw UnexpectedError(),
       };
 
