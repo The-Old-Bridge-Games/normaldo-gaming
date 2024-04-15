@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 
 class MissionsOnStartOverlay extends StatefulWidget {
@@ -24,23 +25,65 @@ class _MissionsOnStartOverlayState extends State<MissionsOnStartOverlay> {
     });
   }
 
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    if (details.delta.dx < 0) {
+      setState(() => _left += details.delta.dx);
+    }
+    if (_left < -100) {
+      setState(() {
+        _left = -1000;
+      });
+    }
+  }
+
+  void _onHorizontalDragEnd(DragEndDetails details) {
+    if (_left >= -100) {
+      setState(() => _left = 16);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          alignment: Alignment.centerLeft,
-          children: [
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              left: _left,
-              width: MediaQuery.of(context).size.width / 2.5,
-              child: const MissionsList(disabled: true),
-            )
-          ],
-        ),
-      ),
+    final textTheme = Theme.of(context).textTheme;
+    const borderSide = BorderSide(
+      color: NGTheme.purple3,
+      width: 4,
+    );
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 300),
+          left: _left,
+          width: MediaQuery.of(context).size.width / 2.4,
+          child: GestureDetector(
+            onHorizontalDragUpdate: _onHorizontalDragUpdate,
+            onHorizontalDragEnd: _onHorizontalDragEnd,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Expanded(child: MissionsList(disabled: true)),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: NGTheme.purple2,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
+                      ),
+                      border: Border(
+                        right: borderSide,
+                        top: borderSide,
+                        bottom: borderSide,
+                      )),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+                  child: Text('<', style: textTheme.displayLarge),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }
