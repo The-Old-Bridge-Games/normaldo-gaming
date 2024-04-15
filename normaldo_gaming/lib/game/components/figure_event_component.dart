@@ -345,8 +345,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
-                  size.x * 1.3 +
-                      (xOffset * Items.trashBin.getSize(lineSize).x * 4),
+                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 4),
                   linesCentersY[item.line ?? 0]));
           }
         }

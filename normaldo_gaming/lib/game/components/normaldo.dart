@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/rendering.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
@@ -566,7 +567,18 @@ class Normaldo extends PositionComponent
         ItemEffect.immuneToSlowingItems => Colors.deepPurple[400],
         ItemEffect.immuneToAttackingItems => Colors.redAccent[300],
       };
-      notify(text: text, color: color);
+      if (duration > 0) {
+        notify(text: text, color: color);
+      }
+      if (effect == ItemEffect.slow || effect == ItemEffect.speedUp) {
+        decorator.removeLast();
+        decorator.addLast(
+            PaintDecorator.tint(color?.withOpacity(0.2) ?? Colors.black));
+      }
+      if (duration == 0 &&
+          (effect == ItemEffect.slow || effect == ItemEffect.speedUp)) {
+        decorator.removeLast();
+      }
     }));
     add(effectsController);
 

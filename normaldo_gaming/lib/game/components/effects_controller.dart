@@ -30,6 +30,24 @@ class EffectsController extends PositionComponent
   List<ItemEffect> get effectsInProgress => _timers.keys.toList();
 
   void addEffect(ItemEffect effect, double duration) {
+    if (effect == ItemEffect.speedUp &&
+        effectsInProgress.contains(ItemEffect.slow)) {
+      _timers[ItemEffect.slow]?.timer.stop();
+      _timers.remove(ItemEffect.slow);
+      _current.remove(ItemEffect.slow);
+      _stopEffect(ItemEffect.slow);
+      onNewState(effect, 0);
+      return;
+    }
+    if (effect == ItemEffect.slow &&
+        effectsInProgress.contains(ItemEffect.speedUp)) {
+      _timers[ItemEffect.speedUp]?.timer.stop();
+      _timers.remove(ItemEffect.speedUp);
+      _current.remove(ItemEffect.speedUp);
+      _stopEffect(ItemEffect.speedUp);
+      onNewState(effect, 0);
+      return;
+    }
     if (effectsInProgress.contains(effect)) {
       final newDuration = _current[effect]! + duration;
       onNewState(effect, newDuration);
