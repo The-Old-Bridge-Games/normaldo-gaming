@@ -225,7 +225,7 @@ enum Items {
       // case Items.fatPizza:
       //   return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.homeless:
-        return Vector2(lineSize * 0.8, lineSize * 0.8);
+        return Vector2(lineSize, lineSize);
       case Items.moneyBag:
         return Vector2(lineSize / 2, lineSize / 2);
       case Items.boombox:

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
@@ -39,11 +40,11 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
               item: Items.boombox, line: Random().nextInt(Utils.linesCount))
         ],
         [
-          const LineItem(item: Items.trashBin, line: 0),
-          const LineItem(item: Items.trashBin, line: 1),
-          const LineItem(item: Items.trashBin, line: 2),
-          const LineItem(item: Items.trashBin, line: 3),
-          const LineItem(item: Items.trashBin, line: 4),
+          const LineItem(item: Items.cone, line: 0),
+          const LineItem(item: Items.cone, line: 1),
+          const LineItem(item: Items.cone, line: 2),
+          const LineItem(item: Items.cone, line: 3),
+          const LineItem(item: Items.cone, line: 4),
         ]
       ],
       guardedPizza: () {
@@ -51,14 +52,14 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         return [
           [LineItem(item: Items.trashBin, line: firstLine)],
           [
-            LineItem(item: Items.trashBin, line: firstLine - 1),
+            LineItem(item: Items.cone, line: firstLine - 1),
             LineItem(item: Items.fatPizza, line: firstLine),
-            LineItem(item: Items.trashBin, line: firstLine + 1),
+            LineItem(item: Items.cone, line: firstLine + 1),
           ],
           [
-            LineItem(item: Items.trashBin, line: firstLine - 1),
-            LineItem(item: Items.trashBin, line: firstLine),
-            LineItem(item: Items.trashBin, line: firstLine + 1),
+            LineItem(item: Items.cone, line: firstLine - 1),
+            LineItem(item: Items.cone, line: firstLine),
+            LineItem(item: Items.cone, line: firstLine + 1),
           ],
         ];
       },
@@ -85,7 +86,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             livingPath.length,
             (columnIndex) => List.generate(Utils.linesCount, (index) {
                   if (index != livingPath[columnIndex]) {
-                    return LineItem(item: Items.trashBin, line: index);
+                    return LineItem(item: Items.cone, line: index);
                   }
                   if (columnIndex != eventLength - 1) {
                     return LineItem(item: Items.pizza, line: index);
@@ -112,7 +113,16 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       bigBuddyBin: () {
         return [
-          [LineItem(item: Items.hugeItem, line: Random().nextInt(3))],
+          [
+            LineItem(
+                item: [
+                  Items.cone,
+                  Items.trashBin,
+                  Items.bird,
+                  Items.policeAlarm,
+                ].random(),
+                line: Random().nextInt(3))
+          ],
         ];
       },
       only2Lines: () {
@@ -139,7 +149,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
           final list = List.generate(
               Utils.linesCount,
               (index) => LineItem(
-                    item: Items.trashBin,
+                    item: Items.cone,
                     line: index,
                   ));
           list.removeWhere((e) {
@@ -303,7 +313,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           final columnPadding = xOffset *
-              (Items.trashBin.getSize(lineSize).x +
+              (Items.cone.getSize(lineSize).x +
                   (Random().nextInt(size.x ~/ 3).toDouble()));
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
