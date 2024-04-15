@@ -35,7 +35,7 @@ final class Bird extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('Frame 70.png');
+    sprite = await Sprite.load('bird 1.png');
     return super.onLoad();
   }
 }

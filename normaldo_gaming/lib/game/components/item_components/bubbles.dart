@@ -35,7 +35,7 @@ final class Bubbles extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('Frame 74.png');
+    sprite = await Sprite.load('bubble 1.png');
     return super.onLoad();
   }
 }

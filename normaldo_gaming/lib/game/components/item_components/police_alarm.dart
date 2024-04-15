@@ -35,7 +35,7 @@ final class PoliceAlarm extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('Frame 72.png');
+    sprite = await Sprite.load('knopka siren1 3.png');
     return super.onLoad();
   }
 }

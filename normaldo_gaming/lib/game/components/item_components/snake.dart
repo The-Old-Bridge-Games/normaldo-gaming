@@ -35,7 +35,7 @@ final class Snake extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('Frame 71.png');
+    sprite = await Sprite.load('snake2 1.png');
     return super.onLoad();
   }
 }

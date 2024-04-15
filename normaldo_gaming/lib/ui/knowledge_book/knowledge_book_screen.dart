@@ -12,9 +12,6 @@ import 'package:normaldo_gaming/ui/knowledge_book/widgets/type_picker.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 
-// 1. написать все на русском
-// 2. добить развернутую карточку
-
 class KnowledgeBookScreen extends StatefulWidget {
   const KnowledgeBookScreen({super.key});
 

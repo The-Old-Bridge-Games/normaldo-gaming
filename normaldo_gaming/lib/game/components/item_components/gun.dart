@@ -35,7 +35,7 @@ final class Gun extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('Frame 73.png');
+    sprite = await Sprite.load('gun 2.png');
     return super.onLoad();
   }
 }

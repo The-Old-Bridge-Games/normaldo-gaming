@@ -31,7 +31,7 @@ final class CasinoChip extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
-    sprite = await Sprite.load('cazinocaps.png');
+    sprite = await Sprite.load('cazinocaps 1.png');
     return super.onLoad();
   }
 }
