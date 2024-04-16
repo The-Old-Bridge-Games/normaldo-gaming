@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -89,6 +90,13 @@ class _MainScreenState extends State<MainScreen> {
   void _onStartPressed() {
     _buildingsPlaying = false;
     if (_tab == Tabs.play) {
+      if (context.read<MissionCubit>().state.hasAnyCompleted) {
+        context.pushNamed(NGRoutes.missions.name).whenComplete(
+            () => context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
+                  () => tab = Tabs.idle,
+                ));
+        return;
+      }
       context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
             () => tab = Tabs.idle,
           );

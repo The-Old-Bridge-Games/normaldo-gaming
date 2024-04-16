@@ -55,6 +55,9 @@ class PullUpGame extends FlameGame
   @override
   void onRemove() {
     missionCubit.resetOneGames();
+    if (!gameSessionCubit.state.isDead) {
+      missionCubit.resetAllProgress();
+    }
     super.onRemove();
   }
 

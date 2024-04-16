@@ -59,10 +59,7 @@ abstract class NGRouter {
                     name: NGRoutes.missions.name,
                     pageBuilder: (context, state) => CustomTransitionPage(
                       key: state.pageKey,
-                      child: MissionsScreen(
-                        tag: (state.extra as Map<String, dynamic>)['tag']
-                            as String,
-                      ),
+                      child: const MissionsScreen(),
                       transitionDuration: const Duration(milliseconds: 300),
                       reverseTransitionDuration:
                           const Duration(milliseconds: 300),
@@ -70,13 +67,11 @@ abstract class NGRouter {
                       barrierColor: Colors.transparent,
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
-                        const begin = Offset(-1.0, 0.0);
-                        const end = Offset.zero;
-                        final tween = Tween(begin: begin, end: end);
-                        final offsetAnimation = animation.drive(tween);
+                        final tween = Tween<double>(begin: 0, end: 1);
+                        final fadeAnimation = animation.drive(tween);
 
-                        return SlideTransition(
-                          position: offsetAnimation,
+                        return FadeTransition(
+                          opacity: fadeAnimation,
                           child: child,
                         );
                       },

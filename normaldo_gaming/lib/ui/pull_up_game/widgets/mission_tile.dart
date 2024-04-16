@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
@@ -23,7 +22,7 @@ class MissionTile extends StatelessWidget {
     return ListTile(
       leading: _buildExp(context),
       tileColor: NGTheme.purple2,
-      trailing: false
+      trailing: true
           ? IconButton(
               onPressed: onCompletePressed,
               icon: const Icon(

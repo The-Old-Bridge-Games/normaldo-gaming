@@ -113,13 +113,14 @@ class __$$MissionStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MissionStateImpl implements _MissionState {
+class _$MissionStateImpl extends _MissionState {
   const _$MissionStateImpl(
       {required final Set<Mission> missions,
       required this.completing,
       required final List<int> newIndexes})
       : _missions = missions,
-        _newIndexes = newIndexes;
+        _newIndexes = newIndexes,
+        super._();
 
   final Set<Mission> _missions;
   @override
@@ -170,11 +171,12 @@ class _$MissionStateImpl implements _MissionState {
       __$$MissionStateImplCopyWithImpl<_$MissionStateImpl>(this, _$identity);
 }
 
-abstract class _MissionState implements MissionState {
+abstract class _MissionState extends MissionState {
   const factory _MissionState(
       {required final Set<Mission> missions,
       required final bool completing,
       required final List<int> newIndexes}) = _$MissionStateImpl;
+  const _MissionState._() : super._();
 
   @override
   Set<Mission> get missions;

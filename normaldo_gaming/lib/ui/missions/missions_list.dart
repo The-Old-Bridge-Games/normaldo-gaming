@@ -9,14 +9,18 @@ import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
 
 class MissionsList extends StatefulWidget {
+  static const startDelay = Duration(seconds: 2);
+
   final bool showProgress;
   final bool disabled;
+  final bool showHeader;
   final EdgeInsets? padding;
 
   const MissionsList({
     super.key,
     this.showProgress = true,
     this.disabled = false,
+    this.showHeader = true,
     this.padding,
   });
 
@@ -72,7 +76,9 @@ class _MissionsListState extends State<MissionsList> {
               ));
       _listKey.currentState?.insertItem(index);
     }
-    context.read<MissionCubit>().updateMissions(missions);
+    if (!widget.disabled) {
+      context.read<MissionCubit>().updateMissions(missions);
+    }
   }
 
   void _completeMissionAt(int index) {
@@ -109,7 +115,7 @@ class _MissionsListState extends State<MissionsList> {
     if (!widget.disabled) {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         if (cubit.state.missions.any((element) => element.completed)) {
-          Future.delayed(const Duration(seconds: 2))
+          Future.delayed(MissionsList.startDelay)
               .whenComplete(() => _completer());
         }
       });
@@ -133,13 +139,14 @@ class _MissionsListState extends State<MissionsList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16, top: 8),
-              child: Text(
-                'Missions'.tr(),
-                style: textTheme.displayMedium,
+            if (widget.showHeader)
+              Padding(
+                padding: const EdgeInsets.only(left: 16, top: 8),
+                child: Text(
+                  'Missions'.tr(),
+                  style: textTheme.displayMedium,
+                ),
               ),
-            ),
             AnimatedList(
                 key: _listKey,
                 initialItemCount: missions.length,

@@ -1,123 +1,76 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
-import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
-import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
-import 'package:normaldo_gaming/ui/pull_up_game/widgets/mission_tile.dart';
-import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
+import 'package:normaldo_gaming/ui/missions/missions_list.dart';
+import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
 class MissionsScreen extends StatefulWidget {
-  const MissionsScreen({
-    required this.tag,
-    super.key,
-  });
-
-  final String tag;
+  const MissionsScreen({super.key});
 
   @override
   State<MissionsScreen> createState() => _MissionsScreenState();
 }
 
 class _MissionsScreenState extends State<MissionsScreen> {
-  final _levelManager = injector.get<LevelManager>();
+  bool canSkip = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(MissionsList.startDelay + const Duration(seconds: 1))
+          .whenComplete(() {
+        setState(() {
+          canSkip = true;
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Row(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width / 2,
-            color: NGTheme.purple1,
-            child: SafeArea(
-              right: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  Row(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.black87,
+        body: SafeArea(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 24),
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linearToEaseOut,
-                        child: Text(
-                          'Missions'.tr(),
-                          style: textTheme.displayMedium,
-                        ),
+                      const SizedBox(height: 32),
+                      Text(
+                        'Missions'.tr(),
+                        style: textTheme.displayLarge?.copyWith(fontSize: 56),
                       ),
-                      const SizedBox(width: 16),
-                      Hero(
-                        tag: widget.tag,
-                        child: Image.asset(
-                          'assets/images/missions.png',
-                          fit: BoxFit.cover,
-                          width: 27,
-                          height: 27,
-                        ),
+                      const SizedBox(height: 32),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: const MissionsList(showHeader: false),
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: BouncingButton(
-                          onPressed: () => context.pop(),
-                          child: const Icon(
-                            Icons.close,
-                            size: 32,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 24),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24),
-                    child: UserLevelBar(
-                        levelManager: _levelManager, barWidth: 200),
+                ),
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  right: 0,
+                  bottom: canSkip ? 0 : -200,
+                  child: NGButton(
+                    text: 'Skip'.tr(),
+                    onPressed: () => context.pop(),
                   ),
-                  const SizedBox(height: 16),
-                  Stack(
-                    children: [
-                      BlocBuilder<MissionCubit, MissionState>(
-                          builder: (context, state) {
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 24.0),
-                            itemCount: state.missions.length,
-                            itemBuilder: (context, index) {
-                              final mission = state.missions.toList()[index];
-                              return MissionTile(
-                                mission: mission,
-                              );
-                            });
-                      }),
-                    ],
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
-          GestureDetector(
-            onTap: () => context.pop(),
-            child: Container(
-              color: Colors.transparent,
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

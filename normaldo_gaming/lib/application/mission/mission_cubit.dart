@@ -14,6 +14,18 @@ class MissionCubit extends HydratedCubit<MissionState> {
 
   MissionCubit(this._missionsRepository) : super(MissionState.initial());
 
+  void resetAllProgress() {
+    final newMissions = <Mission>[];
+    for (final mission in state.missions) {
+      if (mission.currentValue != 0) {
+        newMissions.add(mission.copyWith(currentValue: 0));
+      } else {
+        newMissions.add(mission);
+      }
+    }
+    emit(state.copyWith(missions: newMissions.toSet()));
+  }
+
   void resetOneGames() {
     final newMissions = <Mission>[];
     for (final mission in state.missions) {
