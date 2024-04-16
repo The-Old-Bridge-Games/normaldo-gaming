@@ -12,9 +12,6 @@ final class Stone extends SpriteComponent
   Items get item => Items.stone;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -35,6 +32,7 @@ final class Stone extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 3;
     sprite = await Sprite.load('stone 2.png');
     return super.onLoad();
   }

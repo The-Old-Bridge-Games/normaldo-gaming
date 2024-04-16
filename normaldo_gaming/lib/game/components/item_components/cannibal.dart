@@ -25,9 +25,6 @@ final class Cannibal extends SpriteComponent
   Items get item => Items.cannibal;
 
   @override
-  int get strength => 2;
-
-  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -38,6 +35,7 @@ final class Cannibal extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     const duration = 0.3;
     final random = Random();
     final start = 1 + random.nextInt(3).toDouble() + random.nextDouble();

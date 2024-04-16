@@ -12,9 +12,6 @@ final class ShipPart extends SpriteComponent
   Items get item => Items.trashBin;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -35,6 +32,7 @@ final class ShipPart extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 2;
     sprite = await Sprite.load('shippart.png');
     return super.onLoad();
   }

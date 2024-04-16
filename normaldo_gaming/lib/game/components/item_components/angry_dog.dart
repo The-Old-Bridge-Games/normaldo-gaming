@@ -22,9 +22,6 @@ final class AngryDog extends SpriteComponent
   @override
   Items get item => Items.angryDog;
 
-  @override
-  int get strength => 3;
-
   late final RotateEffect _shakeEffect;
 
   bool _hitting = false;
@@ -38,6 +35,7 @@ final class AngryDog extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 2;
     sprite = await Sprite.load('angry dog 2.png');
 
     _shakeEffect = RotateEffect.to(

@@ -12,9 +12,6 @@ final class RoadSign extends SpriteComponent
   Items get item => Items.roadSign;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -49,6 +46,7 @@ final class RoadSign extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 2;
     super.onLoad();
     sprite = await Sprite.load('road_sign.png');
   }

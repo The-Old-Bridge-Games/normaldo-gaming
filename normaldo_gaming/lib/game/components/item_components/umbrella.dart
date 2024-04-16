@@ -12,9 +12,6 @@ final class Umbrella extends SpriteComponent
   Items get item => Items.umbrella;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -35,6 +32,7 @@ final class Umbrella extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     sprite = await Sprite.load('umbrella.png');
     return super.onLoad();
   }

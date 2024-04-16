@@ -15,9 +15,6 @@ final class Security extends PositionComponent
   Items get item => Items.security;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -46,6 +43,7 @@ final class Security extends PositionComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     final sprite = await Sprite.load('securiti.png');
     add(_security = SpriteComponent(
       sprite: sprite,

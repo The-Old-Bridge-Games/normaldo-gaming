@@ -276,7 +276,10 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
         onFinish();
       }
     }, orElse: () {
-      if (gameObjects.isNotEmpty && !_finished) {
+      if (gameObjects.isEmpty && !_finished) {
+        onFinish();
+        _finished = true;
+      } else if (gameObjects.isNotEmpty && !_finished) {
         if ((gameObjects.every((e) =>
             e.absolutePosition.x < (gameRef as PullUpGame).grid.size.x))) {
           onFinish();
@@ -345,7 +348,7 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
-                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 4),
+                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 3),
                   linesCentersY[item.line ?? 0]));
           }
         }
@@ -376,13 +379,17 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
       },
       bigBuddyBin: () {
         final item = matrix.first.first;
-        // final itemSize = item.item.getSize(lineSize);
-        final component = item.item.component();
+        final itemSize = item.item.getSize(lineSize);
+        final component = item.item.component() as AttackingItem
+          ..anchor = Anchor.topCenter
+          ..speedMultiplier = 1.3
+          ..size = item.item == Items.trashBin ? itemSize : itemSize * 4;
         component.position = Vector2(
           size.x + component.size.x,
-          linesCentersY[matrix.first.first.line ?? 0] - lineSize / 2,
+          linesCentersY[matrix.first.first.line ?? 0],
         );
-        add(component..anchor = Anchor.topCenter);
+        add(component);
+        component.strength = 10;
       },
       only2Lines: () {
         for (final column in matrix) {
@@ -391,8 +398,9 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
             final itemSize = Items.cone.getSize(lineSize);
             add(item.item.component()
               ..size = itemSize
+              ..speedMultiplier = 1.5
               ..position = Vector2(
-                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 2),
+                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x),
                   linesCentersY[item.line ?? 0]));
           }
         }

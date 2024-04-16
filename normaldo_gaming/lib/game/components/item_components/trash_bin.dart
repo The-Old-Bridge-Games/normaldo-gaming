@@ -15,9 +15,6 @@ final class TrashBin extends SpriteComponent
   Items get item => Items.trashBin;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -41,6 +38,7 @@ final class TrashBin extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 3;
     sprite = await Sprite.load('trash_bin.png');
     return super.onLoad();
   }

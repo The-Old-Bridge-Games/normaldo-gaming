@@ -16,9 +16,6 @@ final class Policeman extends PositionComponent
   Items get item => Items.policeman;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -47,6 +44,7 @@ final class Policeman extends PositionComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     final sprite = await Sprite.load('policeman.png');
     add(_policeman = SpriteComponent(
       sprite: sprite,

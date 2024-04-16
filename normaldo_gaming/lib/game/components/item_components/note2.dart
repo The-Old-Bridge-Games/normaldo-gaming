@@ -14,9 +14,6 @@ final class Note2 extends SpriteComponent
   Items get item => Items.note;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 2;
 
   @override
@@ -37,6 +34,7 @@ final class Note2 extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     sprite = await Sprite.load('nota2.png');
     return super.onLoad();
   }

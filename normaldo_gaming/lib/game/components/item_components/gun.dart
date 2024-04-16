@@ -22,9 +22,6 @@ final class Gun extends SpriteComponent
   Items get item => Items.gun;
 
   @override
-  int get strength => 3;
-
-  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -35,6 +32,7 @@ final class Gun extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     sprite = await Sprite.load('gun 2.png');
     return super.onLoad();
   }

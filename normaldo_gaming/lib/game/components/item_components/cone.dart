@@ -12,9 +12,6 @@ final class Cone extends SpriteComponent
   Items get item => Items.cone;
 
   @override
-  int get strength => 1;
-
-  @override
   int get damage => 1;
 
   @override
@@ -35,6 +32,7 @@ final class Cone extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     sprite = await Sprite.load('Sprite-conus1.png');
     return super.onLoad();
   }

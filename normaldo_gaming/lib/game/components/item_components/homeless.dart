@@ -25,9 +25,6 @@ final class Homeless extends SpriteComponent
   int get damage => 1;
 
   @override
-  int get strength => 2;
-
-  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -39,6 +36,7 @@ final class Homeless extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     const duration = 0.3;
+    strength = 1;
     final isBottomJump = Random().nextBool();
     final random = Random();
     final grid = game.grid;

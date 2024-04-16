@@ -29,9 +29,6 @@ final class Molotov extends SpriteAnimationComponent
   Items get item => Items.molotov;
 
   @override
-  int get strength => 1;
-
-  @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     attack(other);
@@ -40,6 +37,7 @@ final class Molotov extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     final sprites = [
       await Sprite.load('molotov1.png'),
       await Sprite.load('molotov2.png'),

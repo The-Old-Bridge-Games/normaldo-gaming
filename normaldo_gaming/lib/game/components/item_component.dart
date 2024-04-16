@@ -124,8 +124,13 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
 
 // ✅
 mixin AttackingItem on Item {
-  int get strength;
+  int _strength = 1;
+  int get strength => _strength;
   int get damage;
+
+  set strength(int newStrength) {
+    _strength = newStrength;
+  }
 
   void attack(PositionComponent other) {
     if (other is Boss) return;

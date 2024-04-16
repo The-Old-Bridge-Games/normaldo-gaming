@@ -22,9 +22,6 @@ final class Bird extends SpriteComponent
   Items get item => Items.bird;
 
   @override
-  int get strength => 1;
-
-  @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
@@ -35,6 +32,7 @@ final class Bird extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    strength = 1;
     sprite = await Sprite.load('bird 1.png');
     return super.onLoad();
   }
