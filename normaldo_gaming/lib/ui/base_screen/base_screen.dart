@@ -32,7 +32,7 @@ class _BaseScreenState extends State<BaseScreen> {
     final skin = cubit.state.skin;
     return GestureDetector(
       onDoubleTap: () {
-        context.read<UserCubit>().addExp(10);
+        // context.read<UserCubit>().addExp(10);
       },
       child: Scaffold(
         backgroundColor: Colors.black,

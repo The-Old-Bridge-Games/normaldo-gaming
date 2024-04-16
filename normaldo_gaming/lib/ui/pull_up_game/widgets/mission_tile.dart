@@ -22,7 +22,7 @@ class MissionTile extends StatelessWidget {
     return ListTile(
       leading: _buildExp(context),
       tileColor: NGTheme.purple2,
-      trailing: true
+      trailing: false
           ? IconButton(
               onPressed: onCompletePressed,
               icon: const Icon(
