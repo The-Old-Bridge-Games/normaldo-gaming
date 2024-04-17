@@ -17,6 +17,7 @@ class FatCounter extends PositionComponent with HasGameRef {
 
   late SpriteComponent leftSprite;
   late SpriteComponent rightSprite;
+  late Sprite deadSprite;
 
   final barSize = Vector2(50, 10);
 
@@ -29,7 +30,11 @@ class FatCounter extends PositionComponent with HasGameRef {
   set normaldoFatState(NormaldoFatState newState) {
     _normaldoFatState = newState;
     final borderStates = newState.prevAndNextStates;
-    leftSprite.sprite = _normaldoSprites[borderStates.first];
+    if (borderStates.first == NormaldoFatState.skinnyDead) {
+      leftSprite.sprite = deadSprite;
+    } else {
+      leftSprite.sprite = _normaldoSprites[borderStates.first];
+    }
     rightSprite.sprite = _normaldoSprites[borderStates.last];
   }
 
@@ -37,6 +42,7 @@ class FatCounter extends PositionComponent with HasGameRef {
   FutureOr<void> onLoad() async {
     final iconSize = PullUpGame.menuIconSize;
     final barPosition = Vector2(iconSize.x, barSize.y);
+    deadSprite = await Sprite.load('deadmode.png');
     _normaldoSprites = await normaldoSprites(skin);
     _bar = RectangleComponent(
       paint: Paint()..color = NGTheme.green1,
