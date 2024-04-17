@@ -114,7 +114,7 @@ final class MagicBox extends SpriteComponent
                       ),
                     )));
                 }));
-            add(TimerComponent(
+            grid.add(TimerComponent(
               removeOnFinish: true,
               period: 0.2 * 8,
               onTick: () {
@@ -124,7 +124,7 @@ final class MagicBox extends SpriteComponent
                     EffectController(
                       duration: 0.2,
                     )));
-                add(TimerComponent(
+                grid.add(TimerComponent(
                     period: 2,
                     removeOnFinish: true,
                     onTick: () {
