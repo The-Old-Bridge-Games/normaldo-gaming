@@ -6,6 +6,7 @@ class UserState with _$UserState {
     required User user,
     required bool educated,
     required Skin skin,
+    required List<String> activatedPromoCodes,
     NetworkException? failure,
   }) = _UserState;
 
@@ -25,5 +26,6 @@ class UserState with _$UserState {
         ),
         educated: false,
         skin: Skin.basic(),
+        activatedPromoCodes: [],
       );
 }

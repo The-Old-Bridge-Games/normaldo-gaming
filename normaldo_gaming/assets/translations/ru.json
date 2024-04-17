@@ -222,5 +222,15 @@
   "spidey sense": "паучье чутье",
   "Unique": "Уникальность",
   "Fats": "Жиры",
-  "Resist": "Сопротивление"
+  "Resist": "Сопротивление",
+  "ABOUT US": "О НАС",
+  "ACTIVATE CODE": "АКТИВИРОВАТЬ КОД",
+  "Enter your code..": "Введите код активации",
+  "Submit": "Ввод",
+  "You have already activated this code": "Вы уже активировали этот код",
+  "Unknown code": "Неизвестный код",
+  "You received:": "Вы получили:",
+  "SUCCESS!!!": "ПОЛУЧИЛОСЬ!!!",
+  "Sure": "Да",
+  "You already have this skin. Take 500$ instead": "У вас уже есть данный скин. Получите 500$"
 }

@@ -19,6 +19,7 @@ mixin _$UserState {
   User get user => throw _privateConstructorUsedError;
   bool get educated => throw _privateConstructorUsedError;
   Skin get skin => throw _privateConstructorUsedError;
+  List<String> get activatedPromoCodes => throw _privateConstructorUsedError;
   NetworkException? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,7 +32,12 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({User user, bool educated, Skin skin, NetworkException? failure});
+  $Res call(
+      {User user,
+      bool educated,
+      Skin skin,
+      List<String> activatedPromoCodes,
+      NetworkException? failure});
 }
 
 /// @nodoc
@@ -50,6 +56,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
     Object? user = null,
     Object? educated = null,
     Object? skin = null,
+    Object? activatedPromoCodes = null,
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +72,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.skin
           : skin // ignore: cast_nullable_to_non_nullable
               as Skin,
+      activatedPromoCodes: null == activatedPromoCodes
+          ? _value.activatedPromoCodes
+          : activatedPromoCodes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -81,7 +92,12 @@ abstract class _$$UserStateImplCopyWith<$Res>
       __$$UserStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, bool educated, Skin skin, NetworkException? failure});
+  $Res call(
+      {User user,
+      bool educated,
+      Skin skin,
+      List<String> activatedPromoCodes,
+      NetworkException? failure});
 }
 
 /// @nodoc
@@ -98,6 +114,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
     Object? user = null,
     Object? educated = null,
     Object? skin = null,
+    Object? activatedPromoCodes = null,
     Object? failure = freezed,
   }) {
     return _then(_$UserStateImpl(
@@ -113,6 +130,10 @@ class __$$UserStateImplCopyWithImpl<$Res>
           ? _value.skin
           : skin // ignore: cast_nullable_to_non_nullable
               as Skin,
+      activatedPromoCodes: null == activatedPromoCodes
+          ? _value._activatedPromoCodes
+          : activatedPromoCodes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -128,7 +149,9 @@ class _$UserStateImpl implements _UserState {
       {required this.user,
       required this.educated,
       required this.skin,
-      this.failure});
+      required final List<String> activatedPromoCodes,
+      this.failure})
+      : _activatedPromoCodes = activatedPromoCodes;
 
   @override
   final User user;
@@ -136,12 +159,21 @@ class _$UserStateImpl implements _UserState {
   final bool educated;
   @override
   final Skin skin;
+  final List<String> _activatedPromoCodes;
+  @override
+  List<String> get activatedPromoCodes {
+    if (_activatedPromoCodes is EqualUnmodifiableListView)
+      return _activatedPromoCodes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activatedPromoCodes);
+  }
+
   @override
   final NetworkException? failure;
 
   @override
   String toString() {
-    return 'UserState(user: $user, educated: $educated, skin: $skin, failure: $failure)';
+    return 'UserState(user: $user, educated: $educated, skin: $skin, activatedPromoCodes: $activatedPromoCodes, failure: $failure)';
   }
 
   @override
@@ -153,11 +185,14 @@ class _$UserStateImpl implements _UserState {
             (identical(other.educated, educated) ||
                 other.educated == educated) &&
             (identical(other.skin, skin) || other.skin == skin) &&
+            const DeepCollectionEquality()
+                .equals(other._activatedPromoCodes, _activatedPromoCodes) &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, educated, skin, failure);
+  int get hashCode => Object.hash(runtimeType, user, educated, skin,
+      const DeepCollectionEquality().hash(_activatedPromoCodes), failure);
 
   @JsonKey(ignore: true)
   @override
@@ -171,6 +206,7 @@ abstract class _UserState implements UserState {
       {required final User user,
       required final bool educated,
       required final Skin skin,
+      required final List<String> activatedPromoCodes,
       final NetworkException? failure}) = _$UserStateImpl;
 
   @override
@@ -179,6 +215,8 @@ abstract class _UserState implements UserState {
   bool get educated;
   @override
   Skin get skin;
+  @override
+  List<String> get activatedPromoCodes;
   @override
   NetworkException? get failure;
   @override

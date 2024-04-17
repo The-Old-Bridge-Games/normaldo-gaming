@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/ui/settings/activate_code_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
@@ -26,8 +27,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _onIntroPressed() {}
   void _onResetPressed() {
-    context.read<UserCubit>().reset();
-    context.pop();
+    final textTheme = Theme.of(context).textTheme;
+    showDialog(
+        context: context,
+        builder: (context) => Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 2,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: NGTheme.purple2, width: 3),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'U sure??'.tr(),
+                      style: textTheme.displayLarge,
+                    ),
+                    const SizedBox(height: 32),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: Text(
+                              'Nope'.tr(),
+                              style: textTheme.displaySmall,
+                            )),
+                        const SizedBox(width: 8),
+                        NGButton(
+                          onPressed: () {
+                            context.read<UserCubit>().reset();
+                            context.pop();
+                            context.pop();
+                          },
+                          text: 'Sure'.tr(),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ));
   }
 
   @override
@@ -42,88 +90,99 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        leading: const Row(
-          children: [
-            NGBackButton(),
-          ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          leading: const Row(
+            children: [
+              NGBackButton(),
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Settings'.tr(),
+            style: textTheme.displayLarge,
+          ),
         ),
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'Settings'.tr(),
-          style: textTheme.displayLarge,
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    NGButton(
-                      onPressed: _onChangeLocalePressed,
-                      text: 'Language'.tr(
-                        args: [context.locale.languageCode],
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      NGButton(
+                        onPressed: _onChangeLocalePressed,
+                        text: 'Language'.tr(
+                          args: [context.locale.languageCode],
+                        ),
                       ),
-                    ),
-                    NGButton(
-                      text: 'intro'.tr(),
-                      onPressed: _onIntroPressed,
-                    ),
-                    NGButton(
-                      onPressed: _onResetPressed,
-                      text: 'reset'.tr(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                Center(
-                  child: Text('- О НАС -', style: textTheme.displayLarge),
-                ),
-                const SizedBox(height: 32),
-                Row(
-                  children: [
-                    Expanded(
+                      NGButton(
+                        text: 'intro'.tr(),
+                        onPressed: _onIntroPressed,
+                      ),
+                      NGButton(
+                        onPressed: _onResetPressed,
+                        text: 'reset'.tr(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: Text('- ${'ACTIVATE CODE'.tr()} -',
+                        style: textTheme.displayLarge),
+                  ),
+                  const SizedBox(height: 16),
+                  const ActivateCodeWidget(),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: Text('- ${'ABOUT US'.tr()} -',
+                        style: textTheme.displayLarge),
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: AboutUsCard(
+                        model: AboutUsModel(
+                          name: 'Gleb',
+                          position: 'Designer',
+                          description: 'Do not eat bread',
+                          imagePath: 'assets/images/us/gashan_pix.png',
+                        ),
+                      )),
+                      const SizedBox(width: 32),
+                      Expanded(
                         child: AboutUsCard(
-                      model: AboutUsModel(
-                        name: 'Gleb',
-                        position: 'Designer',
-                        description: 'Do not eat bread',
-                        imagePath: 'assets/images/us/gashan_pix.png',
-                      ),
-                    )),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: AboutUsCard(
-                        model: AboutUsModel(
-                          name: 'GojiTBT',
-                          position: 'Sound Designer',
-                          description: 'Im a ZAZA boi',
-                          imagePath: 'assets/images/us/gashan_pix.png',
+                          model: AboutUsModel(
+                            name: 'GojiTBT',
+                            position: 'Sound Designer',
+                            description: 'Im a ZAZA boi',
+                            imagePath: 'assets/images/us/gashan_pix.png',
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: AboutUsCard(
-                        model: AboutUsModel(
-                          name: 'pROC',
-                          position: 'Developer',
-                          description:
-                              'No matter how fast are you, only matters keep goin',
-                          imagePath: 'assets/images/us/gashan_pix.png',
+                      const SizedBox(width: 32),
+                      Expanded(
+                        child: AboutUsCard(
+                          model: AboutUsModel(
+                            name: 'pROC',
+                            position: 'Developer',
+                            description:
+                                'No matter how fast are you, only matters keep goin',
+                            imagePath: 'assets/images/us/gashan_pix.png',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

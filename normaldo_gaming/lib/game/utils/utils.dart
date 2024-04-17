@@ -220,6 +220,11 @@ abstract class Utils {
     };
   }
 
+  static const promoCodes = {
+    'KUSS': 'pirate',
+    'KUSS2': 'pirate',
+  };
+
   static const locationExp = {
     'gleb piece': 1,
     'slot machine': 2,

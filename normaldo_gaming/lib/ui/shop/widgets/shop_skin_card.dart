@@ -10,10 +10,12 @@ import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
 class ShopSkinCard extends StatefulWidget {
   final Skin skin;
+  final bool fromShop;
 
   const ShopSkinCard({
     super.key,
     required this.skin,
+    this.fromShop = true,
   });
 
   @override
@@ -155,7 +157,7 @@ class _ShopSkinCardState extends State<ShopSkinCard> {
             ),
           ),
         ),
-        if (userHasSkin)
+        if (userHasSkin && widget.fromShop)
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 24),
@@ -167,7 +169,7 @@ class _ShopSkinCardState extends State<ShopSkinCard> {
               ),
             ),
           )
-        else
+        else if (!userHasSkin && widget.fromShop)
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: NGButton(

@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:normaldo_gaming/core/errors.dart';
-import 'package:normaldo_gaming/data/skins/models/skin_model.dart';
 import 'package:normaldo_gaming/data/user/models/skin_model.dart';
 import 'package:normaldo_gaming/data/user/models/user_model.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/domain/user/user_repository.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 
 part 'user_state.dart';
@@ -24,6 +25,46 @@ class UserCubit extends HydratedCubit<UserState> {
   final SkinsRepository _skinsRepository;
 
   final _levelManager = injector.get<LevelManager>();
+
+  (Skin? skin, String? error) activateCode(String code) {
+    if (state.activatedPromoCodes.contains(code)) {
+      return (null, 'You have already activated this code'.tr());
+    }
+    final skinId = Utils.promoCodes[code];
+    if (skinId != null) {
+      final hasSkin = state.user.mySkins
+          .where((element) => element.uniqueId == skinId)
+          .isNotEmpty;
+      if (!hasSkin) {
+        final newMySkins = List<Skin>.from(state.user.mySkins);
+        final newSkin = _skinsRepository.getSkinById(skinId);
+        newMySkins.add(newSkin);
+        final newActivatedPromoCodes =
+            List<String>.from(state.activatedPromoCodes);
+        newActivatedPromoCodes.add(code);
+        emit(state.copyWith(
+          activatedPromoCodes: newActivatedPromoCodes,
+          user: UserModel.fromEntity(state.user)
+              .copyWith(mySkins: newMySkins)
+              .toEntity(),
+        ));
+        return (newSkin, null);
+      } else {
+        final newActivatedPromoCodes =
+            List<String>.from(state.activatedPromoCodes);
+        newActivatedPromoCodes.add(code);
+        emit(state.copyWith(
+          activatedPromoCodes: newActivatedPromoCodes,
+          user: UserModel.fromEntity(state.user)
+              .copyWith(dollars: state.user.dollars + 500)
+              .toEntity(),
+        ));
+        return (null, 'You already have this skin. Take 500\$ instead'.tr());
+      }
+    } else {
+      return (null, 'Unknown code'.tr());
+    }
+  }
 
   void buySkin(String uniqueId) {
     final skin = _skinsRepository.getSkinById(uniqueId);
@@ -179,6 +220,9 @@ class UserCubit extends HydratedCubit<UserState> {
     return UserState(
         user: UserModel.fromJson(json).toEntity(),
         educated: json['educated'],
+        activatedPromoCodes: (json['activatedPromoCodes'] as List<dynamic>)
+            .map((e) => e.toString())
+            .toList(),
         skin: SkinModel.fromJson(
           json['skin'],
         ).toEntity());
@@ -206,6 +250,7 @@ class UserCubit extends HydratedCubit<UserState> {
     ).toJson()
       ..addEntries([
         MapEntry('educated', state.educated),
+        MapEntry('activatedPromoCodes', state.activatedPromoCodes),
         MapEntry(
           'skin',
           SkinModel.fromEntity(state.skin).toJson(),
