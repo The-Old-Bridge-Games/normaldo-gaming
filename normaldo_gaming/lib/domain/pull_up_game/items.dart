@@ -214,7 +214,7 @@ enum Items {
   Vector2 getSize(double lineSize) {
     switch (this) {
       case Items.trashBin:
-        final height = lineSize * (2 + Random().nextInt(3));
+        final height = lineSize * 3;
         return Vector2(height * _widthFactor, height);
       case Items.pizza:
         return Vector2(lineSize * 0.7, lineSize * 0.7);

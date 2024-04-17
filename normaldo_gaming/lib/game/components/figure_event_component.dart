@@ -11,7 +11,8 @@ import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 
-class FigureEventComponent extends PositionComponent with HasGameRef {
+class FigureEventComponent extends PositionComponent
+    with HasGameRef<PullUpGame> {
   FigureEventComponent({
     required this.figure,
     required this.lineSize,
@@ -310,7 +311,9 @@ class FigureEventComponent extends PositionComponent with HasGameRef {
   }
 
   void _addLineItemsFromMatrix(List<List<LineItem>> matrix) {
-    (gameRef as PullUpGame).grid.resumeLines();
+    gameRef.grid.resumeLines();
+    gameRef.grid.removeWhere((component) =>
+        component is Item && component.position.x > gameRef.size.x);
     figure.when(
       trashWall: () {
         for (final column in matrix) {

@@ -575,7 +575,7 @@ class Normaldo extends PositionComponent
       if (effect == ItemEffect.slow || effect == ItemEffect.speedUp) {
         decorator.removeLast();
         decorator.addLast(
-            PaintDecorator.tint(color?.withOpacity(0.2) ?? Colors.black));
+            PaintDecorator.tint(color?.withOpacity(0.4) ?? Colors.black));
       }
       if (duration == 0 &&
           (effect == ItemEffect.slow || effect == ItemEffect.speedUp)) {

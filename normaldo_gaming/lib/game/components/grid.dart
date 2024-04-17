@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/palette.dart';
@@ -123,25 +124,39 @@ class Grid extends PositionComponent
         period: state.level.frequency,
         repeat: true,
         onTick: () {
-          // return;
-          if (state.figure != null) return;
-          final items = state.level.next().map((e) {
-            final component = e.item.component();
-            component.size = e.item.getSize(lineSize);
-            component.position = Vector2(
-                gameRef.size.x + component.size.x * 2,
-                _linesCentersY[
-                    e.line ?? Random().nextInt(_linesCentersY.length)]);
-            return component;
-          }).toList();
-          items.removeWhere(
-              (item) => _stoppedLines.values.contains(item.position.y));
-          addAll(items);
+          onItemsCreatorTick(state);
         },
       );
       if (state.figure != null) _itemsCreator?.timer.pause();
       add(_itemsCreator!);
     }
+  }
+
+  void onItemsCreatorTick(LevelState state) {
+    if (state.figure != null) return;
+    final lineItem = state.level.next().first;
+    final component = lineItem.item.component();
+    component.size = lineItem.item.getSize(lineSize);
+    final items = children.whereType<Item>();
+    if (items.isNotEmpty) {
+      if (items.last.position.x > gameRef.size.x * 1.5) return;
+    }
+    double lastItemPositionX = gameRef.size.x;
+    double lastItemSizeX = 0;
+    if (items.isNotEmpty) {
+      if (items.last.position.x > gameRef.size.x) {
+        lastItemPositionX = items.last.position.x;
+      }
+      lastItemSizeX = items.last.size.x;
+    }
+    print(children.length);
+    component.position = Vector2(
+        lastItemPositionX + lastItemSizeX + component.size.x,
+        _linesCentersY[
+            lineItem.line ?? Random().nextInt(_linesCentersY.length)]);
+    if (_stoppedLines.values.contains(component.position.y)) return;
+
+    add(component);
   }
 
   void stopAllLines() {
@@ -193,6 +208,7 @@ class Grid extends PositionComponent
     for (int i = 0; i < Utils.linesCount; i++) {
       final lineCenterY = lineSize * i + lineSize / 2;
       _linesCentersY.add(lineCenterY);
+      // gameRef.camera.viewfinder.zoom = 0.4;
 
       // 4DEV
       // line bounds highlights
@@ -218,20 +234,7 @@ class Grid extends PositionComponent
         period: levelBloc.state.level.frequency,
         repeat: true,
         onTick: () {
-          // return;
-          if (levelBloc.state.figure != null) return;
-          final items = levelBloc.state.level.next().map((e) {
-            final component = e.item.component();
-            component.size = e.item.getSize(lineSize);
-            component.position = Vector2(
-                gameRef.size.x + component.size.x * 2,
-                _linesCentersY[
-                    e.line ?? Random().nextInt(_linesCentersY.length)]);
-            return component;
-          }).toList();
-          items.removeWhere(
-              (item) => _stoppedLines.values.contains(item.position.y));
-          addAll(items);
+          onItemsCreatorTick(levelBloc.state);
         });
     add(_itemsCreator!);
     await add(FlameBlocProvider<GameSessionCubit, GameSessionState>.value(
