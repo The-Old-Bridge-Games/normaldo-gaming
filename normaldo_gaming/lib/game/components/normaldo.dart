@@ -151,6 +151,8 @@ class Normaldo extends PositionComponent
 
   bool _immortal = false;
   bool get immortal => _immortal;
+  bool isBiting(NormaldoFatState? current) =>
+      NormaldoFatState.onlyEating.contains(current);
 
   Set<Items> _immuneTo = {};
 
@@ -620,6 +622,19 @@ class Normaldo extends PositionComponent
     if (skin.uniqueId == 'new_year') {
       game.overlays.add(Overlays.snowfall.name);
     }
+  }
+
+  @override
+  void update(double dt) {
+    final anyEatableClose = gameRef.grid.children
+        .whereType<Eatable>()
+        .any((element) => element.distance(this) < 150);
+    if (anyEatableClose && !isBiting(nComponent.current)) {
+      toEatingState();
+      Future.delayed(const Duration(milliseconds: 200))
+          .whenComplete(() => toIdleFatState());
+    }
+    super.update(dt);
   }
 
   @override
