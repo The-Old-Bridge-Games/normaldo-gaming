@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -111,18 +112,19 @@ class _PauseMenuState extends State<PauseMenu> {
           : SafeArea(
               child: Row(
                 children: [
-                  const Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 60),
-                        MissionsList(
-                          disabled: true,
-                          showProgress: true,
-                        ),
-                      ],
+                  if (context.read<UserCubit>().state.educated)
+                    const Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 60),
+                          MissionsList(
+                            disabled: true,
+                            showProgress: true,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Expanded(
                     child: Column(
                       children: [
@@ -142,13 +144,14 @@ class _PauseMenuState extends State<PauseMenu> {
                                   style: textTheme.displayLarge
                                       ?.copyWith(color: NGTheme.purple2)),
                               const SizedBox(height: 32),
-                              BouncingButton(
-                                onPressed: _onMenuPressed,
-                                child: Text(
-                                  'Menu'.tr(),
-                                  style: textTheme.displayMedium,
+                              if (context.read<UserCubit>().state.educated)
+                                BouncingButton(
+                                  onPressed: _onMenuPressed,
+                                  child: Text(
+                                    'Menu'.tr(),
+                                    style: textTheme.displayMedium,
+                                  ),
                                 ),
-                              ),
                               const SizedBox(height: 16),
                               NGButton(
                                 onPressed: _unpause,

@@ -1,27 +1,22 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
-import 'package:normaldo_gaming/game/components/item_components/road_sign.dart';
-import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 
 import 'normaldo.dart';
@@ -29,7 +24,7 @@ import 'normaldo.dart';
 class Grid extends PositionComponent
     with
         DragCallbacks,
-        HasGameRef,
+        HasGameRef<PullUpGame>,
         FlameBlocReader<LevelBloc, LevelState>,
         FlameBlocListenable<LevelBloc, LevelState>,
         HasNgAudio {
@@ -133,6 +128,7 @@ class Grid extends PositionComponent
   }
 
   void onItemsCreatorTick(LevelState state) {
+    if (!gameRef.userCubit.state.educated) return;
     if (state.figure != null) return;
     final lineItem = state.level.next().first;
     final component = lineItem.item.component();
@@ -149,7 +145,6 @@ class Grid extends PositionComponent
       }
       lastItemSizeX = items.last.size.x;
     }
-    print(children.length);
     component.position = Vector2(
         lastItemPositionX + lastItemSizeX + component.size.x,
         _linesCentersY[

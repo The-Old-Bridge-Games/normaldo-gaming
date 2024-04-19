@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
 import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
@@ -19,6 +20,7 @@ import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/education/education_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/config_inherited_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
@@ -122,6 +124,7 @@ OS Version: ${Platform.operatingSystemVersion}
         providers: [
           // BlocProvider<AuthCubit>(create: (context) => injector.get()..auth()),
           BlocProvider<UserCubit>(create: (context) => userCubit),
+          BlocProvider<EducationCubit>(create: (context) => EducationCubit()),
           BlocProvider<SignUpCubit>(create: (context) => injector.get()),
           BlocProvider<SignInCubit>(create: (context) => injector.get()),
           BlocProvider<MissionCubit>(create: (context) => injector.get()),

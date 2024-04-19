@@ -23,6 +23,7 @@ dependencies:
   # UI
   expandable: ^5.0.1
   scrollable_positioned_list: ^0.3.8
+  animated_text_kit: ^4.2.2
 
   # Ads
   unity_ads_plugin: ^0.3.10

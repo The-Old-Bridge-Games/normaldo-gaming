@@ -291,6 +291,7 @@ class Normaldo extends PositionComponent
   final List<NormaldoFatState> _fatCounter = [];
 
   NormaldoFatState _nextFat() {
+    toIdleFatState();
     if (_fatCounter.isNotEmpty) {
       final current = _fatCounter.last;
       final indexOfCurrent = NormaldoFatState.onlyIdle.indexOf(current);

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
+import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/game/components/education/education_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
 import 'package:normaldo_gaming/game/components/pause_button.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
@@ -28,12 +31,14 @@ class PullUpGame extends FlameGame
   final GameSessionCubit gameSessionCubit;
   final LevelBloc levelBloc;
   final MissionCubit missionCubit;
+  final EducationCubit educationCubit;
 
   PullUpGame({
     required this.userCubit,
     required this.gameSessionCubit,
     required this.levelBloc,
     required this.missionCubit,
+    required this.educationCubit,
   });
 
   // Components
@@ -74,13 +79,16 @@ class PullUpGame extends FlameGame
 
     await _initBloc();
 
-    add(TimerComponent(
-      period: 0.5,
-      removeOnFinish: true,
-      onTick: () {
-        // _showMissions();
-      },
-    ));
+    if (!userCubit.state.educated) {
+      add(TimerComponent(
+        period: 0.5,
+        removeOnFinish: true,
+        onTick: () {
+          pauseButton.position -= Vector2(0, 200);
+          add(EducationComponent());
+        },
+      ));
+    }
 
     overlays.add(Overlays.missions.name);
 

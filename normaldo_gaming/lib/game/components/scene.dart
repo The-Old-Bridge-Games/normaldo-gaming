@@ -32,7 +32,9 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
       size: Vector2(size.y * 26.225, size.y),
     ));
     addAll(_currentBackgrounds);
-    _move();
+    if (gameRef.userCubit.state.educated) {
+      _move();
+    }
     add(TimerComponent(
         period: 3,
         repeat: true,
@@ -88,6 +90,8 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
     _move();
     super.onLoad();
   }
+
+  void move() => _move();
 
   void _move() {
     for (final bg in _currentBackgrounds) {
