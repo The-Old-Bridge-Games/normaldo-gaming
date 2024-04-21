@@ -157,6 +157,10 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(state.copyWith(educated: true));
   }
 
+  void toggleEducation() {
+    emit(state.copyWith(educated: !state.educated));
+  }
+
   void takeExtraLife(int amount) {
     assert(amount > 0);
     emit(

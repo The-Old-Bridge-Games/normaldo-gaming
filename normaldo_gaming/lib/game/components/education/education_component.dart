@@ -13,6 +13,7 @@ import 'package:normaldo_gaming/game/components/item_components/boombox.dart';
 import 'package:normaldo_gaming/game/components/item_components/cone.dart';
 import 'package:normaldo_gaming/game/components/item_components/dollar.dart';
 import 'package:normaldo_gaming/game/components/item_components/energizer.dart';
+import 'package:normaldo_gaming/game/components/item_components/girl.dart';
 import 'package:normaldo_gaming/game/components/item_components/hourglass.dart';
 import 'package:normaldo_gaming/game/components/item_components/magic_hat.dart';
 import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
@@ -28,10 +29,14 @@ class EducationComponent extends Component with HasGameRef<PullUpGame> {
 
   final _effectItems = <Item>[
     BananaPeel(),
-    Boombox(),
     Energizer(),
-    MagicHat(),
     Hourglass(),
+    MagicHat(),
+    Girl(),
+    BananaPeel(),
+    BananaPeel(),
+    BananaPeel(),
+    BananaPeel(),
   ];
 
   @override

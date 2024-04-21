@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
@@ -133,6 +135,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ),
                   const SizedBox(height: 32),
+                  _buildEducationCheckbox(),
+                  const SizedBox(height: 32),
                   Center(
                     child: Text('- ${'ACTIVATE CODE'.tr()} -',
                         style: textTheme.displayLarge),
@@ -187,6 +191,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildEducationCheckbox() {
+    final textTheme = Theme.of(context).textTheme;
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            Text(
+              'Education'.tr(),
+              style: textTheme.displayMedium,
+            ),
+            const SizedBox(width: 32),
+            Checkbox(
+                value: !state.educated,
+                checkColor: Colors.white,
+                activeColor: NGTheme.purple2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                side: const BorderSide(color: NGTheme.purple2, width: 2),
+                onChanged: (value) {
+                  context.read<UserCubit>().toggleEducation();
+                }),
+          ],
+        );
+      },
     );
   }
 
