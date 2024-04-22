@@ -18,8 +18,6 @@ final Map<int, Roller<Items>> _itemRollers = {
     ..._goodItems,
     (Items.bananaPeel, 80),
     (Items.trashBin, 3),
-    // dev
-    (Items.cone, 40),
   ]),
   1: Roller<Items>([
     ..._goodItems,

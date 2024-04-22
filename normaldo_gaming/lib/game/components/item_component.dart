@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
@@ -17,6 +18,8 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
 
 mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
+  late final AudioPool _hitSfxPool;
+
   Items get item;
   bool get autoRemove => true;
   void Function()? get onRemoved => null;
@@ -85,13 +88,16 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
         (other is AttackingItem &&
             this is! AttackingItem &&
             this is! NormaldoAttack)) {
+      if (position.x < gameRef.size.x) {
+        _hitSfxPool.start();
+      }
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);
   }
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
     add(hitbox..position = Vector2(size.x / 2, size.y / 2));
     anchor = anchor;
     game.levelBloc.stream.listen((state) {
@@ -99,6 +105,10 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
         _speed = state.level.speed;
       }
     });
+    _hitSfxPool = await AudioPool.createFromAsset(
+      path: 'audio/sfx/gantelya1.mp3',
+      maxPlayers: 1,
+    );
     return super.onLoad();
   }
 
@@ -144,6 +154,9 @@ mixin AttackingItem on Item {
     }
     if (other is AttackingItem && other.collidable && strength > 0) {
       if (other.strength >= strength) {
+        if (position.x < gameRef.size.x) {
+          _hitSfxPool.start();
+        }
         removeFromParent();
       }
     }
@@ -240,8 +253,11 @@ mixin MoneytakeItem on Item {
 
 // ✅
 mixin MoneygiveItem on Item {
+  late final AudioPool _dollarSfxPool;
+
   void giveMoney(int amount) {
     game.gameSessionCubit.addDollars(amount);
+    _dollarSfxPool.start();
     game.grid.normaldo.notify(
       text: '+$amount bucks',
       color: Colors.greenAccent[600],
@@ -249,7 +265,11 @@ mixin MoneygiveItem on Item {
   }
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
+    _dollarSfxPool = await AudioPool.createFromAsset(
+      path: 'audio/sfx/dollars.mp3',
+      maxPlayers: 1,
+    );
     add(ScaleEffect.to(
         Vector2.all(1.2),
         EffectController(

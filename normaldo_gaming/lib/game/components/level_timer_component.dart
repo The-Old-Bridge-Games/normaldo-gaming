@@ -16,10 +16,11 @@ class LevelTimerComponent extends TimerComponent
   // double get _eventPeriod => (15 + Random().nextInt(16)).toDouble();
 
   void _onTick() {
+    return;
     if (!gameRef.userCubit.state.educated) return;
     if (bloc.state.miniGame != null) return;
     if (bloc.state.figure == null && !gameRef.bossInProgress) {
-      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.bigBuddyBin()));
+      // bloc.add(const LevelEvent.startFigure(figure: FigureEvent.only2Lines()));
       bloc.add(const LevelEvent.startRandomFigure());
     }
     add(TimerComponent(

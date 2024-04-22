@@ -242,24 +242,24 @@ class Grid extends PositionComponent
           previousState.figure != newState.figure,
       onNewState: (state) async {
         if (state.figure != null) {
-          _itemsCreator?.timer.pause();
-          add(TimerComponent(
-              period: state.level.frequency,
-              removeOnFinish: true,
-              onTick: () {
-                add(
-                  FigureEventComponent(
-                    figure: state.figure!,
-                    lineSize: lineSize,
-                    linesCentersY: linesCentersY,
-                    onFinish: () {
-                      bloc.add(const LevelEvent.finishFigure());
-                    },
-                  )
-                    ..position = Vector2(0, 0)
-                    ..size = size,
-                );
-              }));
+          stopAllLines();
+          children
+              .where((e) => e is Item && e.position.x > size.x + 100)
+              .forEach((element) {
+            element.removeFromParent();
+          });
+          add(
+            FigureEventComponent(
+              figure: state.figure!,
+              lineSize: lineSize,
+              linesCentersY: linesCentersY,
+              onFinish: () {
+                bloc.add(const LevelEvent.finishFigure());
+              },
+            )
+              ..position = Vector2(0, 0)
+              ..size = size,
+          );
         } else {
           onNewState(state);
         }

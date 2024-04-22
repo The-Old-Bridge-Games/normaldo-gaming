@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -14,6 +16,7 @@ final class Pizza extends SpriteComponent
         Item,
         PizzaGivingItem,
         Eatable {
+  late final List<AudioPool> _hitSfxPools;
   @override
   ShapeHitbox get hitbox => CircleHitbox.relative(
         0.8,
@@ -28,6 +31,7 @@ final class Pizza extends SpriteComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Normaldo) {
+      _hitSfxPools.random().start();
       givePizza();
     }
     super.onCollisionStart(intersectionPoints, other);
@@ -36,6 +40,16 @@ final class Pizza extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     sprite = await Sprite.load('pizza.png');
+    _hitSfxPools = [
+      await AudioPool.createFromAsset(
+        path: 'audio/sfx/havaet.mp3',
+        maxPlayers: 1,
+      ),
+      await AudioPool.createFromAsset(
+        path: 'audio/sfx/havaet2.mp3',
+        maxPlayers: 1,
+      ),
+    ];
     return super.onLoad();
   }
 }

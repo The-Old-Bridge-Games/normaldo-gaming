@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
@@ -26,6 +27,7 @@ class _MissionNotificationState extends State<MissionNotificationOverlay>
     final mission = state.missions.toList()[index];
     _lastCompleted = mission;
     animationController.forward().whenComplete(() {
+      FlameAudio.play('sfx/mission_notification.mp3');
       Future.delayed(const Duration(seconds: 2)).whenComplete(
         () => animationController.reverse(),
       );

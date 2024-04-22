@@ -79,6 +79,8 @@ class PullUpGame extends FlameGame
 
     await _initBloc();
 
+    // camera.viewfinder.zoom = 0.4;
+
     if (!userCubit.state.educated) {
       add(TimerComponent(
         period: 0.5,

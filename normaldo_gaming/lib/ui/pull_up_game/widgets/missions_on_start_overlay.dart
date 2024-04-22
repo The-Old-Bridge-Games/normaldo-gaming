@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +24,7 @@ class _MissionsOnStartOverlayState extends State<MissionsOnStartOverlay> {
     if (!context.read<UserCubit>().state.educated) return;
     Future.delayed(const Duration(milliseconds: 300)).whenComplete(() {
       setState(() => _left = 16);
+      FlameAudio.play('sfx/mission_notification.mp3');
       Future.delayed(const Duration(seconds: 3))
           .whenComplete(() => setState(() => _left = -1000));
     });

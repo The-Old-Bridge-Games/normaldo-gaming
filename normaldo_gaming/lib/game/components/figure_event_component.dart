@@ -262,33 +262,50 @@ class FigureEventComponent extends PositionComponent
 
     _addLineItemsFromMatrix(matrix);
 
-    return super.onLoad();
-  }
+    add(TimerComponent(
+      period: 1,
+      removeOnFinish: true,
+      repeat: true,
+      onTick: () {
+        if (!_initiated) return;
+        final gameObjects = children.whereType<PositionComponent>();
+        if (gameObjects.isEmpty && _finished) removeFromParent();
+        figure.maybeWhen(punchWave: () {
+          if ((gameObjects.every((e) => e.position.x < gameRef.grid.size.x)) &&
+              _finished) {
+            onFinish();
+          }
+        }, guardedPizza: () {
+          // add(TimerComponent(
+          //     period: 3,
+          //     removeOnFinish: true,
+          //     onTick: () {
+          //       _finished = true;
+          //       onFinish();
+          //     }));
+        }, unreachablePizza: () {
+          // add(TimerComponent(
+          //     period: 3,
+          //     removeOnFinish: true,
+          //     onTick: () {
+          //       _finished = true;
+          //       onFinish();
+          //     }));
+        }, orElse: () {
+          if (gameObjects.isEmpty && !_finished) {
+            _finished = true;
+            onFinish();
+          } else if (gameObjects.isNotEmpty && !_finished) {
+            if ((gameObjects.every((e) => e.position.x < 0))) {
+              _finished = true;
+              onFinish();
+            }
+          }
+        });
+      },
+    ));
 
-  @override
-  void update(double dt) {
-    if (!_initiated) return;
-    final gameObjects = children.whereType<Item>();
-    if (gameObjects.isEmpty && _finished) removeFromParent();
-    figure.maybeWhen(punchWave: () {
-      if ((gameObjects.every((e) =>
-              e.absolutePosition.x < (gameRef as PullUpGame).grid.size.x)) &&
-          _finished) {
-        onFinish();
-      }
-    }, orElse: () {
-      if (gameObjects.isEmpty && !_finished) {
-        onFinish();
-        _finished = true;
-      } else if (gameObjects.isNotEmpty && !_finished) {
-        if ((gameObjects.every((e) =>
-            e.absolutePosition.x < (gameRef as PullUpGame).grid.size.x))) {
-          onFinish();
-          _finished = true;
-        }
-      }
-    });
-    super.update(dt);
+    return super.onLoad();
   }
 
   @override
@@ -365,7 +382,7 @@ class FigureEventComponent extends PositionComponent
             onTick: () {
               for (final item in column) {
                 final itemSize = item.item.getSize(lineSize);
-                (gameRef as PullUpGame).grid.resumeLines();
+                gameRef.grid.resumeLines();
                 add(item.item.component()
                   ..size = itemSize
                   ..position = Vector2(
@@ -378,17 +395,17 @@ class FigureEventComponent extends PositionComponent
             },
           ));
         }
-        (gameRef as PullUpGame).grid.resumeLines();
+        gameRef.grid.resumeLines();
       },
       bigBuddyBin: () {
         final item = matrix.first.first;
         final itemSize = item.item.getSize(lineSize);
         final component = item.item.component() as AttackingItem
-          ..anchor = Anchor.topCenter
+          ..anchor = Anchor.center
           ..speedMultiplier = 1.3
           ..size = item.item == Items.trashBin ? itemSize : itemSize * 4;
         component.position = Vector2(
-          size.x + component.size.x,
+          gameRef.size.x + component.size.x,
           linesCentersY[matrix.first.first.line ?? 0],
         );
         add(component);
@@ -402,8 +419,7 @@ class FigureEventComponent extends PositionComponent
             add(item.item.component()
               ..size = itemSize
               ..speedMultiplier = 1.5
-              ..position = Vector2(
-                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x),
+              ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x),
                   linesCentersY[item.line ?? 0]));
           }
         }
