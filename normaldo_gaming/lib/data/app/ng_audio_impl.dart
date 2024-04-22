@@ -285,7 +285,7 @@ extension on Sfx {
       case Sfx.weightIncreased:
         return ['eeeeee.mp3'];
       case Sfx.weightLoosed:
-        return ['yyyyyyy.mp3'];
+        return ['death.mp3'];
       case Sfx.gameOver:
         return ['game_over.mp3'];
       case Sfx.buttonPressed:

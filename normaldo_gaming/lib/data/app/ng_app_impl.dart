@@ -93,7 +93,7 @@ OS Version: ${Platform.operatingSystemVersion}
       'sfx/subbwoofer.mp3',
       'sfx/super_pizza.mp3',
       'sfx/ydar.mp3',
-      'sfx/yyyyyyy.mp3',
+      'sfx/death.mp3',
       'sfx/mission_notification.mp3',
       'sfx/spin.mp3',
       'sfx/roll_dropped.mp3',

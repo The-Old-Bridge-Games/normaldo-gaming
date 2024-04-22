@@ -6,6 +6,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/rendering.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
@@ -144,8 +145,10 @@ class Normaldo extends PositionComponent
     this.customPizzaToGetFatter,
   }) : super(size: size, anchor: Anchor.center);
 
-  final Skin skin;
+  late final AudioPool _deathSfxPool;
+  late final AudioPool _hitSfxPool;
 
+  final Skin skin;
   final FatStateIterator fatIterator =
       FatStateIterator(NormaldoFatState.skinny);
 
@@ -208,6 +211,7 @@ class Normaldo extends PositionComponent
   void takeHit({int damage = 1}) {
     if (_immortal) return;
     if (fatIterator.deadlyDamage(damage)) {
+      _deathSfxPool.start();
       nComponent.current = NormaldoFatState.skinnyDead;
       bloc.die(gameRef.missionCubit, gameRef.scene.currentLocationIndex);
       return;
@@ -215,6 +219,7 @@ class Normaldo extends PositionComponent
 
     _pizzaEaten = 0;
     state = NormaldoHitState.hit;
+    _hitSfxPool.start(volume: 0.5);
     final newFatState = fatIterator.prev(step: damage);
     _changeFatAnimation(newFatState);
   }
@@ -542,6 +547,16 @@ class Normaldo extends PositionComponent
     nComponent.sprites = await normaldoSprites(skin);
 
     nComponent.current = NormaldoFatState.skinny;
+
+    _deathSfxPool = await AudioPool.createFromAsset(
+      path: 'audio/sfx/death.mp3',
+      maxPlayers: 1,
+    );
+
+    _hitSfxPool = await AudioPool.createFromAsset(
+      path: 'audio/sfx/ydar.mp3',
+      maxPlayers: 1,
+    );
 
     add(nComponent);
 
