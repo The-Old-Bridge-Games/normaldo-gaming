@@ -13,6 +13,8 @@ import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/education/education_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
@@ -48,6 +50,8 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   late final FatCounter fatCounter;
   late final Grid grid;
+
+  final sfxPools = AudioPools();
 
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;
@@ -91,6 +95,10 @@ class PullUpGame extends FlameGame
         },
       ));
     }
+
+    sfxPools
+        .init(userCubit.state.skin)
+        .whenComplete(() => print('AUDIO POOLS SUCCESSFULLY LOADED'));
 
     overlays.add(Overlays.missions.name);
 

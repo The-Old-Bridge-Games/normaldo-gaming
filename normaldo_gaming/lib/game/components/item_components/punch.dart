@@ -3,15 +3,12 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 final class Punch extends SpriteComponent
     with CollisionCallbacks, HasGameRef<PullUpGame>, Item, AttackingItem {
-  late final AudioPool _prepSfxPool;
-
   @override
   int get damage => 1;
 
@@ -48,10 +45,6 @@ final class Punch extends SpriteComponent
           reverseSpeed: 50,
           infinite: true,
         ));
-    _prepSfxPool = await AudioPool.createFromAsset(
-      path: 'audio/sfx/round_box.mp3',
-      maxPlayers: 5,
-    );
     final grid = game.grid;
     grid.stopLine(grid.linesCentersY.indexOf(position.y));
     grid.removeWhere((component) =>
@@ -68,7 +61,7 @@ final class Punch extends SpriteComponent
     if (_hitting) return;
     final grid = game.grid;
     if (position.x <= grid.size.x - (size.x / 2)) {
-      _prepSfxPool.start();
+      gameRef.sfxPools.playSfx(item);
       _hitting = true;
       add(TimerComponent(
           period: 1,

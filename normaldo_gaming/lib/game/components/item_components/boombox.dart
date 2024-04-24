@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
@@ -12,8 +11,6 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 final class Boombox extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<PullUpGame>, Item, CleanScreenItem {
-  late final AudioPool _sfxPool;
-
   @override
   ShapeHitbox get hitbox => RectangleHitbox.relative(
         Vector2.all(0.9),
@@ -30,7 +27,7 @@ final class Boombox extends SpriteAnimationComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      _sfxPool.start();
+      gameRef.sfxPools.playSfx(item);
       HapticFeedback.heavyImpact();
       cleanScreen();
       removeFromParent();
@@ -45,10 +42,6 @@ final class Boombox extends SpriteAnimationComponent
       await Sprite.load('boombox1.png'),
       await Sprite.load('boombox2.png'),
     ];
-    _sfxPool = await AudioPool.createFromAsset(
-      path: 'audio/sfx/bomb1.mp3',
-      maxPlayers: 1,
-    );
     final animation = SpriteAnimation.spriteList(
       sprites,
       stepTime: 0.2,

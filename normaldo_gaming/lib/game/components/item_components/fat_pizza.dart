@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
@@ -13,8 +12,6 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 final class FatPizza extends SpriteComponent
     with HasGameRef<PullUpGame>, CollisionCallbacks, Item, CustomEffectItem {
-  late final AudioPool _sfxPool;
-
   @override
   ShapeHitbox get hitbox => RectangleHitbox.relative(
         Vector2.all(0.9),
@@ -35,7 +32,7 @@ final class FatPizza extends SpriteComponent
     if (other is Normaldo) {
       applyEffect(() {
         _animationInProgress = true;
-        _sfxPool.start();
+        gameRef.sfxPools.playSfx(item);
         final grid = game.grid;
         grid.removeAllItems(exclude: [this]);
         List<Vector2> takenPos = [];
@@ -104,10 +101,6 @@ final class FatPizza extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     sprite = await Sprite.load('pizza_pack1.png');
-    _sfxPool = await AudioPool.createFromAsset(
-      path: 'audio/sfx/mystery 2.mp3',
-      maxPlayers: 1,
-    );
     return super.onLoad();
   }
 
