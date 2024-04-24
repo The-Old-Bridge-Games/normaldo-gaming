@@ -56,6 +56,9 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               }),
           resistanceToItems: [
             Items.homeless,
+            Items.security,
+            Items.policeman,
+            Items.handcuffs,
           ],
         ),
         const Skin(
@@ -101,7 +104,12 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 }),
             resistanceToItems: [
               Items.cocktail,
-              Items.molotov,
+              Items.homeless,
+              Items.girl,
+              Items.policeman,
+              Items.security,
+              Items.cannibal,
+              Items.girl,
             ],
             uniqueSkill: 'gets some fat from eating human beings'),
         const Skin(
@@ -127,7 +135,11 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'maxFat': ['glasses/GOLDEN MAX FAT.mp3']
               },
             ),
-            resistanceToItems: [],
+            resistanceToItems: [
+              Items.loserTicket,
+              Items.handcuffs,
+              Items.compass,
+            ],
             uniqueSkill: "ain't getting slower after fat up"),
         const Skin(
           uniqueId: 'halloween',
@@ -154,7 +166,13 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'hit': ['halloween/PUMPKING HIT.mp3'],
                 'resist': ['halloween/PUMPKING LAUGHT.mp3'],
               }),
-          resistanceToItems: [],
+          resistanceToItems: [
+            Items.greenPoison,
+            Items.cocktail,
+            Items.molotov,
+            Items.snake,
+            Items.homeless,
+          ],
         ),
         const Skin(
           uniqueId: 'harry_potter',
@@ -182,7 +200,19 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'slowMo': ['harry_potter/POTTER SLOMO MAHOVIK.mp3'],
                 'maxFat': ['harry_potter/POTTER MAX FAT.mp3']
               }),
-          resistanceToItems: [],
+          resistanceToItems: [
+            Items.greenPoison,
+            Items.snake,
+            Items.cocktail,
+            Items.letterBottle,
+            Items.umbrella,
+            Items.angryDog,
+            Items.handcuffs,
+            Items.bird,
+            Items.cone,
+            Items.loserTicket,
+            Items.compass,
+          ],
           uniqueSkill: 'vanishing trick+',
         ),
         const Skin(
@@ -211,7 +241,17 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'shredder': ['new_year/SANTA SOUND HOHOHO.mp3'],
                 'moneyBag': ['new_year/SANTA TAKE MONEY OR COCTAIL.mp3'],
               }),
-          resistanceToItems: [],
+          resistanceToItems: [
+            Items.homeless,
+            Items.security,
+            Items.policeman,
+            Items.greenPoison,
+            Items.cocktail,
+            Items.molotov,
+            Items.handcuffs,
+            Items.note,
+            Items.note2,
+          ],
           uniqueSkill: 'causes cozy snowfall',
         ),
         const Skin(
@@ -247,6 +287,15 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
             resistanceToItems: [
               Items.homeless,
               Items.cocktail,
+              Items.greenPoison,
+              Items.molotov,
+              Items.security,
+              Items.policeman,
+              Items.handcuffs,
+              Items.shipPart,
+              Items.loserTicket,
+              Items.compass,
+              Items.gun,
             ],
             uniqueSkill: 'accidentally takes x3 dollars or pizza'),
         const Skin(
@@ -284,6 +333,14 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           resistanceToItems: [
             Items.homeless,
             Items.trashBin,
+            Items.security,
+            Items.policeman,
+            Items.cone,
+            Items.stone,
+            Items.roadSign,
+            Items.umbrella,
+            Items.handcuffs,
+            Items.gun,
           ],
           uniqueSkill: 'spidey sense',
         ),
@@ -354,6 +411,13 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               }),
           resistanceToItems: [
             Items.cocktail,
+            Items.policeman,
+            Items.homeless,
+            Items.security,
+            Items.greenPoison,
+            Items.loserTicket,
+            Items.handcuffs,
+            Items.gun,
           ],
           uniqueSkill: 'vanishing trick',
         ),
