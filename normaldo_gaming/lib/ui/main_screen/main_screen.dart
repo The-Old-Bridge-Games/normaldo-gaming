@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
@@ -17,6 +18,7 @@ import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/trash_bin_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 
@@ -79,9 +81,11 @@ class _MainScreenState extends State<MainScreen> {
   void _onTrashBinPressed() {
     _buildingsPlaying = false;
     if (_tab == Tabs.trash) {
-      // context.pushNamed(NGRoutes.pullUpGame.name).whenComplete(
-      //       () => tab = Tabs.idle,
-      //     );
+      context.read<DailyRewardCubit>().applyAward(context.read());
+      showDialog(
+          context: context,
+          barrierColor: Colors.black87,
+          builder: (context) => const TrashBinScreen());
     } else {
       tab = Tabs.trash;
     }
