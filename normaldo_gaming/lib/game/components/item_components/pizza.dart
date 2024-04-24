@@ -40,16 +40,24 @@ final class Pizza extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     sprite = await Sprite.load('pizza.png');
-    _hitSfxPools = [
-      await AudioPool.createFromAsset(
-        path: 'audio/sfx/havaet.mp3',
-        maxPlayers: 1,
-      ),
-      await AudioPool.createFromAsset(
-        path: 'audio/sfx/havaet2.mp3',
-        maxPlayers: 1,
-      ),
-    ];
+    final skinBiteSfx = gameRef.grid.normaldo.skin.assets.sfx['bite'];
+    if (skinBiteSfx != null) {
+      final skinBitePools = await Future.wait(skinBiteSfx.map(
+        (e) => AudioPool.createFromAsset(path: 'audio/skins/$e', maxPlayers: 1),
+      ));
+      _hitSfxPools = skinBitePools;
+    } else {
+      _hitSfxPools = [
+        await AudioPool.createFromAsset(
+          path: 'audio/sfx/havaet.mp3',
+          maxPlayers: 1,
+        ),
+        await AudioPool.createFromAsset(
+          path: 'audio/sfx/havaet2.mp3',
+          maxPlayers: 1,
+        ),
+      ];
+    }
     return super.onLoad();
   }
 }

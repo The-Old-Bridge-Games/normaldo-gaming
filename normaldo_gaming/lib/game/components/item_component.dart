@@ -78,6 +78,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   ) {
     if (!collidable) return;
     if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      other.resist();
       removeFromParent();
       return;
     }

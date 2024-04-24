@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/rendering.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -147,6 +148,9 @@ class Normaldo extends PositionComponent
 
   late final AudioPool _deathSfxPool;
   late final AudioPool _hitSfxPool;
+  late final AudioPool _maxFatSfxPool;
+  late final List<AudioPool> _resistSfxPools;
+  late final List<AudioPool> _fatUpSfxPools;
 
   final Skin skin;
   final FatStateIterator fatIterator =
@@ -295,6 +299,12 @@ class Normaldo extends PositionComponent
 
   final List<NormaldoFatState> _fatCounter = [];
 
+  void resist() {
+    if (_resistSfxPools.isNotEmpty) {
+      _resistSfxPools.random().start();
+    }
+  }
+
   NormaldoFatState _nextFat() {
     toIdleFatState();
     if (_fatCounter.isNotEmpty) {
@@ -305,6 +315,11 @@ class Normaldo extends PositionComponent
       } else {
         final nextFat = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
         if (nextFat != nComponent.current) {
+          if (nextFat == NormaldoFatState.uberFat) {
+            _maxFatSfxPool.start();
+          } else {
+            _fatUpSfxPools.random().start();
+          }
           return nextFat;
         }
       }
@@ -520,7 +535,7 @@ class Normaldo extends PositionComponent
     Color? color,
     double? fontSize,
   }) {
-    final grid = (gameRef as PullUpGame).grid;
+    final grid = gameRef.grid;
     grid.add(
       NotificationComponent(
         text: text,
@@ -552,11 +567,31 @@ class Normaldo extends PositionComponent
       path: 'audio/sfx/death.mp3',
       maxPlayers: 1,
     );
-
     _hitSfxPool = await AudioPool.createFromAsset(
-      path: 'audio/sfx/ydar.mp3',
+      path: skin.assets.sfx['hit'] != null
+          ? 'audio/skins/${skin.assets.sfx['hit']!.random()}'
+          : 'audio/sfx/ydar.mp3',
       maxPlayers: 1,
     );
+    _maxFatSfxPool = await AudioPool.createFromAsset(
+      path: skin.assets.sfx['maxFat'] != null
+          ? 'audio/skins/${skin.assets.sfx['maxFat']!.random()}'
+          : 'audio/sfx/eeeeee.mp3',
+      maxPlayers: 1,
+    );
+    _resistSfxPools = await Future.wait(
+        skin.assets.sfx['resist']?.map((e) => AudioPool.createFromAsset(
+                  path: 'audio/skins/$e',
+                  maxPlayers: 1,
+                )) ??
+            []);
+
+    _fatUpSfxPools = await Future.wait(
+        skin.assets.sfx['fatUp']?.map((e) => AudioPool.createFromAsset(
+                  path: 'audio/skins/$e',
+                  maxPlayers: 1,
+                )) ??
+            []);
 
     add(nComponent);
 
