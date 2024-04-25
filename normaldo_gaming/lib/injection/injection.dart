@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/auth/auth_cubit.dart';
+import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
@@ -58,6 +59,7 @@ void initializeInjector(Config config) {
     (injector) => MissionCubit(injector.get()),
     allowFutureReassignment: true,
   );
+  injector.map<DailyRewardCubit>((injector) => DailyRewardCubit());
 
   // Repositories
   injector.map<MissionsRepository>((injector) => MissionsRepositoryImpl());

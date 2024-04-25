@@ -240,4 +240,12 @@ abstract class Utils {
 
   static final locationIndexToString =
       locationIndexes.map((key, value) => MapEntry(value, key));
+
+  static String imagePathFromDailyReward(String reward) =>
+      reward.contains('dollar')
+          ? 'assets/images/dollar.png'
+          : 'assets/images/heart.png';
+
+  static String amountFromDailyReward(String reward) =>
+      reward.split(RegExp('dollars|heart')).last;
 }

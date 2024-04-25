@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DailyRewardState {
   Duration get delay => throw _privateConstructorUsedError;
   int get currentDay => throw _privateConstructorUsedError;
+  DateTime? get lastApply => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DailyRewardStateCopyWith<DailyRewardState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $DailyRewardStateCopyWith<$Res> {
           DailyRewardState value, $Res Function(DailyRewardState) then) =
       _$DailyRewardStateCopyWithImpl<$Res, DailyRewardState>;
   @useResult
-  $Res call({Duration delay, int currentDay});
+  $Res call({Duration delay, int currentDay, DateTime? lastApply});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$DailyRewardStateCopyWithImpl<$Res, $Val extends DailyRewardState>
   $Res call({
     Object? delay = null,
     Object? currentDay = null,
+    Object? lastApply = freezed,
   }) {
     return _then(_value.copyWith(
       delay: null == delay
@@ -58,6 +60,10 @@ class _$DailyRewardStateCopyWithImpl<$Res, $Val extends DailyRewardState>
           ? _value.currentDay
           : currentDay // ignore: cast_nullable_to_non_nullable
               as int,
+      lastApply: freezed == lastApply
+          ? _value.lastApply
+          : lastApply // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$DailyRewardStateImplCopyWith<$Res>
       __$$DailyRewardStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Duration delay, int currentDay});
+  $Res call({Duration delay, int currentDay, DateTime? lastApply});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$DailyRewardStateImplCopyWithImpl<$Res>
   $Res call({
     Object? delay = null,
     Object? currentDay = null,
+    Object? lastApply = freezed,
   }) {
     return _then(_$DailyRewardStateImpl(
       delay: null == delay
@@ -96,6 +103,10 @@ class __$$DailyRewardStateImplCopyWithImpl<$Res>
           ? _value.currentDay
           : currentDay // ignore: cast_nullable_to_non_nullable
               as int,
+      lastApply: freezed == lastApply
+          ? _value.lastApply
+          : lastApply // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -103,17 +114,20 @@ class __$$DailyRewardStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DailyRewardStateImpl extends _DailyRewardState {
-  const _$DailyRewardStateImpl({required this.delay, required this.currentDay})
+  const _$DailyRewardStateImpl(
+      {required this.delay, required this.currentDay, this.lastApply})
       : super._();
 
   @override
   final Duration delay;
   @override
   final int currentDay;
+  @override
+  final DateTime? lastApply;
 
   @override
   String toString() {
-    return 'DailyRewardState(delay: $delay, currentDay: $currentDay)';
+    return 'DailyRewardState(delay: $delay, currentDay: $currentDay, lastApply: $lastApply)';
   }
 
   @override
@@ -123,11 +137,13 @@ class _$DailyRewardStateImpl extends _DailyRewardState {
             other is _$DailyRewardStateImpl &&
             (identical(other.delay, delay) || other.delay == delay) &&
             (identical(other.currentDay, currentDay) ||
-                other.currentDay == currentDay));
+                other.currentDay == currentDay) &&
+            (identical(other.lastApply, lastApply) ||
+                other.lastApply == lastApply));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, delay, currentDay);
+  int get hashCode => Object.hash(runtimeType, delay, currentDay, lastApply);
 
   @JsonKey(ignore: true)
   @override
@@ -140,13 +156,16 @@ class _$DailyRewardStateImpl extends _DailyRewardState {
 abstract class _DailyRewardState extends DailyRewardState {
   const factory _DailyRewardState(
       {required final Duration delay,
-      required final int currentDay}) = _$DailyRewardStateImpl;
+      required final int currentDay,
+      final DateTime? lastApply}) = _$DailyRewardStateImpl;
   const _DailyRewardState._() : super._();
 
   @override
   Duration get delay;
   @override
   int get currentDay;
+  @override
+  DateTime? get lastApply;
   @override
   @JsonKey(ignore: true)
   _$$DailyRewardStateImplCopyWith<_$DailyRewardStateImpl> get copyWith =>

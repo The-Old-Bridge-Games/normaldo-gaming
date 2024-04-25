@@ -7,6 +7,7 @@ class DailyRewardState with _$DailyRewardState {
   const factory DailyRewardState({
     required Duration delay,
     required int currentDay,
+    DateTime? lastApply,
   }) = _DailyRewardState;
 
   bool get canApply => delay == Duration.zero;

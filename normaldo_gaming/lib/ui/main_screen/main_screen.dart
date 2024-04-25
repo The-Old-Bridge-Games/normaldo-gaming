@@ -81,7 +81,6 @@ class _MainScreenState extends State<MainScreen> {
   void _onTrashBinPressed() {
     _buildingsPlaying = false;
     if (_tab == Tabs.trash) {
-      context.read<DailyRewardCubit>().applyAward(context.read());
       showDialog(
           context: context,
           barrierColor: Colors.black87,

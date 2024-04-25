@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -67,6 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         NGButton(
                           onPressed: () {
                             context.read<UserCubit>().reset();
+                            context.read<DailyRewardCubit>().reset();
                             context.pop();
                             context.pop();
                           },

@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/sign_in/sign_in_cubit.dart';
@@ -128,6 +129,7 @@ OS Version: ${Platform.operatingSystemVersion}
           BlocProvider<SignUpCubit>(create: (context) => injector.get()),
           BlocProvider<SignInCubit>(create: (context) => injector.get()),
           BlocProvider<MissionCubit>(create: (context) => injector.get()),
+          BlocProvider<DailyRewardCubit>(create: (context) => injector.get()),
         ],
         child: ConfigInheritedWidget(
           config: config,
