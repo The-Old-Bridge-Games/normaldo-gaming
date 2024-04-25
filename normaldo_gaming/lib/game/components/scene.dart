@@ -103,6 +103,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
                 // Preparing to boss
                 const vanishDuration = 0.3;
                 final normaldo = game.grid.normaldo;
+                game.levelBloc.add(const LevelEvent.finishFigure());
                 game.grid.stopAllLines();
                 game.grid.removeAllItems();
                 game.grid.controlTurnedOff = true;

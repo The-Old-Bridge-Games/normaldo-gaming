@@ -6,6 +6,7 @@ import 'package:flame/extensions.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
+import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -25,8 +26,9 @@ class FigureEventComponent extends PositionComponent
   final List<double> linesCentersY;
   final void Function() onFinish;
 
+  Grid get grid => gameRef.grid;
+
   var _initiated = false;
-  var _finished = false;
 
   @override
   Future<void> onLoad() async {
@@ -51,7 +53,7 @@ class FigureEventComponent extends PositionComponent
       guardedPizza: () {
         final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
         return [
-          [LineItem(item: Items.trashBin, line: firstLine)],
+          [LineItem(item: Items.cone, line: firstLine)],
           [
             LineItem(item: Items.cone, line: firstLine - 1),
             LineItem(item: Items.fatPizza, line: firstLine),
@@ -263,67 +265,31 @@ class FigureEventComponent extends PositionComponent
     _addLineItemsFromMatrix(matrix);
 
     add(TimerComponent(
-      period: 1,
-      removeOnFinish: true,
-      repeat: true,
-      onTick: () {
-        if (!_initiated) return;
-        final gameObjects = children.whereType<PositionComponent>();
-        if (gameObjects.isEmpty && _finished) removeFromParent();
-        figure.maybeWhen(punchWave: () {
-          if ((gameObjects.every((e) => e.position.x < gameRef.grid.size.x)) &&
-              _finished) {
+        period: 1,
+        removeOnFinish: true,
+        repeat: true,
+        onTick: () {
+          if (_initiated) {
+            print('FINISHED FIGURE: $figure');
+
             onFinish();
+            removeFromParent();
           }
-        }, guardedPizza: () {
-          // add(TimerComponent(
-          //     period: 3,
-          //     removeOnFinish: true,
-          //     onTick: () {
-          //       _finished = true;
-          //       onFinish();
-          //     }));
-        }, unreachablePizza: () {
-          // add(TimerComponent(
-          //     period: 3,
-          //     removeOnFinish: true,
-          //     onTick: () {
-          //       _finished = true;
-          //       onFinish();
-          //     }));
-        }, orElse: () {
-          if (gameObjects.isEmpty && !_finished) {
-            _finished = true;
-            onFinish();
-          } else if (gameObjects.isNotEmpty && !_finished) {
-            if ((gameObjects.every((e) => e.position.x < 0))) {
-              _finished = true;
-              onFinish();
-            }
-          }
-        });
-      },
-    ));
+        }));
 
     return super.onLoad();
   }
 
   @override
   void removeFromParent() {
-    if (!_finished) {
-      onFinish();
-      _finished = true;
-    }
+    onFinish();
     removeAll(children);
     super.removeFromParent();
   }
 
   @override
   void onRemove() {
-    if (!_finished) {
-      onFinish();
-      _finished = true;
-    }
+    onFinish();
     super.onRemove();
   }
 
@@ -340,40 +306,44 @@ class FigureEventComponent extends PositionComponent
                   (Random().nextInt(size.x ~/ 3).toDouble()));
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
                   size.x * 1.3 + (xOffset * itemSize.x) + columnPadding,
                   linesCentersY[item.line ?? 0]));
           }
         }
+        _initiated = true;
       },
       guardedPizza: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
                   linesCentersY[item.line ?? 0]));
           }
         }
+        _initiated = true;
       },
       cursedPath: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
                   size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 3),
                   linesCentersY[item.line ?? 0]));
           }
         }
+        _initiated = true;
       },
       punchWave: () async {
+        grid.stopAllLines();
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           add(TimerComponent(
@@ -383,19 +353,24 @@ class FigureEventComponent extends PositionComponent
               for (final item in column) {
                 final itemSize = item.item.getSize(lineSize);
                 gameRef.grid.resumeLines();
-                add(item.item.component()
+                grid.add(item.item.component()
                   ..size = itemSize
                   ..position = Vector2(
                       (size.x) + Items.punch.getSize(lineSize).x,
                       linesCentersY[item.line ?? 0]));
-                if (matrix.indexOf(column) == matrix.length - 1) {
-                  _finished = true;
-                }
+              }
+              if (matrix.indexOf(column) == matrix.length - 1) {
+                grid.add(TimerComponent(
+                    period: 2,
+                    removeOnFinish: true,
+                    onTick: () {
+                      gameRef.grid.resumeLines();
+                      _initiated = true;
+                    }));
               }
             },
           ));
         }
-        gameRef.grid.resumeLines();
       },
       bigBuddyBin: () {
         final item = matrix.first.first;
@@ -408,28 +383,34 @@ class FigureEventComponent extends PositionComponent
           gameRef.size.x + component.size.x,
           linesCentersY[matrix.first.first.line ?? 0],
         );
-        add(component);
+        grid.add(component);
         component.strength = 10;
+        _initiated = true;
       },
       only2Lines: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
             final itemSize = Items.cone.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..speedMultiplier = 1.5
               ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x),
                   linesCentersY[item.line ?? 0]));
           }
         }
+        _initiated = true;
       },
       slowMo: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            final component = item.item.component();
+            if (component is Pizza) {
+              component.speedMultiplier = 2;
+            }
+            grid.add(component
               ..size = itemSize
               ..position = Vector2(
                   size.x * (xOffset > 0 ? 2.6 : 1.3) +
@@ -437,21 +418,20 @@ class FigureEventComponent extends PositionComponent
                   linesCentersY[item.line ?? 0]));
           }
         }
-        children.whereType<Pizza>().forEach((element) {
-          element.speedMultiplier = 2;
-        });
+        _initiated = true;
       },
       unreachablePizza: () {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
                   linesCentersY[item.line ?? 0]));
           }
         }
+        _initiated = true;
       },
       winLabel: (_) {
         final gapIndexes = [7, 10];
@@ -463,7 +443,7 @@ class FigureEventComponent extends PositionComponent
           }
           for (final item in column) {
             final itemSize = item.item.getSize(lineSize);
-            add(item.item.component()
+            grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
                 size.x * 1.3 + xOffset,
@@ -471,8 +451,8 @@ class FigureEventComponent extends PositionComponent
               ));
           }
         }
+        _initiated = true;
       },
     );
-    _initiated = true;
   }
 }

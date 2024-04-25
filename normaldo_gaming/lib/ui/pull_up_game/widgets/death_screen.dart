@@ -25,7 +25,7 @@ class DeathScreen extends StatefulWidget {
 class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   static const _iconDimension = 30.0;
 
-  late final int _audioId;
+  int? _audioId;
 
   final _levelManager = injector.get<LevelManager>();
 
@@ -55,7 +55,9 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
 
   @override
   void dispose() {
-    audio.stopAudio(_audioId);
+    if (_audioId != null) {
+      audio.stopAudio(_audioId!);
+    }
     super.dispose();
   }
 

@@ -102,6 +102,16 @@ final class AudioPools {
             path: 'audio/sfx/round_box.mp3',
             maxPlayers: 5,
           ),
+        ],
+        Items.cocktail: [
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/drink.mp3',
+            maxPlayers: 1,
+          ),
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/drink2.mp3',
+            maxPlayers: 1,
+          ),
         ]
       };
       final skinBiteSfx = skin.assets.sfx['bite'];

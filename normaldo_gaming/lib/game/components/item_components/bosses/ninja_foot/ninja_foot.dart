@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
+import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
@@ -109,6 +111,11 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
       } else {
         gameRef.grid.resumeLines();
         gameRef.bossInProgress = false;
+        gameRef.levelBloc.add(LevelEvent.startFigure(
+            figure: FigureEvent.winLabel(
+          item: [Items.pizza, Items.dollar].random(),
+        )));
+        removeFromParent();
       }
     }
   }

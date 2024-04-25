@@ -33,6 +33,7 @@ class _BaseScreenState extends State<BaseScreen> {
     return GestureDetector(
       onDoubleTap: () {
         // context.read<UserCubit>().addExp(10);
+        // context.read<UserCubit>().addDollars(60000);
       },
       child: Scaffold(
         backgroundColor: Colors.black,

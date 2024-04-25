@@ -31,6 +31,7 @@ final class PurpleCocktail extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
+      gameRef.sfxPools.playSfx(item);
       slow();
     }
     super.onCollisionStart(intersectionPoints, other);

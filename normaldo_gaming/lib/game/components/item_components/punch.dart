@@ -35,6 +35,7 @@ final class Punch extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() async {
+    collidable = false;
     strength = 2;
     sprite = await Sprite.load('punch.png');
 
@@ -72,6 +73,7 @@ final class Punch extends SpriteComponent
                 period: 0.5,
                 removeOnFinish: true,
                 onTick: () {
+                  collidable = true;
                   add(MoveToEffect(
                       Vector2(-grid.size.x / 2, y),
                       EffectController(
