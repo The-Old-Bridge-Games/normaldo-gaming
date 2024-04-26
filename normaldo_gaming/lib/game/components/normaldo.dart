@@ -593,6 +593,35 @@ class Normaldo extends PositionComponent
     );
   }
 
+  void _evadeTimer() {
+    add(TimerComponent(
+        period: (50 + Random().nextInt(21)).toDouble(),
+        removeOnFinish: true,
+        onTick: () {
+          nComponent.add(OpacityEffect.to(
+              0.5,
+              EffectController(
+                duration: 0.3,
+                reverseDuration: 0.3,
+                atMaxDuration: 0.5,
+              )));
+          _immortal = true;
+          add(TimerComponent(
+              period: 3,
+              removeOnFinish: true,
+              onTick: () {
+                nComponent.add(OpacityEffect.to(
+                    1,
+                    EffectController(
+                      duration: 0.3,
+                      reverseDuration: 0.3,
+                      atMaxDuration: 0.5,
+                    )));
+                _immortal = false;
+              }));
+        }));
+  }
+
   @override
   bool get debugMode => false;
 
@@ -708,6 +737,9 @@ class Normaldo extends PositionComponent
           onTick: () {
             gameRef.grid.vanishRandomItem();
           }));
+    }
+    if (skin.uniqueId == 'spider-man') {
+      _evadeTimer();
     }
 
     // 4DEV
