@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserState {
   User get user => throw _privateConstructorUsedError;
   bool get educated => throw _privateConstructorUsedError;
+
+  /// passed intro + intro game
+  bool get introduced => throw _privateConstructorUsedError;
   Skin get skin => throw _privateConstructorUsedError;
   List<String> get activatedPromoCodes => throw _privateConstructorUsedError;
   NetworkException? get failure => throw _privateConstructorUsedError;
@@ -35,6 +38,7 @@ abstract class $UserStateCopyWith<$Res> {
   $Res call(
       {User user,
       bool educated,
+      bool introduced,
       Skin skin,
       List<String> activatedPromoCodes,
       NetworkException? failure});
@@ -55,6 +59,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? introduced = null,
     Object? skin = null,
     Object? activatedPromoCodes = null,
     Object? failure = freezed,
@@ -67,6 +72,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
       educated: null == educated
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      introduced: null == introduced
+          ? _value.introduced
+          : introduced // ignore: cast_nullable_to_non_nullable
               as bool,
       skin: null == skin
           ? _value.skin
@@ -95,6 +104,7 @@ abstract class _$$UserStateImplCopyWith<$Res>
   $Res call(
       {User user,
       bool educated,
+      bool introduced,
       Skin skin,
       List<String> activatedPromoCodes,
       NetworkException? failure});
@@ -113,6 +123,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? educated = null,
+    Object? introduced = null,
     Object? skin = null,
     Object? activatedPromoCodes = null,
     Object? failure = freezed,
@@ -125,6 +136,10 @@ class __$$UserStateImplCopyWithImpl<$Res>
       educated: null == educated
           ? _value.educated
           : educated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      introduced: null == introduced
+          ? _value.introduced
+          : introduced // ignore: cast_nullable_to_non_nullable
               as bool,
       skin: null == skin
           ? _value.skin
@@ -148,6 +163,7 @@ class _$UserStateImpl implements _UserState {
   const _$UserStateImpl(
       {required this.user,
       required this.educated,
+      required this.introduced,
       required this.skin,
       required final List<String> activatedPromoCodes,
       this.failure})
@@ -157,6 +173,10 @@ class _$UserStateImpl implements _UserState {
   final User user;
   @override
   final bool educated;
+
+  /// passed intro + intro game
+  @override
+  final bool introduced;
   @override
   final Skin skin;
   final List<String> _activatedPromoCodes;
@@ -173,7 +193,7 @@ class _$UserStateImpl implements _UserState {
 
   @override
   String toString() {
-    return 'UserState(user: $user, educated: $educated, skin: $skin, activatedPromoCodes: $activatedPromoCodes, failure: $failure)';
+    return 'UserState(user: $user, educated: $educated, introduced: $introduced, skin: $skin, activatedPromoCodes: $activatedPromoCodes, failure: $failure)';
   }
 
   @override
@@ -184,6 +204,8 @@ class _$UserStateImpl implements _UserState {
             (identical(other.user, user) || other.user == user) &&
             (identical(other.educated, educated) ||
                 other.educated == educated) &&
+            (identical(other.introduced, introduced) ||
+                other.introduced == introduced) &&
             (identical(other.skin, skin) || other.skin == skin) &&
             const DeepCollectionEquality()
                 .equals(other._activatedPromoCodes, _activatedPromoCodes) &&
@@ -191,7 +213,7 @@ class _$UserStateImpl implements _UserState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, educated, skin,
+  int get hashCode => Object.hash(runtimeType, user, educated, introduced, skin,
       const DeepCollectionEquality().hash(_activatedPromoCodes), failure);
 
   @JsonKey(ignore: true)
@@ -205,6 +227,7 @@ abstract class _UserState implements UserState {
   const factory _UserState(
       {required final User user,
       required final bool educated,
+      required final bool introduced,
       required final Skin skin,
       required final List<String> activatedPromoCodes,
       final NetworkException? failure}) = _$UserStateImpl;
@@ -213,6 +236,10 @@ abstract class _UserState implements UserState {
   User get user;
   @override
   bool get educated;
+  @override
+
+  /// passed intro + intro game
+  bool get introduced;
   @override
   Skin get skin;
   @override

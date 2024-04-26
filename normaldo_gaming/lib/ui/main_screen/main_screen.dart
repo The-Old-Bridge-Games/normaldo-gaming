@@ -16,6 +16,7 @@ import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/intro_screen.dart';
 
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/trash_bin_screen.dart';
@@ -185,6 +186,12 @@ class _MainScreenState extends State<MainScreen> {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       for (final tab in Tabs.values) {
         precacheImage(AssetImage(tab.assetPath), context);
+      }
+      if (!context.read<UserCubit>().state.introduced) {
+        showDialog(
+            context: context,
+            barrierColor: Colors.black,
+            builder: (context) => const IntroScreen());
       }
     });
   }

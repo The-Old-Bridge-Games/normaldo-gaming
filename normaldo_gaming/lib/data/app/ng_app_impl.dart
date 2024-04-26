@@ -21,7 +21,6 @@ import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
-import 'package:normaldo_gaming/ui/education/education_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/config_inherited_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
@@ -66,7 +65,7 @@ OS Version: ${Platform.operatingSystemVersion}
             print('Initialization Failed: $error $message'),
       );
     }
-    await FlameAudio.audioCache.loadAll([
+    FlameAudio.audioCache.loadAll([
       'main_theme.mp3',
       'club_track.mp3',
       'hard_track.mp3',

@@ -5,6 +5,9 @@ class UserState with _$UserState {
   const factory UserState({
     required User user,
     required bool educated,
+
+    /// passed intro + intro game
+    required bool introduced,
     required Skin skin,
     required List<String> activatedPromoCodes,
     NetworkException? failure,
@@ -25,6 +28,7 @@ class UserState with _$UserState {
           ],
         ),
         educated: false,
+        introduced: false,
         skin: Skin.basic(),
         activatedPromoCodes: [],
       );

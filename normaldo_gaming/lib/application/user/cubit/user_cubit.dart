@@ -157,6 +157,10 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(state.copyWith(educated: true));
   }
 
+  void introduce() {
+    emit(state.copyWith(introduced: true));
+  }
+
   void toggleEducation() {
     emit(state.copyWith(educated: !state.educated));
   }
@@ -224,6 +228,7 @@ class UserCubit extends HydratedCubit<UserState> {
     return UserState(
         user: UserModel.fromJson(json).toEntity(),
         educated: json['educated'],
+        introduced: json['introduced'],
         activatedPromoCodes: (json['activatedPromoCodes'] as List<dynamic>)
             .map((e) => e.toString())
             .toList(),
@@ -254,6 +259,7 @@ class UserCubit extends HydratedCubit<UserState> {
     ).toJson()
       ..addEntries([
         MapEntry('educated', state.educated),
+        MapEntry('introduced', state.introduced),
         MapEntry('activatedPromoCodes', state.activatedPromoCodes),
         MapEntry(
           'skin',

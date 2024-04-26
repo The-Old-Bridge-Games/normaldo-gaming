@@ -35,8 +35,9 @@ dependencies:
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.1
 
-  # Audio
+  # Media
   flame_audio: ^2.1.4
+  video_player: ^2.8.2
 
   # Routing
   go_router: ^12.1.1
@@ -95,6 +96,7 @@ flutter:
   assets:
     - assets/
     - assets/translations/
+    - assets/video/
     - assets/images/
     - assets/images/2.0x/
     - assets/images/3.0x/

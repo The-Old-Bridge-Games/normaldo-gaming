@@ -229,6 +229,7 @@ class EducationComponent extends Component with HasGameRef<PullUpGame> {
                                                                                     onTypeWritingFinished: () {
                                                                                       cubit.hideMessage();
                                                                                       userCubit.educate();
+                                                                                      userCubit.introduce();
                                                                                       gameRef.scene.move();
                                                                                       gameRef.pauseButton.position += Vector2(0, 200);
                                                                                     },
