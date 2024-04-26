@@ -22,19 +22,6 @@ class NgAudioImpl implements NgAudio {
 
   @override
   Future<void> init() async {
-    for (final sfx in Sfx.values) {
-      for (final path in sfx.paths) {
-        final pool = await FlameAudio.createPool(
-          'sfx/$path',
-          maxPlayers: sfx.maxPlayers,
-        );
-        if (_audioPools[sfx] == null) {
-          _audioPools[sfx] = [pool];
-        } else {
-          _audioPools[sfx]!.add(pool);
-        }
-      }
-    }
     _initialized = true;
   }
 

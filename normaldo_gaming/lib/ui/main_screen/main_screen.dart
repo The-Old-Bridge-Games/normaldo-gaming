@@ -179,8 +179,6 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
 
     injector.get<AudioPools>().init(context.read<UserCubit>().state.skin);
 
-    audio.playBgm();
-
     _buildingsPlayTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (!_buildingsPlaying && _buildingsPlayCount == 0 && _tab == Tabs.idle) {
         _buildingsPlaying = true;
@@ -198,6 +196,11 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
             context: context,
             barrierColor: Colors.black,
             builder: (context) => const IntroScreen());
+      }
+      if (context.read<UserCubit>().state.introduced) {
+        audio.clearBgm();
+        audio.addAllToBgm(['mix.mp3']);
+        audio.playBgm();
       }
     });
   }
