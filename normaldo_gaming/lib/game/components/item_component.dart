@@ -249,12 +249,14 @@ mixin MoneytakeItem on Item {
 // ✅
 mixin MoneygiveItem on Item {
   void giveMoney(int amount) {
-    game.gameSessionCubit.addDollars(amount);
+    if (game.grid.normaldo.canGetX3Money) {
+      game.gameSessionCubit.addDollars(amount * 3);
+      game.grid.normaldo.showX3Money();
+    } else {
+      game.gameSessionCubit.addDollars(amount);
+    }
+
     gameRef.sfxPools.playMoneygiveSfx();
-    game.grid.normaldo.notify(
-      text: '+$amount bucks',
-      color: Colors.greenAccent[600],
-    );
   }
 
   @override

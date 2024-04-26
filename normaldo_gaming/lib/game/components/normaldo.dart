@@ -12,6 +12,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/core/errors.dart';
+import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/sfx.dart';
@@ -151,6 +152,7 @@ class Normaldo extends PositionComponent
   late final AudioPool _maxFatSfxPool;
   late final List<AudioPool> _resistSfxPools;
   late final List<AudioPool> _fatUpSfxPools;
+  late final Sprite _x3Sprite;
 
   final Skin skin;
   final FatStateIterator fatIterator =
@@ -286,6 +288,9 @@ class Normaldo extends PositionComponent
     }
   }
 
+  bool get canGetX3Money =>
+      skin.uniqueId == 'pirate' && Roller<bool>([(true, 3), (false, 7)]).roll();
+
   set state(NormaldoHitState newState) {
     switch (newState) {
       case NormaldoHitState.idle:
@@ -375,6 +380,47 @@ class Normaldo extends PositionComponent
       _changeFatAnimation(nextFat);
       _fatCounter.clear();
     }
+  }
+
+  void showX3Money() {
+    final comp = SpriteComponent(
+      sprite: _x3Sprite,
+      size: size * 0.7,
+      anchor: Anchor.center,
+      position: size / 2,
+      angle: -0.2,
+      scale: Vector2.all(0),
+    );
+    add(comp
+      ..addAll([
+        ScaleEffect.to(Vector2.all(1), EffectController(duration: 0.2)),
+        MoveByEffect(
+            Vector2(0, -size.y * 0.8), EffectController(duration: 0.2)),
+        RotateEffect.by(
+            0.2,
+            EffectController(
+              duration: 0.1,
+              reverseDuration: 0.1,
+              repeatCount: 10,
+              startDelay: 0.2,
+            ), onComplete: () {
+          comp.add(SequenceEffect([
+            ScaleEffect.to(
+              Vector2.all(1.1),
+              EffectController(
+                duration: 0.2,
+              ),
+            ),
+            ScaleEffect.to(
+              Vector2.all(0),
+              EffectController(
+                duration: 0.1,
+              ),
+            ),
+            RemoveEffect(),
+          ]));
+        })
+      ]));
   }
 
   Future<void> nextFatState() async {
@@ -560,6 +606,8 @@ class Normaldo extends PositionComponent
       position: size / 2,
       priority: 1,
     );
+
+    _x3Sprite = await Sprite.load('x3 (2) 3.png');
 
     nComponent.sprites = await normaldoSprites(skin);
 
