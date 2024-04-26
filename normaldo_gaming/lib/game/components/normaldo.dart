@@ -698,13 +698,25 @@ class Normaldo extends PositionComponent
 
   @override
   void update(double dt) {
-    final anyEatableClose = gameRef.grid.children
-        .whereType<Eatable>()
-        .any((element) => element.distance(this) < 150);
-    if (anyEatableClose && !isBiting(nComponent.current)) {
-      toEatingState();
-      Future.delayed(const Duration(milliseconds: 200))
-          .whenComplete(() => toIdleFatState());
+    if (skin.uniqueId == 'dracula') {
+      final anyEatableClose =
+          gameRef.grid.children.whereType<Item>().where((e) {
+        return (e is Eatable || skin.resistanceToItems.contains(e.item));
+      }).any((element) => element.distance(this) < 150);
+      if (anyEatableClose && !isBiting(nComponent.current)) {
+        toEatingState();
+        Future.delayed(const Duration(milliseconds: 200))
+            .whenComplete(() => toIdleFatState());
+      }
+    } else {
+      final anyEatableClose = gameRef.grid.children
+          .whereType<Eatable>()
+          .any((element) => element.distance(this) < 150);
+      if (anyEatableClose && !isBiting(nComponent.current)) {
+        toEatingState();
+        Future.delayed(const Duration(milliseconds: 200))
+            .whenComplete(() => toIdleFatState());
+      }
     }
     super.update(dt);
   }
@@ -726,6 +738,11 @@ class Normaldo extends PositionComponent
       toEatingState();
       Future.delayed(const Duration(milliseconds: 200))
           .whenComplete(() => toIdleFatState());
+    }
+    if (skin.uniqueId == 'dracula' &&
+        (other is Item && skin.resistanceToItems.contains(other.item))) {
+      game.grid.normaldo.increaseFatPoints(1);
+      gameRef.sfxPools.playSfx(Items.pizza);
     }
     if (!_immortal && _immuneTo.isNotEmpty) {
       if (other is Item) {
