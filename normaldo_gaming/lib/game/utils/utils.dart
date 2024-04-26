@@ -223,6 +223,13 @@ abstract class Utils {
   static const promoCodes = {
     'KUSS': 'pirate',
     'KUSS2': 'pirate',
+    'glasses': 'glasses',
+    'spider-man': 'spider-man',
+    'wizard': 'wizard',
+    'harry potter': 'harry_potter',
+    'dracula': 'dracula',
+    'halloween': 'halloween',
+    'happy new year': 'new_year',
   };
 
   static const locationExp = {
