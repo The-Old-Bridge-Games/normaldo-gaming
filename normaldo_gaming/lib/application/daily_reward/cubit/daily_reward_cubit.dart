@@ -59,15 +59,15 @@ class DailyRewardCubit extends HydratedCubit<DailyRewardState> {
       final currTime = await NTP.now();
       if (state.lastApply != null) {
         final lastApply = state.lastApply!;
-        if (lastApply.difference(currTime).inDays > 0) {
+        final diff = currTime.difference(lastApply);
+        if (diff.inDays > 0) {
           emit(state.copyWith(delay: Duration.zero));
         } else {
           emit(state.copyWith(
+            // delay: Duration.zero,
             delay: const Duration(hours: 24) -
                 Duration(
-                  hours: currTime.hour,
-                  minutes: currTime.minute,
-                  seconds: currTime.second,
+                  seconds: diff.inSeconds,
                 ),
           ));
         }
