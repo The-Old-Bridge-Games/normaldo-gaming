@@ -641,6 +641,25 @@ class Normaldo extends PositionComponent
       onTick: _handleFat,
     ));
 
+    if (skin.uniqueId == 'wizard') {
+      add(TimerComponent(
+          period: 10,
+          repeat: true,
+          removeOnFinish: true,
+          onTick: () {
+            gameRef.grid.vanishRandomItem();
+          }));
+    }
+    if (skin.uniqueId == 'harry_potter') {
+      add(TimerComponent(
+          period: 7,
+          repeat: true,
+          removeOnFinish: true,
+          onTick: () {
+            gameRef.grid.vanishRandomItem();
+          }));
+    }
+
     // 4DEV
     // add(_circle);
 

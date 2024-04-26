@@ -3,7 +3,9 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
@@ -192,6 +194,35 @@ class Grid extends PositionComponent
             !exclude.contains(component));
       },
     );
+  }
+
+  void vanishRandomItem() {
+    final items = children
+        .whereType<Item>()
+        .where((element) =>
+            (element is AttackingItem ||
+                element is KillingItem ||
+                element is SlowingItem) &&
+            element.position.x < size.x)
+        .toList();
+    if (items.isEmpty) return;
+    final item = items.random();
+    item.add(SequenceEffect([
+      ScaleEffect.to(
+        Vector2.all(1.1),
+        EffectController(
+          duration: 0.2,
+        ),
+      ),
+      ScaleEffect.to(
+        Vector2.all(0),
+        EffectController(
+          duration: 0.1,
+        ),
+      ),
+    ], onComplete: () {
+      item.removeFromParent();
+    }));
   }
 
   @override
