@@ -181,7 +181,6 @@ class Normaldo extends PositionComponent
 
   double speedMultiplier = 1;
   double get speed {
-    if (skin.uniqueId == 'glasses') return 1;
     double speed;
     switch (nComponent.current) {
       case NormaldoFatState.skinny:
@@ -199,6 +198,9 @@ class Normaldo extends PositionComponent
         speed = 0.4;
       case null:
         throw UnexpectedError();
+    }
+    if (skin.uniqueId == 'glasses') {
+      speed = 1;
     }
     return speed * speedMultiplier;
   }
