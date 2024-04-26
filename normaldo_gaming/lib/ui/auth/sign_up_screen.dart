@@ -159,6 +159,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               .read<UserCubit>()
                                               .changeName(_nickController.text);
                                           context.pop();
+                                          showDialog(
+                                              context: context,
+                                              barrierColor: Colors.black,
+                                              builder: (context) =>
+                                                  const IntroScreen());
                                           // with api
                                           // final success = await context
                                           //     .read<SignUpCubit>()

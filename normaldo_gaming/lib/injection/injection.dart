@@ -29,6 +29,7 @@ import 'package:normaldo_gaming/data/user/services/user_api_service.dart';
 import 'package:normaldo_gaming/data/user/user_repository_impl.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
 import 'package:normaldo_gaming/domain/app/audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/auth/auth_repository.dart';
 import 'package:normaldo_gaming/domain/knowledge/knowledge_repository.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
@@ -82,6 +83,11 @@ void initializeInjector(Config config) {
   );
 
   // Services
+
+  injector.map<AudioPools>(
+    (injector) => AudioPools(),
+    isSingleton: true,
+  );
 
   // Storages
   injector.map<AuthLocalStorage>(

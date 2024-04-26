@@ -8,6 +8,8 @@ final class AudioPools {
   late final AudioPool _itemHit;
   late final AudioPool _moneygive;
 
+  bool get initialized => _initialized;
+
   var _initialized = false;
 
   void playSfx(Items item, {double volume = 1.0}) {
@@ -24,6 +26,32 @@ final class AudioPools {
   void playMoneygiveSfx() async {
     if (!_initialized) return;
     _moneygive.start();
+  }
+
+  Future<void> changeSkin(Skin skin) async {
+    try {
+      final skinBiteSfx = skin.assets.sfx['bite'];
+      if (skinBiteSfx != null) {
+        final skinBitePools = await Future.wait(skinBiteSfx.map(
+          (e) =>
+              AudioPool.createFromAsset(path: 'audio/skins/$e', maxPlayers: 1),
+        ));
+        _sfxPools[Items.pizza] = skinBitePools;
+      } else {
+        _sfxPools[Items.pizza] = [
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/havaet.mp3',
+            maxPlayers: 1,
+          ),
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/havaet2.mp3',
+            maxPlayers: 1,
+          ),
+        ];
+      }
+    } catch (e) {
+      print('CHANGE SKIN AUDIO POOLS FAILED');
+    }
   }
 
   Future<void> init(Skin skin) async {
@@ -136,7 +164,6 @@ final class AudioPools {
       _initialized = true;
     } catch (e) {
       print('AUDIO POOLS ARE NOT INITIALIZED');
-      rethrow;
     }
   }
 }

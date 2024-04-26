@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -14,7 +13,6 @@ import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/audio_pools.dart';
-import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/education/education_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
@@ -41,6 +39,7 @@ class PullUpGame extends FlameGame
     required this.levelBloc,
     required this.missionCubit,
     required this.educationCubit,
+    required this.sfxPools,
   });
 
   // Components
@@ -51,7 +50,7 @@ class PullUpGame extends FlameGame
   late final FatCounter fatCounter;
   late final Grid grid;
 
-  final sfxPools = AudioPools();
+  final AudioPools sfxPools;
 
   final _levelManager = injector.get<LevelManager>();
   LevelManager get levelManager => _levelManager;

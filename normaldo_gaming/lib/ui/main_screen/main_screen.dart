@@ -8,11 +8,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
@@ -52,7 +53,7 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with HasNgAudio {
   bool _buildingsPlaying = false;
   Timer? _buildingsPlayTimer;
   int _buildingsPlayCount = 0;
@@ -176,6 +177,10 @@ class _MainScreenState extends State<MainScreen> {
 
     FlutterNativeSplash.remove();
 
+    injector.get<AudioPools>().init(context.read<UserCubit>().state.skin);
+
+    audio.playBgm();
+
     _buildingsPlayTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (!_buildingsPlaying && _buildingsPlayCount == 0 && _tab == Tabs.idle) {
         _buildingsPlaying = true;
@@ -187,7 +192,8 @@ class _MainScreenState extends State<MainScreen> {
       for (final tab in Tabs.values) {
         precacheImage(AssetImage(tab.assetPath), context);
       }
-      if (!context.read<UserCubit>().state.introduced) {
+      if (!context.read<UserCubit>().state.introduced &&
+          context.read<UserCubit>().state.user.name.isNotEmpty) {
         showDialog(
             context: context,
             barrierColor: Colors.black,
@@ -228,63 +234,68 @@ class _MainScreenState extends State<MainScreen> {
         body: GestureDetector(
           onTap: () => tab = Tabs.idle,
           child: BlocListener<UserCubit, UserState>(
-            listenWhen: (previous, current) =>
-                previous.failure != current.failure,
-            listener: _failureListener,
-            child: BlocConsumer<UserCubit, UserState>(
+            listenWhen: (previous, current) => previous.skin != current.skin,
+            listener: (context, state) =>
+                context.read<AudioPools>().changeSkin(state.skin),
+            child: BlocListener<UserCubit, UserState>(
               listenWhen: (previous, current) =>
-                  previous.user.level < current.user.level,
-              listener: _newLevelListener,
-              bloc: context.read(),
-              builder: (context, state) => Stack(
-                fit: StackFit.expand,
-                children: [
-                  _Background(tab: _tab),
-                  Align(
-                    alignment: const Alignment(-0.76, 0.18),
-                    child: _buildStats(),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.4, -0.25),
-                    child: _buildMissionsHitbox(),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: _buildUserLevel(),
-                  ),
-                  Align(
-                    alignment: const Alignment(0.12, 0.3),
-                    child: _buildSlotsHitbox(),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.1, 0.3),
-                    child: _buildShopHitbox(),
-                  ),
-                  Align(
-                    alignment: const Alignment(0.8, 0.4),
-                    child: _buildPlayHitbox(),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.27, 0.3),
-                    child: _buildKnowledgeBookHitbox(),
-                  ),
-                  Align(
-                    alignment: const Alignment(0.29, 0.4),
-                    child: _buildSettingsHitbox(),
-                  ),
-                  Align(
-                    alignment: const Alignment(-0.135, 0.48),
-                    child: _buildTrashHitbox(),
-                  ),
-                  AnimatedAlign(
-                    alignment: _tab == Tabs.idle
-                        ? const Alignment(2, -1)
-                        : const Alignment(1, -1),
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.linearToEaseOut,
-                    child: _buildNavigationClue(),
-                  ),
-                ],
+                  previous.failure != current.failure,
+              listener: _failureListener,
+              child: BlocConsumer<UserCubit, UserState>(
+                listenWhen: (previous, current) =>
+                    previous.user.level < current.user.level,
+                listener: _newLevelListener,
+                bloc: context.read(),
+                builder: (context, state) => Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    _Background(tab: _tab),
+                    Align(
+                      alignment: const Alignment(-0.76, 0.18),
+                      child: _buildStats(),
+                    ),
+                    Align(
+                      alignment: const Alignment(-0.4, -0.25),
+                      child: _buildMissionsHitbox(),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: _buildUserLevel(),
+                    ),
+                    Align(
+                      alignment: const Alignment(0.12, 0.3),
+                      child: _buildSlotsHitbox(),
+                    ),
+                    Align(
+                      alignment: const Alignment(-0.1, 0.3),
+                      child: _buildShopHitbox(),
+                    ),
+                    Align(
+                      alignment: const Alignment(0.8, 0.4),
+                      child: _buildPlayHitbox(),
+                    ),
+                    Align(
+                      alignment: const Alignment(-0.27, 0.3),
+                      child: _buildKnowledgeBookHitbox(),
+                    ),
+                    Align(
+                      alignment: const Alignment(0.29, 0.4),
+                      child: _buildSettingsHitbox(),
+                    ),
+                    Align(
+                      alignment: const Alignment(-0.135, 0.48),
+                      child: _buildTrashHitbox(),
+                    ),
+                    AnimatedAlign(
+                      alignment: _tab == Tabs.idle
+                          ? const Alignment(2, -1)
+                          : const Alignment(1, -1),
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.linearToEaseOut,
+                      child: _buildNavigationClue(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
