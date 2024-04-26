@@ -33,6 +33,8 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
   late int _currentPage;
 
   User get user => context.read<UserCubit>().state.user;
+  List<Skin> get mySkins =>
+      user.mySkins..sort((a, b) => Utils.compareSkinByRarity(a, b));
 
   bool _pageSelectedBySkin(Skin skin) {
     return _currentPage == _indexOfSkin(skin);

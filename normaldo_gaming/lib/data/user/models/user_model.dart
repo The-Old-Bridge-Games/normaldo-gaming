@@ -1,6 +1,7 @@
 import 'package:normaldo_gaming/data/user/models/skin_model.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
+import 'package:normaldo_gaming/game/utils/utils.dart';
 
 final class UserModel {
   final String id;
@@ -46,7 +47,7 @@ final class UserModel {
       exp: exp,
       extraLives: extraLives,
       totalPizzas: totalPizzas,
-      mySkins: mySkins,
+      mySkins: mySkins..sort((a, b) => Utils.compareSkinByRarity(a, b)),
     );
   }
 

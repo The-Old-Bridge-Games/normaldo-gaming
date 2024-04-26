@@ -248,4 +248,10 @@ abstract class Utils {
 
   static String amountFromDailyReward(String reward) =>
       reward.split(RegExp('dollars|heart')).last;
+
+  static int compareSkinByRarity(Skin skin1, Skin skin2) {
+    if (skin1.rarity.index > skin2.rarity.index) return 1;
+    if (skin1.rarity.index == skin2.rarity.index) return 0;
+    return -1;
+  }
 }

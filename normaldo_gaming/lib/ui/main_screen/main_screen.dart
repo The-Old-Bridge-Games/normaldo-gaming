@@ -239,7 +239,7 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
           child: BlocListener<UserCubit, UserState>(
             listenWhen: (previous, current) => previous.skin != current.skin,
             listener: (context, state) =>
-                context.read<AudioPools>().changeSkin(state.skin),
+                injector.get<AudioPools>().changeSkin(state.skin),
             child: BlocListener<UserCubit, UserState>(
               listenWhen: (previous, current) =>
                   previous.failure != current.failure,
