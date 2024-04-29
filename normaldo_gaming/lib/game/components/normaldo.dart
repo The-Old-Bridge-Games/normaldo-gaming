@@ -595,7 +595,7 @@ class Normaldo extends PositionComponent
 
   void _evadeTimer() {
     add(TimerComponent(
-        period: (50 + Random().nextInt(21)).toDouble(),
+        period: (10 + Random().nextInt(21)).toDouble(),
         removeOnFinish: true,
         onTick: () {
           nComponent.add(OpacityEffect.to(
@@ -618,6 +618,7 @@ class Normaldo extends PositionComponent
                       atMaxDuration: 0.5,
                     )));
                 _immortal = false;
+                _evadeTimer();
               }));
         }));
   }
