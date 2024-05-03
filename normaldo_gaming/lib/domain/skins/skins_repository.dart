@@ -28,9 +28,9 @@ final class Skin {
   int get price => switch (rarity) {
         SkinRarity.classic => 0,
         SkinRarity.common => 500,
-        SkinRarity.rare => 2000,
-        SkinRarity.epic => 5000,
-        SkinRarity.legendary => 9999,
+        SkinRarity.rare => 1000,
+        SkinRarity.epic => 1500,
+        SkinRarity.legendary => 2000,
       };
 
   factory Skin.basic() => const Skin(
