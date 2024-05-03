@@ -109,7 +109,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               Items.policeman,
               Items.security,
               Items.cannibal,
-              Items.girl,
             ],
             uniqueSkill: 'gets some fat from eating human beings'),
         const Skin(

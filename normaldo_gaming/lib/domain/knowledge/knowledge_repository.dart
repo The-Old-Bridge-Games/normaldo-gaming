@@ -11,7 +11,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
   @override
   ItemDescription descriptionOf(Items item) {
     return itemDescriptions.firstWhere(
-      (element) => element.item != item && item != Items.hugeItem,
+      (element) => element.item == item && item != Items.hugeItem,
       orElse: () => throw UnexpectedError(),
     );
   }

@@ -8,9 +8,12 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/knowledge/knowledge_repository.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/knowledge_book/widgets/detailed_item_card.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
@@ -30,6 +33,7 @@ class SkinInfoScreen extends StatefulWidget {
 
 class _SkinInfoScreenState extends State<SkinInfoScreen> {
   final _resistScrollController = ScrollController();
+  final _itemsRepo = injector.get<KnowledgeRepository>();
 
   bool userHasSkin(BuildContext context) => context
       .read<UserCubit>()
@@ -178,14 +182,30 @@ class _SkinInfoScreenState extends State<SkinInfoScreen> {
           child: ListView(
             controller: _resistScrollController,
             scrollDirection: Axis.horizontal,
-            children: List.generate(
-                widget.skin.resistanceToItems.length,
-                (index) => Container(
-                      constraints: const BoxConstraints(maxWidth: 100),
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Image.asset(Utils.itemImagePath(
-                          widget.skin.resistanceToItems[index])),
-                    )),
+            children:
+                List.generate(widget.skin.resistanceToItems.length, (index) {
+              final item = widget.skin.resistanceToItems[index];
+              return GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  barrierColor: Colors.black54,
+                  builder: (context) => Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width / 3),
+                      child: DetailedItemCard(
+                        item: _itemsRepo.descriptionOf(item),
+                      ),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 100),
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Image.asset(Utils.itemImagePath(item)),
+                ),
+              );
+            }),
           ),
         ),
       ],
