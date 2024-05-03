@@ -32,6 +32,14 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
       _repository.itemDescriptions.where((element) => !element.isGood).toList();
 
   @override
+  void initState() {
+    if (gudItems.isNotEmpty) {
+      _pickedItem = gudItems.first;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
