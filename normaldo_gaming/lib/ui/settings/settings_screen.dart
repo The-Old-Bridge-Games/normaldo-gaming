@@ -29,8 +29,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _onIntroPressed() {
     showDialog(
+        useSafeArea: false,
         context: context,
-        builder: (context) => const IntroScreen(leadToGame: false));
+        builder: (context) => IntroScreen(
+              languageCode: context.locale.languageCode,
+              leadToGame: false,
+            ));
   }
 
   void _onResetPressed() {
@@ -84,15 +88,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      print(context.locale.languageCode);
-    });
   }
 
   @override

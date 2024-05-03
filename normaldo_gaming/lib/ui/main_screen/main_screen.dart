@@ -194,8 +194,11 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
           context.read<UserCubit>().state.user.name.isNotEmpty) {
         showDialog(
             context: context,
+            useSafeArea: false,
             barrierColor: Colors.black,
-            builder: (context) => const IntroScreen());
+            builder: (context) => IntroScreen(
+                  languageCode: context.locale.languageCode,
+                ));
       }
       if (context.read<UserCubit>().state.introduced) {
         audio.clearBgm();

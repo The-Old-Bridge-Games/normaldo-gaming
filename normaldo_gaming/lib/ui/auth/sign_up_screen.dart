@@ -161,9 +161,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           context.pop();
                                           showDialog(
                                               context: context,
+                                              useSafeArea: false,
                                               barrierColor: Colors.black,
-                                              builder: (context) =>
-                                                  const IntroScreen());
+                                              builder: (context) => IntroScreen(
+                                                    languageCode: context
+                                                        .locale.languageCode,
+                                                  ));
                                           // with api
                                           // final success = await context
                                           //     .read<SignUpCubit>()
