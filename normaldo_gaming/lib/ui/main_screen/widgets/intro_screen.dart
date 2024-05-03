@@ -1,18 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 import 'package:video_player/video_player.dart';
 
 class IntroScreen extends StatefulWidget {
-  const IntroScreen({super.key});
+  final bool leadToGame;
+
+  const IntroScreen({super.key, this.leadToGame = true});
 
   @override
   State<IntroScreen> createState() => _TvScreenState();
 }
 
-class _TvScreenState extends State<IntroScreen> {
+class _TvScreenState extends State<IntroScreen> with HasNgAudio {
   late final VideoPlayerController _controller;
 
   bool _showButton = false;
@@ -21,7 +24,10 @@ class _TvScreenState extends State<IntroScreen> {
     _controller.pause();
     _controller.dispose();
     context.pop();
-    context.pushNamed(NGRoutes.pullUpGame.name);
+    audio.resumeBgm();
+    if (widget.leadToGame) {
+      context.pushNamed(NGRoutes.pullUpGame.name);
+    }
   }
 
   @override
@@ -31,6 +37,7 @@ class _TvScreenState extends State<IntroScreen> {
     _controller = VideoPlayerController.asset('assets/video/intro.mp4')
       ..initialize().then((_) {
         _controller.play();
+        audio.pauseBgm();
         setState(() {});
         _controller.addListener(() {
           if (_controller.value.isCompleted) {
@@ -65,7 +72,7 @@ class _TvScreenState extends State<IntroScreen> {
                   opacity: _showButton ? 1 : 0,
                   child: NGButton(
                     onPressed: _skip,
-                    text: 'Skip'.tr(),
+                    text: widget.leadToGame ? 'Skip'.tr() : 'Close'.tr(),
                   ),
                 ),
               ),

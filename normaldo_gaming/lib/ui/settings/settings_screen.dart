@@ -1,14 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
-import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/intro_screen.dart';
 import 'package:normaldo_gaming/ui/settings/activate_code_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
@@ -28,7 +27,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     context.setLocale(nextLocale.first);
   }
 
-  void _onIntroPressed() {}
+  void _onIntroPressed() {
+    showDialog(
+        context: context,
+        builder: (context) => const IntroScreen(leadToGame: false));
+  }
+
   void _onResetPressed() {
     final textTheme = Theme.of(context).textTheme;
     showDialog(
