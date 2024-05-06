@@ -38,7 +38,7 @@ class NGAppImpl implements NGApp {
     FlutterNativeSplash.preserve(widgetsBinding: binding);
     FlameAudio.bgm.initialize();
     final config = kDebugMode ? Config.dev() : Config.prod();
-    bool initAds = false;
+    bool initAds = true;
     print('''
 Init Ads: $initAds
 OS: ${Platform.operatingSystem}

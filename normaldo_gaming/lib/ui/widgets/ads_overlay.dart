@@ -28,23 +28,21 @@ class AdsOverlay extends StatelessWidget {
 
   Widget _buildLoading(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Expanded(
-        child: Container(
+    return Container(
       color: Colors.black45,
       child: Center(
         child: Text('Loading...'.tr(), style: textTheme.displayLarge),
       ),
-    ));
+    );
   }
 
   Widget _buildShowing(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Expanded(
-        child: Container(
+    return Container(
       color: Colors.black45,
       child: Center(
         child: Text('Showing Ad...'.tr(), style: textTheme.displayLarge),
       ),
-    ));
+    );
   }
 }

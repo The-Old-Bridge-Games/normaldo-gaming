@@ -15,7 +15,6 @@ import 'package:normaldo_gaming/ui/shop/widgets/shop_skin_card.dart';
 import 'package:normaldo_gaming/ui/widgets/ads_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/earn_dollars_dialog.dart';
-import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 import 'widgets/shop_item_card.dart';
