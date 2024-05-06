@@ -18,6 +18,8 @@ abstract class NGTheme {
   static const gray1 = Color(0xffADADAD);
   static const gray2 = Color(0xff3C3838);
 
+  static const tgBlue = Color(0xff24A1DE);
+
   static const classicSkin = Color(0xffA3A3A3);
   static const commonSkin = Color(0xff2FB10F);
   static const rareSkin = Color(0xff376AEC);

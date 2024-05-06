@@ -12,6 +12,7 @@ import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,6 +22,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  static const tgUrl = 'https://t.me/normaldo';
+
   String? _appVersion;
 
   void _onChangeLocalePressed() {
@@ -160,6 +163,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Center(
                     child: Text('- ${'ABOUT US'.tr()} -',
                         style: textTheme.displayLarge),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Text(
+                        'Новости проекта и служба поддержки',
+                        style: textTheme.displaySmall,
+                      ),
+                      const SizedBox(width: 16),
+                      BouncingButton(
+                        onPressed: () => launchUrlString(tgUrl),
+                        child: Image.asset(
+                          'assets/images/tg_logo.png',
+                          height: 45,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 32),
                   Row(
