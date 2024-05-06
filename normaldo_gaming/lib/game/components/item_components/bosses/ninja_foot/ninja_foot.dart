@@ -37,7 +37,6 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
 
   @override
   void start() {
-    gameRef.bossInProgress = true;
     gameRef.grid.stopAllLines();
     game.grid.removeAllItems();
     const double moveFromRightSideDur = 1;

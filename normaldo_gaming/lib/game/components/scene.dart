@@ -101,6 +101,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
               duration: LevelBloc.levelChangeDuration.toDouble(),
               onMax: () {
                 // Preparing to boss
+                gameRef.bossInProgress = true;
                 const vanishDuration = 0.3;
                 final normaldo = game.grid.normaldo;
                 game.levelBloc.add(const LevelEvent.finishFigure());
