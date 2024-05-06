@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
@@ -12,6 +11,7 @@ import 'package:normaldo_gaming/ui/settings/activate_code_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,6 +21,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  String? _appVersion;
+
   void _onChangeLocalePressed() {
     final currLocale = context.locale;
     final nextLocale = List.from(context.supportedLocales)..remove(currLocale);
@@ -88,6 +90,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ));
+  }
+
+  @override
+  void initState() {
+    PackageInfo.fromPlatform()
+        .then((info) => setState(() => _appVersion = info.version));
+    // AppVersionUpdate.checkForUpdates().then((result) => setState(
+    //       () => _appVersion = result.storeVersion,
+    //     ));
+    super.initState();
   }
 
   @override
@@ -186,6 +198,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
+                  if (_appVersion != null)
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 64),
+                          Text(
+                            'v${_appVersion!}',
+                            style: textTheme.displayLarge,
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
