@@ -92,30 +92,30 @@ class LevelManagerImpl implements LevelManager {
         // 1 lvl
         [const TextReward(text: 'HERE WE GO')],
         // 2 lvl
-        [const BucksReward(amount: 10)],
+        [const BucksReward(amount: 50)],
         // 3 lvl
-        [const BucksReward(amount: 20)],
+        [const BucksReward(amount: 50)],
         // 4 lvl
-        [const BucksReward(amount: 30)],
+        [const BucksReward(amount: 50)],
         // 5 lvl
         [
-          const BucksReward(amount: 40),
+          const BucksReward(amount: 100),
           const ExtraLiveReward(amount: 2),
           RankReward(rank: rankFromLvl(5)),
           const SkinReward('viking'),
         ],
         // 6 lvl
-        [const BucksReward(amount: 60)],
+        [const BucksReward(amount: 100)],
         // 7 lvl
         [
-          const BucksReward(amount: 200),
+          const BucksReward(amount: 150),
           const ExtraLiveReward(amount: 2),
           RankReward(rank: rankFromLvl(7)),
         ],
         // 8 lvl
-        [const BucksReward(amount: 100)],
+        [const BucksReward(amount: 150)],
         // 9 lvl
-        [const BucksReward(amount: 120)],
+        [const BucksReward(amount: 150)],
         // 10 lvl
         [
           const BucksReward(amount: 300),
@@ -124,7 +124,7 @@ class LevelManagerImpl implements LevelManager {
           RankReward(rank: rankFromLvl(10)),
         ],
         // 11 lvl
-        [const BucksReward(amount: 200)],
+        [const BucksReward(amount: 300)],
         // 12 lvl
         [const BucksReward(amount: 300)],
         // 13 lvl
@@ -134,7 +134,7 @@ class LevelManagerImpl implements LevelManager {
           const ExtraLiveReward(amount: 3),
         ],
         // 14 lvl
-        [const BucksReward(amount: 500)],
+        [const BucksReward(amount: 400)],
         // 15 lvl
         [
           const BucksReward(amount: 500),
@@ -192,23 +192,23 @@ class LevelManagerImpl implements LevelManager {
         [const BucksReward(amount: 500)],
         // 30 lvl
         [
-          const BucksReward(amount: 500),
+          const BucksReward(amount: 700),
           RankReward(rank: rankFromLvl(30)),
           const SkinReward('spider-man'),
           const ExtraLiveReward(amount: 1),
         ],
         // 31 lvl
-        [const BucksReward(amount: 500)],
+        [const BucksReward(amount: 700)],
         // 32 lvl
-        [const BucksReward(amount: 500)],
+        [const BucksReward(amount: 700)],
         // 33 lvl
         [
-          const BucksReward(amount: 500),
+          const BucksReward(amount: 700),
           RankReward(rank: rankFromLvl(33)),
           const ExtraLiveReward(amount: 1),
         ],
         // 34 lvl
-        [const BucksReward(amount: 500)],
+        [const BucksReward(amount: 700)],
         // 35 lvl
         [
           const BucksReward(amount: 1000),
