@@ -52,6 +52,17 @@ final Map<int, Roller<Items>> _itemRollers = {
     (Items.cone, 20),
     (Items.punch, 20),
   ]),
+  15: Roller<Items>([
+    ..._goodItems,
+    (Items.bananaPeel, 20),
+    (Items.roadSign, 20),
+    (Items.trashBin, 20),
+    (Items.cone, 20),
+    (Items.homeless, 20),
+    (Items.cone, 20),
+    (Items.punch, 20),
+    (Items.molotov, 10),
+  ]),
 };
 
 final Map<int, Map<Items, double>> _itemsAppearingByLevel = {

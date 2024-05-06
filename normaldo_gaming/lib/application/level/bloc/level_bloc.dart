@@ -41,6 +41,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     if (level > 7) {
       frequency = pow(0.8, 15).toDouble();
     }
+    if (level > 15) {
+      frequency = pow(0.8, 18).toDouble();
+    }
     return frequency;
   }
 
@@ -49,8 +52,10 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
       return state.level.speed;
     }
     var speed = (200 + (50 * level)).toDouble();
-    if (level > limitProgressingLevel) {
+    if (level > 7) {
       speed = (200 + (15 * 12)).toDouble();
+    } else if (level > 15) {
+      speed = (200 + (20 * 12)).toDouble();
     }
     return speed;
   }
@@ -69,7 +74,7 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     List<ItemEffect> effects,
     Emitter<LevelState> emit,
   ) {
-    print('SPEED: ${speed(level, effects)}');
+    print('SPEED: ${speed(level, effects)}\nLEVEL:${state.level.index}');
     emit(state.copyWith(
         level: LinearLevel(
       index: level,
