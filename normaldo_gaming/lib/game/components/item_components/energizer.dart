@@ -25,7 +25,7 @@ final class Energizer extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo) {
-      gameRef.sfxPools.playSfx(item, volume: 0.5);
+      gameRef.sfxPools.playSfx(item);
       speedUp();
       removeFromParent();
     }

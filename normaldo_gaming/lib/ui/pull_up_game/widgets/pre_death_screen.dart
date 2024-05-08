@@ -46,7 +46,7 @@ class _PreDeathScreenState extends State<PreDeathScreen> {
           if (state.skipped) return const DeathScreen();
           if (state.adState is Finished) {
             return Scaffold(
-              backgroundColor: Colors.black45,
+              backgroundColor: Colors.black87,
               body: Center(
                   child: Text(
                 'Get ready...'.tr(),

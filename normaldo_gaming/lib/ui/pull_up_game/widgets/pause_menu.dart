@@ -9,6 +9,7 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/ui/missions/missions_list.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/sound_volume_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
@@ -143,6 +144,11 @@ class _PauseMenuState extends State<PauseMenu> {
                               Text('Paused'.tr(),
                                   style: textTheme.displayLarge
                                       ?.copyWith(color: NGTheme.purple2)),
+                              const SizedBox(height: 32),
+                              const SizedBox(
+                                width: 250,
+                                child: SoundVolumeWidget(),
+                              ),
                               const SizedBox(height: 32),
                               if (context.read<UserCubit>().state.educated)
                                 BouncingButton(

@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/daily_reward/cubit/daily_reward_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/intro_screen.dart';
+import 'package:normaldo_gaming/ui/pull_up_game/widgets/sound_volume_widget.dart';
 import 'package:normaldo_gaming/ui/settings/activate_code_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/liner_button.dart';
@@ -21,7 +23,7 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
   static const tgUrl = 'https://t.me/normaldo';
 
   String? _appVersion;
@@ -152,6 +154,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 32),
                   _buildEducationCheckbox(),
+                  const SizedBox(height: 16),
+                  _buildVolumeSlider(),
                   const SizedBox(height: 32),
                   Center(
                     child: Text('- ${'ACTIVATE CODE'.tr()} -',
@@ -237,6 +241,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildVolumeSlider() {
+    return ConstrainedBox(
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2.5),
+      child: const SoundVolumeWidget(),
     );
   }
 

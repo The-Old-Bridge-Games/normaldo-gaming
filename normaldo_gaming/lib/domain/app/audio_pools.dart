@@ -1,5 +1,6 @@
 import 'package:flame/extensions.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
@@ -8,11 +9,26 @@ enum MenuSfx {
 }
 
 final class AudioManager {
+  static const bgmVolumeKey = 'bgmVolumeKey';
+  static const sfxVolumeKey = 'sfxVolumeKey';
+
+  AudioManager() {
+    const FlutterSecureStorage().readAll().then((map) {
+      _bgmVolume = double.tryParse(map[bgmVolumeKey] ?? '') ?? 0.3;
+      _sfxVolume = double.tryParse(map[sfxVolumeKey] ?? '') ?? 1;
+      setBgmVolume(_bgmVolume);
+      setSfxVolume(_sfxVolume);
+    });
+  }
+
   final _bgmPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.loop);
   final _assetBgmPlayer = AudioPlayer();
 
-  var _bgmVolume = 1.0;
+  var _bgmVolume = 0.3;
   var _sfxVolume = 1.0;
+
+  double get bgmVolume => _bgmVolume;
+  double get sfxVolume => _sfxVolume;
 
   final _menuPlayers = {
     MenuSfx.button: AudioPlayer(),
@@ -39,10 +55,13 @@ final class AudioManager {
     return _bgmPlayer.resume();
   }
 
-  Future<void> setBgmVolume(double volume) {
+  Future<void> setBgmVolume(double volume) async {
     assert(volume >= 0 && volume <= 1);
     _bgmVolume = volume;
-    return _bgmPlayer.setVolume(volume);
+    const FlutterSecureStorage()
+        .write(key: bgmVolumeKey, value: volume.toString());
+    await _bgmPlayer.setVolume(volume);
+    await _assetBgmPlayer.setVolume(volume);
   }
 
   Future<void> playMenuSfx(MenuSfx sfx) async {
@@ -55,9 +74,11 @@ final class AudioManager {
     };
   }
 
-  Future<void> setVolumeToMenuSfx(double volume) async {
+  Future<void> setSfxVolume(double volume) async {
     assert(volume >= 0 && volume <= 1);
     _sfxVolume = volume;
+    const FlutterSecureStorage()
+        .write(key: sfxVolumeKey, value: volume.toString());
     for (final player in _menuPlayers.values) {
       await player.setVolume(volume);
     }
@@ -90,6 +111,10 @@ final class AudioManager {
 }
 
 final class AudioPools {
+  final AudioManager _audioManager;
+
+  AudioPools(this._audioManager);
+
   late final Map<Items, List<AudioPool>> _sfxPools;
   late final AudioPool _itemHit;
   late final AudioPool _moneygive;
@@ -98,20 +123,20 @@ final class AudioPools {
 
   var _initialized = false;
 
-  void playSfx(Items item, {double volume = 1.0}) {
+  void playSfx(Items item) {
     if (!_initialized) return;
-    _sfxPools[item]?.random().start(volume: volume) ??
+    _sfxPools[item]?.random().start(volume: _audioManager._sfxVolume) ??
         print('no sfx for $item loaded');
   }
 
   void playItemHitSfx() async {
     if (!_initialized) return;
-    _itemHit.start();
+    _itemHit.start(volume: _audioManager._sfxVolume);
   }
 
   void playMoneygiveSfx() async {
     if (!_initialized) return;
-    _moneygive.start();
+    _moneygive.start(volume: _audioManager._sfxVolume);
   }
 
   Future<void> changeSkin(Skin skin) async {

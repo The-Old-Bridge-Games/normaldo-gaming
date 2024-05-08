@@ -25,7 +25,7 @@ final class BananaPeel extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
-      gameRef.sfxPools.playSfx(item, volume: 0.5);
+      gameRef.sfxPools.playSfx(item);
       slow();
     }
     super.onCollisionStart(intersectionPoints, other);

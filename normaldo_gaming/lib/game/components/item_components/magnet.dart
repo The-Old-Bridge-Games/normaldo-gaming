@@ -24,7 +24,7 @@ final class Magnet extends SpriteComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Normaldo) {
       applyEffect(() {
-        gameRef.sfxPools.playSfx(item, volume: 0.5);
+        gameRef.sfxPools.playSfx(item);
         final items = game.grid.children.where((element) =>
             element is MoneygiveItem || element is PizzaGivingItem);
         for (final item in items) {

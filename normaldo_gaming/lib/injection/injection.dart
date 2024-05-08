@@ -82,8 +82,10 @@ void initializeInjector(Config config) {
 
   // Services
 
+  // Audio
+  injector.map<AudioManager>((injector) => AudioManager(), isSingleton: true);
   injector.map<AudioPools>(
-    (injector) => AudioPools(),
+    (injector) => AudioPools(injector.get()),
     isSingleton: true,
   );
 
@@ -92,7 +94,6 @@ void initializeInjector(Config config) {
       (injector) => const AuthLocalStorageImpl(FlutterSecureStorage()));
 
   // Managers
-  injector.map<AudioManager>((injector) => AudioManager(), isSingleton: true);
   injector.map<BaseAdManager>((injector) => AdManager(config));
   injector.map<LevelManager>(
     (injector) => LevelManagerImpl(),
