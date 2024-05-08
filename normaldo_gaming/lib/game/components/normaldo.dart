@@ -15,7 +15,6 @@ import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
@@ -436,12 +435,9 @@ class Normaldo extends PositionComponent
     }
     final index = NormaldoFatState.onlyIdle.indexOf(state);
     if (index == 3) {
-      if (skin.assets.sfx['maxFat'] != null) {
-        audio.playSfx(
-          Sfx.weightIncreased,
-          customAssets: skin.assets.sfx['maxFat']!,
-          volume: 1.0,
-        );
+      final maxFatPath = skin.assets.sfx['maxFat'];
+      if (maxFatPath != null) {
+        audio.playAssetSfx(maxFatPath.random());
       }
       notify(
         text: 'MAX FAT!'.tr(),
@@ -455,10 +451,12 @@ class Normaldo extends PositionComponent
     }
     if (nComponent.current != state) {
       if (index != 3 || (skin.assets.sfx['maxFat'] == null && index == 3)) {
-        audio.playSfx(
-          Sfx.weightIncreased,
-          customAssets: skin.assets.sfx['fatUp'],
-        );
+        final fatUpPath = skin.assets.sfx['fatUp'];
+        if (fatUpPath != null) {
+          audio.playAssetSfx(
+            fatUpPath.random(),
+          );
+        }
       }
       _changeFatAnimation(state);
       fatIterator.current = state;
@@ -484,7 +482,6 @@ class Normaldo extends PositionComponent
       notify(text: '${'Fat'.tr()} ${index + 1} / 4', color: NGTheme.green1);
     }
     if (nComponent.current != state) {
-      audio.playSfx(Sfx.weightLoosed);
       _changeFatAnimation(state);
       // final changed = _changeFatAnimation(state);
       // if (!changed) {
@@ -675,8 +672,9 @@ class Normaldo extends PositionComponent
 
     add(nComponent);
 
-    if (skin.assets.sfx['start'] != null) {
-      audio.playSfx(Sfx.binCrash, customAssets: skin.assets.sfx['start']);
+    final startPath = skin.assets.sfx['start'];
+    if (startPath != null) {
+      audio.playAssetSfx(startPath.random());
     }
 
     effectsController =

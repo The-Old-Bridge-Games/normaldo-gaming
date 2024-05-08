@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
@@ -64,11 +65,9 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
   }
 
   void _selectSkin() {
-    audio.playAudio(
-        Random().nextBool()
-            ? 'sfx/ui/SKIN AGREE.mp3'
-            : 'sfx/ui/SKIN AGREE 2.mp3',
-        volume: 1);
+    audio.playAssetSfx(
+      Random().nextBool() ? 'sfx/ui/SKIN AGREE.mp3' : 'sfx/ui/SKIN AGREE 2.mp3',
+    );
     context.read<UserCubit>().changeSkin(_skinFrom(_currentPage));
     context.pop();
   }
@@ -120,7 +119,7 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
                     setState(() {
                       _currentPage = index;
                     });
-                    audio.playAudio('sfx/button1.mp3', volume: 1);
+                    audio.playMenuSfx(MenuSfx.button);
                   },
                   builder: (context, index) {
                     final skin = user.mySkins[index];

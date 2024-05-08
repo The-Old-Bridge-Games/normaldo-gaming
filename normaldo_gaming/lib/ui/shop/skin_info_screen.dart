@@ -352,12 +352,11 @@ class _FatPresenterState extends State<FatPresenter> with HasNgAudio {
       _animating = true;
     });
     final biteSound = widget.skin.assets.sfx['bite'] ?? '/sfx/havaet.mp3';
-    audio.playAudio(
-        biteSound is List
-            ? Utils.skinSfxWrapper(
-                biteSound[Random().nextInt(biteSound.length)])
-            : biteSound as String,
-        volume: 1);
+    audio.playAssetSfx(
+      biteSound is List
+          ? Utils.skinSfxWrapper(biteSound[Random().nextInt(biteSound.length)])
+          : biteSound as String,
+    );
     Future.delayed(const Duration(milliseconds: 300)).whenComplete(() {
       setState(() {
         _animating = false;

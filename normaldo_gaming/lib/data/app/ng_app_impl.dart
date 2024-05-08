@@ -17,7 +17,6 @@ import 'package:normaldo_gaming/application/sign_up/sign_up_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/core/theme.dart';
-import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/ng_app.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
@@ -80,7 +79,6 @@ OS Version: ${Platform.operatingSystemVersion}
         storageDirectory: await getApplicationDocumentsDirectory());
 
     initializeInjector(config);
-    await injector.get<NgAudio>().init();
     const supportedLocales = [Locale('ru'), Locale('en')];
     final userCubit = injector.get<UserCubit>();
     runApp(EasyLocalization(

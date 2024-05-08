@@ -15,7 +15,6 @@ import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubi
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/config/config.dart';
 import 'package:normaldo_gaming/data/ads/ng_ad_manager.dart';
-import 'package:normaldo_gaming/data/app/ng_audio_impl.dart';
 import 'package:normaldo_gaming/data/auth/auth_repository_impl.dart';
 import 'package:normaldo_gaming/data/auth/services/auth_api_service.dart';
 import 'package:normaldo_gaming/data/auth/services/auth_local_storage.dart';
@@ -28,7 +27,6 @@ import 'package:normaldo_gaming/data/skins/skins_repository_test_impl.dart';
 import 'package:normaldo_gaming/data/user/services/user_api_service.dart';
 import 'package:normaldo_gaming/data/user/user_repository_impl.dart';
 import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
-import 'package:normaldo_gaming/domain/app/audio.dart';
 import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/auth/auth_repository.dart';
 import 'package:normaldo_gaming/domain/knowledge/knowledge_repository.dart';
@@ -94,6 +92,7 @@ void initializeInjector(Config config) {
       (injector) => const AuthLocalStorageImpl(FlutterSecureStorage()));
 
   // Managers
+  injector.map<AudioManager>((injector) => AudioManager(), isSingleton: true);
   injector.map<BaseAdManager>((injector) => AdManager(config));
   injector.map<LevelManager>(
     (injector) => LevelManagerImpl(),
@@ -114,10 +113,4 @@ void initializeInjector(Config config) {
             AuthApiService.create(),
             UserApiService.create(),
           ]));
-
-  // Audio
-  injector.map<NgAudio>(
-    (injector) => NgAudioImpl(),
-    isSingleton: true,
-  );
 }

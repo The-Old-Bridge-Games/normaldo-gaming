@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 
 class BounceScale {
   final double value;
@@ -60,7 +60,7 @@ class _BouncingButtonState extends State<BouncingButton>
     _scale = 1 - _controller.value;
     return GestureDetector(
       onTap: () {
-        audio.playSfx(Sfx.buttonPressed);
+        audio.playMenuSfx(MenuSfx.button);
         widget.onPressed?.call();
       },
       child: Listener(

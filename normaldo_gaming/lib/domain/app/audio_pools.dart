@@ -3,6 +3,92 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
+enum MenuSfx {
+  button,
+}
+
+final class AudioManager {
+  final _bgmPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.loop);
+  final _assetBgmPlayer = AudioPlayer();
+
+  var _bgmVolume = 1.0;
+  var _sfxVolume = 1.0;
+
+  final _menuPlayers = {
+    MenuSfx.button: AudioPlayer(),
+  };
+
+  Future<void> playBgm({String? path}) {
+    if (path != null) {
+      return _bgmPlayer.play(AssetSource(path), volume: _bgmVolume);
+    } else {
+      return _bgmPlayer.play(AssetSource('audio/main_theme.mp3'),
+          volume: _bgmVolume);
+    }
+  }
+
+  Future<void> stopBgm() async {
+    await _bgmPlayer.stop();
+  }
+
+  Future<void> pauseBgm() async {
+    await _bgmPlayer.pause();
+  }
+
+  Future<void> resumeBgm() {
+    return _bgmPlayer.resume();
+  }
+
+  Future<void> setBgmVolume(double volume) {
+    assert(volume >= 0 && volume <= 1);
+    _bgmVolume = volume;
+    return _bgmPlayer.setVolume(volume);
+  }
+
+  Future<void> playMenuSfx(MenuSfx sfx) async {
+    await _menuPlayers[sfx]!.stop();
+    return switch (sfx) {
+      MenuSfx.button => _menuPlayers[sfx]!.play(
+          AssetSource('audio/sfx/ui/button1.mp3'),
+          volume: _sfxVolume,
+        ),
+    };
+  }
+
+  Future<void> setVolumeToMenuSfx(double volume) async {
+    assert(volume >= 0 && volume <= 1);
+    _sfxVolume = volume;
+    for (final player in _menuPlayers.values) {
+      await player.setVolume(volume);
+    }
+  }
+
+  Future<AudioPlayer> playAssetSfx(String assetPath) async {
+    final player = AudioPlayer()
+      ..play(
+        AssetSource(assetPath),
+        volume: _sfxVolume,
+      );
+    return player;
+  }
+
+  Future<void> playAssetBgm(String assetPath, {bool loop = false}) async {
+    if (loop) {
+      await _assetBgmPlayer.setReleaseMode(ReleaseMode.loop);
+    } else if (_assetBgmPlayer.releaseMode == ReleaseMode.loop) {
+      await _assetBgmPlayer.setReleaseMode(ReleaseMode.release);
+    }
+    return _assetBgmPlayer.play(
+      AssetSource(assetPath),
+      volume: _bgmVolume,
+    );
+  }
+
+  Future<void> stopAssetBgm() {
+    return _assetBgmPlayer.stop();
+  }
+}
+
 final class AudioPools {
   late final Map<Items, List<AudioPool>> _sfxPools;
   late final AudioPool _itemHit;

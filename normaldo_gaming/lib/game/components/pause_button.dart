@@ -5,7 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 class PauseButton extends SpriteComponent
@@ -29,12 +29,10 @@ class PauseButton extends SpriteComponent
             if (state.paused) {
               gameRef.pauseEngine();
               audio.pauseBgm();
-              audio.pauseAllAudios();
               gameRef.overlays.add(Overlays.pauseMenu.name);
             } else {
               gameRef.resumeEngine();
               audio.resumeBgm();
-              audio.resumeAllAudios();
               gameRef.overlays.remove(Overlays.pauseMenu.name);
             }
           }),
@@ -43,7 +41,7 @@ class PauseButton extends SpriteComponent
 
   @override
   bool onTapDown(TapDownEvent event) {
-    audio.playSfx(Sfx.buttonPressed);
+    audio.playMenuSfx(MenuSfx.button);
     bloc.togglePause();
     return true;
   }

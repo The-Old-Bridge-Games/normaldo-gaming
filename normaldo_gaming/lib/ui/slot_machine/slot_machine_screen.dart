@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +10,6 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/components/slot_machine_widget.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
@@ -64,8 +64,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
     ),
   };
 
-  int? _rollingAudioPlayerId;
-  int? _backgroundMusicId;
+  AudioPlayer? _rollingAudioPlayer;
 
   dynamic _onCreated(SlotMachineController controller) async {
     _controller = controller;
@@ -82,22 +81,10 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
     showDialog(context: context, builder: (context) => const SlotsInfoDialog());
   }
 
-  Future<void> _dropRolls() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 0);
-    audio.playSfx(Sfx.rollDropped);
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 1);
-    audio.playSfx(Sfx.rollDropped);
-    await Future.delayed(const Duration(milliseconds: 500));
-    _controller.stop(reelIndex: 2);
-    audio.playSfx(Sfx.rollDropped);
-  }
-
   Future<void> _onSpinPressed({required bool spinning}) async {
-    audio.playSfx(Sfx.spin, volume: 0.2);
+    audio.playAssetSfx('audio/sfx/spin.mp3');
     if (spinning) return;
-    _rollingAudioPlayerId = await audio.playAudio('rolling.mp3', volume: 0.2);
+    _rollingAudioPlayer = await audio.playAssetSfx('audio/rolling.mp3');
     final cubit = context.read<SlotMachineCubit>();
     cubit.roll();
   }
@@ -122,17 +109,17 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
           Duration(milliseconds: 300 + Random().nextInt(1700)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
       await Future.delayed(rollDropDuration);
-      await audio.playSfx(Sfx.rollDropped);
+      await audio.playAssetSfx('audio/sfx/roll_dropped.mp3');
       // await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(200)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
       await Future.delayed(rollDropDuration);
-      await audio.playSfx(Sfx.rollDropped);
+      await audio.playAssetSfx('audio/sfx/roll_dropped.mp3');
       // await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(200)));
       _controller.stop(reelIndex: reelIndexes.removeAt(0));
       await Future.delayed(rollDropDuration);
-      await audio.playSfx(Sfx.rollDropped);
-      if (_rollingAudioPlayerId != null) {
-        audio.stopAudio(_rollingAudioPlayerId!);
+      await audio.playAssetSfx('audio/sfx/roll_dropped.mp3');
+      if (_rollingAudioPlayer != null) {
+        _rollingAudioPlayer?.stop();
       }
       await Future.delayed(const Duration(milliseconds: 1000));
       cubit.stopSpin();
@@ -178,30 +165,20 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   void initState() {
     super.initState();
 
-    audio.setVolumeToBgm(volume: 0);
-    audio
-        .loopAudio('avtiki.mp3', volume: 0.5)
-        .then((value) => _backgroundMusicId = value);
+    audio.pauseBgm();
+    audio.playAssetBgm('audio/avtiki.mp3', loop: true);
   }
 
   @override
   void dispose() {
-    audio.setVolumeToBgm(volume: 0.1);
-    if (_backgroundMusicId != null) {
-      audio.stopAudio(_backgroundMusicId!);
-    }
+    audio.stopAssetBgm().then((value) => audio.resumeBgm());
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (context.read<SlotMachineCubit>().state.spinning) {
-          return false;
-        }
-        return true;
-      },
+    return PopScope(
+      canPop: !context.read<SlotMachineCubit>().state.spinning,
       child: BlocListener<SlotMachineCubit, SlotMachineState>(
         listener: _slotsListener,
         listenWhen: (previous, current) => previous.winRoll != current.winRoll,

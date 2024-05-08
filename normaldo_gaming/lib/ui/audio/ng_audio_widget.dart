@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:normaldo_gaming/domain/app/audio.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:phone_state/phone_state.dart';
 
-class AudioObserver extends NavigatorObserver {
-  final audio = injector.get<NgAudio>();
-
+class AudioObserver extends NavigatorObserver with HasNgAudio {
   @override
   void didPop(Route route, Route? previousRoute) {
     final previousName = previousRoute?.settings.name;
@@ -33,24 +29,18 @@ class AudioObserver extends NavigatorObserver {
 
   Future<void> _startPullUpGameBgm() async {
     await audio.stopBgm();
-    audio.clearBgm();
-    audio.addAllToBgm(['mix.mp3']);
-    audio.playBgm();
+    return audio.playAssetBgm('audio/mix.mp3');
   }
 
   Future<void> _startMainScreenBgm() async {
     await audio.stopBgm();
-    audio.clearBgm();
-    audio.addToBgm('main_theme.mp3');
-    audio.playBgm();
+    return audio.playBgm();
   }
 
   Future<void> check(String location, [String? previousLocation]) async {
-    final audio = injector.get<NgAudio>();
     switch (location) {
       case 'pullUpGame':
-        if (previousLocation == 'main') {
-          await audio.stopBgm();
+        if (previousLocation == 'root') {
           _startMainScreenBgm();
           break;
         }
@@ -79,9 +69,7 @@ class NgAudioWidget extends StatefulWidget {
 }
 
 class _NgAudioWidgetState extends State<NgAudioWidget>
-    with WidgetsBindingObserver {
-  final _audio = injector.get<NgAudio>();
-
+    with WidgetsBindingObserver, HasNgAudio {
   StreamSubscription? _incomingCallSubscription;
 
   String get location {
@@ -96,23 +84,14 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
       case AppLifecycleState.inactive:
       case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
-        _audio.pauseBgm();
-        _audio.pauseAllAudios();
+        audio.pauseBgm();
         break;
       case AppLifecycleState.resumed:
         if (location != '/main/pullUpGame') {
-          _audio.resumeBgm();
+          audio.resumeBgm();
         }
-        _audio.resumeAllAudios();
         break;
     }
-  }
-
-  Future<void> _startMainScreenBgm() async {
-    _audio.clearBgm();
-    _audio.addToBgm('main_theme.mp3');
-    _audio.playBgm();
-    _audio.setVolumeToBgm(volume: 0.1);
   }
 
   @override
@@ -122,7 +101,7 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     WidgetsBinding.instance.addObserver(this);
     _incomingCallSubscription = PhoneState.stream.listen((state) {
       if (state.status == PhoneStateStatus.CALL_ENDED) {
-        _audio.resumeBgm();
+        audio.resumeBgm();
       }
     });
   }

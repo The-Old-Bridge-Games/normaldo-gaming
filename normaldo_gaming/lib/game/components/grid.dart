@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
@@ -9,14 +8,10 @@ import 'package:flame/extensions.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
-import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
-import 'package:normaldo_gaming/game/components/audio_fade_component.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/figure_event_component.dart';
-import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
 import 'package:normaldo_gaming/game/components/level_timer_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/utils.dart';
@@ -71,62 +66,18 @@ class Grid extends PositionComponent
 
   @override
   void onNewState(LevelState state) async {
-    if (state.miniGame != null) {
-      if (gameInProgress) return;
-      gameInProgress = true;
-      state.miniGame?.when(
-        shredder: () async {
-          final audioId = await audio.playAudio('hard_track.mp3', volume: 0.01);
-          add(AudioFadeComponent(onTick: () async {
-            if (audio.bgmVolume - 0.02 > 0) {
-              await audio.setVolumeToBgm(volume: audio.bgmVolume - 0.02);
-            } else {
-              await audio.setVolumeToBgm(volume: 0);
-            }
-            await audio.setVolumeToAudio(
-                audioId: audioId,
-                volume: audio.audioVolume(audioId: audioId) + 0.01);
-            if (audio.audioVolume(audioId: audioId) >= 0.1) {
-              removeWhere((component) => component is AudioFadeComponent);
-            }
-          }));
-          if (normaldo.skin.assets.sfx['shredder'] != null) {
-            audio.playSfx(
-              Sfx.binCrash,
-              customAssets: normaldo.skin.assets.sfx['shredder']!,
-            );
-          }
-          normaldo.notify(
-            text: 'Hmm.. I feel something..'.tr(),
-            color: NGTheme.green1,
-          );
-          _itemsCreator?.timer.pause();
-          add(TimerComponent(
-              period: 3,
-              removeOnFinish: true,
-              onTick: () {
-                removeAllItems();
-                add(ExplosionComponent()..size = size);
-                // add(Shredder(audioId: audioId)
-                //   ..size = Items.shredder.getSize(lineSize)
-                //   ..position = Vector2(0, -100));
-              }));
-        },
-      );
-    } else {
-      if (gameInProgress) gameInProgress = false;
-      gameSessionCubit.changeLevel(state.level.index);
-      if (_itemsCreator != null) remove(_itemsCreator!);
-      _itemsCreator = TimerComponent(
-        period: state.level.frequency,
-        repeat: true,
-        onTick: () {
-          onItemsCreatorTick(state);
-        },
-      );
-      if (state.figure != null) _itemsCreator?.timer.pause();
-      add(_itemsCreator!);
-    }
+    if (gameInProgress) gameInProgress = false;
+    gameSessionCubit.changeLevel(state.level.index);
+    if (_itemsCreator != null) remove(_itemsCreator!);
+    _itemsCreator = TimerComponent(
+      period: state.level.frequency,
+      repeat: true,
+      onTick: () {
+        onItemsCreatorTick(state);
+      },
+    );
+    if (state.figure != null) _itemsCreator?.timer.pause();
+    add(_itemsCreator!);
   }
 
   void onItemsCreatorTick(LevelState state) {

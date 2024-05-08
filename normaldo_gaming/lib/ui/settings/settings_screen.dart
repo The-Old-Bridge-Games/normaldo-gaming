@@ -177,6 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Image.asset(
                           'assets/images/tg_logo.png',
                           height: 45,
+                          width: 45,
                         ),
                       ),
                     ],

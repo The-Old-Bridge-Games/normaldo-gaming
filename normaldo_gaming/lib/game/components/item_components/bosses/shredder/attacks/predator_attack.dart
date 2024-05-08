@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
-import 'package:normaldo_gaming/domain/app/sfx.dart';
 import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
@@ -11,6 +10,8 @@ import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'boss_attack.dart';
 
 final class PredatorAttack extends BossAttack with HasNgAudio {
+  static const predatorSfxPath = 'audio/sfx/shredder_predator.mp3';
+
   PredatorAttack({
     required this.speed,
   })  : _completed = false,
@@ -70,7 +71,7 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
     if (destination.x < -boss.size.x) {
       destination.x = -boss.size.x;
     }
-    audio.playSfx(Sfx.shredderPredator);
+    audio.playAssetSfx(predatorSfxPath);
     final predator = ([
       NinjaFootState.predator1,
       NinjaFootState.predator2,

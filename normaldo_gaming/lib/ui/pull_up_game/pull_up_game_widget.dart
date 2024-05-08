@@ -85,8 +85,6 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    audio.setVolumeToBgm(volume: 0.1);
-    audio.stopAllAudios();
     super.dispose();
   }
 

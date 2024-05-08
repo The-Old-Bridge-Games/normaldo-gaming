@@ -201,8 +201,6 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
                 ));
       }
       if (context.read<UserCubit>().state.introduced) {
-        audio.clearBgm();
-        audio.addAllToBgm(['mix.mp3']);
         audio.playBgm();
       }
     });
