@@ -109,9 +109,14 @@ class NewLevelDialog extends StatelessWidget {
                 const SizedBox(height: 16),
                 _buildRewards(context),
                 const SizedBox(height: 32),
-                NGButton(
-                  onPressed: () => context.pop(),
-                  text: 'AIGHT!'.tr(),
+                BlinkingWidget(
+                  duration: const Duration(milliseconds: 500),
+                  endDelay: const Duration(hours: 2),
+                  startDelay: const Duration(seconds: 3),
+                  child: NGButton(
+                    onPressed: () => context.pop(),
+                    text: 'AIGHT!'.tr(),
+                  ),
                 ),
               ],
             ),

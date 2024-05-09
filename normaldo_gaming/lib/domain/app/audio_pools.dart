@@ -169,17 +169,17 @@ final class AudioPools {
     try {
       _itemHit = await AudioPool.createFromAsset(
         path: 'audio/sfx/gantelya1.mp3',
-        maxPlayers: 10,
+        maxPlayers: 5,
       );
       _moneygive = await AudioPool.createFromAsset(
         path: 'audio/sfx/dollars.mp3',
-        maxPlayers: 5,
+        maxPlayers: 1,
       );
       _sfxPools = {
         Items.bananaPeel: [
           await AudioPool.createFromAsset(
             path: 'audio/sfx/BANANA.mp3',
-            maxPlayers: 8,
+            maxPlayers: 1,
           )
         ],
         Items.boombox: [
@@ -264,7 +264,7 @@ final class AudioPools {
         _sfxPools[Items.pizza] = [
           await AudioPool.createFromAsset(
             path: 'audio/sfx/havaet.mp3',
-            maxPlayers: 1,
+            maxPlayers: 10,
           ),
           await AudioPool.createFromAsset(
             path: 'audio/sfx/havaet2.mp3',

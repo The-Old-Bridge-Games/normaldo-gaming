@@ -19,10 +19,7 @@ final Map<int, Roller<Items>> _itemRollers = {
     // (Items.bananaPeel, 80),
     // (Items.trashBin, 3),
     (Items.pizza, 50),
-    (Items.cone, 15),
-    (Items.roadSign, 15),
-    (Items.trashBin, 15),
-    (Items.homeless, 10),
+    (Items.magnet, 50),
   ]),
   // 1: Roller<Items>([
   //   ..._goodItems,
