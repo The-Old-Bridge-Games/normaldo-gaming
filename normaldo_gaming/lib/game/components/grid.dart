@@ -18,6 +18,11 @@ import 'package:normaldo_gaming/game/utils/utils.dart';
 
 import 'normaldo.dart';
 
+enum ComicsType {
+  hurt,
+  resist,
+}
+
 class Grid extends PositionComponent
     with
         DragCallbacks,
@@ -78,6 +83,50 @@ class Grid extends PositionComponent
     );
     if (state.figure != null) _itemsCreator?.timer.pause();
     add(_itemsCreator!);
+  }
+
+  Future<void> showCollisionComics({
+    required ComicsType type,
+    required Vector2 position,
+    required Vector2 size,
+  }) async {
+    final path = switch (type) {
+      ComicsType.hurt => [
+          'ahh.png',
+          'boom.png',
+          'dang.png',
+        ],
+      ComicsType.resist => [
+          'knukl 1.png',
+          'slakebake2 1.png',
+        ]
+    };
+    add(
+      SpriteComponent(
+        sprite: await Sprite.load(path.random()),
+        size: size,
+        // size: Vector2(100, 80),
+        // position: Vector2(grid.normaldo.size.x * 1.5, grid.normaldo.size.y / 2),
+        position: position,
+        priority: 0,
+        anchor: Anchor.center,
+        scale: Vector2.all(0),
+      )..addAll([
+          ScaleEffect.to(
+            Vector2.all(1.2),
+            EffectController(
+              duration: 0.1,
+            ),
+          ),
+          SequenceEffect([
+            OpacityEffect.fadeOut(
+              DelayedEffectController(EffectController(duration: 0.3),
+                  delay: 0.1),
+            ),
+            RemoveEffect(),
+          ])
+        ]),
+    );
   }
 
   void onItemsCreatorTick(LevelState state) {

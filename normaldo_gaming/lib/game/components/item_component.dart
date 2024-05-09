@@ -4,12 +4,14 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects_controller.dart';
+import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/explosion_component.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -139,11 +141,21 @@ mixin AttackingItem on Item {
   void attack(PositionComponent other) {
     if (other is Boss) return;
     if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      gameRef.grid.showCollisionComics(
+        type: ComicsType.resist,
+        position: position,
+        size: size,
+      );
       removeFromParent();
       return;
     }
     if (other is Normaldo && !other.immortal && !other.hasImmuneTo(item)) {
       other.takeHit(damage: damage);
+      gameRef.grid.showCollisionComics(
+        type: ComicsType.hurt,
+        position: position,
+        size: size,
+      );
       removeFromParent();
     }
     if (other is AttackingItem && other.collidable && strength > 0) {

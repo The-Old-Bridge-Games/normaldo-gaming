@@ -121,9 +121,9 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
                               ),
                               BouncingButton(
                                 onPressed: () {
-                                  audio.stopBgm().whenComplete(() =>
-                                      context.pushReplacement(
-                                          NGRoutes.pullUpGame.path));
+                                  context.pushReplacement(
+                                    NGRoutes.pullUpGame.path,
+                                  );
                                 },
                                 child: Image.asset(
                                     'assets/images/retry_bubble_button.png'),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/all_in.dart';
@@ -9,7 +7,6 @@ import 'package:normaldo_gaming/game/components/item_components/beer.dart';
 import 'package:normaldo_gaming/game/components/item_components/bird.dart';
 import 'package:normaldo_gaming/game/components/item_components/boombox.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/smoke.dart';
-import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/shredder.dart';
 import 'package:normaldo_gaming/game/components/item_components/bubbles.dart';
 import 'package:normaldo_gaming/game/components/item_components/cannibal.dart';
 import 'package:normaldo_gaming/game/components/item_components/casey_mask.dart';

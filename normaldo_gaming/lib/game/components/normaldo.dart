@@ -46,7 +46,7 @@ enum NormaldoFatState {
   skinnyDead;
 
   int pizzaToFat([int? amount]) {
-    // return 3;
+    return 1;
     if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 10,
@@ -880,7 +880,7 @@ class Normaldo extends PositionComponent
   void _changeFatAnimation(NormaldoFatState state) {
     const dur = 0.25;
     const curve = Curves.bounceOut;
-    addAll([
+    nComponent.addAll([
       RotateEffect.to(
           (Random().nextBool() ? pi : -pi) * 2,
           EffectController(
