@@ -46,7 +46,6 @@ enum NormaldoFatState {
   skinnyDead;
 
   int pizzaToFat([int? amount]) {
-    return 1;
     if (amount != null) return amount;
     return switch (this) {
       skinny || skinnyEat => 10,
