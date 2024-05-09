@@ -193,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                           child: AboutUsCard(
                         model: AboutUsModel(
                           name: 'Gleb',
-                          position: 'Designer',
+                          position: 'Art&Design',
                           description: 'Do not eat bread',
                           imagePath: 'assets/images/us/gashan_pix.png',
                         ),
