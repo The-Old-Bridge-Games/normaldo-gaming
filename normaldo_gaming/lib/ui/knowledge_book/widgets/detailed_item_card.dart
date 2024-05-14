@@ -131,7 +131,7 @@ class DetailedItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            item.description,
+                            item.description.tr(),
                             style: textTheme.bodySmall,
                           ),
                         ],

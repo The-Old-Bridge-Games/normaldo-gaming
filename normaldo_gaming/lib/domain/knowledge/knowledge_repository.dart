@@ -384,6 +384,5 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             gives: []),
       ];
 
-  // String _descKey(Items item) => '${item.name}Desc';
-  String _descKey(Items item) => 'Long time agoo this item...';
+  String _descKey(Items item) => '${item.name}Desc';
 }
