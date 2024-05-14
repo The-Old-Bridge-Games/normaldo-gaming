@@ -77,7 +77,11 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 dead: 'normaldo/dracula/dead.png',
                 mask: 'normaldo/dracula/mask.png',
                 sfx: {
-                  'fatUp': ['dracula/VAMP BUPR.mp3'],
+                  'fatUp': [
+                    'dracula/VAMP BUPR.mp3',
+                    'dracula/DRACULA BONUS FAT UP.mp3',
+                    'dracula/DRACULA BONUS FAT UP2.mp3',
+                  ],
                   'slow': [
                     'dracula/VAMP EAT ENJOY.mp3',
                     'dracula/VAMP EAT ENJOY2.mp3',
@@ -100,7 +104,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                   'start': ['dracula/VAMP LAUGHT.mp3'],
                   'slowMo': ['dracula/VAMPIRE SLOMO.mp3'],
                   'shredder': ['dracula/VAMP RAW LAUGHT.mp3'],
-                  'maxFat': ['dracula/VAMP MAX FAT BLOODY.mp3']
+                  'maxFat': ['dracula/VAMP MAX FAT BLOODY.mp3'],
                 }),
             resistanceToItems: [
               Items.cocktail,
@@ -130,6 +134,10 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'slow': ['glasses/DINK COCTAIL.mp3'],
                 'bite': ['glasses/GOLDEN EAT.mp3', 'glasses/GOLDEN EAT 2.mp3'],
                 'hit': ['glasses/GOLDEN HIT.mp3'],
+                'fatUp': [
+                  'glasses/GLASSES   CANT STOP1.mp3',
+                  'glasses/GLASSES   CANT STOP2.mp3',
+                ],
                 'resist': ['glasses/GOLDEN LAUGHT.mp3'],
                 'maxFat': ['glasses/GOLDEN MAX FAT.mp3']
               },
@@ -197,7 +205,12 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 'resist': ['harry_potter/POTTER LAUGHT.mp3'],
                 'start': ['harry_potter/POTTER NORMALDO SAYNG.mp3'],
                 'slowMo': ['harry_potter/POTTER SLOMO MAHOVIK.mp3'],
-                'maxFat': ['harry_potter/POTTER MAX FAT.mp3']
+                'maxFat': ['harry_potter/POTTER MAX FAT.mp3'],
+                'unique': [
+                  'harry_potter/POTTER VANISH1.mp3',
+                  'harry_potter/POTTER VANISH2.mp3',
+                  'harry_potter/POTTER VANISH3.mp3',
+                ],
               }),
           resistanceToItems: [
             Items.greenPoison,
@@ -282,6 +295,10 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                     'pirate/PIRATE LAUGHTLONG.mp3',
                   ],
                   'maxFat': ['pirate/PIRATE MAXFAT.mp3'],
+                  'unique': [
+                    'pirate/PIRAT X 3 BONUS 1.mp3',
+                    'pirate/PIRAT X 3 BONUS 2.mp3',
+                  ],
                 }),
             resistanceToItems: [
               Items.homeless,
@@ -327,7 +344,8 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                   'spider_man/SPIDER SIP.mp3',
                   'spider_man/SPIDER SIP  COCTAIL.mp3',
                 ],
-                'resist': ['spider_man/SPIDER LAUGHT.mp3']
+                'resist': ['spider_man/SPIDER LAUGHT.mp3'],
+                'unique': []
               }),
           resistanceToItems: [
             Items.homeless,
@@ -406,7 +424,11 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                 ],
                 'hit': ['wizard/WIZARD HIT.mp3'],
                 'shredder': ['wizard/WIZARD LAUGHT DOGE.mp3'],
-                'slowMo': ['wizard/WIZARD SLOMO.mp3']
+                'slowMo': ['wizard/WIZARD SLOMO.mp3'],
+                'unique': [
+                  'wizard/WIZARD VANISH RESIST1.mp3',
+                  'wizard/WIZARD VANISH RESIST2.mp3',
+                ],
               }),
           resistanceToItems: [
             Items.cocktail,

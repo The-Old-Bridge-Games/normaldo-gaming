@@ -208,7 +208,7 @@ abstract class Utils {
         Items.smoke => 'assets/images/bosses/smoke.png',
       };
 
-  static String skinSfxWrapper(String sfxPath) => 'skins/$sfxPath';
+  static String skinSfxWrapper(String sfxPath) => 'audio/skins/$sfxPath';
 
   static String rarityTitleOf(Skin skin) {
     return switch (skin.rarity) {

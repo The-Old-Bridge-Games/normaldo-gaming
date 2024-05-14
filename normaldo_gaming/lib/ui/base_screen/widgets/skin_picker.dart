@@ -66,7 +66,9 @@ class _SkinPickerState extends State<SkinPicker> with HasNgAudio {
 
   void _selectSkin() {
     audio.playAssetSfx(
-      Random().nextBool() ? 'sfx/ui/SKIN AGREE.mp3' : 'sfx/ui/SKIN AGREE 2.mp3',
+      Random().nextBool()
+          ? 'audio/sfx/ui/SKIN AGREE.mp3'
+          : 'audio/sfx/ui/SKIN AGREE 2.mp3',
     );
     context.read<UserCubit>().changeSkin(_skinFrom(_currentPage));
     context.pop();

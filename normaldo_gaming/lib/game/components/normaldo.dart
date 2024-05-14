@@ -389,6 +389,10 @@ class Normaldo extends PositionComponent
       angle: -0.2,
       scale: Vector2.all(0),
     );
+    final uniquePath = skin.assets.sfx['unique'];
+    if (uniquePath != null) {
+      audio.playAssetSfx(Utils.skinSfxWrapper(uniquePath.random()));
+    }
     add(comp
       ..addAll([
         ScaleEffect.to(Vector2.all(1), EffectController(duration: 0.2)),
@@ -602,6 +606,10 @@ class Normaldo extends PositionComponent
                 atMaxDuration: 0.5,
               )));
           _immortal = true;
+          final uniquePath = skin.assets.sfx['unique'];
+          if (uniquePath != null) {
+            audio.playAssetSfx(Utils.skinSfxWrapper(uniquePath.random()));
+          }
           add(TimerComponent(
               period: 3,
               removeOnFinish: true,
@@ -668,12 +676,16 @@ class Normaldo extends PositionComponent
                   maxPlayers: 1,
                 )) ??
             []);
+    if (_fatUpSfxPools.isEmpty) {
+      _fatUpSfxPools.add(await AudioPool.createFromAsset(
+          path: 'audio/sfx/FATUP.mp3', maxPlayers: 1));
+    }
 
     add(nComponent);
 
     final startPath = skin.assets.sfx['start'];
     if (startPath != null) {
-      audio.playAssetSfx(startPath.random());
+      audio.playAssetSfx(Utils.skinSfxWrapper(startPath.random()));
     }
 
     effectsController =
@@ -725,6 +737,10 @@ class Normaldo extends PositionComponent
           removeOnFinish: true,
           onTick: () {
             gameRef.grid.vanishRandomItem();
+            final uniquePath = skin.assets.sfx['unique'];
+            if (uniquePath != null) {
+              audio.playAssetSfx(Utils.skinSfxWrapper(uniquePath.random()));
+            }
           }));
     }
     if (skin.uniqueId == 'harry_potter') {
@@ -734,6 +750,10 @@ class Normaldo extends PositionComponent
           removeOnFinish: true,
           onTick: () {
             gameRef.grid.vanishRandomItem();
+            final uniquePath = skin.assets.sfx['unique'];
+            if (uniquePath != null) {
+              audio.playAssetSfx(Utils.skinSfxWrapper(uniquePath.random()));
+            }
           }));
     }
     if (skin.uniqueId == 'spider-man') {
