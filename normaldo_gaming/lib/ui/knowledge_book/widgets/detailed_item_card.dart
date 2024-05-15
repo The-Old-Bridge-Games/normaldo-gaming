@@ -48,7 +48,7 @@ class DetailedItemCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${'Damage'}:',
+                          '${'Damage'.tr()}:',
                           style: textTheme.bodyMedium
                               ?.copyWith(color: NGTheme.auraRed),
                         ),
@@ -64,7 +64,7 @@ class DetailedItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${'Located'}:',
+                        '${'Located'.tr()}:',
                         style: textTheme.titleSmall
                             ?.copyWith(color: NGTheme.purple2),
                       ),
@@ -74,7 +74,7 @@ class DetailedItemCard extends StatelessWidget {
                           item.locations.fold(
                               '',
                               (previousValue, element) =>
-                                  '${previousValue.isEmpty ? '' : '$previousValue,'} $element'),
+                                  '${previousValue.isEmpty ? '' : '${previousValue.tr()},'} ${element.tr()}'),
                           style: textTheme.bodySmall,
                         ),
                       )
@@ -86,17 +86,14 @@ class DetailedItemCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${'Effects'}:',
+                          '${'Effects'.tr()}:',
                           style: textTheme.titleSmall
                               ?.copyWith(color: NGTheme.purple2),
                         ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item.skills.fold(
-                                '',
-                                (previousValue, element) =>
-                                    '$previousValue $element'),
+                            '${item.item.name}Skill'.tr(),
                             style: textTheme.bodySmall,
                           ),
                         )
@@ -108,7 +105,7 @@ class DetailedItemCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${'Gives'}:',
+                          '${'Gives'.tr()}:',
                           style: textTheme.titleSmall
                               ?.copyWith(color: NGTheme.green1),
                         ),
@@ -118,7 +115,7 @@ class DetailedItemCard extends StatelessWidget {
                             item.gives.fold(
                                 '',
                                 (previousValue, element) =>
-                                    '$previousValue $element'),
+                                    '${previousValue.tr()} ${element.tr()}'),
                             style: textTheme.bodySmall,
                           ),
                         )

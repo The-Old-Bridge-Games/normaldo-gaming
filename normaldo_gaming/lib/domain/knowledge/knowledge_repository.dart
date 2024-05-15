@@ -25,7 +25,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
           damage: 1,
           skills: [],
           gives: [],
-          locations: ['sewers', 'yards', 'backyard', 'park', 'beach'],
+          locations: ['sewers', 'frontyard', 'backyard', 'park', 'beach'],
         ),
         ItemDescription(
             item: Items.pizza,
@@ -41,7 +41,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: true,
             damage: 0,
             skills: [],
-            gives: ['1 ndollar'],
+            gives: ['1 \$'],
             locations: ['everywhere']),
         ItemDescription(
           item: Items.fatPizza,
@@ -68,7 +68,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             damage: 0,
             locations: ['everywhere'],
             skills: [],
-            gives: ['10 ndollars']),
+            gives: ['10 \$']),
         ItemDescription(
           item: Items.boombox,
           description: _descKey(Items.boombox),
@@ -108,7 +108,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: false,
             damage: 0,
             locations: ['backyard'],
-            skills: ['cleans a line'],
+            skills: ['flies through the line'],
             gives: []),
         ItemDescription(
             item: Items.allIn,
@@ -116,16 +116,17 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: false,
             damage: 0,
             locations: ['casino', 'jacuzzi'],
-            skills: ['takes 10-50 ndollars'],
+            skills: ['takes 10-50 \$'],
             gives: []),
         ItemDescription(
-            item: Items.angryDog,
-            description: _descKey(Items.angryDog),
-            isGood: false,
-            damage: 0,
-            locations: ['everywhere'],
-            skills: ['barks then cleans the line'],
-            gives: ['yards', 'park']),
+          item: Items.angryDog,
+          description: _descKey(Items.angryDog),
+          isGood: false,
+          damage: 0,
+          locations: ['everywhere'],
+          skills: ['barks then cleans the line'],
+          gives: [],
+        ),
         ItemDescription(
             item: Items.bananaPeel,
             description: _descKey(Items.bananaPeel),
@@ -156,7 +157,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: false,
             damage: 0,
             locations: ['casino', 'jacuzzi'],
-            skills: ['takes 1 ndollar'],
+            skills: ['takes 1 \$'],
             gives: []),
         ItemDescription(
             item: Items.greenPoison,
@@ -260,7 +261,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: false,
             damage: 0,
             locations: ['club', 'casino', 'limo', 'yacht', 'jacuzzi'],
-            skills: ['takes all your money'],
+            skills: ['takes all of your money'],
             gives: []),
         ItemDescription(
             item: Items.magicHat,
@@ -268,7 +269,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: true,
             damage: 0,
             locations: ['everywhere'],
-            skills: ['immune to slowing'],
+            skills: ['slow immune'],
             gives: []),
         ItemDescription(
             item: Items.magicBox,
@@ -284,7 +285,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             isGood: true,
             damage: 0,
             locations: ['everywhere'],
-            skills: ['instantly pulls pizza and ndollars'],
+            skills: ['instantly pulls pizza and \$'],
             gives: []),
         ItemDescription(
             item: Items.note,
@@ -379,7 +380,7 @@ final class KnowledgeRepositoryImpl implements KnowledgeRepository {
             description: _descKey(Items.umbrella),
             isGood: false,
             damage: 1,
-            locations: ['river', 'beach', 'beach'],
+            locations: ['river', 'beach'],
             skills: [],
             gives: []),
       ];

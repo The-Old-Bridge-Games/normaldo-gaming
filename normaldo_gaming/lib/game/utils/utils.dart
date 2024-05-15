@@ -177,7 +177,7 @@ abstract class Utils {
         Items.bubbles => 'assets/images/bubble 1.png',
         Items.cannibal => 'assets/images/canibal.png',
         Items.caseyMask => 'assets/images/kasey mask2 2.png',
-        Items.casinoChip => 'assets/images/cazinocaps.png',
+        Items.casinoChip => 'assets/images/cazinocaps 1.png',
         Items.compass => 'assets/images/compas 2.png',
         Items.cone => 'assets/images/Sprite-conus1.png',
         Items.energizer => 'assets/images/energeticl.png',
