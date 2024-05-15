@@ -24,6 +24,9 @@ final class AudioManager {
   final _bgmPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.loop);
   final _assetBgmPlayer = AudioPlayer();
 
+  bool get assetBgmPaused => _assetBgmPlayer.state == PlayerState.paused;
+  bool get assetBgmPlaying => _assetBgmPlayer.state == PlayerState.playing;
+
   var _bgmVolume = 0.3;
   var _sfxVolume = 1.0;
 
@@ -103,6 +106,14 @@ final class AudioManager {
       AssetSource(assetPath),
       volume: _bgmVolume,
     );
+  }
+
+  Future<void> pauseAssetBgm() {
+    return _assetBgmPlayer.pause();
+  }
+
+  Future<void> resumeAssetBgm() {
+    return _assetBgmPlayer.resume();
   }
 
   Future<void> stopAssetBgm() {

@@ -10,8 +10,6 @@ class AudioObserver extends NavigatorObserver with HasNgAudio {
   void didPop(Route route, Route? previousRoute) {
     final previousName = previousRoute?.settings.name;
     final name = route.settings.name ?? '';
-    print('[POP] PREVIOUS ROUTE NAME: $previousName');
-    print('[POP] ROUTE NAME: $name');
     check(
       name,
       previousName,
@@ -22,7 +20,6 @@ class AudioObserver extends NavigatorObserver with HasNgAudio {
   @override
   void didPush(Route route, Route? previousRoute) {
     final name = route.settings.name ?? '';
-    print('[PUSH] ROUTE NAME: $name');
     check(name);
     super.didPush(route, previousRoute);
   }
@@ -72,11 +69,6 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     with WidgetsBindingObserver, HasNgAudio {
   StreamSubscription? _incomingCallSubscription;
 
-  String get location {
-    if (!mounted) return '';
-    return GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
-  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -84,10 +76,18 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
       case AppLifecycleState.inactive:
       case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
-        audio.pauseBgm();
+        if (audio.assetBgmPlaying) {
+          audio.pauseAssetBgm();
+        } else {
+          audio.pauseBgm();
+        }
         break;
       case AppLifecycleState.resumed:
-        if (location != '/main/pullUpGame') {
+        final pages = Navigator.of(context).widget.pages;
+        final isInGame = pages.last.name == 'pullUpGame';
+        if (audio.assetBgmPaused && !isInGame) {
+          audio.resumeAssetBgm();
+        } else if (!audio.assetBgmPaused && !isInGame) {
           audio.resumeBgm();
         }
         break;
