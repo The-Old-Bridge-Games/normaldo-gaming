@@ -101,7 +101,13 @@ class _NgAudioWidgetState extends State<NgAudioWidget>
     WidgetsBinding.instance.addObserver(this);
     _incomingCallSubscription = PhoneState.stream.listen((state) {
       if (state.status == PhoneStateStatus.CALL_ENDED) {
-        audio.resumeBgm();
+        final pages = Navigator.of(context).widget.pages;
+        final isInGame = pages.last.name == 'pullUpGame';
+        if (audio.assetBgmPaused && !isInGame) {
+          audio.resumeAssetBgm();
+        } else if (!audio.assetBgmPaused && !isInGame) {
+          audio.resumeBgm();
+        }
       }
     });
   }
