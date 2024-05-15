@@ -85,17 +85,13 @@ class MissionCubit extends HydratedCubit<MissionState> {
       crashItem: (exp, completeValue, isOneGame, description, adsViewed, mItem,
           type, currentValue) {
         if (!mission.completed && mItem == item) {
-          if ((currentLocationIndex ?? 0) >= completeValue) {
-            return;
-          } else {
-            final index = state.missions.toList().indexOf(mission);
-            final replacement =
-                mission.copyWith(currentValue: mission.currentValue + 1);
-            final newMissions = List<Mission>.from(state.missions)
-              ..removeAt(index)
-              ..insert(index, replacement);
-            emit(state.copyWith(missions: newMissions.toSet()));
-          }
+          final index = state.missions.toList().indexOf(mission);
+          final replacement =
+              mission.copyWith(currentValue: mission.currentValue + 1);
+          final newMissions = List<Mission>.from(state.missions)
+            ..removeAt(index)
+            ..insert(index, replacement);
+          emit(state.copyWith(missions: newMissions.toSet()));
         }
         return;
       },

@@ -221,17 +221,16 @@ abstract class Utils {
   }
 
   static const promoCodes = {
-    'KUSS': 'pirate',
-    'KUSS2': 'pirate',
-    'GLASSES': 'glasses',
-    'SPIDER-MAN': 'spider-man',
-    'WIZARD': 'wizard',
-    'HARRY POTTER': 'harry_potter',
-    'DRACULA': 'dracula',
-    'HALLOWEEN': 'halloween',
-    'HAPPY NEW YEAR': 'new_year',
-    'VIKING': 'viking',
-    'BATMUN': 'batman',
+    'ZYIKG': 'pirate',
+    'PC8D7': 'glasses',
+    'RNMKH': 'spider-man',
+    '887P1': 'wizard',
+    'CKUKU': 'harry_potter',
+    'YUDQH': 'dracula',
+    'RINMS': 'halloween',
+    'HIWJF': 'new_year',
+    'QO8DW': 'viking',
+    '81WPG': 'batman',
   };
 
   static const locationExp = {
