@@ -224,13 +224,13 @@ enum Items {
       case Items.moneyBag:
         return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.boombox:
-        return Vector2(lineSize * 2, lineSize * 1.5);
+        return Vector2(lineSize * 2, lineSize * 1.7);
       case Items.cocktail:
         return Vector2(lineSize, lineSize);
       case Items.molotov:
         return Vector2(lineSize * 1.8, lineSize * 1.5);
       case Items.hourglass:
-        return Vector2(lineSize, lineSize);
+        return Vector2(lineSize * 0.9, lineSize * 0.9);
       case Items.punch:
         return Vector2(lineSize, lineSize);
       case hugeItem:
@@ -288,7 +288,7 @@ enum Items {
       case Items.magicBox:
         return Vector2(lineSize, lineSize);
       case Items.magnet:
-        return Vector2(lineSize, lineSize);
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.note:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.note2:

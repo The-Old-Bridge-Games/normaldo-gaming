@@ -229,8 +229,9 @@ class Grid extends PositionComponent
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
     _lineSize = size.y / Utils.linesCount;
-    normaldo = Normaldo(size: Vector2.all(lineSize), skin: skin)
-      ..position = Vector2(size.x / 2, size.y / 2);
+    normaldo =
+        Normaldo(size: Utils.normaldoSizeFromSkin(skin, lineSize), skin: skin)
+          ..position = Vector2(size.x / 2, size.y / 2);
     for (int i = 0; i < Utils.linesCount; i++) {
       final lineCenterY = lineSize * i + lineSize / 2;
       _linesCentersY.add(lineCenterY);

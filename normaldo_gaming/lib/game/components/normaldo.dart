@@ -698,7 +698,7 @@ class Normaldo extends PositionComponent
         EffectsController(onNewState: ((ItemEffect effect, double duration) {
       final durString = duration.toInt().toString();
       final text = switch (effect) {
-        ItemEffect.slow => '${'Poisoned'.tr()} $durString',
+        ItemEffect.slow => '${'Slowed'.tr()} $durString',
         ItemEffect.slowMo => '${'Slow mo'.tr()} $durString',
         ItemEffect.immortality => 'IMMORTALDO $durString',
         ItemEffect.disorient => 'DISORIENTED $durString',

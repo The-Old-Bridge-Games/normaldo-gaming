@@ -1,10 +1,10 @@
 part of 'level_bloc.dart';
 
 final _goodItems = [
-  (Items.magicHat, 50.2),
-  (Items.energizer, 50.0),
+  (Items.magicHat, 0.2),
+  (Items.energizer, 1.0),
   (Items.pizza, 50.0),
-  (Items.moneyBag, 50.1),
+  (Items.moneyBag, 0.1),
   (Items.dollar, 2.0),
   (Items.hourglass, 0.5),
   (Items.caseyMask, 0.1),
@@ -18,7 +18,6 @@ final Map<int, Roller<Items>> _itemRollers = {
     ..._goodItems,
     (Items.bananaPeel, 80),
     (Items.trashBin, 3),
-    (Items.molotov, 50),
   ]),
   1: Roller<Items>([
     ..._goodItems,

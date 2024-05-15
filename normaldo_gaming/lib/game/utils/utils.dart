@@ -230,6 +230,8 @@ abstract class Utils {
     'DRACULA': 'dracula',
     'HALLOWEEN': 'halloween',
     'HAPPY NEW YEAR': 'new_year',
+    'VIKING': 'viking',
+    'BATMUN': 'batman',
   };
 
   static const locationExp = {
@@ -261,4 +263,12 @@ abstract class Utils {
     if (skin1.rarity.index == skin2.rarity.index) return 0;
     return -1;
   }
+
+  static Vector2 normaldoSizeFromSkin(Skin skin, double lineSize) =>
+      switch (skin.uniqueId) {
+        'glasses' => Vector2.all(lineSize),
+        'dracula' => Vector2.all(lineSize),
+        'basic' => Vector2.all(lineSize),
+        _ => Vector2.all(lineSize * 1.15),
+      };
 }
