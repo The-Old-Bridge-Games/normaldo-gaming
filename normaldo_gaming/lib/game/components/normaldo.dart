@@ -217,7 +217,7 @@ class Normaldo extends PositionComponent
   void takeHit({int damage = 1}) {
     if (_immortal) return;
     if (fatIterator.deadlyDamage(damage)) {
-      _deathSfxPool.start();
+      _deathSfxPool.start(volume: gameRef.audio.sfxVolume);
       nComponent.current = NormaldoFatState.skinnyDead;
       bloc.die(gameRef.missionCubit, gameRef.scene.currentLocationIndex);
       return;
@@ -225,7 +225,7 @@ class Normaldo extends PositionComponent
 
     _pizzaEaten = 0;
     state = NormaldoHitState.hit;
-    _hitSfxPool.start(volume: 0.5);
+    _hitSfxPool.start(volume: gameRef.audio.sfxVolume);
     final newFatState = fatIterator.prev(step: damage);
     _changeFatAnimation(newFatState);
   }
@@ -306,7 +306,7 @@ class Normaldo extends PositionComponent
 
   void resist() {
     if (_resistSfxPools.isNotEmpty) {
-      _resistSfxPools.random().start();
+      _resistSfxPools.random().start(volume: gameRef.audio.sfxVolume);
     }
   }
 
@@ -321,9 +321,11 @@ class Normaldo extends PositionComponent
         final nextFat = NormaldoFatState.onlyIdle[indexOfCurrent + 1];
         if (nextFat != nComponent.current) {
           if (nextFat == NormaldoFatState.uberFat) {
-            _maxFatSfxPool.start();
+            _maxFatSfxPool.start(volume: gameRef.audio.sfxVolume);
+            print("MAX FAT SFX POOl");
           } else {
-            _fatUpSfxPools.random().start();
+            print("FAT SFX POOl");
+            _fatUpSfxPools.random().start(volume: gameRef.audio.sfxVolume);
           }
           return nextFat;
         }
@@ -375,6 +377,12 @@ class Normaldo extends PositionComponent
   void _handleFat() {
     if (_fatCounter.isNotEmpty) {
       final nextFat = _fatCounter.last;
+      final fatUpPath = skin.assets.sfx['fatUp'];
+      if (fatUpPath != null) {
+        audio.playAssetSfx(
+          Utils.skinSfxWrapper(fatUpPath.random()),
+        );
+      }
       _changeFatAnimation(nextFat);
       _fatCounter.clear();
     }
@@ -603,7 +611,7 @@ class Normaldo extends PositionComponent
               EffectController(
                 duration: 0.3,
                 reverseDuration: 0.3,
-                atMaxDuration: 0.5,
+                atMaxDuration: 3,
               )));
           _immortal = true;
           final uniquePath = skin.assets.sfx['unique'];
@@ -800,7 +808,7 @@ class Normaldo extends PositionComponent
       final anyEatableClose =
           gameRef.grid.children.whereType<Item>().where((e) {
         return (e is Eatable || skin.resistanceToItems.contains(e.item));
-      }).any((element) => element.distance(this) < 150);
+      }).any((element) => element.distance(this) < element.size.x * 1.5);
       if (anyEatableClose && !isBiting(nComponent.current)) {
         toEatingState();
         Future.delayed(const Duration(milliseconds: 200))
@@ -809,7 +817,7 @@ class Normaldo extends PositionComponent
     } else {
       final anyEatableClose = gameRef.grid.children
           .whereType<Item>()
-          .any((element) => element.distance(this) < 150);
+          .any((element) => element.distance(this) < element.size.x * 1.5);
       if (anyEatableClose && !isBiting(nComponent.current)) {
         toEatingState();
         Future.delayed(const Duration(milliseconds: 200))

@@ -345,7 +345,10 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
                   'spider_man/SPIDER SIP  COCTAIL.mp3',
                 ],
                 'resist': ['spider_man/SPIDER LAUGHT.mp3'],
-                'unique': []
+                'unique': [
+                  'spider_man/SPIDER RESIST1.mp3',
+                  'spider_man/SPIDER RESIST2.mp3',
+                ]
               }),
           resistanceToItems: [
             Items.homeless,
