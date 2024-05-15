@@ -20,7 +20,7 @@ final class Molotov extends SpriteAnimationComponent
 
   @override
   ShapeHitbox get hitbox => RectangleHitbox.relative(
-        Vector2.all(0.9),
+        Vector2.all(0.3),
         parentSize: size,
         anchor: anchor,
       );
@@ -40,7 +40,7 @@ final class Molotov extends SpriteAnimationComponent
     strength = 1;
     final sprites = [
       await Sprite.load('molotov1.png'),
-      await Sprite.load('molotov2.png'),
+      // await Sprite.load('molotov2.png'),
     ];
     final animation = SpriteAnimation.spriteList(
       sprites,

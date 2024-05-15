@@ -219,22 +219,20 @@ enum Items {
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.fatPizza:
         return Vector2(lineSize, lineSize);
-      // case Items.fatPizza:
-      //   return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.homeless:
         return Vector2(lineSize, lineSize);
       case Items.moneyBag:
-        return Vector2(lineSize / 2, lineSize / 2);
+        return Vector2(lineSize / 1.5, lineSize / 1.5);
       case Items.boombox:
-        return Vector2(lineSize, lineSize * 0.7);
+        return Vector2(lineSize * 2, lineSize * 1.5);
       case Items.cocktail:
-        return Vector2(lineSize / 1.5, lineSize / 1.5);
+        return Vector2(lineSize, lineSize);
       case Items.molotov:
-        return Vector2(lineSize, lineSize * 0.4);
+        return Vector2(lineSize * 1.8, lineSize * 1.5);
       case Items.hourglass:
-        return Vector2(lineSize / 1.5, lineSize / 1.5);
+        return Vector2(lineSize, lineSize);
       case Items.punch:
-        return Vector2(lineSize, lineSize * 0.6);
+        return Vector2(lineSize, lineSize);
       case hugeItem:
         return Vector2(lineSize * 6 / 1.2, lineSize * 3 * 0.95);
       case shredder:
@@ -258,7 +256,7 @@ enum Items {
       case Items.casinoChip:
         return Vector2(lineSize * 0.6, lineSize * 0.6);
       case Items.greenPoison:
-        return Vector2(lineSize * 0.6, lineSize * 0.8);
+        return Vector2(lineSize, lineSize * 1.2);
       case Items.compass:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.energizer:
@@ -274,7 +272,7 @@ enum Items {
       case Items.bubbles:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.girl:
-        return Vector2(lineSize * 0.8, lineSize * 0.8);
+        return Vector2(lineSize * 1.3, lineSize * 1.3);
       case Items.goldClocks:
         return Vector2(lineSize * 0.6, lineSize * 0.6);
       case Items.handcuffs:
@@ -286,11 +284,11 @@ enum Items {
       case Items.loserTicket:
         return Vector2(lineSize * 0.8, lineSize * 0.6);
       case Items.magicHat:
-        return Vector2(lineSize * 0.6, lineSize * 0.6);
+        return Vector2(lineSize, lineSize);
       case Items.magicBox:
-        return Vector2(lineSize * 0.7, lineSize * 0.7);
+        return Vector2(lineSize, lineSize);
       case Items.magnet:
-        return Vector2(lineSize * 0.7, lineSize * 0.55);
+        return Vector2(lineSize, lineSize);
       case Items.note:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.note2:
