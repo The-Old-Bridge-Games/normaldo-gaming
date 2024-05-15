@@ -626,8 +626,6 @@ class Normaldo extends PositionComponent
                     1,
                     EffectController(
                       duration: 0.3,
-                      reverseDuration: 0.3,
-                      atMaxDuration: 0.5,
                     )));
                 _immortal = false;
                 _evadeTimer();
