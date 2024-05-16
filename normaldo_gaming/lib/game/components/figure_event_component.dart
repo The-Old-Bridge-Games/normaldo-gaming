@@ -427,7 +427,7 @@ class FigureEventComponent extends PositionComponent
             final itemSize = item.item.getSize(lineSize);
             grid.add(item.item.component()
               ..size = itemSize
-              ..position = Vector2(size.x * 1.3 + (xOffset * itemSize.x * 2.1),
+              ..position = Vector2(size.x + (xOffset * itemSize.x * 1.2),
                   linesCentersY[item.line ?? 0]));
           }
         }
