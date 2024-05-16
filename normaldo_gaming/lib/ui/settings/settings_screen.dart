@@ -204,7 +204,7 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                           model: AboutUsModel(
                             name: 'GojiTBT',
                             position: 'Sound Designer',
-                            description: 'Im a ZAZA boi',
+                            description: 'U hear me',
                             imagePath: 'assets/images/us/gashan_pix.png',
                           ),
                         ),
@@ -216,7 +216,7 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                             name: 'pROC',
                             position: 'Developer',
                             description:
-                                'No matter how fast are you, only matters keep goin',
+                                'No matter how fast you are just keep goin ©Kama BULLET',
                             imagePath: 'assets/images/us/gashan_pix.png',
                           ),
                         ),
