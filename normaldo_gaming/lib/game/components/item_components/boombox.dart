@@ -13,7 +13,7 @@ final class Boombox extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<PullUpGame>, Item, CleanScreenItem {
   @override
   ShapeHitbox get hitbox => RectangleHitbox.relative(
-        Vector2.all(0.9),
+        Vector2.all(0.5),
         parentSize: size,
         anchor: anchor,
       );
