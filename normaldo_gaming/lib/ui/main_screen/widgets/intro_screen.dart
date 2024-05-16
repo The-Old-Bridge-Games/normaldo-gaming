@@ -36,6 +36,12 @@ class _TvScreenState extends State<IntroScreen> with HasNgAudio {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
 
