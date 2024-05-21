@@ -132,6 +132,7 @@ class Grid extends PositionComponent
   void onItemsCreatorTick(LevelState state) {
     if (!gameRef.userCubit.state.educated) return;
     if (state.figure != null) return;
+    if (gameRef.bossInProgress) return;
     final lineItem = state.level.next().first;
     final component = lineItem.item.component();
     component.size = lineItem.item.getSize(lineSize);
