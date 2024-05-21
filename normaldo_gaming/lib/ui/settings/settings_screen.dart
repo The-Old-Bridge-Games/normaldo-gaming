@@ -193,9 +193,9 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                           child: AboutUsCard(
                         model: AboutUsModel(
                           name: 'Gleb',
-                          position: 'Art&Design',
-                          description: 'Do not eat bread',
-                          imagePath: 'assets/images/us/gashan_pix.png',
+                          position: 'Game desinger\nIdea creator',
+                          description: 'I am hungry',
+                          imagePath: 'assets/images/us/hleb.png',
                         ),
                       )),
                       const SizedBox(width: 32),
@@ -215,9 +215,8 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                           model: AboutUsModel(
                             name: 'pROC',
                             position: 'Developer',
-                            description:
-                                'No matter how fast you are just keep goin ©Kama BULLET',
-                            imagePath: 'assets/images/us/gashan_pix.png',
+                            description: 'NORMALDO to every house',
+                            imagePath: 'assets/images/us/proc.png',
                           ),
                         ),
                       ),
@@ -353,11 +352,17 @@ class AboutUsCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(model.name, style: textTheme.displayMedium),
+                  Text(
+                    model.name,
+                    style: textTheme.displayMedium,
+                  ),
                   const SizedBox(height: 4),
-                  Text(model.position,
-                      style: textTheme.displayMedium
-                          ?.copyWith(color: NGTheme.purple1)),
+                  Text(
+                    model.position,
+                    style: textTheme.displayMedium
+                        ?.copyWith(color: NGTheme.purple1),
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     model.description,
