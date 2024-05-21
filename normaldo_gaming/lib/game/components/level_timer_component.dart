@@ -19,9 +19,10 @@ class LevelTimerComponent extends TimerComponent
     if (!gameRef.userCubit.state.educated) return;
     if (bloc.state.miniGame != null) return;
     if (bloc.state.figure == null && !gameRef.bossInProgress) {
-      // bloc.add(
-      //     const LevelEvent.startFigure(figure: FigureEvent.unreachablePizza()));
-      bloc.add(const LevelEvent.startRandomFigure());
+      bloc.add(
+        // const LevelEvent.startFigure(figure: FigureEvent.punchWave()),
+        const LevelEvent.startRandomFigure(),
+      );
     }
     add(TimerComponent(
       period: _eventPeriod,
