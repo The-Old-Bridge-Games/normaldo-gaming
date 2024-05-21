@@ -52,7 +52,7 @@ class MissionCubit extends HydratedCubit<MissionState> {
       throw UnexpectedError();
     }
 
-    final mission = _missionOfType(type);
+    final mission = _missionOfType(type, item: item);
     mission.maybeWhen(
       finishGame: (exp, description, adsViewed, completeValue, isOneGame, type,
           currentValue) {
@@ -210,9 +210,22 @@ class MissionCubit extends HydratedCubit<MissionState> {
     return state.missions.any((element) => element.type == type);
   }
 
-  Mission _missionOfType(MissionType type) =>
-      state.missions.firstWhere((element) => element.type == type,
-          orElse: () => throw UnexpectedError());
+  Mission _missionOfType(MissionType type, {Items? item}) {
+    switch (type) {
+      case MissionType.crashItem:
+        return state.missions.firstWhere(
+            (element) =>
+                element.type == type &&
+                element.maybeMap(
+                  crashItem: (mission) => mission.item == item,
+                  orElse: () => false,
+                ),
+            orElse: () => throw UnexpectedError());
+      default:
+        return state.missions.firstWhere((element) => element.type == type,
+            orElse: () => throw UnexpectedError());
+    }
+  }
 
   // <––––––––––––––––––––––––– HYDRATING –––––––––––––––––––––––––>
 

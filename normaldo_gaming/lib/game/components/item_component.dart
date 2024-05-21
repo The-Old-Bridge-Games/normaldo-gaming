@@ -145,6 +145,7 @@ mixin AttackingItem on Item {
         position: position,
         size: size,
       );
+      gameRef.missionCubit.applyProgress(MissionType.crashItem, item: item);
       removeFromParent();
       return;
     }
