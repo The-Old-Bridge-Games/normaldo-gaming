@@ -814,7 +814,7 @@ class Normaldo extends PositionComponent
       }
     } else {
       final anyEatableClose = gameRef.grid.children
-          .whereType<Item>()
+          .whereType<Eatable>()
           .any((element) => element.distance(this) < element.size.x * 1.5);
       if (anyEatableClose && !isBiting(nComponent.current)) {
         toEatingState();

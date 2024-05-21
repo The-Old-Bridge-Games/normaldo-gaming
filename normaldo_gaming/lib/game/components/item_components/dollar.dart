@@ -8,7 +8,12 @@ import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 final class Dollar extends SpriteComponent
-    with HasGameRef<PullUpGame>, CollisionCallbacks, Item, MoneygiveItem {
+    with
+        HasGameRef<PullUpGame>,
+        CollisionCallbacks,
+        Item,
+        MoneygiveItem,
+        Eatable {
   @override
   ShapeHitbox get hitbox => CircleHitbox.relative(
         0.9,
