@@ -151,6 +151,7 @@ mixin AttackingItem on Item {
     }
     if (other is Normaldo && !other.immortal && !other.hasImmuneTo(item)) {
       other.takeHit(damage: damage);
+      gameRef.missionCubit.applyProgress(MissionType.crashItem, item: item);
       gameRef.grid.showCollisionComics(
         type: ComicsType.hurt,
         position: position,

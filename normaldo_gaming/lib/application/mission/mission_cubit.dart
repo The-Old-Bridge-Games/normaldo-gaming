@@ -43,7 +43,7 @@ class MissionCubit extends HydratedCubit<MissionState> {
     Items? item,
     int? currentLocationIndex,
   }) {
-    if (!_hasMissionOfType(type)) return;
+    if (!_hasMissionOfType(type, item: item)) return;
     if ((type == MissionType.crashItem || type == MissionType.passItem) &&
         item == null) {
       throw UnexpectedError();
