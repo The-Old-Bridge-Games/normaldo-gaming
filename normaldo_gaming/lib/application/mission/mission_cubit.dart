@@ -206,25 +206,24 @@ class MissionCubit extends HydratedCubit<MissionState> {
 
   // <––––––––––––––––––––––––– PRIVATE METHODS –––––––––––––––––––––––––>
 
-  bool _hasMissionOfType(MissionType type) {
-    return state.missions.any((element) => element.type == type);
+  bool _hasMissionOfType(MissionType type, {Items? item}) {
+    return state.missions.any((element) =>
+        element.type == type &&
+        element.maybeMap(
+          crashItem: (mission) => mission.item == item,
+          orElse: () => true,
+        ));
   }
 
   Mission _missionOfType(MissionType type, {Items? item}) {
-    switch (type) {
-      case MissionType.crashItem:
-        return state.missions.firstWhere(
-            (element) =>
-                element.type == type &&
-                element.maybeMap(
-                  crashItem: (mission) => mission.item == item,
-                  orElse: () => false,
-                ),
-            orElse: () => throw UnexpectedError());
-      default:
-        return state.missions.firstWhere((element) => element.type == type,
-            orElse: () => throw UnexpectedError());
-    }
+    return state.missions.firstWhere(
+      (mission) =>
+          mission.maybeMap(
+            crashItem: (mission) => mission.item == item,
+            orElse: () => true,
+          ) &&
+          mission.type == type,
+    );
   }
 
   // <––––––––––––––––––––––––– HYDRATING –––––––––––––––––––––––––>
