@@ -29,7 +29,6 @@ dependencies:
   unity_ads_plugin: ^0.3.14
 
   # Database
-  hive: ^2.2.3
 
   # Splash&Icon
   flutter_native_splash: ^2.2.19
@@ -46,7 +45,7 @@ dependencies:
   flutter_simple_dependency_injection: ^2.0.0
 
   # Network
-  chopper: ^7.0.9
+  # chopper: ^7.0.9
 
   # Storage
   flutter_secure_storage: ^9.0.0
@@ -59,6 +58,7 @@ dependencies:
   # app_version_update: ^4.0.2
   package_info_plus: ^8.0.0
   url_launcher: ^6.2.6
+  archive: ^3.5.1
 
   # Localization
   easy_localization: ^3.0.2
