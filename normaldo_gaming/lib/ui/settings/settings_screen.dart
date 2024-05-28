@@ -205,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> with HasNgAudio {
                             name: 'GojiTBT',
                             position: 'Sound Designer',
                             description: 'U hear me',
-                            imagePath: 'assets/images/us/gashan_pix.png',
+                            imagePath: 'assets/images/us/goji.png',
                           ),
                         ),
                       ),
