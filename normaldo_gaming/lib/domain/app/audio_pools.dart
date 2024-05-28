@@ -127,6 +127,7 @@ final class AudioPools {
   AudioPools(this._audioManager);
 
   late final Map<Items, List<AudioPool>> _sfxPools;
+  final Map<Items, Future<void> Function()> _sfxStopFunc = {};
   late final AudioPool _itemHit;
   late final AudioPool _moneygive;
 
@@ -134,10 +135,14 @@ final class AudioPools {
 
   var _initialized = false;
 
-  void playSfx(Items item) {
+  Future<void> playSfx(Items item) async {
     if (!_initialized) return;
-    _sfxPools[item]?.random().start(volume: _audioManager._sfxVolume) ??
-        print('no sfx for $item loaded');
+    await _sfxStopFunc[item]?.call();
+    final stopFunc =
+        await _sfxPools[item]?.random().start(volume: _audioManager._sfxVolume);
+    if (stopFunc != null) {
+      _sfxStopFunc[item] = stopFunc;
+    }
   }
 
   void playItemHitSfx() async {

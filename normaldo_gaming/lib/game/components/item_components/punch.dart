@@ -40,7 +40,7 @@ final class Punch extends SpriteComponent
     sprite = await Sprite.load('punch.png');
 
     _shakeEffect = RotateEffect.to(
-        0.5,
+        0.3,
         EffectController(
           speed: 50,
           reverseSpeed: 50,
