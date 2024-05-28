@@ -126,7 +126,9 @@ class UserCubit extends HydratedCubit<UserState> {
         case ExtraLiveReward():
           extraLivesRewarded += reward.amount;
         case SkinReward():
-          newSkins.add(_skinsRepository.getSkinById(reward.uniqueId));
+          if (state.user.mySkins.every((s) => s.uniqueId != reward.uniqueId)) {
+            newSkins.add(_skinsRepository.getSkinById(reward.uniqueId));
+          }
         default:
           continue;
       }
@@ -136,7 +138,7 @@ class UserCubit extends HydratedCubit<UserState> {
             .copyWith(
               dollars: state.user.dollars + bucksRewarded,
               extraLives: state.user.extraLives + extraLivesRewarded,
-              mySkins: (newSkins..addAll(state.user.mySkins)).toSet().toList(),
+              mySkins: (newSkins..addAll(state.user.mySkins)),
             )
             .toEntity()));
   }
