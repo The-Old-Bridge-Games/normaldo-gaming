@@ -64,35 +64,7 @@ final class Punch extends SpriteComponent
     final grid = game.grid;
     if (position.x <= grid.size.x - (size.x / 2)) {
       gameRef.sfxPools.playSfx(item);
-      grid.add(RectangleComponent(
-        priority: -1,
-        size: Vector2(grid.size.x, size.y * 0.95),
-        anchor: Anchor.center,
-        position: Vector2(grid.center.x, position.y),
-        paint: Paint()..color = Colors.red,
-      )..addAll([
-          SequenceEffect([
-            SizeEffect.by(
-                Vector2(0, -size.y * 0.95), EffectController(duration: 0.01)),
-            SizeEffect.by(
-                Vector2(0, size.y * 0.9),
-                EffectController(
-                  duration: 1,
-                ))
-          ]),
-          SequenceEffect([
-            OpacityEffect.to(0.5, EffectController(duration: 0.01)),
-            OpacityEffect.to(
-                0,
-                EffectController(
-                  repeatCount: 2,
-                  duration: 0.3,
-                  reverseDuration: 0.5,
-                )),
-            OpacityEffect.fadeOut(EffectController(duration: 0.1)),
-            RemoveEffect(),
-          ])
-        ]));
+      // _startBgEffect();
       _hitting = true;
       add(TimerComponent(
           period: 1,
@@ -116,5 +88,38 @@ final class Punch extends SpriteComponent
           }));
     }
     super.update(dt);
+  }
+
+  void _startBgEffect() {
+    final grid = gameRef.grid;
+    grid.add(RectangleComponent(
+      priority: -1,
+      size: Vector2(grid.size.x, size.y * 0.95),
+      anchor: Anchor.center,
+      position: Vector2(grid.center.x, position.y),
+      paint: Paint()..color = Colors.red,
+    )..addAll([
+        SequenceEffect([
+          SizeEffect.by(
+              Vector2(0, -size.y * 0.95), EffectController(duration: 0.01)),
+          SizeEffect.by(
+              Vector2(0, size.y * 0.9),
+              EffectController(
+                duration: 1,
+              ))
+        ]),
+        SequenceEffect([
+          OpacityEffect.to(0.5, EffectController(duration: 0.01)),
+          OpacityEffect.to(
+              0,
+              EffectController(
+                repeatCount: 2,
+                duration: 0.3,
+                reverseDuration: 0.5,
+              )),
+          OpacityEffect.fadeOut(EffectController(duration: 0.1)),
+          RemoveEffect(),
+        ])
+      ]));
   }
 }
