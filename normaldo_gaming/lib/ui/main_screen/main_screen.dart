@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:games_services/games_services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
@@ -107,6 +108,10 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
           );
     } else {
       tab = Tabs.play;
+      Leaderboards.showLeaderboards(
+        iOSLeaderboardID: 'main_leaderboard',
+        androidLeaderboardID: 'CgkIkbL246cOEAIQAQ',
+      );
     }
   }
 
@@ -152,6 +157,13 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
     } else {
       tab = Tabs.slots;
     }
+  }
+
+  void _onLeaderboardPressed() {
+    Leaderboards.showLeaderboards(
+      iOSLeaderboardID: 'main_leaderboard',
+      androidLeaderboardID: 'CgkIkbL246cOEAIQAQ',
+    );
   }
 
   void _onKnowledgeBookPressed() {
@@ -200,8 +212,12 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
                   languageCode: context.locale.languageCode,
                 ));
       }
-      if (context.read<UserCubit>().state.introduced) {
+      final userState = context.read<UserCubit>().state;
+      if (userState.introduced) {
         audio.playBgm();
+      }
+      if (userState.user.name.isNotEmpty) {
+        GameAuth.signIn();
       }
     });
   }
@@ -290,6 +306,10 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
                       alignment: const Alignment(-0.135, 0.48),
                       child: _buildTrashHitbox(),
                     ),
+                    Align(
+                      alignment: const Alignment(-0.8, 0.2),
+                      child: _buildLeaderboardHitbox(),
+                    ),
                     AnimatedAlign(
                       alignment: _tab == Tabs.idle
                           ? const Alignment(2, -1)
@@ -303,6 +323,20 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLeaderboardHitbox() {
+    return BouncingButton(
+      onPressed: _onLeaderboardPressed,
+      child: Transform.rotate(
+        angle: -0.24,
+        child: Container(
+          width: 150,
+          height: 100,
+          color: Colors.red.withOpacity(0.0001),
         ),
       ),
     );

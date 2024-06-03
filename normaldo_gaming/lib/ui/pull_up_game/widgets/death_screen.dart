@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:games_services/games_services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
@@ -41,6 +42,11 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
     if (gameCubit.state.score > userCubit.state.user.highScore) {
       userCubit.changeHighScore(gameCubit.state.score);
     }
+    Leaderboards.submitScore(
+        score: Score(
+            androidLeaderboardID: 'CgkIkbL246cOEAIQAQ',
+            iOSLeaderboardID: 'main_leaderboard',
+            value: gameCubit.state.score));
     userCubit.addDollars(gameCubit.state.dollars);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {

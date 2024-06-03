@@ -1,7 +1,7 @@
 name: normaldo_gaming
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.16.4+30
+version: 0.17.0+31
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -19,6 +19,7 @@ dependencies:
   json_annotation: ^4.8.1
   path_provider: ^2.0.15
   equatable: ^2.0.5
+  games_services: ^4.0.1
 
   # UI
   expandable: ^5.0.1
