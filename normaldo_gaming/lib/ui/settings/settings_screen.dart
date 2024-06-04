@@ -354,12 +354,12 @@ class AboutUsCard extends StatelessWidget {
                 children: [
                   Text(
                     model.name,
-                    style: textTheme.displayMedium,
+                    style: textTheme.displaySmall,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     model.position,
-                    style: textTheme.displayMedium
+                    style: textTheme.displaySmall
                         ?.copyWith(color: NGTheme.purple1),
                     textAlign: TextAlign.center,
                   ),

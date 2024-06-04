@@ -42,19 +42,19 @@ abstract class NGTheme {
 
   static const displayLarge = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 24,
+    fontSize: 18,
     color: Colors.white,
   );
 
   static const displayMedium = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 18,
+    fontSize: 15,
     color: Colors.white,
   );
 
   static const displaySmall = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 15,
+    fontSize: 12,
     color: Colors.white,
   );
 
