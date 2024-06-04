@@ -6,6 +6,7 @@ import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 
 enum MenuSfx {
   button,
+  roll,
 }
 
 final class AudioManager {
@@ -35,6 +36,7 @@ final class AudioManager {
 
   final _menuPlayers = {
     MenuSfx.button: AudioPlayer(),
+    MenuSfx.roll: AudioPlayer(),
   };
 
   Future<void> playBgm({String? path}) {
@@ -67,11 +69,17 @@ final class AudioManager {
     await _assetBgmPlayer.setVolume(volume);
   }
 
-  Future<void> playMenuSfx(MenuSfx sfx) async {
-    await _menuPlayers[sfx]!.stop();
+  Future<void> playMenuSfx(MenuSfx sfx, {bool stopPrevious = true}) async {
+    if (stopPrevious) {
+      await _menuPlayers[sfx]!.stop();
+    }
     return switch (sfx) {
       MenuSfx.button => _menuPlayers[sfx]!.play(
           AssetSource('audio/sfx/ui/button1.mp3'),
+          volume: _sfxVolume,
+        ),
+      MenuSfx.roll => _menuPlayers[sfx]!.play(
+          AssetSource('audio/sfx/spin.mp3'),
           volume: _sfxVolume,
         ),
     };

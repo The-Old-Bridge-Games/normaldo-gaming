@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/components/slot_machine_widget.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
@@ -82,8 +83,8 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   }
 
   Future<void> _onSpinPressed({required bool spinning}) async {
-    audio.playAssetSfx('audio/sfx/spin.mp3');
     if (spinning) return;
+    audio.playMenuSfx(MenuSfx.roll, stopPrevious: false);
     _rollingAudioPlayer = await audio.playAssetSfx('audio/rolling.mp3');
     final cubit = context.read<SlotMachineCubit>();
     cubit.roll();
