@@ -31,7 +31,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   double _opacity = 0.0;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
 
     audio.playAssetBgm('/audio/death_audio.mp3', loop: true);

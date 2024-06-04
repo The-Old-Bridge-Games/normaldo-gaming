@@ -21,6 +21,7 @@ import 'package:normaldo_gaming/routing/ng_router.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/intro_screen.dart';
 
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/top_players_list.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/trash_bin_screen.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -108,10 +109,6 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
           );
     } else {
       tab = Tabs.play;
-      Leaderboards.showLeaderboards(
-        iOSLeaderboardID: 'main_leaderboard',
-        androidLeaderboardID: 'CgkIkbL246cOEAIQAQ',
-      );
     }
   }
 
@@ -306,10 +303,10 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
                       alignment: const Alignment(-0.135, 0.48),
                       child: _buildTrashHitbox(),
                     ),
-                    Align(
-                      alignment: const Alignment(-0.8, 0.2),
-                      child: _buildLeaderboardHitbox(),
-                    ),
+                    // Align(
+                    //   alignment: const Alignment(-0.8, 0.2),
+                    //   child: _buildLeaderboardHitbox(),
+                    // ),
                     AnimatedAlign(
                       alignment: _tab == Tabs.idle
                           ? const Alignment(2, -1)
@@ -457,62 +454,63 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
         child: SizedBox(
           width: 120,
           height: 60,
+          child: TopPlayersList(),
           // color: Colors.red.withOpacity(0.3),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: FittedBox(
-                  child: Text(
-                    user.name.isEmpty ? 'Loading...' : user.name,
-                    style: textTheme.displayMedium,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 4),
-              SizedBox(
-                height: 15,
-                child: Row(
-                  children: [
-                    // HIGHSCORE
-                    Image.asset('assets/images/pizza.png'),
-                    const SizedBox(width: 4),
-                    Text(
-                      user.highScore.toString(),
-                      style: textTheme.displaySmall,
-                    ),
-                    const Spacer(),
-                    // DOLLARS
-                    Image.asset('assets/images/dollar.png'),
-                    const SizedBox(width: 4),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        user.dollars.toString(),
-                        style: textTheme.displaySmall,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 4),
-              SizedBox(
-                height: 15,
-                child: Row(
-                  children: [
-                    // EXTRA LIVES
-                    Image.asset('assets/images/heart.png'),
-                    const SizedBox(width: 4),
-                    Text(
-                      user.extraLives.toString(),
-                      style: textTheme.displaySmall,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          // child: Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     Expanded(
+          //       child: FittedBox(
+          //         child: Text(
+          //           user.name.isEmpty ? 'Loading...' : user.name,
+          //           style: textTheme.displayMedium,
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(height: 4),
+          //     SizedBox(
+          //       height: 15,
+          //       child: Row(
+          //         children: [
+          //           // HIGHSCORE
+          //           Image.asset('assets/images/pizza.png'),
+          //           const SizedBox(width: 4),
+          //           Text(
+          //             user.highScore.toString(),
+          //             style: textTheme.displaySmall,
+          //           ),
+          //           const Spacer(),
+          //           // DOLLARS
+          //           Image.asset('assets/images/dollar.png'),
+          //           const SizedBox(width: 4),
+          //           FittedBox(
+          //             fit: BoxFit.scaleDown,
+          //             child: Text(
+          //               user.dollars.toString(),
+          //               style: textTheme.displaySmall,
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //     const SizedBox(height: 4),
+          //     SizedBox(
+          //       height: 15,
+          //       child: Row(
+          //         children: [
+          //           // EXTRA LIVES
+          //           Image.asset('assets/images/heart.png'),
+          //           const SizedBox(width: 4),
+          //           Text(
+          //             user.extraLives.toString(),
+          //             style: textTheme.displaySmall,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ),
       );
     });
