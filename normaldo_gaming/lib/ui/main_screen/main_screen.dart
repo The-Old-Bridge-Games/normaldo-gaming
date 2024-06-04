@@ -421,7 +421,7 @@ class _MainScreenState extends State<MainScreen> with HasNgAudio {
       return Transform.rotate(
         angle: -0.35,
         child: SizedBox(
-          width: 120,
+          width: MediaQuery.of(context).size.width * 0.15,
           height: 60,
           // color: Colors.red.withOpacity(0.3),
           child: Column(

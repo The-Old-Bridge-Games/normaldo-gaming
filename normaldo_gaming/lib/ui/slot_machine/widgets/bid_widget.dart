@@ -63,14 +63,6 @@ class _BidWidgetState extends State<BidWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _decreaseBidderWrapper(
-            step: 100,
-            child: BouncingButton(
-              onPressed: () => _onMinusPressed(100),
-              child: _buildBidButton(increasing: false, text: '-100'),
-            ),
-          ),
-          const SizedBox(width: 8),
-          _decreaseBidderWrapper(
             step: 50,
             child: BouncingButton(
                 onPressed: () => _onMinusPressed(50),
@@ -109,13 +101,6 @@ class _BidWidgetState extends State<BidWidget> {
                 child: _buildBidButton(text: '+50')),
           ),
           const SizedBox(width: 8),
-          _increaseBidderWrapper(
-            step: 100,
-            userDollars: state.user.dollars,
-            child: BouncingButton(
-                onPressed: () => _onPlusPressed(100),
-                child: _buildBidButton(text: '+100')),
-          ),
         ],
       ),
     );

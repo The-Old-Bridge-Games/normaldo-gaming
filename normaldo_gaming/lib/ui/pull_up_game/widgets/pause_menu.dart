@@ -149,7 +149,7 @@ class _PauseMenuState extends State<PauseMenu> {
                                 width: 250,
                                 child: SoundVolumeWidget(),
                               ),
-                              const SizedBox(height: 32),
+                              const SizedBox(height: 16),
                               if (context.read<UserCubit>().state.educated)
                                 BouncingButton(
                                   onPressed: _onMenuPressed,
@@ -158,7 +158,7 @@ class _PauseMenuState extends State<PauseMenu> {
                                     style: textTheme.displayMedium,
                                   ),
                                 ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 8),
                               NGButton(
                                 onPressed: _unpause,
                                 text: 'Resume'.tr(),
