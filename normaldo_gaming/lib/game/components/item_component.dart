@@ -42,9 +42,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
 
   set collidable(bool newValue) {
     _collidable = newValue;
-    if (collidable) {
-      _addHitbox();
-    } else {
+    if (!collidable) {
       _removeHitbox();
     }
   }
@@ -55,14 +53,8 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   double _speedMultiplier = 1;
   bool _moving = true;
 
-  void _addHitbox() {
-    add(hitbox..position = Vector2(size.x / 2, size.y / 2));
-  }
-
   void _removeHitbox() {
-    if (children.whereType<ShapeHitbox>().isNotEmpty) {
-      removeWhere((e) => e is ShapeHitbox);
-    }
+    removeWhere((component) => component is Hitbox);
   }
 
   @override
