@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
+import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/sound_volume_widget.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
@@ -20,7 +21,7 @@ class PauseMenu extends StatefulWidget {
   State<PauseMenu> createState() => _PauseMenuState();
 }
 
-class _PauseMenuState extends State<PauseMenu> {
+class _PauseMenuState extends State<PauseMenu> with HasNgAudio {
   bool _unpausing = false;
   Timer? _timer;
 
@@ -80,6 +81,7 @@ class _PauseMenuState extends State<PauseMenu> {
                         const SizedBox(width: 8),
                         NGButton(
                           onPressed: () {
+                            audio.stopAssetBgm();
                             Vibrate.feedback(FeedbackType.light);
                             context.pop();
                             context.pop();
