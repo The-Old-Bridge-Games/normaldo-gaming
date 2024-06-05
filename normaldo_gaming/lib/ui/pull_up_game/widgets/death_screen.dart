@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
+import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/slot_machine/cubit/slot_machine_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
@@ -28,6 +29,7 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
   final _levelManager = injector.get<LevelManager>();
 
   double _opacity = 0.0;
+  bool _ignoring = true;
 
   @override
   void initState() {
@@ -48,101 +50,108 @@ class _DeathScreenState extends State<DeathScreen> with HasNgAudio {
       setState(() {
         _opacity = 1.0;
       });
+      if (context.read<MissionCubit>().state.missions.any((m) => m.completed)) {
+        Future.delayed(const Duration(seconds: 3))
+            .whenComplete(() => setState(() => _ignoring = false));
+      } else {
+        setState(() => _ignoring = false);
+      }
     });
-  }
-
-  @override
-  void dispose() {
-    audio.stopAssetBgm();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<GameSessionCubit>();
-    return Scaffold(
-      backgroundColor: Colors.black45,
-      body: AnimatedOpacity(
-        opacity: _opacity,
-        duration: const Duration(seconds: 1),
-        child: Stack(
-          children: [
-            SafeArea(
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        children: [
-                          _buildMissions(),
-                        ],
+    return IgnorePointer(
+      ignoring: _ignoring,
+      child: Scaffold(
+        backgroundColor: Colors.black45,
+        body: AnimatedOpacity(
+          opacity: _opacity,
+          duration: const Duration(seconds: 1),
+          child: Stack(
+            children: [
+              SafeArea(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          children: [
+                            _buildMissions(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: NGTheme.purple3, width: 3),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 8.0,
-                      ),
-                      margin: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: Column(
-                        children: [
-                          UserLevelBar(
-                            levelManager: _levelManager,
-                            barWidth: 180,
-                          ),
-                          const SizedBox(height: 32.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _buildScore(context, cubit.state.score),
-                              _buildDollars(context, cubit.state.dollars),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          _buildNewRecordText(),
-                          const Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              BouncingButton(
-                                onPressed: () => context.pop(),
-                                child: Image.asset(
-                                    'assets/images/menu_bubble_button.png'),
-                              ),
-                              BouncingButton(
-                                onPressed: () {
-                                  context.pushReplacement(
-                                    NGRoutes.pullUpGame.path,
-                                  );
-                                },
-                                child: Image.asset(
-                                    'assets/images/retry_bubble_button.png'),
-                              ),
-                            ],
-                          )
-                        ],
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: NGTheme.purple3, width: 3),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 8.0,
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 24.0),
+                        child: Column(
+                          children: [
+                            UserLevelBar(
+                              levelManager: _levelManager,
+                              barWidth: 180,
+                            ),
+                            const SizedBox(height: 32.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildScore(context, cubit.state.score),
+                                _buildDollars(context, cubit.state.dollars),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            _buildNewRecordText(),
+                            const Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                BouncingButton(
+                                  onPressed: () async {
+                                    await audio.stopAssetBgm();
+                                    context.pop();
+                                  },
+                                  child: Image.asset(
+                                      'assets/images/menu_bubble_button.png'),
+                                ),
+                                BouncingButton(
+                                  onPressed: () async {
+                                    await audio.stopAssetBgm();
+                                    context.pushReplacement(
+                                      NGRoutes.pullUpGame.path,
+                                    );
+                                  },
+                                  child: Image.asset(
+                                      'assets/images/retry_bubble_button.png'),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              left: 24,
-              bottom: 0,
-              child: _buildBuildings(),
-            ),
-          ],
+              Positioned(
+                left: 24,
+                bottom: 0,
+                child: _buildBuildings(),
+              ),
+            ],
+          ),
         ),
       ),
     );
