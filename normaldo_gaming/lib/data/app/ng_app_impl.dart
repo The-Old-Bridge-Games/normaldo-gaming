@@ -110,13 +110,17 @@ class _AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: NGRouter.router,
-      debugShowCheckedModeBanner: false,
-      theme: _theme,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      locale: context.locale,
+    return MediaQuery(
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1.0)),
+      child: MaterialApp.router(
+        routerConfig: NGRouter.router,
+        debugShowCheckedModeBanner: false,
+        theme: _theme,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        locale: context.locale,
+      ),
     );
   }
 }
