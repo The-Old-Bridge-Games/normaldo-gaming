@@ -65,11 +65,6 @@ OS Version: ${Platform.operatingSystemVersion}
       );
     }
 
-    await AudioPlayer.global.setAudioContext(AudioContextConfig(
-      respectSilence: true,
-      duckAudio: true,
-    ).build());
-
     final directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
 
