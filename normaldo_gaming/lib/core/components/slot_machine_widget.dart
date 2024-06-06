@@ -134,6 +134,7 @@ class _SlotMachineState extends State<SlotMachineWidget> {
                 )
               : Row(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _Reel(
                       reelWidth: widget.reelWidth,

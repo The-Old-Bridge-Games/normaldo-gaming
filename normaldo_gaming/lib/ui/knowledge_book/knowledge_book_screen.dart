@@ -74,6 +74,7 @@ class _KnowledgeBookScreenState extends State<KnowledgeBookScreen> {
             Expanded(
               flex: 2,
               child: DetailedItemCard(
+                key: ObjectKey(_pickedItem),
                 item: _pickedItem!,
               ),
             ),

@@ -10,6 +10,7 @@ import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/components/slot_machine_widget.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/roller/rolls.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
@@ -82,8 +83,8 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
   }
 
   Future<void> _onSpinPressed({required bool spinning}) async {
-    audio.playAssetSfx('audio/sfx/spin.mp3');
     if (spinning) return;
+    audio.playMenuSfx(MenuSfx.roll, stopPrevious: false);
     _rollingAudioPlayer = await audio.playAssetSfx('audio/rolling.mp3');
     final cubit = context.read<SlotMachineCubit>();
     cubit.roll();
@@ -191,7 +192,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                   image: DecorationImage(
                 image: AssetImage(
                     'assets/images/backgrounds/slot_machine_screen.png'),
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.cover,
               )),
               child: Stack(
                 children: [
@@ -221,12 +222,17 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                           height: 110,
                           width: MediaQuery.of(context).size.width,
                           reelHeight: 300,
-                          // reelSpacing: constraints.maxWidth / 3.888888888,
-                          rollAlignments: const [
-                            Alignment(-0.6, 0),
-                            Alignment(-0.01, 0),
-                            Alignment(0.58, 0),
-                          ],
+                          rollAlignments: constraints.maxWidth > 720
+                              ? const [
+                                  Alignment(-0.6, 0),
+                                  Alignment(-0.01, 0),
+                                  Alignment(0.58, 0),
+                                ]
+                              : const [
+                                  Alignment(-0.77, 0),
+                                  Alignment(-0.01, 0),
+                                  Alignment(0.73, 0),
+                                ],
                           reelItemExtent: 100,
                           rollItems: _rollItems.values.toList(),
                           onCreated: _onCreated,
@@ -277,7 +283,6 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildExtraLives(),
-                  const SizedBox(width: 16),
                   _buildBalance(),
                   Padding(
                     padding: const EdgeInsets.only(top: 4),

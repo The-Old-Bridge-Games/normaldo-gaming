@@ -59,6 +59,8 @@ final class MagicBox extends SpriteComponent
                 reverseDuration: 0.2,
               ), onComplete: () {
             add(TimerComponent(
+                key: ComponentKey.named('magic_box'),
+                removeOnFinish: true,
                 period: 0.2,
                 repeat: true,
                 onTick: () {
@@ -83,6 +85,7 @@ final class MagicBox extends SpriteComponent
                   }
 
                   final pos = getPos();
+                  print(pos);
                   final roller = Roller<Item>([
                     (Pizza(), 5),
                     (PurpleCocktail(), 1),
@@ -120,6 +123,10 @@ final class MagicBox extends SpriteComponent
               period: 0.2 * 8,
               onTick: () {
                 _animationInProgress = false;
+                gameRef
+                    .findByKey<TimerComponent>(ComponentKey.named('magic_box'))
+                    ?.timer
+                    .stop();
                 add(ScaleEffect.to(
                     Vector2.all(0),
                     EffectController(

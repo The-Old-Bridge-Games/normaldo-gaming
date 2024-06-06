@@ -80,13 +80,11 @@ class _PullUpGameWidgetState extends State<PullUpGameWidget>
     } else {
       _canPlay = true;
     }
-    audio.playAssetBgm('audio/mix.mp3');
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    audio.stopAssetBgm();
     super.dispose();
   }
 
