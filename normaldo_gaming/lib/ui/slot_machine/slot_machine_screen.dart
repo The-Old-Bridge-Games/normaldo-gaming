@@ -178,7 +178,6 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
 
   @override
   Widget build(BuildContext context) {
-    final horizontalViewPadding = MediaQuery.of(context).viewPadding.horizontal;
     return PopScope(
       canPop: !context.read<SlotMachineCubit>().state.spinning,
       child: BlocListener<SlotMachineCubit, SlotMachineState>(
@@ -193,7 +192,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                   image: DecorationImage(
                 image: AssetImage(
                     'assets/images/backgrounds/slot_machine_screen.png'),
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.cover,
               )),
               child: Stack(
                 children: [
@@ -217,26 +216,23 @@ class _SlotMachineScreenState extends State<SlotMachineScreen>
                     alignment: Alignment.center,
                     child: IgnorePointer(
                       child: LayoutBuilder(
-                        builder: (context, constraints) => SlotMachineWidget(
+                        builder: (context, constraints) =>
+                            SlotMachineWidget.stacked(
                           shuffle: false,
                           height: 110,
                           width: MediaQuery.of(context).size.width,
                           reelHeight: 300,
-                          reelSpacing: constraints.maxWidth / 3 -
-                              (horizontalViewPadding == 0
-                                  ? constraints.maxWidth * 0.11
-                                  : horizontalViewPadding + 10),
-                          // rollAlignments: constraints.maxWidth > 720
-                          //     ? const [
-                          //         Alignment(-0.6, 0),
-                          //         Alignment(-0.01, 0),
-                          //         Alignment(0.58, 0),
-                          //       ]
-                          //     : const [
-                          //         Alignment(-0.77, 0),
-                          //         Alignment(-0.01, 0),
-                          //         Alignment(0.73, 0),
-                          //       ],
+                          rollAlignments: constraints.maxWidth > 720
+                              ? const [
+                                  Alignment(-0.6, 0),
+                                  Alignment(-0.01, 0),
+                                  Alignment(0.58, 0),
+                                ]
+                              : const [
+                                  Alignment(-0.77, 0),
+                                  Alignment(-0.01, 0),
+                                  Alignment(0.73, 0),
+                                ],
                           reelItemExtent: 100,
                           rollItems: _rollItems.values.toList(),
                           onCreated: _onCreated,
