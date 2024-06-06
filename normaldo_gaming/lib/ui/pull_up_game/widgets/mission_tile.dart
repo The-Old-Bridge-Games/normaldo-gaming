@@ -19,45 +19,53 @@ class MissionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return ListTile(
-      leading: _buildExp(context),
-      tileColor: NGTheme.purple2,
-      trailing: false
-          ? IconButton(
-              onPressed: onCompletePressed,
-              icon: const Icon(
-                Icons.done,
-                color: NGTheme.green1,
-              ))
-          : null,
-      title: Text(
-          mission.when(
-                collectPizza: (exp, completeValue, isOneGame, description,
-                        adsViewed, type, currentValue) =>
-                    mission.description.plural(completeValue,
-                        args: [completeValue.toString()]),
-                crashItem: (exp, completeValue, isOneGame, description,
-                        adsViewed, item, type, currentValue) =>
-                    mission.description.plural(completeValue,
-                        args: [item.name.tr(), completeValue.toString()]),
-                passItem: (exp, completeValue, isOneGame, description,
-                        adsViewed, item, type, currentValue) =>
-                    mission.description.plural(completeValue,
-                        args: [item.name.tr(), completeValue.toString()]),
-                reachLocation: (exp, description, adsViewed, completeValue,
-                        isOneGame, type, currentValue) =>
-                    mission.description.tr(args: [
-                  Utils.locationIndexToString[completeValue]?.tr() ?? 'UNKNOWN'
-                ]),
-                finishGame: (exp, description, adsViewed, completeValue,
-                        isOneGame, type, currentValue) =>
-                    mission.description.tr(args: [
-                  Utils.locationIndexToString[completeValue]?.tr() ?? 'UNKNOWN'
-                ]),
-              ) +
-              (showProgress ? ' ${mission.progressText}' : ''),
-          style: textTheme.displaySmall
-              ?.copyWith(color: mission.completed ? NGTheme.green1 : null)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          _buildExp(context),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+                mission.when(
+                      collectPizza: (exp, completeValue, isOneGame, description,
+                              adsViewed, type, currentValue) =>
+                          mission.description.plural(completeValue,
+                              args: [completeValue.toString()]),
+                      crashItem: (exp, completeValue, isOneGame, description,
+                              adsViewed, item, type, currentValue) =>
+                          mission.description.plural(completeValue,
+                              args: [item.name.tr(), completeValue.toString()]),
+                      passItem: (exp, completeValue, isOneGame, description,
+                              adsViewed, item, type, currentValue) =>
+                          mission.description.plural(completeValue,
+                              args: [item.name.tr(), completeValue.toString()]),
+                      reachLocation: (exp, description, adsViewed,
+                              completeValue, isOneGame, type, currentValue) =>
+                          mission.description.tr(args: [
+                        Utils.locationIndexToString[completeValue]?.tr() ??
+                            'UNKNOWN'
+                      ]),
+                      finishGame: (exp, description, adsViewed, completeValue,
+                              isOneGame, type, currentValue) =>
+                          mission.description.tr(args: [
+                        Utils.locationIndexToString[completeValue]?.tr() ??
+                            'UNKNOWN'
+                      ]),
+                    ) +
+                    (showProgress ? ' ${mission.progressText}' : ''),
+                style: textTheme.displaySmall?.copyWith(
+                    color: mission.completed ? NGTheme.green1 : null)),
+          )
+        ],
+        // ? IconButton(
+        //     onPressed: onCompletePressed,
+        //     icon: const Icon(
+        //       Icons.done,
+        //       color: NGTheme.green1,
+        //     ))
+        // : null,
+      ),
     );
   }
 
