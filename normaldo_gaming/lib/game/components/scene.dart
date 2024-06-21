@@ -1,7 +1,5 @@
-import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
@@ -14,6 +12,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
   final Vector2 initialSize;
   final _currentBackgrounds = <SpriteAnimationComponent>[];
   var _currentLocationIndex = 0;
+  var _currentLevel = -1;
   int get currentLocationIndex => _currentLocationIndex;
 
   @override
@@ -26,11 +25,21 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
     //   await Images().load('backgrounds/bg0-sheet.png'),
     //   await AssetsCache().readJson('images/backgrounds/bg0.json'),
     // );
-    final sprite = await Sprite.load('backgrounds/level1.png');
-    _currentBackgrounds.add(SpriteAnimationComponent(
-      animation: SpriteAnimation.spriteList([sprite], stepTime: 10),
-      size: Vector2(size.y * 26.225, size.y),
-    ));
+    final level1X = size.y * 26.225;
+    final level2X = size.y * 46.54;
+    final level1 = await Sprite.load('backgrounds/level1.png');
+    final level2 = await Sprite.load('backgrounds/level2.png');
+    _currentBackgrounds.addAll([
+      SpriteAnimationComponent(
+        animation: SpriteAnimation.spriteList([level1], stepTime: 10),
+        size: Vector2(level1X, size.y),
+      ),
+      SpriteAnimationComponent(
+        animation: SpriteAnimation.spriteList([level2], stepTime: 10),
+        position: Vector2(level1X, 0),
+        size: Vector2(level2X, size.y),
+      ),
+    ]);
     addAll(_currentBackgrounds);
     if (gameRef.userCubit.state.educated) {
       _move();
@@ -47,59 +56,21 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
           }
         }));
     return super.onLoad();
-    final imagesList = await Images().loadAll(List.generate(
-        44, (index) => 'backgrounds/bg0/normaldo${index + 1}.png'));
-    final spriteList = imagesList.map((e) => Sprite(e)).toList();
-    final frameAnimation =
-        SpriteAnimation.spriteList(spriteList, stepTime: 0.07);
-    _currentBackgrounds.addAll([
-      SpriteAnimationComponent(
-        position: position,
-        size: size,
-        animation: frameAnimation,
-      ),
-      SpriteAnimationComponent(
-        size: size,
-        position: Vector2(size.x, y),
-        animation: SpriteAnimation.spriteList(
-          [Sprite(await Images().load('backgrounds/bg1.png'))],
-          stepTime: 0.07,
-        ),
-      ),
-    ]);
-    addAll(_currentBackgrounds);
-    await add(FlameBlocListener<LevelBloc, LevelState>(
-      listenWhen: (previousState, newState) =>
-          previousState.level.index != newState.level.index,
-      onNewState: (state) async {
-        final index = (state.level.index + 1) % 22;
-        _currentBackgrounds.add(SpriteAnimationComponent(
-          animation: index == 0
-              ? frameAnimation
-              : SpriteAnimation.spriteList(
-                  [Sprite(await Images().load('backgrounds/bg$index.png'))],
-                  stepTime: 0.07,
-                ),
-        )
-          ..position = Vector2(initialSize.x, y)
-          ..size = size);
-        add(_currentBackgrounds.last);
-        _move();
-      },
-    ));
-    _move();
-    super.onLoad();
   }
 
-  void move() => _move();
+  void moveToNextLevel() => _move();
 
   void _move() {
+    if (_currentBackgrounds.length - 1 == _currentLevel) return;
+    _currentLevel++;
     for (final bg in _currentBackgrounds) {
       bg.add(MoveByEffect(
-          Vector2(-bg.size.x + initialSize.x * 2, 0),
+          Vector2(
+              -_currentBackgrounds[_currentLevel].size.x + initialSize.x, 0),
           EffectController(
-              duration: LevelBloc.levelChangeDuration.toDouble(),
+              speed: 300,
               onMax: () {
+                if (_currentBackgrounds.indexOf(bg) != _currentLevel) return;
                 // Preparing to boss
                 gameRef.bossInProgress = true;
                 const vanishDuration = 0.3;
