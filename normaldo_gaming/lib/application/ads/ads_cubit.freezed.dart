@@ -690,6 +690,7 @@ mixin _$AdReward {
   TResult when<TResult extends Object?>({
     required TResult Function() noReward,
     required TResult Function(int amount) bucks,
+    required TResult Function(int amount) bucksInGame,
     required TResult Function(void Function() applyReward) custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -697,6 +698,7 @@ mixin _$AdReward {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noReward,
     TResult? Function(int amount)? bucks,
+    TResult? Function(int amount)? bucksInGame,
     TResult? Function(void Function() applyReward)? custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -704,6 +706,7 @@ mixin _$AdReward {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noReward,
     TResult Function(int amount)? bucks,
+    TResult Function(int amount)? bucksInGame,
     TResult Function(void Function() applyReward)? custom,
     required TResult orElse(),
   }) =>
@@ -712,6 +715,7 @@ mixin _$AdReward {
   TResult map<TResult extends Object?>({
     required TResult Function(_NoReward value) noReward,
     required TResult Function(_Bucks value) bucks,
+    required TResult Function(_BucksInGame value) bucksInGame,
     required TResult Function(_Custom value) custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -719,6 +723,7 @@ mixin _$AdReward {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NoReward value)? noReward,
     TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_BucksInGame value)? bucksInGame,
     TResult? Function(_Custom value)? custom,
   }) =>
       throw _privateConstructorUsedError;
@@ -726,6 +731,7 @@ mixin _$AdReward {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NoReward value)? noReward,
     TResult Function(_Bucks value)? bucks,
+    TResult Function(_BucksInGame value)? bucksInGame,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) =>
@@ -789,6 +795,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult when<TResult extends Object?>({
     required TResult Function() noReward,
     required TResult Function(int amount) bucks,
+    required TResult Function(int amount) bucksInGame,
     required TResult Function(void Function() applyReward) custom,
   }) {
     return noReward();
@@ -799,6 +806,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noReward,
     TResult? Function(int amount)? bucks,
+    TResult? Function(int amount)? bucksInGame,
     TResult? Function(void Function() applyReward)? custom,
   }) {
     return noReward?.call();
@@ -809,6 +817,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noReward,
     TResult Function(int amount)? bucks,
+    TResult Function(int amount)? bucksInGame,
     TResult Function(void Function() applyReward)? custom,
     required TResult orElse(),
   }) {
@@ -823,6 +832,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult map<TResult extends Object?>({
     required TResult Function(_NoReward value) noReward,
     required TResult Function(_Bucks value) bucks,
+    required TResult Function(_BucksInGame value) bucksInGame,
     required TResult Function(_Custom value) custom,
   }) {
     return noReward(this);
@@ -833,6 +843,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NoReward value)? noReward,
     TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_BucksInGame value)? bucksInGame,
     TResult? Function(_Custom value)? custom,
   }) {
     return noReward?.call(this);
@@ -843,6 +854,7 @@ class _$NoRewardImpl implements _NoReward {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NoReward value)? noReward,
     TResult Function(_Bucks value)? bucks,
+    TResult Function(_BucksInGame value)? bucksInGame,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {
@@ -923,6 +935,7 @@ class _$BucksImpl implements _Bucks {
   TResult when<TResult extends Object?>({
     required TResult Function() noReward,
     required TResult Function(int amount) bucks,
+    required TResult Function(int amount) bucksInGame,
     required TResult Function(void Function() applyReward) custom,
   }) {
     return bucks(amount);
@@ -933,6 +946,7 @@ class _$BucksImpl implements _Bucks {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noReward,
     TResult? Function(int amount)? bucks,
+    TResult? Function(int amount)? bucksInGame,
     TResult? Function(void Function() applyReward)? custom,
   }) {
     return bucks?.call(amount);
@@ -943,6 +957,7 @@ class _$BucksImpl implements _Bucks {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noReward,
     TResult Function(int amount)? bucks,
+    TResult Function(int amount)? bucksInGame,
     TResult Function(void Function() applyReward)? custom,
     required TResult orElse(),
   }) {
@@ -957,6 +972,7 @@ class _$BucksImpl implements _Bucks {
   TResult map<TResult extends Object?>({
     required TResult Function(_NoReward value) noReward,
     required TResult Function(_Bucks value) bucks,
+    required TResult Function(_BucksInGame value) bucksInGame,
     required TResult Function(_Custom value) custom,
   }) {
     return bucks(this);
@@ -967,6 +983,7 @@ class _$BucksImpl implements _Bucks {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NoReward value)? noReward,
     TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_BucksInGame value)? bucksInGame,
     TResult? Function(_Custom value)? custom,
   }) {
     return bucks?.call(this);
@@ -977,6 +994,7 @@ class _$BucksImpl implements _Bucks {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NoReward value)? noReward,
     TResult Function(_Bucks value)? bucks,
+    TResult Function(_BucksInGame value)? bucksInGame,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {
@@ -993,6 +1011,151 @@ abstract class _Bucks implements AdReward {
   int get amount;
   @JsonKey(ignore: true)
   _$$BucksImplCopyWith<_$BucksImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BucksInGameImplCopyWith<$Res> {
+  factory _$$BucksInGameImplCopyWith(
+          _$BucksInGameImpl value, $Res Function(_$BucksInGameImpl) then) =
+      __$$BucksInGameImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int amount});
+}
+
+/// @nodoc
+class __$$BucksInGameImplCopyWithImpl<$Res>
+    extends _$AdRewardCopyWithImpl<$Res, _$BucksInGameImpl>
+    implements _$$BucksInGameImplCopyWith<$Res> {
+  __$$BucksInGameImplCopyWithImpl(
+      _$BucksInGameImpl _value, $Res Function(_$BucksInGameImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+  }) {
+    return _then(_$BucksInGameImpl(
+      null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$BucksInGameImpl implements _BucksInGame {
+  const _$BucksInGameImpl(this.amount);
+
+  @override
+  final int amount;
+
+  @override
+  String toString() {
+    return 'AdReward.bucksInGame(amount: $amount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BucksInGameImpl &&
+            (identical(other.amount, amount) || other.amount == amount));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, amount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BucksInGameImplCopyWith<_$BucksInGameImpl> get copyWith =>
+      __$$BucksInGameImplCopyWithImpl<_$BucksInGameImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noReward,
+    required TResult Function(int amount) bucks,
+    required TResult Function(int amount) bucksInGame,
+    required TResult Function(void Function() applyReward) custom,
+  }) {
+    return bucksInGame(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noReward,
+    TResult? Function(int amount)? bucks,
+    TResult? Function(int amount)? bucksInGame,
+    TResult? Function(void Function() applyReward)? custom,
+  }) {
+    return bucksInGame?.call(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noReward,
+    TResult Function(int amount)? bucks,
+    TResult Function(int amount)? bucksInGame,
+    TResult Function(void Function() applyReward)? custom,
+    required TResult orElse(),
+  }) {
+    if (bucksInGame != null) {
+      return bucksInGame(amount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoReward value) noReward,
+    required TResult Function(_Bucks value) bucks,
+    required TResult Function(_BucksInGame value) bucksInGame,
+    required TResult Function(_Custom value) custom,
+  }) {
+    return bucksInGame(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoReward value)? noReward,
+    TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_BucksInGame value)? bucksInGame,
+    TResult? Function(_Custom value)? custom,
+  }) {
+    return bucksInGame?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoReward value)? noReward,
+    TResult Function(_Bucks value)? bucks,
+    TResult Function(_BucksInGame value)? bucksInGame,
+    TResult Function(_Custom value)? custom,
+    required TResult orElse(),
+  }) {
+    if (bucksInGame != null) {
+      return bucksInGame(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BucksInGame implements AdReward {
+  const factory _BucksInGame(final int amount) = _$BucksInGameImpl;
+
+  int get amount;
+  @JsonKey(ignore: true)
+  _$$BucksInGameImplCopyWith<_$BucksInGameImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1063,6 +1226,7 @@ class _$CustomImpl implements _Custom {
   TResult when<TResult extends Object?>({
     required TResult Function() noReward,
     required TResult Function(int amount) bucks,
+    required TResult Function(int amount) bucksInGame,
     required TResult Function(void Function() applyReward) custom,
   }) {
     return custom(applyReward);
@@ -1073,6 +1237,7 @@ class _$CustomImpl implements _Custom {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? noReward,
     TResult? Function(int amount)? bucks,
+    TResult? Function(int amount)? bucksInGame,
     TResult? Function(void Function() applyReward)? custom,
   }) {
     return custom?.call(applyReward);
@@ -1083,6 +1248,7 @@ class _$CustomImpl implements _Custom {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? noReward,
     TResult Function(int amount)? bucks,
+    TResult Function(int amount)? bucksInGame,
     TResult Function(void Function() applyReward)? custom,
     required TResult orElse(),
   }) {
@@ -1097,6 +1263,7 @@ class _$CustomImpl implements _Custom {
   TResult map<TResult extends Object?>({
     required TResult Function(_NoReward value) noReward,
     required TResult Function(_Bucks value) bucks,
+    required TResult Function(_BucksInGame value) bucksInGame,
     required TResult Function(_Custom value) custom,
   }) {
     return custom(this);
@@ -1107,6 +1274,7 @@ class _$CustomImpl implements _Custom {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NoReward value)? noReward,
     TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_BucksInGame value)? bucksInGame,
     TResult? Function(_Custom value)? custom,
   }) {
     return custom?.call(this);
@@ -1117,6 +1285,7 @@ class _$CustomImpl implements _Custom {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NoReward value)? noReward,
     TResult Function(_Bucks value)? bucks,
+    TResult Function(_BucksInGame value)? bucksInGame,
     TResult Function(_Custom value)? custom,
     required TResult orElse(),
   }) {

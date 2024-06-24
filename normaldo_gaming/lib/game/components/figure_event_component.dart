@@ -43,11 +43,11 @@ class FigureEventComponent extends PositionComponent
               item: Items.boombox, line: Random().nextInt(Utils.linesCount))
         ],
         [
-          const LineItem(item: Items.cone, line: 0),
-          const LineItem(item: Items.cone, line: 1),
-          const LineItem(item: Items.cone, line: 2),
-          const LineItem(item: Items.cone, line: 3),
-          const LineItem(item: Items.cone, line: 4),
+          const LineItem(item: Items.tv, line: 0),
+          const LineItem(item: Items.tv, line: 1),
+          const LineItem(item: Items.tv, line: 2),
+          const LineItem(item: Items.tv, line: 3),
+          const LineItem(item: Items.tv, line: 4),
         ]
       ],
       guardedPizza: () {

@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
+import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/ui/widgets/earn_dollars_dialog.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
@@ -39,6 +40,13 @@ class _AdsWidgetState extends State<AdsWidget>
             rewardType.maybeWhen(
               bucks: (amount) {
                 context.read<UserCubit>().addDollars(amount);
+                showDialog(
+                        context: context,
+                        builder: (context) => EarnDollarsDialog(amount: amount))
+                    .then((value) => onComplete?.call());
+              },
+              bucksInGame: (amount) {
+                context.read<GameSessionCubit>().addDollars(amount);
                 showDialog(
                         context: context,
                         builder: (context) => EarnDollarsDialog(amount: amount))

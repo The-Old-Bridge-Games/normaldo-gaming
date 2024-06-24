@@ -31,7 +31,7 @@ final class Tv extends SpriteComponent
         gameRef.pauseEngine();
         gameRef.adsCubit.showAd(
             type: AdType.interstitial,
-            reward: const AdReward.bucks(15),
+            reward: const AdReward.bucksInGame(15),
             onComplete: () {
               gameRef.overlays.remove(Overlays.pauseMenu.name);
               Future.delayed(const Duration(seconds: 1)).whenComplete(

@@ -19,5 +19,6 @@ class AdsState with _$AdsState {
 class AdReward with _$AdReward {
   const factory AdReward.noReward() = _NoReward;
   const factory AdReward.bucks(int amount) = _Bucks;
+  const factory AdReward.bucksInGame(int amount) = _BucksInGame;
   const factory AdReward.custom(void Function() applyReward) = _Custom;
 }
