@@ -83,6 +83,7 @@ class PullUpGame extends FlameGame
     (Items.magnet, 2.0),
     (Items.boombox, 2.0),
     (Items.magicBox, 3.0),
+    (Items.mutagen, 0.1),
   ];
 
   @override

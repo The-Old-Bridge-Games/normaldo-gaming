@@ -433,6 +433,24 @@ class Normaldo extends PositionComponent
       ]));
   }
 
+  Future<void> toMaxFat() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    toIdleFatState();
+    const state = NormaldoFatState.uberFat;
+    final maxFatPath = skin.assets.sfx['maxFat'];
+    if (maxFatPath != null) {
+      audio.playAssetSfx(maxFatPath.random());
+    }
+    notify(
+      text: 'MAX FAT!'.tr(),
+      color: NGTheme.green1,
+      fontSize: 18,
+    );
+    _changeFatAnimation(state);
+    fatIterator.current = state;
+    setHitboxPositionAndSize(size: size * bigHitboxRatio);
+  }
+
   Future<void> nextFatState() async {
     NormaldoFatState state;
     await Future.delayed(const Duration(milliseconds: 200));

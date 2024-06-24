@@ -32,6 +32,7 @@ import 'package:normaldo_gaming/game/components/item_components/magic_hat.dart';
 import 'package:normaldo_gaming/game/components/item_components/magnet.dart';
 import 'package:normaldo_gaming/game/components/item_components/molotov.dart';
 import 'package:normaldo_gaming/game/components/item_components/money_bag.dart';
+import 'package:normaldo_gaming/game/components/item_components/mutagen.dart';
 import 'package:normaldo_gaming/game/components/item_components/note.dart';
 import 'package:normaldo_gaming/game/components/item_components/note2.dart';
 import 'package:normaldo_gaming/game/components/item_components/phone.dart';
@@ -97,6 +98,7 @@ enum Items {
   letterBottle,
   roadSign,
   umbrella,
+  mutagen,
   // BOSSES&ATTACKS
   shredder,
   shuriken,
@@ -205,6 +207,8 @@ enum Items {
         return Umbrella();
       case smoke:
         return Smoke(corners: []);
+      case mutagen:
+        return Mutagen();
     }
   }
 
@@ -318,6 +322,8 @@ enum Items {
         return Vector2(lineSize, lineSize);
       case Items.smoke:
         return Vector2(lineSize * 0.5, lineSize * 0.5);
+      case Items.mutagen:
+        return Vector2(lineSize * 0.8, lineSize * 0.8);
     }
   }
 
