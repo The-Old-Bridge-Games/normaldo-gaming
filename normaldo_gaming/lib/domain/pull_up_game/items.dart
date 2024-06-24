@@ -329,7 +329,7 @@ enum Items {
       case Items.mutagen:
         return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.tv:
-        return Vector2(lineSize * 0.6 * 1.356, lineSize * 0.6);
+        return Vector2(lineSize * 0.8 * 1.356, lineSize * 0.8);
     }
   }
 

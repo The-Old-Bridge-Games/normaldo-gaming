@@ -87,6 +87,12 @@ class _AdsWidgetState extends State<AdsWidget>
   }
 
   @override
+  void dispose() {
+    rotationAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdsCubit, AdsState>(
       listener: _blocListener,

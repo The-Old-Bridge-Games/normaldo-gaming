@@ -36,6 +36,11 @@ final class Level {
     required this.itemsByLevel,
     required this.speed,
   });
+
+  bool contains(Items item) {
+    return itemsByLevel.entries
+        .any((element) => element.value.items.contains(item));
+  }
 }
 
 class PullUpGame extends FlameGame

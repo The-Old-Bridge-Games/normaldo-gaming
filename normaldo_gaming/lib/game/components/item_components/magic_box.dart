@@ -85,21 +85,32 @@ final class MagicBox extends SpriteComponent
                   }
 
                   final pos = getPos();
-                  print(pos);
-                  final roller = Roller<Item>([
-                    (Pizza(), 5),
-                    (PurpleCocktail(), 1),
-                    (GreenPoison(), 1),
-                    (Girl(), 1),
-                    (BananaPeel(), 1),
-                    (Beer(), 1),
-                    (MoneyBag(), 0.1),
-                    (CaseyMask(), 0.5),
-                    (Dollar(), 2),
-                    (MagicHat(), 0.5),
-                    (Hourglass(), 0.5),
-                    (GoldClocks(), 0.5),
-                  ]);
+                  final allRolls = <(Items, double)>[
+                    (Items.pizza, 5),
+                    (Items.cocktail, 1),
+                    (Items.greenPoison, 1),
+                    (Items.girl, 1),
+                    (Items.bananaPeel, 1),
+                    (Items.beer, 1),
+                    (Items.moneyBag, 0.1),
+                    (Items.caseyMask, 0.5),
+                    (Items.dollar, 2),
+                    (Items.magicHat, 0.5),
+                    (Items.hourglass, 0.5),
+                    (Items.goldClocks, 0.5),
+                    (Items.compass, 0.5),
+                  ];
+                  final availableRolls = <(Items, double)>[];
+                  for (final roll in allRolls) {
+                    if (gameRef.scene.currentLevel.contains(roll.$1)) {
+                      availableRolls.add(roll);
+                    }
+                  }
+                  final roller = Roller<Item>(
+                    availableRolls
+                        .map((e) => (e.$1.component(), e.$2))
+                        .toList(),
+                  );
                   final item = roller.roll()..collidable = false;
                   grid.add(item
                     ..size = item.item.getSize(grid.lineSize)

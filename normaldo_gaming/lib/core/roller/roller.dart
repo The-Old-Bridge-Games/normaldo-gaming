@@ -18,6 +18,8 @@ final class Roller<T extends Object> {
 
   final List<_Roll<T>> _rolls = [];
 
+  List<T> get items => _rolls.map((e) => e.roll).toList();
+
   double _accumulatedWeight = 0.0;
 
   void add(T roll, double weight) {
