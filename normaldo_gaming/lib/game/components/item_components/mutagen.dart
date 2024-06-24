@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
@@ -35,6 +37,12 @@ final class Mutagen extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     sprite = await Sprite.load('mutagen.png');
+    add(RotateEffect.by(
+        pi * 2,
+        EffectController(
+          infinite: true,
+          speed: 5,
+        )));
     return super.onLoad();
   }
 }
