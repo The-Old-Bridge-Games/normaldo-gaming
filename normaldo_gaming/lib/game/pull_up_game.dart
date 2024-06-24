@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
+import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/education/cubit/education_cubit.dart';
 import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_session_cubit.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -46,6 +47,7 @@ class PullUpGame extends FlameGame
   final LevelBloc levelBloc;
   final MissionCubit missionCubit;
   final EducationCubit educationCubit;
+  final AdsCubit adsCubit;
 
   PullUpGame({
     required this.userCubit,
@@ -54,6 +56,7 @@ class PullUpGame extends FlameGame
     required this.missionCubit,
     required this.educationCubit,
     required this.sfxPools,
+    required this.adsCubit,
   });
 
   // Components
@@ -72,7 +75,7 @@ class PullUpGame extends FlameGame
 
   bool bossInProgress = false;
 
-  final _goodItems = [
+  final _allLevelItems = <(Items, double)>[
     (Items.magicHat, 0.2),
     (Items.energizer, 1.0),
     (Items.pizza, 50.0),
@@ -84,6 +87,7 @@ class PullUpGame extends FlameGame
     (Items.boombox, 2.0),
     (Items.magicBox, 3.0),
     (Items.mutagen, 0.1),
+    (Items.tv, 1),
   ];
 
   @override
@@ -133,18 +137,18 @@ class PullUpGame extends FlameGame
         bgSprite: level1,
         itemsByLevel: {
           0: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.bananaPeel, 80),
             (Items.trashBin, 3),
           ]),
           1: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.bananaPeel, 20),
             (Items.cone, 10),
             (Items.homeless, 10),
           ]),
           2: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.bananaPeel, 20),
             (Items.roadSign, 10),
             (Items.cone, 10),
@@ -152,7 +156,7 @@ class PullUpGame extends FlameGame
             (Items.trashBin, 3),
           ]),
           3: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.bananaPeel, 20),
             (Items.roadSign, 20),
             (Items.trashBin, 20),
@@ -161,7 +165,7 @@ class PullUpGame extends FlameGame
             (Items.punch, 20),
           ]),
           5: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.bananaPeel, 20),
             (Items.roadSign, 20),
             (Items.trashBin, 20),
@@ -176,19 +180,19 @@ class PullUpGame extends FlameGame
         bgSprite: level2,
         itemsByLevel: {
           9: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
           ]),
           10: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
             (Items.umbrella, 20),
             (Items.cone, 20),
           ]),
           11: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
             (Items.umbrella, 20),
@@ -197,7 +201,7 @@ class PullUpGame extends FlameGame
             (Items.bird, 20),
           ]),
           12: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
             (Items.umbrella, 20),
@@ -207,7 +211,7 @@ class PullUpGame extends FlameGame
             (Items.homeless, 20),
           ]),
           13: Roller<Items>([
-            ..._goodItems,
+            ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
             (Items.umbrella, 20),

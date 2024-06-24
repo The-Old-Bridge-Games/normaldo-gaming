@@ -6,16 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/shop_items_list/shop_items_list_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
-import 'package:normaldo_gaming/domain/ads/ad_manager.dart';
 import 'package:normaldo_gaming/domain/shop/entities/shop_item.dart';
 import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
 import 'package:normaldo_gaming/domain/user/entities/user.dart';
-import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/ui/ads_widget/ads_widget.dart';
 import 'package:normaldo_gaming/ui/shop/widgets/shop_skin_card.dart';
-import 'package:normaldo_gaming/ui/widgets/ads_overlay.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
-import 'package:normaldo_gaming/ui/widgets/earn_dollars_dialog.dart';
-import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 import 'widgets/shop_item_card.dart';
 
@@ -34,43 +30,12 @@ class _ShopScreenState extends State<ShopScreen> {
   User get user => context.read<UserCubit>().state.user;
 
   Future<void> _onItemPressed(BuildContext context, ShopItem item) async {
-    final textTheme = Theme.of(context).textTheme;
     if (item is DollarForAdItem) {
       final cubit = context.read<AdsCubit>();
-      final placementId =
-          injector.get<BaseAdManager>().rewardedVideoAdPlacementId;
-      cubit.setState(const AdsState.loading());
-      await UnityAds.load(
-          placementId: placementId,
-          onComplete: (placementId) {
-            cubit.setState(const AdsState.showing());
-            UnityAds.showVideoAd(
-                placementId: placementId,
-                onStart: (placementId) =>
-                    cubit.setState(const AdsState.showing()),
-                onClick: (placementId) => print('Video Ad $placementId click'),
-                onSkipped: (placementId) =>
-                    cubit.setState(const AdsState.skipped()),
-                onComplete: (placementId) {
-                  cubit.setState(const AdsState.initial());
-                  showDialog(
-                      context: context,
-                      builder: (context) =>
-                          const EarnDollarsDialog(amount: 15)).then((value) {
-                    context.read<UserCubit>().addDollars(15);
-                  });
-                },
-                onFailed: (placementId, error, message) =>
-                    cubit.setState(const AdsState.skipped()));
-          },
-          onFailed: (placementId, error, errorMessage) {
-            cubit.setState(const AdsState.failed());
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-              errorMessage,
-              style: textTheme.displayMedium,
-            )));
-          });
+      cubit.showAd(
+        type: AdType.rewarded,
+        reward: const AdReward.bucks(30),
+      );
     }
   }
 
@@ -91,7 +56,7 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return AdsOverlay(
+    return AdsWidget(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,

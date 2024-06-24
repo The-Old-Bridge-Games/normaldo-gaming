@@ -20,27 +20,31 @@ mixin _$AdsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
+    required TResult Function(String errorMessage, void Function()? onComplete)
+        failed,
+    required TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)
+        readyToShow,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
+    TResult? Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult? Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
+    TResult Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,27 +52,24 @@ mixin _$AdsState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_ReadyToShow value) readyToShow,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_ReadyToShow value)? readyToShow,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
+    TResult Function(_ReadyToShow value)? readyToShow,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -131,9 +132,11 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
+    required TResult Function(String errorMessage, void Function()? onComplete)
+        failed,
+    required TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)
+        readyToShow,
   }) {
     return initial();
   }
@@ -143,9 +146,10 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
+    TResult? Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult? Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
   }) {
     return initial?.call();
   }
@@ -155,9 +159,10 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
+    TResult Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -171,9 +176,8 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_ReadyToShow value) readyToShow,
   }) {
     return initial(this);
   }
@@ -183,9 +187,8 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_ReadyToShow value)? readyToShow,
   }) {
     return initial?.call(this);
   }
@@ -195,9 +198,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
+    TResult Function(_ReadyToShow value)? readyToShow,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,9 +253,11 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
+    required TResult Function(String errorMessage, void Function()? onComplete)
+        failed,
+    required TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)
+        readyToShow,
   }) {
     return loading();
   }
@@ -263,9 +267,10 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
+    TResult? Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult? Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
   }) {
     return loading?.call();
   }
@@ -275,9 +280,10 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
+    TResult Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -291,9 +297,8 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_ReadyToShow value) readyToShow,
   }) {
     return loading(this);
   }
@@ -303,9 +308,8 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_ReadyToShow value)? readyToShow,
   }) {
     return loading?.call(this);
   }
@@ -315,9 +319,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
+    TResult Function(_ReadyToShow value)? readyToShow,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -332,130 +335,12 @@ abstract class _Loading implements AdsState {
 }
 
 /// @nodoc
-abstract class _$$ShowingImplCopyWith<$Res> {
-  factory _$$ShowingImplCopyWith(
-          _$ShowingImpl value, $Res Function(_$ShowingImpl) then) =
-      __$$ShowingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ShowingImplCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$ShowingImpl>
-    implements _$$ShowingImplCopyWith<$Res> {
-  __$$ShowingImplCopyWithImpl(
-      _$ShowingImpl _value, $Res Function(_$ShowingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ShowingImpl implements _Showing {
-  const _$ShowingImpl();
-
-  @override
-  String toString() {
-    return 'AdsState.showing()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ShowingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
-  }) {
-    return showing();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
-  }) {
-    return showing?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
-    required TResult orElse(),
-  }) {
-    if (showing != null) {
-      return showing();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
-    required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
-  }) {
-    return showing(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
-    TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
-  }) {
-    return showing?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
-    TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
-    required TResult orElse(),
-  }) {
-    if (showing != null) {
-      return showing(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Showing implements AdsState {
-  const factory _Showing() = _$ShowingImpl;
-}
-
-/// @nodoc
 abstract class _$$FailedImplCopyWith<$Res> {
   factory _$$FailedImplCopyWith(
           _$FailedImpl value, $Res Function(_$FailedImpl) then) =
       __$$FailedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String errorMessage, void Function()? onComplete});
 }
 
 /// @nodoc
@@ -465,37 +350,73 @@ class __$$FailedImplCopyWithImpl<$Res>
   __$$FailedImplCopyWithImpl(
       _$FailedImpl _value, $Res Function(_$FailedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorMessage = null,
+    Object? onComplete = freezed,
+  }) {
+    return _then(_$FailedImpl(
+      null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      onComplete: freezed == onComplete
+          ? _value.onComplete
+          : onComplete // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$FailedImpl implements _Failed {
-  const _$FailedImpl();
+  const _$FailedImpl(this.errorMessage, {this.onComplete});
+
+  @override
+  final String errorMessage;
+  @override
+  final void Function()? onComplete;
 
   @override
   String toString() {
-    return 'AdsState.failed()';
+    return 'AdsState.failed(errorMessage: $errorMessage, onComplete: $onComplete)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FailedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$FailedImpl &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.onComplete, onComplete) ||
+                other.onComplete == onComplete));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, errorMessage, onComplete);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FailedImplCopyWith<_$FailedImpl> get copyWith =>
+      __$$FailedImplCopyWithImpl<_$FailedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
+    required TResult Function(String errorMessage, void Function()? onComplete)
+        failed,
+    required TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)
+        readyToShow,
   }) {
-    return failed();
+    return failed(errorMessage, onComplete);
   }
 
   @override
@@ -503,11 +424,12 @@ class _$FailedImpl implements _Failed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
+    TResult? Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult? Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
   }) {
-    return failed?.call();
+    return failed?.call(errorMessage, onComplete);
   }
 
   @override
@@ -515,13 +437,14 @@ class _$FailedImpl implements _Failed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
+    TResult Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
     required TResult orElse(),
   }) {
     if (failed != null) {
-      return failed();
+      return failed(errorMessage, onComplete);
     }
     return orElse();
   }
@@ -531,9 +454,8 @@ class _$FailedImpl implements _Failed {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_ReadyToShow value) readyToShow,
   }) {
     return failed(this);
   }
@@ -543,9 +465,8 @@ class _$FailedImpl implements _Failed {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_ReadyToShow value)? readyToShow,
   }) {
     return failed?.call(this);
   }
@@ -555,9 +476,8 @@ class _$FailedImpl implements _Failed {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
+    TResult Function(_ReadyToShow value)? readyToShow,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -568,54 +488,118 @@ class _$FailedImpl implements _Failed {
 }
 
 abstract class _Failed implements AdsState {
-  const factory _Failed() = _$FailedImpl;
+  const factory _Failed(final String errorMessage,
+      {final void Function()? onComplete}) = _$FailedImpl;
+
+  String get errorMessage;
+  void Function()? get onComplete;
+  @JsonKey(ignore: true)
+  _$$FailedImplCopyWith<_$FailedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SkippedImplCopyWith<$Res> {
-  factory _$$SkippedImplCopyWith(
-          _$SkippedImpl value, $Res Function(_$SkippedImpl) then) =
-      __$$SkippedImplCopyWithImpl<$Res>;
+abstract class _$$ReadyToShowImplCopyWith<$Res> {
+  factory _$$ReadyToShowImplCopyWith(
+          _$ReadyToShowImpl value, $Res Function(_$ReadyToShowImpl) then) =
+      __$$ReadyToShowImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String placementId, AdReward reward, void Function()? onComplete});
+
+  $AdRewardCopyWith<$Res> get reward;
 }
 
 /// @nodoc
-class __$$SkippedImplCopyWithImpl<$Res>
-    extends _$AdsStateCopyWithImpl<$Res, _$SkippedImpl>
-    implements _$$SkippedImplCopyWith<$Res> {
-  __$$SkippedImplCopyWithImpl(
-      _$SkippedImpl _value, $Res Function(_$SkippedImpl) _then)
+class __$$ReadyToShowImplCopyWithImpl<$Res>
+    extends _$AdsStateCopyWithImpl<$Res, _$ReadyToShowImpl>
+    implements _$$ReadyToShowImplCopyWith<$Res> {
+  __$$ReadyToShowImplCopyWithImpl(
+      _$ReadyToShowImpl _value, $Res Function(_$ReadyToShowImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? placementId = null,
+    Object? reward = null,
+    Object? onComplete = freezed,
+  }) {
+    return _then(_$ReadyToShowImpl(
+      placementId: null == placementId
+          ? _value.placementId
+          : placementId // ignore: cast_nullable_to_non_nullable
+              as String,
+      reward: null == reward
+          ? _value.reward
+          : reward // ignore: cast_nullable_to_non_nullable
+              as AdReward,
+      onComplete: freezed == onComplete
+          ? _value.onComplete
+          : onComplete // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AdRewardCopyWith<$Res> get reward {
+    return $AdRewardCopyWith<$Res>(_value.reward, (value) {
+      return _then(_value.copyWith(reward: value));
+    });
+  }
 }
 
 /// @nodoc
 
-class _$SkippedImpl implements _Skipped {
-  const _$SkippedImpl();
+class _$ReadyToShowImpl implements _ReadyToShow {
+  const _$ReadyToShowImpl(
+      {required this.placementId, required this.reward, this.onComplete});
+
+  @override
+  final String placementId;
+  @override
+  final AdReward reward;
+  @override
+  final void Function()? onComplete;
 
   @override
   String toString() {
-    return 'AdsState.skipped()';
+    return 'AdsState.readyToShow(placementId: $placementId, reward: $reward, onComplete: $onComplete)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SkippedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ReadyToShowImpl &&
+            (identical(other.placementId, placementId) ||
+                other.placementId == placementId) &&
+            (identical(other.reward, reward) || other.reward == reward) &&
+            (identical(other.onComplete, onComplete) ||
+                other.onComplete == onComplete));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, placementId, reward, onComplete);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReadyToShowImplCopyWith<_$ReadyToShowImpl> get copyWith =>
+      __$$ReadyToShowImplCopyWithImpl<_$ReadyToShowImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() showing,
-    required TResult Function() failed,
-    required TResult Function() skipped,
+    required TResult Function(String errorMessage, void Function()? onComplete)
+        failed,
+    required TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)
+        readyToShow,
   }) {
-    return skipped();
+    return readyToShow(placementId, reward, onComplete);
   }
 
   @override
@@ -623,11 +607,12 @@ class _$SkippedImpl implements _Skipped {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? showing,
-    TResult? Function()? failed,
-    TResult? Function()? skipped,
+    TResult? Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult? Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
   }) {
-    return skipped?.call();
+    return readyToShow?.call(placementId, reward, onComplete);
   }
 
   @override
@@ -635,13 +620,14 @@ class _$SkippedImpl implements _Skipped {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? showing,
-    TResult Function()? failed,
-    TResult Function()? skipped,
+    TResult Function(String errorMessage, void Function()? onComplete)? failed,
+    TResult Function(
+            String placementId, AdReward reward, void Function()? onComplete)?
+        readyToShow,
     required TResult orElse(),
   }) {
-    if (skipped != null) {
-      return skipped();
+    if (readyToShow != null) {
+      return readyToShow(placementId, reward, onComplete);
     }
     return orElse();
   }
@@ -651,11 +637,10 @@ class _$SkippedImpl implements _Skipped {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Showing value) showing,
     required TResult Function(_Failed value) failed,
-    required TResult Function(_Skipped value) skipped,
+    required TResult Function(_ReadyToShow value) readyToShow,
   }) {
-    return skipped(this);
+    return readyToShow(this);
   }
 
   @override
@@ -663,11 +648,10 @@ class _$SkippedImpl implements _Skipped {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Showing value)? showing,
     TResult? Function(_Failed value)? failed,
-    TResult? Function(_Skipped value)? skipped,
+    TResult? Function(_ReadyToShow value)? readyToShow,
   }) {
-    return skipped?.call(this);
+    return readyToShow?.call(this);
   }
 
   @override
@@ -675,18 +659,479 @@ class _$SkippedImpl implements _Skipped {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Showing value)? showing,
     TResult Function(_Failed value)? failed,
-    TResult Function(_Skipped value)? skipped,
+    TResult Function(_ReadyToShow value)? readyToShow,
     required TResult orElse(),
   }) {
-    if (skipped != null) {
-      return skipped(this);
+    if (readyToShow != null) {
+      return readyToShow(this);
     }
     return orElse();
   }
 }
 
-abstract class _Skipped implements AdsState {
-  const factory _Skipped() = _$SkippedImpl;
+abstract class _ReadyToShow implements AdsState {
+  const factory _ReadyToShow(
+      {required final String placementId,
+      required final AdReward reward,
+      final void Function()? onComplete}) = _$ReadyToShowImpl;
+
+  String get placementId;
+  AdReward get reward;
+  void Function()? get onComplete;
+  @JsonKey(ignore: true)
+  _$$ReadyToShowImplCopyWith<_$ReadyToShowImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AdReward {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noReward,
+    required TResult Function(int amount) bucks,
+    required TResult Function(void Function() applyReward) custom,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noReward,
+    TResult? Function(int amount)? bucks,
+    TResult? Function(void Function() applyReward)? custom,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noReward,
+    TResult Function(int amount)? bucks,
+    TResult Function(void Function() applyReward)? custom,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoReward value) noReward,
+    required TResult Function(_Bucks value) bucks,
+    required TResult Function(_Custom value) custom,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoReward value)? noReward,
+    TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_Custom value)? custom,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoReward value)? noReward,
+    TResult Function(_Bucks value)? bucks,
+    TResult Function(_Custom value)? custom,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AdRewardCopyWith<$Res> {
+  factory $AdRewardCopyWith(AdReward value, $Res Function(AdReward) then) =
+      _$AdRewardCopyWithImpl<$Res, AdReward>;
+}
+
+/// @nodoc
+class _$AdRewardCopyWithImpl<$Res, $Val extends AdReward>
+    implements $AdRewardCopyWith<$Res> {
+  _$AdRewardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$NoRewardImplCopyWith<$Res> {
+  factory _$$NoRewardImplCopyWith(
+          _$NoRewardImpl value, $Res Function(_$NoRewardImpl) then) =
+      __$$NoRewardImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NoRewardImplCopyWithImpl<$Res>
+    extends _$AdRewardCopyWithImpl<$Res, _$NoRewardImpl>
+    implements _$$NoRewardImplCopyWith<$Res> {
+  __$$NoRewardImplCopyWithImpl(
+      _$NoRewardImpl _value, $Res Function(_$NoRewardImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$NoRewardImpl implements _NoReward {
+  const _$NoRewardImpl();
+
+  @override
+  String toString() {
+    return 'AdReward.noReward()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$NoRewardImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noReward,
+    required TResult Function(int amount) bucks,
+    required TResult Function(void Function() applyReward) custom,
+  }) {
+    return noReward();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noReward,
+    TResult? Function(int amount)? bucks,
+    TResult? Function(void Function() applyReward)? custom,
+  }) {
+    return noReward?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noReward,
+    TResult Function(int amount)? bucks,
+    TResult Function(void Function() applyReward)? custom,
+    required TResult orElse(),
+  }) {
+    if (noReward != null) {
+      return noReward();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoReward value) noReward,
+    required TResult Function(_Bucks value) bucks,
+    required TResult Function(_Custom value) custom,
+  }) {
+    return noReward(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoReward value)? noReward,
+    TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_Custom value)? custom,
+  }) {
+    return noReward?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoReward value)? noReward,
+    TResult Function(_Bucks value)? bucks,
+    TResult Function(_Custom value)? custom,
+    required TResult orElse(),
+  }) {
+    if (noReward != null) {
+      return noReward(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NoReward implements AdReward {
+  const factory _NoReward() = _$NoRewardImpl;
+}
+
+/// @nodoc
+abstract class _$$BucksImplCopyWith<$Res> {
+  factory _$$BucksImplCopyWith(
+          _$BucksImpl value, $Res Function(_$BucksImpl) then) =
+      __$$BucksImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int amount});
+}
+
+/// @nodoc
+class __$$BucksImplCopyWithImpl<$Res>
+    extends _$AdRewardCopyWithImpl<$Res, _$BucksImpl>
+    implements _$$BucksImplCopyWith<$Res> {
+  __$$BucksImplCopyWithImpl(
+      _$BucksImpl _value, $Res Function(_$BucksImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+  }) {
+    return _then(_$BucksImpl(
+      null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$BucksImpl implements _Bucks {
+  const _$BucksImpl(this.amount);
+
+  @override
+  final int amount;
+
+  @override
+  String toString() {
+    return 'AdReward.bucks(amount: $amount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BucksImpl &&
+            (identical(other.amount, amount) || other.amount == amount));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, amount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BucksImplCopyWith<_$BucksImpl> get copyWith =>
+      __$$BucksImplCopyWithImpl<_$BucksImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noReward,
+    required TResult Function(int amount) bucks,
+    required TResult Function(void Function() applyReward) custom,
+  }) {
+    return bucks(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noReward,
+    TResult? Function(int amount)? bucks,
+    TResult? Function(void Function() applyReward)? custom,
+  }) {
+    return bucks?.call(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noReward,
+    TResult Function(int amount)? bucks,
+    TResult Function(void Function() applyReward)? custom,
+    required TResult orElse(),
+  }) {
+    if (bucks != null) {
+      return bucks(amount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoReward value) noReward,
+    required TResult Function(_Bucks value) bucks,
+    required TResult Function(_Custom value) custom,
+  }) {
+    return bucks(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoReward value)? noReward,
+    TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_Custom value)? custom,
+  }) {
+    return bucks?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoReward value)? noReward,
+    TResult Function(_Bucks value)? bucks,
+    TResult Function(_Custom value)? custom,
+    required TResult orElse(),
+  }) {
+    if (bucks != null) {
+      return bucks(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Bucks implements AdReward {
+  const factory _Bucks(final int amount) = _$BucksImpl;
+
+  int get amount;
+  @JsonKey(ignore: true)
+  _$$BucksImplCopyWith<_$BucksImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CustomImplCopyWith<$Res> {
+  factory _$$CustomImplCopyWith(
+          _$CustomImpl value, $Res Function(_$CustomImpl) then) =
+      __$$CustomImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({void Function() applyReward});
+}
+
+/// @nodoc
+class __$$CustomImplCopyWithImpl<$Res>
+    extends _$AdRewardCopyWithImpl<$Res, _$CustomImpl>
+    implements _$$CustomImplCopyWith<$Res> {
+  __$$CustomImplCopyWithImpl(
+      _$CustomImpl _value, $Res Function(_$CustomImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? applyReward = null,
+  }) {
+    return _then(_$CustomImpl(
+      null == applyReward
+          ? _value.applyReward
+          : applyReward // ignore: cast_nullable_to_non_nullable
+              as void Function(),
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CustomImpl implements _Custom {
+  const _$CustomImpl(this.applyReward);
+
+  @override
+  final void Function() applyReward;
+
+  @override
+  String toString() {
+    return 'AdReward.custom(applyReward: $applyReward)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CustomImpl &&
+            (identical(other.applyReward, applyReward) ||
+                other.applyReward == applyReward));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, applyReward);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CustomImplCopyWith<_$CustomImpl> get copyWith =>
+      __$$CustomImplCopyWithImpl<_$CustomImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() noReward,
+    required TResult Function(int amount) bucks,
+    required TResult Function(void Function() applyReward) custom,
+  }) {
+    return custom(applyReward);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? noReward,
+    TResult? Function(int amount)? bucks,
+    TResult? Function(void Function() applyReward)? custom,
+  }) {
+    return custom?.call(applyReward);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? noReward,
+    TResult Function(int amount)? bucks,
+    TResult Function(void Function() applyReward)? custom,
+    required TResult orElse(),
+  }) {
+    if (custom != null) {
+      return custom(applyReward);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NoReward value) noReward,
+    required TResult Function(_Bucks value) bucks,
+    required TResult Function(_Custom value) custom,
+  }) {
+    return custom(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NoReward value)? noReward,
+    TResult? Function(_Bucks value)? bucks,
+    TResult? Function(_Custom value)? custom,
+  }) {
+    return custom?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NoReward value)? noReward,
+    TResult Function(_Bucks value)? bucks,
+    TResult Function(_Custom value)? custom,
+    required TResult orElse(),
+  }) {
+    if (custom != null) {
+      return custom(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Custom implements AdReward {
+  const factory _Custom(final void Function() applyReward) = _$CustomImpl;
+
+  void Function() get applyReward;
+  @JsonKey(ignore: true)
+  _$$CustomImplCopyWith<_$CustomImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

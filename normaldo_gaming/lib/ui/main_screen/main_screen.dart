@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:normaldo_gaming/application/ads/ads_cubit.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
@@ -17,6 +18,7 @@ import 'package:normaldo_gaming/domain/app/audio_pools.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/injection/injection.dart';
 import 'package:normaldo_gaming/routing/ng_router.dart';
+import 'package:normaldo_gaming/ui/ads_widget/ads_widget.dart';
 import 'package:normaldo_gaming/ui/main_screen/widgets/intro_screen.dart';
 
 import 'package:normaldo_gaming/ui/main_screen/widgets/new_level_dialog.dart';

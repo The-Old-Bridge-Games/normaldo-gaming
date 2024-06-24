@@ -373,5 +373,7 @@
   "Effects": "Эффекты",
   "Gives": "Дает",
   "Located": "Локации",
-  "Damage": "Урон"
+  "Damage": "Урон",
+  "Cannot load a video ad": "Не удалось загрузить рекламный ролик!",
+  "Cannot show a video ad": "Не удалось показать рекламный ролик!"
 }

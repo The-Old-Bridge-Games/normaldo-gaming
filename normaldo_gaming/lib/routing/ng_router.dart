@@ -50,6 +50,8 @@ abstract class NGRouter {
                             create: (context) => injector.get()),
                         BlocProvider<LevelBloc>(
                             create: (context) => injector.get()),
+                        BlocProvider<AdsCubit>(
+                            create: (context) => injector.get()),
                       ],
                       child: const PullUpGameWidget(),
                     ),

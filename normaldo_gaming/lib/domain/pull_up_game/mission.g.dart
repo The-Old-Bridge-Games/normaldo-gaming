@@ -117,6 +117,8 @@ const _$ItemsEnumMap = {
   Items.letterBottle: 'letterBottle',
   Items.roadSign: 'roadSign',
   Items.umbrella: 'umbrella',
+  Items.mutagen: 'mutagen',
+  Items.tv: 'tv',
   Items.shredder: 'shredder',
   Items.shuriken: 'shuriken',
   Items.shredderSword: 'shredderSword',
