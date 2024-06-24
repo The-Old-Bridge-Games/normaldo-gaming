@@ -11,8 +11,10 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/application/mission/mission_cubit.dart';
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
+import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
 import 'package:normaldo_gaming/domain/app/audio_pools.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
 import 'package:normaldo_gaming/game/components/education/education_component.dart';
 import 'package:normaldo_gaming/game/components/fat_counter.dart';
@@ -22,6 +24,18 @@ import 'package:normaldo_gaming/injection/injection.dart';
 
 import 'components/components.dart';
 import 'components/grid.dart';
+
+final class Level {
+  final Sprite bgSprite;
+  final Map<int, Roller<Items>> itemsByLevel;
+  final double speed;
+
+  const Level({
+    required this.bgSprite,
+    required this.itemsByLevel,
+    required this.speed,
+  });
+}
 
 class PullUpGame extends FlameGame
     with TapCallbacks, DragCallbacks, HasCollisionDetection, HasNgAudio {
@@ -49,6 +63,7 @@ class PullUpGame extends FlameGame
   final pauseButton = PauseButton();
   late final FatCounter fatCounter;
   late final Grid grid;
+  late final List<Level> levels;
 
   final AudioPools sfxPools;
 
@@ -56,6 +71,19 @@ class PullUpGame extends FlameGame
   LevelManager get levelManager => _levelManager;
 
   bool bossInProgress = false;
+
+  final _goodItems = [
+    (Items.magicHat, 0.2),
+    (Items.energizer, 1.0),
+    (Items.pizza, 50.0),
+    (Items.moneyBag, 0.1),
+    (Items.dollar, 2.0),
+    (Items.hourglass, 0.5),
+    (Items.caseyMask, 0.1),
+    (Items.magnet, 2.0),
+    (Items.boombox, 2.0),
+    (Items.magicBox, 3.0),
+  ];
 
   @override
   bool get debugMode => false;
@@ -71,6 +99,127 @@ class PullUpGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    final level1 = await Sprite.load('backgrounds/level1.png');
+    final level2 = await Sprite.load('backgrounds/level2.png');
+    /*ЛВЛ 1
+положительные :
+1 пицца 
+2 доллар 
+3 магнит
+4 Магнитофон
+5 мешок денег
+6 коробка пиццы
+7 иммунитет к физухе
+8 иммунитет к магии
+9 песочные часы 
+10 мэджик бокс
+11 мутаген
+12 кока кола
+
+Отрицательные :
+1 помойка
+2 конус
+3 банан 
+4 знак
+5 бомж рыжый
+6 бомж серый
+7 перчатка
+8 коктейль череп (замедление)
+9 телевизор просмотр рекламы
+     */
+    levels = [
+      Level(
+        bgSprite: level1,
+        itemsByLevel: {
+          0: Roller<Items>([
+            ..._goodItems,
+            (Items.bananaPeel, 80),
+            (Items.trashBin, 3),
+          ]),
+          1: Roller<Items>([
+            ..._goodItems,
+            (Items.bananaPeel, 20),
+            (Items.cone, 10),
+            (Items.homeless, 10),
+          ]),
+          2: Roller<Items>([
+            ..._goodItems,
+            (Items.bananaPeel, 20),
+            (Items.roadSign, 10),
+            (Items.cone, 10),
+            (Items.homeless, 5),
+            (Items.trashBin, 3),
+          ]),
+          3: Roller<Items>([
+            ..._goodItems,
+            (Items.bananaPeel, 20),
+            (Items.roadSign, 20),
+            (Items.trashBin, 20),
+            (Items.cone, 20),
+            (Items.homeless, 20),
+            (Items.punch, 20),
+          ]),
+          5: Roller<Items>([
+            ..._goodItems,
+            (Items.bananaPeel, 20),
+            (Items.roadSign, 20),
+            (Items.trashBin, 20),
+            (Items.cone, 40),
+            (Items.homeless, 20),
+            (Items.punch, 20),
+          ]),
+        },
+        speed: 100,
+      ),
+      Level(
+        bgSprite: level2,
+        itemsByLevel: {
+          9: Roller<Items>([
+            ..._goodItems,
+            (Items.letterBottle, 20),
+            (Items.compass, 20),
+          ]),
+          10: Roller<Items>([
+            ..._goodItems,
+            (Items.letterBottle, 20),
+            (Items.compass, 20),
+            (Items.umbrella, 20),
+            (Items.cone, 20),
+          ]),
+          11: Roller<Items>([
+            ..._goodItems,
+            (Items.letterBottle, 20),
+            (Items.compass, 20),
+            (Items.umbrella, 20),
+            (Items.cone, 20),
+            (Items.shipPart, 40),
+            (Items.bird, 20),
+          ]),
+          12: Roller<Items>([
+            ..._goodItems,
+            (Items.letterBottle, 20),
+            (Items.compass, 20),
+            (Items.umbrella, 20),
+            (Items.cone, 20),
+            (Items.shipPart, 40),
+            (Items.bird, 20),
+            (Items.homeless, 20),
+          ]),
+          13: Roller<Items>([
+            ..._goodItems,
+            (Items.letterBottle, 20),
+            (Items.compass, 20),
+            (Items.umbrella, 20),
+            (Items.cone, 20),
+            (Items.shipPart, 40),
+            (Items.bird, 20),
+            (Items.homeless, 20),
+            (Items.punch, 20),
+          ]),
+        },
+        speed: 100,
+      ),
+    ];
     camera.moveTo(size / 2);
     add(TimerComponent(
       period: 1,
@@ -106,6 +255,7 @@ class PullUpGame extends FlameGame
 
   void _initializeComponents() {
     scene = Scene(
+      levels,
       initialSize: Vector2(size.x, size.x),
     );
     scene.size = size;

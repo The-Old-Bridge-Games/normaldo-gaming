@@ -262,7 +262,7 @@ enum Items {
       case Items.energizer:
         return Vector2(lineSize * 0.6, lineSize * 0.8);
       case Items.bird:
-        return Vector2(lineSize * 0.7, lineSize * 0.7);
+        return Vector2(lineSize, lineSize);
       case Items.snake:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.policeAlarm:
@@ -302,20 +302,20 @@ enum Items {
       case Items.security:
         return Vector2(lineSize, lineSize);
       case Items.shipPart:
-        return Vector2(lineSize * 0.7, lineSize * 0.7);
+        return Vector2(lineSize * 2, lineSize * 2);
       case Items.cone:
         return Vector2(lineSize * _widthFactor, lineSize);
       case Items.stone:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.letterBottle:
-        return Vector2(lineSize * 0.6, lineSize * 0.8);
+        return Vector2(lineSize * 0.8, lineSize);
       case Items.roadSign:
         final height = lineSize * 2.5;
         return Vector2(height * _widthFactor, height);
       // case Items.roadSign:
       //   return Vector2(lineSize, lineSize);
       case Items.umbrella:
-        return Vector2(lineSize * 0.7, lineSize * 0.7);
+        return Vector2(lineSize, lineSize);
       case Items.smoke:
         return Vector2(lineSize * 0.5, lineSize * 0.5);
     }

@@ -7,39 +7,48 @@ import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foo
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
-  Scene({required this.initialSize});
+  Scene(
+    this._levels, {
+    required this.initialSize,
+  });
 
   final Vector2 initialSize;
   final _currentBackgrounds = <SpriteAnimationComponent>[];
   var _currentLocationIndex = 0;
   var _currentLevel = -1;
   int get currentLocationIndex => _currentLocationIndex;
+  Level get currentLevel => _levels[_currentLevel];
+
+  final List<Level> _levels;
 
   @override
   Future<void> onLoad() async {
-    // final spriteSheet = SpriteSheet(
-    //     image: await Images().load('/backgrounds/bg0-sheet.png'),
-    //     srcSize: Vector2(2400, 1080));
-    // final animation = spriteSheet.createAnimation(row: 0, stepTime: 0.07);
-    // final aseAnimation = SpriteAnimation.fromAsepriteData(
-    //   await Images().load('backgrounds/bg0-sheet.png'),
-    //   await AssetsCache().readJson('images/backgrounds/bg0.json'),
-    // );
     final level1X = size.y * 26.225;
     final level2X = size.y * 46.54;
-    final level1 = await Sprite.load('backgrounds/level1.png');
-    final level2 = await Sprite.load('backgrounds/level2.png');
-    _currentBackgrounds.addAll([
-      SpriteAnimationComponent(
-        animation: SpriteAnimation.spriteList([level1], stepTime: 10),
-        size: Vector2(level1X, size.y),
-      ),
-      SpriteAnimationComponent(
-        animation: SpriteAnimation.spriteList([level2], stepTime: 10),
-        position: Vector2(level1X, 0),
-        size: Vector2(level2X, size.y),
-      ),
-    ]);
+    double xOffset = 0;
+    for (final level in _levels) {
+      final index = _levels.indexOf(level);
+      final width = switch (index) {
+        0 => level1X,
+        _ => level2X,
+      };
+      final lSize = Vector2(
+        width,
+        size.y,
+        // size.y * (level.bgSprite.image.width / level.bgSprite.image.height),
+        // size.y,
+      );
+      _currentBackgrounds.add(
+        SpriteAnimationComponent(
+            animation: SpriteAnimation.spriteList(
+              [level.bgSprite],
+              stepTime: 10,
+            ),
+            size: lSize,
+            position: Vector2(xOffset, 0)),
+      );
+      xOffset += lSize.x;
+    }
     addAll(_currentBackgrounds);
     if (gameRef.userCubit.state.educated) {
       _move();
@@ -68,7 +77,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
           Vector2(
               -_currentBackgrounds[_currentLevel].size.x + initialSize.x, 0),
           EffectController(
-              speed: 300,
+              speed: 100,
               onMax: () {
                 if (_currentBackgrounds.indexOf(bg) != _currentLevel) return;
                 // Preparing to boss

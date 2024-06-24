@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level/level.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mini_games/mini_game.dart';
@@ -11,7 +10,6 @@ import 'package:normaldo_gaming/game/components/effects_controller.dart';
 part 'level_bloc.freezed.dart';
 part 'level_event.dart';
 part 'level_state.dart';
-part 'items_data.dart';
 
 class LevelBloc extends Bloc<LevelEvent, LevelState> {
   static const int limitProgressingLevel = 50;
@@ -36,12 +34,9 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   List<FigureEvent> _figuresPool = [];
 
   double frequency(int level) {
-    var frequency = pow(0.8, level + 1).toDouble();
-    if (level > 7) {
-      frequency = pow(0.8, 15).toDouble();
-    }
+    var frequency = pow(0.9, level + 1).toDouble();
     if (level > 15) {
-      frequency = pow(0.8, 18).toDouble();
+      frequency = pow(0.9, 18).toDouble();
     }
     return frequency;
   }
@@ -50,10 +45,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     if (effects.contains(ItemEffect.slowMo)) {
       return state.level.speed;
     }
-    var speed = (200 + (50 * level)).toDouble();
-    if (level > 7) {
-      speed = (200 + (15 * 12)).toDouble();
-    } else if (level > 15) {
+    var speed = (200 + (10 * level)).toDouble();
+    if (level > 15) {
       speed = (200 + (20 * 12)).toDouble();
     }
     return speed;
@@ -79,8 +72,6 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
       index: level,
       frequency: frequency(level),
       speed: speed(level, effects),
-      itemsChances: _itemsAppearingByLevel[level] ?? state.level.itemsChances,
-      itemRoller: _itemRollers[level] ?? state.level.itemRoller,
     )));
   }
 

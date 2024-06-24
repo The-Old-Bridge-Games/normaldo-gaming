@@ -7,7 +7,7 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class LevelTimerComponent extends TimerComponent
     with FlameBlocReader<LevelBloc, LevelState>, HasGameRef<PullUpGame> {
-  LevelTimerComponent() : super(period: 30, repeat: true);
+  LevelTimerComponent() : super(period: 10, repeat: true);
 
   int _currentLocationIndex = 0;
 
@@ -55,10 +55,12 @@ class LevelTimerComponent extends TimerComponent
     if (gameRef.scene.currentLocationIndex > _currentLocationIndex) {
       _currentLocationIndex = gameRef.scene.currentLocationIndex;
 
-      bloc.add(LevelEvent.changeLevel(
-        level: bloc.state.level.index + 1,
-        effects: game.grid.normaldo.effectsController.effectsInProgress,
-      ));
+      if (!gameRef.bossInProgress) {
+        bloc.add(LevelEvent.changeLevel(
+          level: bloc.state.level.index + 1,
+          effects: game.grid.normaldo.effectsController.effectsInProgress,
+        ));
+      }
     }
   }
 }

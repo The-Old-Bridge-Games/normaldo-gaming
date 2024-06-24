@@ -133,9 +133,12 @@ class Grid extends PositionComponent
     if (!gameRef.userCubit.state.educated) return;
     if (state.figure != null) return;
     if (gameRef.bossInProgress) return;
-    final lineItem = state.level.next().first;
-    final component = lineItem.item.component();
-    component.size = lineItem.item.getSize(lineSize);
+    final lineItem = gameRef.scene.currentLevel.itemsByLevel.entries
+        .lastWhere((element) => element.key <= state.level.index)
+        .value
+        .roll();
+    final component = lineItem.component();
+    component.size = lineItem.getSize(lineSize);
     final items = children.whereType<Item>();
     if (items.isNotEmpty) {
       if (items.last.position.x > gameRef.size.x * 1.5) return;
@@ -150,8 +153,7 @@ class Grid extends PositionComponent
     }
     component.position = Vector2(
         lastItemPositionX + lastItemSizeX + component.size.x,
-        _linesCentersY[
-            lineItem.line ?? Random().nextInt(_linesCentersY.length)]);
+        _linesCentersY[Random().nextInt(_linesCentersY.length)]);
     if (_stoppedLines.values.contains(component.position.y)) return;
 
     add(component);

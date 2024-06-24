@@ -12,7 +12,7 @@ final class ShipPart extends SpriteComponent
   Items get item => Items.trashBin;
 
   @override
-  int get damage => 1;
+  int get damage => 2;
 
   @override
   ShapeHitbox get hitbox => CircleHitbox.relative(
