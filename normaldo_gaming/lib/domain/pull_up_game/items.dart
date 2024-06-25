@@ -48,6 +48,7 @@ import 'package:normaldo_gaming/game/components/item_components/shuriken.dart';
 import 'package:normaldo_gaming/game/components/item_components/snake.dart';
 import 'package:normaldo_gaming/game/components/item_components/spades_card.dart';
 import 'package:normaldo_gaming/game/components/item_components/stone.dart';
+import 'package:normaldo_gaming/game/components/item_components/tire.dart';
 import 'package:normaldo_gaming/game/components/item_components/trash_bin.dart';
 import 'package:normaldo_gaming/game/components/item_components/tv.dart';
 import 'package:normaldo_gaming/game/components/item_components/umbrella.dart';
@@ -101,6 +102,7 @@ enum Items {
   umbrella,
   mutagen,
   tv,
+  tire,
   // BOSSES&ATTACKS
   shredder,
   shuriken,
@@ -213,6 +215,8 @@ enum Items {
         return Mutagen();
       case tv:
         return Tv();
+      case tire:
+        return Tire();
     }
   }
 
@@ -330,6 +334,8 @@ enum Items {
         return Vector2(lineSize * 0.8, lineSize * 0.8);
       case Items.tv:
         return Vector2(lineSize * 0.8 * 1.356, lineSize * 0.8);
+      case Items.tire:
+        return Vector2(lineSize, lineSize);
     }
   }
 

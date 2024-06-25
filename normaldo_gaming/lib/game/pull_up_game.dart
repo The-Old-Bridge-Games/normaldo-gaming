@@ -111,32 +111,6 @@ class PullUpGame extends FlameGame
   Future<void> onLoad() async {
     final level1 = await Sprite.load('backgrounds/level1.png');
     final level2 = await Sprite.load('backgrounds/level2.png');
-    /*ЛВЛ 1
-положительные :
-1 пицца 
-2 доллар 
-3 магнит
-4 Магнитофон
-5 мешок денег
-6 коробка пиццы
-7 иммунитет к физухе
-8 иммунитет к магии
-9 песочные часы 
-10 мэджик бокс
-11 мутаген
-12 кока кола
-
-Отрицательные :
-1 помойка
-2 конус
-3 банан 
-4 знак
-5 бомж рыжый
-6 бомж серый
-7 перчатка
-8 коктейль череп (замедление)
-9 телевизор просмотр рекламы
-     */
     levels = [
       Level(
         bgSprite: level1,
@@ -188,6 +162,7 @@ class PullUpGame extends FlameGame
             ..._allLevelItems,
             (Items.letterBottle, 20),
             (Items.compass, 20),
+            (Items.tire, 20),
           ]),
           10: Roller<Items>([
             ..._allLevelItems,
@@ -195,6 +170,7 @@ class PullUpGame extends FlameGame
             (Items.compass, 20),
             (Items.umbrella, 20),
             (Items.cone, 20),
+            (Items.tire, 20),
           ]),
           11: Roller<Items>([
             ..._allLevelItems,
@@ -204,6 +180,7 @@ class PullUpGame extends FlameGame
             (Items.cone, 20),
             (Items.shipPart, 40),
             (Items.bird, 20),
+            (Items.tire, 20),
           ]),
           12: Roller<Items>([
             ..._allLevelItems,
@@ -214,6 +191,7 @@ class PullUpGame extends FlameGame
             (Items.shipPart, 40),
             (Items.bird, 20),
             (Items.homeless, 20),
+            (Items.tire, 20),
           ]),
           13: Roller<Items>([
             ..._allLevelItems,
@@ -225,6 +203,7 @@ class PullUpGame extends FlameGame
             (Items.bird, 20),
             (Items.homeless, 20),
             (Items.punch, 20),
+            (Items.tire, 20),
           ]),
         },
         speed: 100,
