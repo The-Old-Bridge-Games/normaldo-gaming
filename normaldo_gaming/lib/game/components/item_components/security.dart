@@ -4,13 +4,21 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/extensions.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
+enum Direction { up, down }
+
 final class Security extends PositionComponent
     with HasGameRef<PullUpGame>, CollisionCallbacks, Item, AttackingItem {
-  Security({this.called = false});
+  Security({
+    this.called = false,
+    this.direction,
+  }) {
+    debugMode = false;
+  }
   @override
   Items get item => Items.security;
 
@@ -19,16 +27,16 @@ final class Security extends PositionComponent
 
   @override
   ShapeHitbox get hitbox => CircleHitbox.relative(
-        0.9,
+        0.6,
         parentSize: size,
         anchor: anchor,
       );
 
-  late final SpriteComponent _hand;
   late final SpriteComponent _security;
 
   // if this policeman was called by another so this one wouldn't call another one
   final bool called;
+  final Direction? direction;
 
   bool _gotHelp = false;
 
@@ -37,8 +45,8 @@ final class Security extends PositionComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    attack(other);
     super.onCollisionStart(intersectionPoints, other);
+    attack(other);
   }
 
   @override
@@ -51,11 +59,6 @@ final class Security extends PositionComponent
       anchor: anchor,
       position: size / 2,
     ));
-    _hand = SpriteComponent(
-        sprite: await Sprite.load('policeman_calling.png'),
-        anchor: anchor,
-        scale: Vector2.all(0),
-        size: Vector2(size.x * 0.3, size.y * 0.5));
     return super.onLoad();
   }
 
@@ -69,17 +72,6 @@ final class Security extends PositionComponent
   }
 
   void _getHelp() {
-    add(_hand
-      ..position = Vector2(size.x * 0.8, size.y / 1.5)
-      ..add(ScaleEffect.to(
-          Vector2.all(1),
-          EffectController(
-            duration: 0.3,
-            atMaxDuration: 1,
-            reverseDuration: 0.3,
-          ), onComplete: () {
-        remove(_hand);
-      })));
     _security.addAll([
       RotateEffect.by(
           0.05 * (Random().nextBool() ? 1 : -1),
@@ -96,14 +88,45 @@ final class Security extends PositionComponent
             _security.removeWhere((component) => component is RotateEffect);
             _security.angle = 0;
             final yCenters = game.grid.linesCentersY;
-            final currentCenterIndex = yCenters.indexOf(position.y);
-            final yPos = switch (currentCenterIndex) {
-              0 => yCenters[1],
-              4 => yCenters[3],
-              _ =>
-                yCenters[currentCenterIndex + (Random().nextBool() ? 1 : -1)],
+            double closestYCenter = 1000;
+            for (final yCenter in yCenters) {
+              if ((yCenter - center.y).abs() < closestYCenter) {
+                closestYCenter = yCenter;
+              }
+            }
+
+            final currentCenterIndex = yCenters.indexOf(closestYCenter);
+            Direction? nextDirection;
+            if (direction != null) {
+              nextDirection = direction;
+              if (nextDirection == Direction.up && currentCenterIndex == 0) {
+                return;
+              }
+              if (nextDirection == Direction.down && currentCenterIndex == 4) {
+                return;
+              }
+            }
+            if (nextDirection == null) {
+              if (currentCenterIndex == 0) {
+                nextDirection = Direction.down;
+              } else if (currentCenterIndex == 4) {
+                nextDirection = Direction.up;
+              } else {
+                nextDirection = Direction.values.random();
+              }
+            }
+
+            final yPos = switch (nextDirection) {
+              Direction.down => position.y + gameRef.grid.lineSize,
+              Direction.up => position.y - gameRef.grid.lineSize,
             };
-            final newPoliceman = Security(called: true)..collidable = false;
+            final newPoliceman = Security(
+              called: false,
+              direction: nextDirection,
+            )
+              ..speed = speed
+              ..anchor = anchor
+              ..collidable = false;
             collidable = false;
             game.grid.add(
               newPoliceman
@@ -124,7 +147,7 @@ final class Security extends PositionComponent
                   MoveEffect.to(
                     Vector2(position.x, yPos),
                     EffectController(
-                      duration: 0.3,
+                      duration: 0.4,
                     ),
                     onComplete: () {
                       newPoliceman.collidable = true;

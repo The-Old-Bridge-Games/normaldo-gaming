@@ -134,7 +134,8 @@ class Grid extends PositionComponent
     if (state.figure != null) return;
     if (gameRef.bossInProgress) return;
     final lineItem = gameRef.scene.currentLevel.itemsByLevel.entries
-        .lastWhere((element) => element.key <= state.level.index)
+        .lastWhere((element) => element.key <= state.level.index,
+            orElse: () => gameRef.scene.currentLevel.itemsByLevel.entries.last)
         .value
         .roll();
     final component = lineItem.component();

@@ -42,9 +42,6 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
 
   set collidable(bool newValue) {
     _collidable = newValue;
-    if (!collidable) {
-      _removeHitbox();
-    }
   }
 
   LevelManager get levelManager => game.levelManager;
@@ -52,10 +49,6 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
   var _collidable = true;
   double _speedMultiplier = 1;
   bool _moving = true;
-
-  void _removeHitbox() {
-    removeWhere((component) => component is Hitbox);
-  }
 
   @override
   Anchor get anchor => Anchor.center;
@@ -67,6 +60,7 @@ mixin Item on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
     PositionComponent other,
   ) {
     if (!collidable) return;
+    if ((other is Item) && !other.collidable) return;
     if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
       other.resist();
       removeFromParent();

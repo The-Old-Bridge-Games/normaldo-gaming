@@ -21,9 +21,6 @@ final class Girl extends SpriteComponent
   Items get item => Items.girl;
 
   @override
-  bool get moving => true;
-
-  @override
   void Function()? get onRemoved => null;
 
   @override

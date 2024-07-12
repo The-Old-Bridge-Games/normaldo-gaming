@@ -4,34 +4,61 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:normaldo_gaming/core/errors.dart';
+import 'package:flame/extensions.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/handcuffs.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
+
+enum Direction {
+  leftUp,
+  up,
+  rightUp,
+  right,
+  rightBottom,
+  bottom,
+  leftBottom,
+  left
+}
 
 final class Policeman extends PositionComponent
     with HasGameRef<PullUpGame>, CollisionCallbacks, Item, AttackingItem {
-  Policeman({this.called = false});
+  Policeman({this.called = false}) {
+    debugMode = false;
+  }
   @override
-  Items get item => Items.policeman;
+  Items get item => Items.security;
 
   @override
   int get damage => 1;
 
   @override
   ShapeHitbox get hitbox => CircleHitbox.relative(
-        0.9,
+        0.6,
         parentSize: size,
         anchor: anchor,
       );
 
   late final SpriteComponent _hand;
-  late final SpriteComponent _policeman;
+  late final SpriteComponent _security;
 
   // if this policeman was called by another so this one wouldn't call another one
   final bool called;
 
   bool _gotHelp = false;
+
+  Vector2 getPositionFrom(Direction direction) {
+    return switch (direction) {
+      Direction.leftUp => position - size,
+      Direction.up => position - Vector2(0, size.y),
+      Direction.rightUp => position + Vector2(size.x, -size.y),
+      Direction.right => position + Vector2(size.x, 0),
+      Direction.rightBottom => position + size,
+      Direction.bottom => position + Vector2(0, size.y),
+      Direction.leftBottom => position + Vector2(-size.x, size.y),
+      Direction.left => position + Vector2(-size.x, 0)
+    };
+  }
 
   @override
   void onCollisionStart(
@@ -46,7 +73,7 @@ final class Policeman extends PositionComponent
   FutureOr<void> onLoad() async {
     strength = 1;
     final sprite = await Sprite.load('policeman.png');
-    add(_policeman = SpriteComponent(
+    add(_security = SpriteComponent(
       sprite: sprite,
       size: size,
       anchor: anchor,
@@ -56,7 +83,7 @@ final class Policeman extends PositionComponent
         sprite: await Sprite.load('policeman_calling.png'),
         anchor: anchor,
         scale: Vector2.all(0),
-        size: Vector2(size.x * 0.6, size.y * 0.8));
+        size: Vector2(size.x * 0.3, size.y * 0.5));
     return super.onLoad();
   }
 
@@ -81,7 +108,7 @@ final class Policeman extends PositionComponent
           ), onComplete: () {
         remove(_hand);
       })));
-    _policeman.addAll([
+    _security.addAll([
       RotateEffect.by(
           0.05 * (Random().nextBool() ? 1 : -1),
           EffectController(
@@ -94,26 +121,19 @@ final class Policeman extends PositionComponent
           period: 1,
           removeOnFinish: true,
           onTick: () {
-            _policeman.removeWhere((component) => component is RotateEffect);
-            _policeman.angle = 0;
-            final yCenters = game.grid.linesCentersY;
-            final currentCenterIndex = yCenters.indexOf(position.y);
-            final yPos = switch (currentCenterIndex) {
-              0 => yCenters[1],
-              1 =>
-                yCenters[currentCenterIndex + (Random().nextBool() ? 1 : -1)],
-              2 =>
-                yCenters[currentCenterIndex + (Random().nextBool() ? 1 : -1)],
-              3 =>
-                yCenters[currentCenterIndex + (Random().nextBool() ? 1 : -1)],
-              4 => yCenters[3],
-              _ => throw UnexpectedError(),
-            };
-            final newPoliceman = Policeman()..collidable = false;
-            collidable = false;
+            _security.removeWhere((component) => component is RotateEffect);
+            _security.angle = 0;
+
+            final direction = Direction.values.random();
+            final distinction = getPositionFrom(direction) - position;
+            final destination = position + distinction * 10;
+
+            final handcuffs = Handcuffs()
+              ..speed = speed
+              ..collidable = false;
             game.grid.add(
-              newPoliceman
-                ..size = size
+              handcuffs
+                ..size = Items.handcuffs.getSize(gameRef.grid.lineSize)
                 ..position = position
                 ..scale = Vector2.all(0)
                 ..addAll([
@@ -121,20 +141,22 @@ final class Policeman extends PositionComponent
                       Vector2.all(1),
                       EffectController(
                         duration: 0.3,
-                      )),
+                      ), onComplete: () {
+                    handcuffs.collidable = true;
+                  }),
                   RotateEffect.by(
                       pi * 2,
                       EffectController(
-                        duration: 0.3,
+                        duration: 1,
+                        repeatCount: 10,
                       )),
                   MoveEffect.to(
-                    Vector2(position.x, yPos),
+                    destination,
                     EffectController(
-                      duration: 0.3,
+                      duration: 6,
                     ),
                     onComplete: () {
-                      newPoliceman.collidable = true;
-                      collidable = true;
+                      handcuffs.removeFromParent();
                     },
                   )
                 ]),

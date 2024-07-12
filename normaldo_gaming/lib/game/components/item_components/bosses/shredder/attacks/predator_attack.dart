@@ -6,7 +6,6 @@ import 'package:normaldo_gaming/game/components/grid.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/shuriken_shower_attack.dart';
-import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'boss_attack.dart';
 
 final class PredatorAttack extends BossAttack with HasNgAudio {
@@ -52,7 +51,7 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
     boss.scale = Vector2.all(0);
     boss.position = corners.removeAt(0).position;
     boss.scale = Vector2.all(1);
-    _flipIfNeeded(boss, grid.normaldo);
+    flipIfNeeded(boss, grid.normaldo);
     final nPosition = grid.normaldo.position;
     final distinction = nPosition - boss.position;
     var destination = nPosition + distinction;
@@ -101,14 +100,5 @@ final class PredatorAttack extends BossAttack with HasNgAudio {
         bossComp(boss).current = NinjaFootState.idle;
       }),
     );
-  }
-
-  void _flipIfNeeded(Boss boss, Normaldo normaldo) {
-    if (boss.center.x > normaldo.center.x && boss.isFlippedHorizontally) {
-      boss.flipHorizontallyAroundCenter();
-    }
-    if (boss.center.x < normaldo.center.x && !boss.isFlippedHorizontally) {
-      boss.flipHorizontallyAroundCenter();
-    }
   }
 }

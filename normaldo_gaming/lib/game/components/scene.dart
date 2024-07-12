@@ -3,10 +3,14 @@ import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/club_boss/club_boss.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
+  static const double levelSpeed = 100;
+
   Scene(
     this._levels, {
     required this.initialSize,
@@ -21,9 +25,15 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
 
   final List<Level> _levels;
 
+  Boss get _boss => switch (_currentLevel) {
+        0 => NinjaFoot(),
+        1 => ClubBoss(),
+        _ => NinjaFoot(),
+      };
+
   @override
   Future<void> onLoad() async {
-    final level1X = size.y * 26.225;
+    final level1X = size.y * 21.787;
     final level2X = size.y * 46.54;
     double xOffset = 0;
     for (final level in _levels) {
@@ -77,7 +87,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
           Vector2(
               -_currentBackgrounds[_currentLevel].size.x + initialSize.x, 0),
           EffectController(
-              speed: 100,
+              speed: levelSpeed,
               onMax: () {
                 if (_currentBackgrounds.indexOf(bg) != _currentLevel) return;
                 // Preparing to boss
@@ -102,11 +112,12 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
                     onTick: () async {
                       // Creating a boss component
                       final grid = game.grid;
-                      final ninjaFoot = NinjaFoot();
-                      grid.add(ninjaFoot
+                      final boss = _boss;
+                      grid.add(boss
+                        ..size = Vector2.all(grid.lineSize)
                         ..position =
                             Vector2(grid.size.x + 100, grid.size.y / 2));
-                      ninjaFoot.start();
+                      boss.start();
                     }));
               })));
     }

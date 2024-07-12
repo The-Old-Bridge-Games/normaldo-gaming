@@ -288,7 +288,7 @@ enum Items {
       case Items.goldClocks:
         return Vector2(lineSize * 0.6, lineSize * 0.6);
       case Items.handcuffs:
-        return Vector2(lineSize * 0.6, lineSize * 0.6);
+        return Vector2(lineSize, lineSize);
       case Items.caseyMask:
         return Vector2(lineSize, lineSize);
       // case Items.caseyMask:
@@ -310,9 +310,9 @@ enum Items {
       case Items.spadesCard:
         return Vector2(lineSize * 0.7, lineSize * 0.7);
       case Items.policeman:
-        return Vector2(lineSize * 0.8, lineSize * 0.8);
+        return Vector2(lineSize * 1, lineSize * 1);
       case Items.security:
-        return Vector2(lineSize, lineSize);
+        return Vector2(lineSize * 1.3, lineSize * 1.3);
       case Items.shipPart:
         return Vector2(lineSize * 3, lineSize * 3);
       case Items.cone:

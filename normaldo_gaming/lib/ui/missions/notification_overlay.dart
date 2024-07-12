@@ -44,6 +44,12 @@ class _MissionNotificationState extends State<MissionNotificationOverlay>
   }
 
   @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     animationController = AnimationController(
       vsync: this,

@@ -24,6 +24,12 @@ class _BaseScreenState extends State<BaseScreen> {
   final _levelManager = injector.get<LevelManager>();
 
   @override
+  void initState() {
+    context.read<UserCubit>().addExtraLife(10);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final screenSize = MediaQuery.of(context).size;

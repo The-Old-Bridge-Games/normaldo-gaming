@@ -33,9 +33,6 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
   List<Items> get immuneToItems => [Items.shuriken];
 
   @override
-  int hp = 3;
-
-  @override
   void start() {
     gameRef.grid.stopAllLines();
     game.grid.removeAllItems();
@@ -199,12 +196,16 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
     attacks = [
       ShurikenShowerAttack(speed: 500, endDelay: 1),
       ShurikenShowerAttack(speed: 500, endDelay: 1),
-      // PredatorAttack(speed: 600),
-      // PredatorAttack(speed: 600),
-      // ShurikenShowerAttack(speed: 700, endDelay: 1),
-      // ShurikenShowerAttack(speed: 700, endDelay: 1),
-      // PredatorAttack(speed: 700),
-      // PredatorAttack(speed: 700),
+      PredatorAttack(speed: 500),
+      ShurikenShowerAttack(speed: 500, endDelay: 1),
+      ShurikenShowerAttack(speed: 500, endDelay: 1),
+      PredatorAttack(speed: 500),
+      SmokeAttack(duration: 8, action: SmokeAction.corners),
+      ShurikenShowerAttack(speed: 600, endDelay: 1),
+      ShurikenShowerAttack(speed: 600, endDelay: 1),
+      PredatorAttack(speed: 600),
+      PredatorAttack(speed: 600),
+      PredatorAttack(speed: 600),
       // ShurikenShowerAttack(speed: 700),
       // PredatorAttack(speed: 700),
       // SmokeAttack(duration: 15, action: SmokeAction.corners),
@@ -251,10 +252,5 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
       // PredatorAttack(speed: 1000),
     ];
     return super.onLoad();
-  }
-
-  @override
-  void die() {
-    print('ninja foot died');
   }
 }
