@@ -209,6 +209,7 @@ abstract class Utils {
         Items.mutagen => 'assets/images/mutagen.png',
         Items.tv => 'assets/images/tv.png',
         Items.tire => 'assets/images/tire.png',
+        Items.bullet => 'assets/images/bullet.png',
       };
 
   static String skinSfxWrapper(String sfxPath) => 'audio/skins/$sfxPath';

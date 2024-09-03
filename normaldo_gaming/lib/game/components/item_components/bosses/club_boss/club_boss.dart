@@ -86,6 +86,8 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
             EffectController(
               duration: 0.5,
             ), onComplete: () {
+          gameRef.audio
+              .playAssetSfx('audio/bosses/nigga_boss/NIGGA WAVE CALLING.mp3');
           _callSecurityWave();
         }),
         RotateEffect.by(

@@ -8,6 +8,7 @@ import 'package:normaldo_gaming/game/components/item_components/bird.dart';
 import 'package:normaldo_gaming/game/components/item_components/boombox.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/smoke.dart';
 import 'package:normaldo_gaming/game/components/item_components/bubbles.dart';
+import 'package:normaldo_gaming/game/components/item_components/bullet.dart';
 import 'package:normaldo_gaming/game/components/item_components/cannibal.dart';
 import 'package:normaldo_gaming/game/components/item_components/casey_mask.dart';
 import 'package:normaldo_gaming/game/components/item_components/casino_chip.dart';
@@ -103,6 +104,7 @@ enum Items {
   mutagen,
   tv,
   tire,
+  bullet,
   // BOSSES&ATTACKS
   shredder,
   shuriken,
@@ -217,6 +219,8 @@ enum Items {
         return Tv();
       case tire:
         return Tire();
+      case bullet:
+        return Bullet();
     }
   }
 
@@ -336,6 +340,9 @@ enum Items {
         return Vector2(lineSize * 0.8 * 1.356, lineSize * 0.8);
       case Items.tire:
         return Vector2(lineSize, lineSize);
+      case Items.bullet:
+        const double height = 25;
+        return Vector2(height * 1.57, height);
     }
   }
 

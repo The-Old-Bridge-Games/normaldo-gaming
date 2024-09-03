@@ -5,11 +5,12 @@ import 'package:normaldo_gaming/domain/pull_up_game/mission.dart';
 import 'package:normaldo_gaming/game/components/effects/effects.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/boss_component.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/club_boss/club_boss.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/leatherhead/leatherhead.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
-  static const double levelSpeed = 100;
+  static const double levelSpeed = 5000;
 
   Scene(
     this._levels, {
@@ -26,7 +27,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
   final List<Level> _levels;
 
   Boss get _boss => switch (_currentLevel) {
-        0 => NinjaFoot(),
+        0 => Leatherhead(),
         1 => ClubBoss(),
         _ => NinjaFoot(),
       };

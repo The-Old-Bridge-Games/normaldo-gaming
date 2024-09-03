@@ -128,6 +128,8 @@ final class Security extends PositionComponent
               ..anchor = anchor
               ..collidable = false;
             collidable = false;
+            gameRef.audio.playAssetSfx(
+                'audio/bosses/nigga_boss/SECURITY  DUPLICATE.mp3');
             game.grid.add(
               newPoliceman
                 ..size = size

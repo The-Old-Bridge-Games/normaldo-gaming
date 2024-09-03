@@ -131,6 +131,7 @@ final class Policeman extends PositionComponent
             final handcuffs = Handcuffs()
               ..speed = speed
               ..collidable = false;
+            gameRef.audio.playAssetSfx('audio/bosses/nigga_boss/BRACERS.mp3');
             game.grid.add(
               handcuffs
                 ..size = Items.handcuffs.getSize(gameRef.grid.lineSize)

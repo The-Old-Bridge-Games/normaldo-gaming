@@ -74,6 +74,8 @@ final class ClubBossCallsPolice extends BossAttack with HasNgAudio {
           ..position = Vector2(grid.size.x + boss.size.x * 9,
               grid.linesCentersY[yIndexes.random()]),
       ]);
+      boss.gameRef.audio
+          .playAssetSfx('audio/bosses/nigga_boss/NIGGA LAUGHT.mp3');
       boss.addAll([
         ScaleEffect.to(
             Vector2.all(1.1),

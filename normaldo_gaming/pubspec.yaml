@@ -160,6 +160,7 @@ flutter:
     - assets/images/us/
 
     - assets/audio/
+    - assets/audio/bosses/nigga_boss/
     - assets/audio/sfx/
     - assets/audio/sfx/ui/
     - assets/audio/skins/batman/
