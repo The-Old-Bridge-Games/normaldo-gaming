@@ -400,14 +400,18 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
       anchor: anchor,
       position: center,
     ));
-    const double endDelay = 3;
     attacks = [
-      LeatherheadTailAttack(side: TailSide.bottom),
-      LeatherheadTailAttack(side: TailSide.top),
-      LeatherheadTailAttack(side: TailSide.bottom),
-      LeatherheadTailAttack(side: TailSide.top),
-      LeatherheadBuckshot(),
       LeatherheadHunting(),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 200),
+      LeatherheadTailAttack(side: TailSide.top, speed: 300),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 400),
+      LeatherheadTailAttack(side: TailSide.top, speed: 400),
+      LeatherheadBuckshot(),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 200),
+      LeatherheadTailAttack(side: TailSide.top, speed: 300),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 400),
+      LeatherheadTailAttack(side: TailSide.top, speed: 400),
+      LeatherheadBuckshot(),
     ];
     return super.onLoad();
   }

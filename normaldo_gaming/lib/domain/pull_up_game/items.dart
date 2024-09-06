@@ -39,6 +39,7 @@ import 'package:normaldo_gaming/game/components/item_components/note2.dart';
 import 'package:normaldo_gaming/game/components/item_components/phone.dart';
 import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/components/item_components/police_alarm.dart';
+import 'package:normaldo_gaming/game/components/item_components/police_car.dart';
 import 'package:normaldo_gaming/game/components/item_components/policeman.dart';
 import 'package:normaldo_gaming/game/components/item_components/punch.dart';
 import 'package:normaldo_gaming/game/components/item_components/road_sign.dart';
@@ -105,6 +106,7 @@ enum Items {
   tv,
   tire,
   bullet,
+  policeCar,
   // BOSSES&ATTACKS
   shredder,
   shuriken,
@@ -221,6 +223,8 @@ enum Items {
         return Tire();
       case bullet:
         return Bullet();
+      case policeCar:
+        return PoliceCar();
     }
   }
 
@@ -343,6 +347,9 @@ enum Items {
       case Items.bullet:
         const double height = 25;
         return Vector2(height * 1.57, height);
+      case Items.policeCar:
+        final height = lineSize * 3;
+        return Vector2(height * _widthFactor, height);
     }
   }
 
@@ -352,6 +359,7 @@ enum Items {
         homeless => 1,
         roadSign => 1,
         bananaPeel => 1,
+        policeCar => 1,
         _ => 1,
       };
 }

@@ -7,18 +7,6 @@ import 'package:flame/effects.dart';
 import 'package:normaldo_gaming/core/roller/roller.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
-import 'package:normaldo_gaming/game/components/item_components/banana_peel.dart';
-import 'package:normaldo_gaming/game/components/item_components/beer.dart';
-import 'package:normaldo_gaming/game/components/item_components/casey_mask.dart';
-import 'package:normaldo_gaming/game/components/item_components/cocktail.dart';
-import 'package:normaldo_gaming/game/components/item_components/dollar.dart';
-import 'package:normaldo_gaming/game/components/item_components/girl.dart';
-import 'package:normaldo_gaming/game/components/item_components/gold_clocks.dart';
-import 'package:normaldo_gaming/game/components/item_components/green_poison.dart';
-import 'package:normaldo_gaming/game/components/item_components/hourglass.dart';
-import 'package:normaldo_gaming/game/components/item_components/magic_hat.dart';
-import 'package:normaldo_gaming/game/components/item_components/money_bag.dart';
-import 'package:normaldo_gaming/game/components/item_components/pizza.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
@@ -58,8 +46,9 @@ final class MagicBox extends SpriteComponent
                 duration: 0.2,
                 reverseDuration: 0.2,
               ), onComplete: () {
+            final key = ComponentKey.unique();
             add(TimerComponent(
-                key: ComponentKey.named('magic_box'),
+                key: key,
                 removeOnFinish: true,
                 period: 0.2,
                 repeat: true,
@@ -134,10 +123,7 @@ final class MagicBox extends SpriteComponent
               period: 0.2 * 8,
               onTick: () {
                 _animationInProgress = false;
-                gameRef
-                    .findByKey<TimerComponent>(ComponentKey.named('magic_box'))
-                    ?.timer
-                    .stop();
+                gameRef.findByKey<TimerComponent>(key)?.timer.stop();
                 add(ScaleEffect.to(
                     Vector2.all(0),
                     EffectController(

@@ -6,6 +6,9 @@ import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/club_boss/club_boss.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/leatherhead/leatherhead.dart';
+import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foot/ninja_foot.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/boss_attack.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -32,10 +35,17 @@ mixin Boss on PositionComponent, HasGameRef<PullUpGame>, CollisionCallbacks {
     super.onCollisionStart(intersectionPoints, other);
   }
 
+  String get _path => switch (this) {
+        NinjaFoot() => 'BOSSFIGHT.png',
+        Leatherhead() => 'bosses/BOSSFIGHT LH.png',
+        ClubBoss() => 'bosses/BOSSFIGHT FA.png',
+        _ => 'BOSSFIGHT.png',
+      };
+
   Future<void> warn() async {
     final grid = gameRef.grid;
     final warning = SpriteComponent(
-      sprite: await Sprite.load('BOSSFIGHT.png'),
+      sprite: await Sprite.load(_path),
       position: Vector2(grid.size.x * 1.5, grid.center.y),
       size: game.grid.size / 2,
       anchor: Anchor.center,

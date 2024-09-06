@@ -206,6 +206,7 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
       PredatorAttack(speed: 600),
       PredatorAttack(speed: 600),
       PredatorAttack(speed: 600),
+      //
       // ShurikenShowerAttack(speed: 700),
       // PredatorAttack(speed: 700),
       // SmokeAttack(duration: 15, action: SmokeAction.corners),

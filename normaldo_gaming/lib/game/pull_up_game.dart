@@ -80,7 +80,7 @@ class PullUpGame extends FlameGame
 
   bool bossInProgress = false;
 
-  final _allLevelItems = <(Items, double)>[
+  static const _allLevelItems = <(Items, double)>[
     (Items.magicHat, 0.2),
     (Items.energizer, 1.0),
     (Items.pizza, 50.0),
@@ -107,105 +107,171 @@ class PullUpGame extends FlameGame
     super.onRemove();
   }
 
+  final Map<int, Roller<Items>> _itemsByLevel = {
+    0: Roller<Items>([
+      ..._allLevelItems,
+      (Items.bananaPeel, 80),
+      (Items.trashBin, 3),
+      (Items.policeCar, 20),
+    ]),
+    1: Roller<Items>([
+      ..._allLevelItems,
+      (Items.bananaPeel, 20),
+      (Items.cone, 10),
+      (Items.homeless, 10),
+    ]),
+    2: Roller<Items>([
+      ..._allLevelItems,
+      (Items.bananaPeel, 20),
+      (Items.roadSign, 10),
+      (Items.cone, 10),
+      (Items.homeless, 5),
+      (Items.trashBin, 3),
+    ]),
+    3: Roller<Items>([
+      ..._allLevelItems,
+      (Items.bananaPeel, 20),
+      (Items.roadSign, 20),
+      (Items.trashBin, 20),
+      (Items.cone, 20),
+      (Items.homeless, 20),
+      (Items.punch, 20),
+    ]),
+    5: Roller<Items>([
+      ..._allLevelItems,
+      (Items.bananaPeel, 20),
+      (Items.roadSign, 20),
+      (Items.trashBin, 20),
+      (Items.cone, 40),
+      (Items.homeless, 20),
+      (Items.punch, 20),
+    ]),
+    9: Roller<Items>([
+      ..._allLevelItems,
+      (Items.letterBottle, 20),
+      (Items.compass, 20),
+      (Items.tire, 20),
+    ]),
+    10: Roller<Items>([
+      ..._allLevelItems,
+      (Items.letterBottle, 20),
+      (Items.compass, 20),
+      (Items.umbrella, 20),
+      (Items.cone, 20),
+      (Items.tire, 20),
+    ]),
+    11: Roller<Items>([
+      ..._allLevelItems,
+      (Items.letterBottle, 20),
+      (Items.compass, 20),
+      (Items.umbrella, 20),
+      (Items.cone, 20),
+      (Items.shipPart, 40),
+      (Items.bird, 20),
+      (Items.tire, 20),
+    ]),
+    12: Roller<Items>([
+      ..._allLevelItems,
+      (Items.letterBottle, 20),
+      (Items.compass, 20),
+      (Items.umbrella, 20),
+      (Items.cone, 20),
+      (Items.shipPart, 40),
+      (Items.bird, 20),
+      (Items.homeless, 20),
+      (Items.tire, 20),
+    ]),
+    13: Roller<Items>([
+      ..._allLevelItems,
+      (Items.letterBottle, 20),
+      (Items.compass, 20),
+      (Items.umbrella, 20),
+      (Items.cone, 20),
+      (Items.shipPart, 40),
+      (Items.bird, 20),
+      (Items.homeless, 20),
+      (Items.punch, 20),
+      (Items.tire, 20),
+    ]),
+    28: Roller<Items>([
+      ..._allLevelItems,
+      (Items.compass, 2),
+      (Items.bananaPeel, 20),
+      (Items.beer, 20),
+    ]),
+    31: Roller<Items>([
+      ..._allLevelItems,
+      (Items.umbrella, 20),
+      (Items.compass, 2),
+      (Items.bananaPeel, 20),
+      (Items.beer, 20),
+    ]),
+    36: Roller<Items>([
+      ..._allLevelItems,
+      (Items.umbrella, 20),
+      (Items.stone, 20),
+      (Items.compass, 2),
+      (Items.bananaPeel, 20),
+      (Items.beer, 20),
+    ]),
+    44: Roller<Items>([
+      ..._allLevelItems,
+      (Items.umbrella, 20),
+      (Items.stone, 20),
+      (Items.compass, 2),
+      (Items.bananaPeel, 20),
+      (Items.beer, 20),
+    ]),
+    54: Roller<Items>([
+      ..._allLevelItems,
+      (Items.policeCar, 5),
+      (Items.tire, 20),
+      (Items.molotov, 2),
+      (Items.angryDog, 20),
+      (Items.trashBin, 5),
+    ]),
+    67: Roller<Items>([
+      ..._allLevelItems,
+      (Items.policeman, 5),
+      (Items.cone, 20),
+      (Items.handcuffs, 2),
+      (Items.homeless, 20),
+      (Items.girl, 5),
+      (Items.tire, 20),
+    ]),
+  };
+
   @override
   Future<void> onLoad() async {
     final level1 = await Sprite.load('backgrounds/level1.png');
     final level2 = await Sprite.load('backgrounds/level2.png');
+    final level3 = await Sprite.load('backgrounds/LEVEL 3.png');
+    final level4 = await Sprite.load('backgrounds/LEVEL 4.png');
+    final level5 = await Sprite.load('backgrounds/LEVEL 5.png');
     levels = [
       Level(
         bgSprite: level1,
-        itemsByLevel: {
-          0: Roller<Items>([
-            ..._allLevelItems,
-            (Items.bananaPeel, 80),
-            (Items.trashBin, 3),
-          ]),
-          1: Roller<Items>([
-            ..._allLevelItems,
-            (Items.bananaPeel, 20),
-            (Items.cone, 10),
-            (Items.homeless, 10),
-          ]),
-          2: Roller<Items>([
-            ..._allLevelItems,
-            (Items.bananaPeel, 20),
-            (Items.roadSign, 10),
-            (Items.cone, 10),
-            (Items.homeless, 5),
-            (Items.trashBin, 3),
-          ]),
-          3: Roller<Items>([
-            ..._allLevelItems,
-            (Items.bananaPeel, 20),
-            (Items.roadSign, 20),
-            (Items.trashBin, 20),
-            (Items.cone, 20),
-            (Items.homeless, 20),
-            (Items.punch, 20),
-          ]),
-          5: Roller<Items>([
-            ..._allLevelItems,
-            (Items.bananaPeel, 20),
-            (Items.roadSign, 20),
-            (Items.trashBin, 20),
-            (Items.cone, 40),
-            (Items.homeless, 20),
-            (Items.punch, 20),
-          ]),
-        },
+        itemsByLevel: _itemsByLevel,
         speed: 100,
       ),
       Level(
         bgSprite: level2,
-        itemsByLevel: {
-          9: Roller<Items>([
-            ..._allLevelItems,
-            (Items.letterBottle, 20),
-            (Items.compass, 20),
-            (Items.tire, 20),
-          ]),
-          10: Roller<Items>([
-            ..._allLevelItems,
-            (Items.letterBottle, 20),
-            (Items.compass, 20),
-            (Items.umbrella, 20),
-            (Items.cone, 20),
-            (Items.tire, 20),
-          ]),
-          11: Roller<Items>([
-            ..._allLevelItems,
-            (Items.letterBottle, 20),
-            (Items.compass, 20),
-            (Items.umbrella, 20),
-            (Items.cone, 20),
-            (Items.shipPart, 40),
-            (Items.bird, 20),
-            (Items.tire, 20),
-          ]),
-          12: Roller<Items>([
-            ..._allLevelItems,
-            (Items.letterBottle, 20),
-            (Items.compass, 20),
-            (Items.umbrella, 20),
-            (Items.cone, 20),
-            (Items.shipPart, 40),
-            (Items.bird, 20),
-            (Items.homeless, 20),
-            (Items.tire, 20),
-          ]),
-          13: Roller<Items>([
-            ..._allLevelItems,
-            (Items.letterBottle, 20),
-            (Items.compass, 20),
-            (Items.umbrella, 20),
-            (Items.cone, 20),
-            (Items.shipPart, 40),
-            (Items.bird, 20),
-            (Items.homeless, 20),
-            (Items.punch, 20),
-            (Items.tire, 20),
-          ]),
-        },
+        itemsByLevel: _itemsByLevel,
+        speed: 100,
+      ),
+      Level(
+        bgSprite: level3,
+        itemsByLevel: _itemsByLevel,
+        speed: 100,
+      ),
+      Level(
+        bgSprite: level4,
+        itemsByLevel: _itemsByLevel,
+        speed: 100,
+      ),
+      Level(
+        bgSprite: level5,
+        itemsByLevel: _itemsByLevel,
         speed: 100,
       ),
     ];

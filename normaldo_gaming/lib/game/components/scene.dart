@@ -10,7 +10,7 @@ import 'package:normaldo_gaming/game/components/item_components/bosses/ninja_foo
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
-  static const double levelSpeed = 5000;
+  static const double levelSpeed = 70;
 
   Scene(
     this._levels, {
@@ -26,22 +26,30 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
 
   final List<Level> _levels;
 
-  Boss get _boss => switch (_currentLevel) {
-        0 => Leatherhead(),
-        1 => ClubBoss(),
-        _ => NinjaFoot(),
+  Boss? _boss(int level) => switch (level) {
+        0 => NinjaFoot(),
+        1 => Leatherhead(),
+        4 => ClubBoss(),
+        _ => null,
       };
 
   @override
   Future<void> onLoad() async {
     final level1X = size.y * 21.787;
     final level2X = size.y * 46.54;
+    final level3X = size.y * 62.397;
+    final level4X = size.y * 60.70;
+    final level5X = size.y * 16.45;
     double xOffset = 0;
     for (final level in _levels) {
       final index = _levels.indexOf(level);
       final width = switch (index) {
         0 => level1X,
-        _ => level2X,
+        1 => level2X,
+        2 => level3X,
+        3 => level4X,
+        4 => level5X,
+        _ => 1.0,
       };
       final lSize = Vector2(
         width,
@@ -83,14 +91,25 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
   void _move() {
     if (_currentBackgrounds.length - 1 == _currentLevel) return;
     _currentLevel++;
+    print('LEVEL: $_currentLevel');
     for (final bg in _currentBackgrounds) {
       bg.add(MoveByEffect(
           Vector2(
-              -_currentBackgrounds[_currentLevel].size.x + initialSize.x, 0),
+              -_currentBackgrounds[_currentLevel].size.x +
+                  initialSize.x -
+                  (initialSize.x * (_currentLevel == 0 ? 0 : 1)),
+              0),
           EffectController(
               speed: levelSpeed,
               onMax: () {
-                if (_currentBackgrounds.indexOf(bg) != _currentLevel) return;
+                if (_currentBackgrounds.indexOf(bg) ==
+                        _currentBackgrounds.length - 1 &&
+                    _boss(_currentLevel) == null) {
+                  _move();
+                  return;
+                }
+                if (_currentBackgrounds.indexOf(bg) != _currentLevel ||
+                    _boss(_currentLevel) == null) return;
                 // Preparing to boss
                 gameRef.bossInProgress = true;
                 const vanishDuration = 0.3;
@@ -113,7 +132,7 @@ class Scene extends PositionComponent with HasGameRef<PullUpGame>, Effects {
                     onTick: () async {
                       // Creating a boss component
                       final grid = game.grid;
-                      final boss = _boss;
+                      final boss = _boss(_currentLevel)!;
                       grid.add(boss
                         ..size = Vector2.all(grid.lineSize)
                         ..position =

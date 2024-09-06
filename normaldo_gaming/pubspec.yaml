@@ -107,8 +107,6 @@ flutter:
     - assets/images/2.0x/slot_machine.png
     - assets/images/3.0x/slot_machine.png
     - assets/images/backgrounds/
-    - assets/images/backgrounds/2.0x/
-    - assets/images/backgrounds/3.0x/
     - assets/images/normaldo/
     - assets/images/normaldo/2.0x/
     - assets/images/normaldo/3.0x/

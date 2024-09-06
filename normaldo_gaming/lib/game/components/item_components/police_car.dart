@@ -1,47 +1,43 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
+import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/items.dart';
 import 'package:normaldo_gaming/game/components/item_component.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
 
-final class Tire extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<PullUpGame>, Item, AttackingItem {
+final class PoliceCar extends SpriteComponent
+    with HasGameRef<PullUpGame>, CollisionCallbacks, Item, AttackingItem {
   @override
-  int get damage => 1;
+  Items get item => Items.trashBin;
 
   @override
-  ShapeHitbox get hitbox => CircleHitbox.relative(
-        0.8,
+  int get damage => 3;
+
+  @override
+  Color get debugColor => Colors.blue;
+
+  @override
+  PositionComponent get hitbox => RectangleHitbox.relative(
+        Vector2(0.9, 0.3),
         parentSize: size,
         anchor: anchor,
-      );
-
-  @override
-  Items get item => Items.tire;
+      )..debugColor = Colors.blue;
 
   @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    attack(other);
     super.onCollisionStart(intersectionPoints, other);
+    attack(other);
   }
 
   @override
   FutureOr<void> onLoad() async {
-    strength = 1;
-    sprite = await Sprite.load('tire.png');
-    add(RotateEffect.to(
-        2 * pi,
-        EffectController(
-          infinite: true,
-          speed: 3,
-        )));
+    strength = 3;
+    sprite = await Sprite.load('police car.png');
     return super.onLoad();
   }
 }

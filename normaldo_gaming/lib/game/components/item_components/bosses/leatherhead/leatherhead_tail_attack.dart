@@ -17,11 +17,13 @@ enum TailSide { bottom, top }
 final class LeatherheadTailAttack extends BossAttack with HasNgAudio {
   LeatherheadTailAttack({
     required this.side,
+    required this.speed,
     this.endDelay = 0,
   })  : _completed = false,
         _inProgress = false;
 
   final double endDelay;
+  final double speed;
   final TailSide side;
 
   bool _completed;
@@ -63,7 +65,7 @@ final class LeatherheadTailAttack extends BossAttack with HasNgAudio {
     tail.add(MoveToEffect(
         moveDestinationFromSide(grid),
         EffectController(
-          speed: 400,
+          speed: speed,
           curve: Curves.ease,
         ), onComplete: () {
       _completed = true;
