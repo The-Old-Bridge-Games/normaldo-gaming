@@ -97,13 +97,14 @@ class Grid extends PositionComponent
           'dang.png',
         ],
       ComicsType.resist => [
-          'knukl 1.png',
+          skin.uniqueId == 'tyson' ? 'normaldo/tyson/punch.png' : 'knukl 1.png',
           'slakebake2 1.png',
         ]
     };
+    final sprite = await Sprite.load(path.random());
     add(
       SpriteComponent(
-        sprite: await Sprite.load(path.random()),
+        sprite: sprite,
         size: size,
         // size: Vector2(100, 80),
         // position: Vector2(grid.normaldo.size.x * 1.5, grid.normaldo.size.y / 2),

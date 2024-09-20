@@ -152,6 +152,9 @@ abstract class Utils {
         'viking' => 'assets/images/normaldo/viking/mask.png',
         'wizard' => 'assets/images/normaldo/wizard/mask.png',
         'pirate' => 'assets/images/normaldo/pirate/mask.png',
+        'kuss' => 'assets/images/normaldo/kuss/logo.png',
+        'joker' => 'assets/images/normaldo/joker/logo.png',
+        'tyson' => 'assets/images/normaldo/tyson/LOGO.png',
         _ => throw UnexpectedError(),
       };
 
@@ -236,6 +239,9 @@ abstract class Utils {
     'HIWJF': 'new_year',
     'QO8DW': 'viking',
     '81WPG': 'batman',
+    'Z38FD': 'joker',
+    'KB4LP': 'tyson',
+    'KUSS777': 'kuss',
   };
 
   static const locationExp = {
@@ -273,6 +279,9 @@ abstract class Utils {
         'glasses' => Vector2.all(lineSize),
         'dracula' => Vector2.all(lineSize),
         'basic' => Vector2.all(lineSize),
+        'kuss' => Vector2.all(lineSize * 1.3),
+        'tyson' => Vector2.all(lineSize * 1.3),
+        'joker' => Vector2.all(lineSize * 1.3),
         _ => Vector2.all(lineSize * 1.15),
       };
 }

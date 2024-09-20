@@ -393,9 +393,6 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
           resistanceToItems: [
             Items.trashBin,
             Items.cone,
-            Items.shipPart,
-            Items.stone,
-            Items.umbrella,
             Items.roadSign,
           ],
         ),
@@ -444,6 +441,114 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
             Items.gun,
           ],
           uniqueSkill: 'vanishing trick',
+        ),
+        const Skin(
+          uniqueId: 'tyson',
+          name: "TYSON",
+          rarity: SkinRarity.common,
+          assets: SkinAssets(
+              skinny: 'normaldo/tyson/1-1.png',
+              slim: 'normaldo/tyson/2-1.png',
+              fat: 'normaldo/tyson/3-1.png',
+              superFat: 'normaldo/tyson/4-1.png',
+              skinnyBite: 'normaldo/tyson/1-2.png',
+              slimBite: 'normaldo/tyson/2-2.png',
+              fatBite: 'normaldo/tyson/3-2.png',
+              superFatBite: 'normaldo/tyson/4-2.png',
+              dead: 'normaldo/tyson/deadmode.png',
+              mask: 'normaldo/tyson/LOGO.png',
+              sfx: {
+                'fatUp': ['tyson/TYSON TALKING.mp3'],
+                'resist': [
+                  'tyson/TYSON EVAID Dub.mp3',
+                  'tyson/TYSON EVAID LEFT RIGHT.mp3',
+                ],
+                'bite': [
+                  'tyson/TYSON  EAT Dub.mp3',
+                  'tyson/TYSON  EAT.mp3',
+                ],
+                'hit': ['tyson/TYSON  hit.mp3'],
+                'slowMo': ['tyson/TYSON  SLOMO.mp3'],
+              }),
+          resistanceToItems: [
+            Items.punch,
+          ],
+        ),
+        const Skin(
+          uniqueId: 'joker',
+          name: "JOKER",
+          rarity: SkinRarity.legendary,
+          assets: SkinAssets(
+              skinny: 'normaldo/joker/1-1.png',
+              slim: 'normaldo/joker/2-1.png',
+              fat: 'normaldo/joker/3-1.png',
+              superFat: 'normaldo/joker/4-1.png',
+              skinnyBite: 'normaldo/joker/1-2.png',
+              slimBite: 'normaldo/joker/2-2.png',
+              fatBite: 'normaldo/joker/3-2.png',
+              superFatBite: 'normaldo/joker/4-2.png',
+              dead: 'normaldo/joker/deadmode.png',
+              mask: 'normaldo/joker/logo.png',
+              sfx: {
+                'fatUp': ['joker/JOCKER BURP.mp3'],
+                // 'resist': [
+                //   'tyson/TYSON EVAID Dub.mp3',
+                //   'tyson/TYSON EVAID LEFT RIGHT.mp3',
+                // ],
+                'bite': [
+                  'joker/JOCKER EAT 1.mp3',
+                  'joker/JOCKER EAT.mp3',
+                ],
+                'hit': ['joker/JOCKER HIT.mp3'],
+                'slowMo': ['joker/JOCKER SLOMO.mp3'],
+                'start': ['joker/JOCKER LAUGHT.mp3']
+              }),
+          resistanceToItems: [
+            Items.loserTicket,
+            Items.policeman,
+            Items.handcuffs,
+            Items.spadesCard,
+            Items.casinoChip,
+            Items.security,
+          ],
+        ),
+        const Skin(
+          uniqueId: 'kuss',
+          name: "KUSS",
+          rarity: SkinRarity.rare,
+          assets: SkinAssets(
+              skinny: 'normaldo/kuss/1-1.png',
+              slim: 'normaldo/kuss/2-1.png',
+              fat: 'normaldo/kuss/3-1.png',
+              superFat: 'normaldo/kuss/4-1.png',
+              skinnyBite: 'normaldo/kuss/1-2.png',
+              slimBite: 'normaldo/kuss/2-2.png',
+              fatBite: 'normaldo/kuss/3-2.png',
+              superFatBite: 'normaldo/kuss/4-2.png',
+              dead: 'normaldo/kuss/deadmode.png',
+              mask: 'normaldo/kuss/logo.png',
+              sfx: {
+                'fatUp': ['kuss/KUSS BURP.mp3'],
+                'resist': [
+                  'kuss/KUSS TALKING.mp3',
+                ],
+                'bite': [
+                  'kuss/KUSS EAT Dub.mp3',
+                  'kuss/KUSS EAT.mp3',
+                ],
+                'hit': [
+                  'kuss/KUSS HIT Dub.mp3',
+                  'kuss/KUSS HIT.mp3',
+                ],
+                'slowMo': ['kuss/KUSS SLOMO.mp3'],
+                'start': ['kuss/KUSS LAUGHT.mp3']
+              }),
+          resistanceToItems: [
+            Items.bananaPeel,
+            Items.beer,
+            Items.cocktail,
+            Items.greenPoison,
+          ],
         ),
       ]..sort((a, b) => a.rarity.index - b.rarity.index);
 }
