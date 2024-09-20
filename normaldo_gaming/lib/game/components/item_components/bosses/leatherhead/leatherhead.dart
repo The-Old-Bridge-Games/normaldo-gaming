@@ -99,6 +99,8 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
           key: key,
           onTick: () {
             current = LeatherheadState.reloadUp;
+            gameRef.audio.playAssetSfx('audio/bosses/leatherhead/reload.mp3');
+
             animationTicker?.onComplete = () {
               current = LeatherheadState.sniperShot;
               final nPosition = grid.normaldo.position;
@@ -107,6 +109,8 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
               angle = angleTo(grid.normaldo.position) + (pi / 2);
               animationTicker?.onFrame = (frame) {
                 if (frame == 1) {
+                  gameRef.audio
+                      .playAssetSfx('audio/bosses/leatherhead/SNIPER.mp3');
                   grid.add(Bullet(destination: destination)
                     ..priority = 1
                     ..size = Items.bullet.getSize(grid.lineSize)
@@ -157,7 +161,13 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
             final topDestination = topPosition + (topDistinction * 3);
             final bottomDestination = bottomPosition + (bottomDistinction * 3);
 
+            if (frame == 0) {
+              gameRef.audio.playAssetSfx('audio/bosses/leatherhead/reload.mp3');
+            }
+
             if (frame == 3) {
+              gameRef.audio
+                  .playAssetSfx('audio/bosses/leatherhead/DROBASH.mp3');
               grid.add(Bullet(
                 destination: topDestination,
                 animationSpeed: bulletSpeed,
@@ -214,6 +224,8 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
             duration: moveFromRightSideDur,
           ), onComplete: () {
         // Normaldo takes his position when boss talking
+        gameRef.audio
+            .playAssetSfx('audio/bosses/leatherhead/RAAW LITTLE TURLE.mp3');
         if (grid.normaldo.position != grid.center) {
           grid.normaldo.addAll(jumpToEffect(
             position: grid.center,
@@ -401,6 +413,9 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
       position: center,
     ));
     attacks = [
+      LeatherheadBuckshot(),
+      LeatherheadBuckshot(),
+      LeatherheadBuckshot(),
       LeatherheadHunting(),
       LeatherheadTailAttack(side: TailSide.bottom, speed: 200),
       LeatherheadTailAttack(side: TailSide.top, speed: 300),

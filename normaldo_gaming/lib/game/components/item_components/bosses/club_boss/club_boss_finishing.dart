@@ -41,6 +41,8 @@ final class ClubBossFinishing extends BossAttack with HasNgAudio, Effects {
       ),
       onComplete: () {
         flipIfNeeded(boss, grid.normaldo);
+        boss.gameRef.audio
+            .playAssetSfx('audio/bosses/nigga_boss/TALKING 2.mp3');
         boss.add(TimerComponent(
             period: 1,
             removeOnFinish: true,
@@ -79,6 +81,8 @@ final class ClubBossFinishing extends BossAttack with HasNgAudio, Effects {
                 },
               );
               grid.addAll(girls);
+              boss.gameRef.audio
+                  .playAssetSfx('audio/bosses/nigga_boss/kissing.mp3');
               boss.add(TimerComponent(
                   period: 2,
                   removeOnFinish: true,

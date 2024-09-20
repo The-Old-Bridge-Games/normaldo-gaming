@@ -11,6 +11,7 @@ import 'package:normaldo_gaming/game/components/item_components/bosses/boss_comp
 import 'package:normaldo_gaming/game/components/item_components/bosses/leatherhead/leatherhead.dart';
 import 'package:normaldo_gaming/game/components/item_components/bosses/shredder/attacks/boss_attack.dart';
 import 'package:normaldo_gaming/game/components/normaldo.dart';
+import 'package:normaldo_gaming/game/pull_up_game.dart';
 
 enum TailSide { bottom, top }
 
@@ -61,6 +62,7 @@ final class LeatherheadTailAttack extends BossAttack with HasNgAudio {
       ..angle = startTailAngleFromSide(grid)
       ..anchor = Anchor.bottomCenter
       ..position = startPositionFromSide(grid);
+    boss.gameRef.audio.playAssetSfx('audio/bosses/leatherhead/SEA TAIL.mp3');
     grid.add(tail);
     tail.add(MoveToEffect(
         moveDestinationFromSide(grid),
@@ -84,7 +86,8 @@ final class LeatherheadTailAttack extends BossAttack with HasNgAudio {
   }
 }
 
-final class LeatherheadTail extends SpriteComponent with CollisionCallbacks {
+final class LeatherheadTail extends SpriteComponent
+    with CollisionCallbacks, HasGameRef<PullUpGame> {
   @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
@@ -93,6 +96,7 @@ final class LeatherheadTail extends SpriteComponent with CollisionCallbacks {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Normaldo) {
       other.takeHit();
+      gameRef.audio.playAssetSfx('audio/bosses/leatherhead/haha tail.mp3');
     }
   }
 

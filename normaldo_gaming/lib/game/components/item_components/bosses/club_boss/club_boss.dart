@@ -86,8 +86,7 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
             EffectController(
               duration: 0.5,
             ), onComplete: () {
-          gameRef.audio
-              .playAssetSfx('audio/bosses/nigga_boss/NIGGA WAVE CALLING.mp3');
+          gameRef.audio.playAssetSfx('audio/bosses/nigga_boss/TALK.mp3');
           _callSecurityWave();
         }),
         RotateEffect.by(
@@ -126,6 +125,8 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
             duration: moveFromRightSideDur,
           ), onComplete: () {
         // Normaldo takes his position when boss talking
+        gameRef.audio.playAssetSfx('audio/bosses/nigga_boss/WHOS NEXT.mp3');
+
         if (grid.normaldo.position != grid.center) {
           grid.normaldo.addAll(jumpToEffect(
             position: grid.center,

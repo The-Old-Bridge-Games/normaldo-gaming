@@ -33,8 +33,7 @@ final class ClubBossCallsGirls extends BossAttack with HasNgAudio {
     boss.position = Vector2(grid.size.x + boss.size.x, grid.size.y / 2);
     boss.scale = Vector2.all(2);
     bossComp(boss).current = ClubBossState.callGirls;
-    boss.gameRef.audio
-        .playAssetSfx('audio/bosses/nigga_boss/BOSS FAT NIGGA TALKING.mp3');
+    boss.gameRef.audio.playAssetSfx('audio/bosses/nigga_boss/TALKING 2.mp3');
     boss.add(MoveByEffect(
         Vector2(-boss.size.x * 2, 0),
         EffectController(

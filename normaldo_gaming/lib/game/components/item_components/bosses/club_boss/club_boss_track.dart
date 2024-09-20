@@ -38,6 +38,7 @@ final class ClubBossTrack extends BossAttack with HasNgAudio, Effects {
         EffectController(
           duration: 1,
         ), onComplete: () {
+      boss.gameRef.audio.playAssetSfx('audio/bosses/nigga_boss/WHOS NEXT.mp3');
       boss.addAll([
         RotateEffect.by(
             0.2,
