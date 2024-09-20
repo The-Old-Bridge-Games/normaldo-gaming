@@ -264,7 +264,7 @@ enum Items {
       case allIn:
         return Vector2(lineSize * 0.8, lineSize * 0.8);
       case angryDog:
-        return Vector2(lineSize * 0.8, lineSize * 0.8);
+        return Vector2(lineSize, lineSize);
       case bananaPeel:
         return Vector2(lineSize, lineSize);
       // case bananaPeel:
