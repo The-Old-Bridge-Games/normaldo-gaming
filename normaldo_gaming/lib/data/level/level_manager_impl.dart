@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:normaldo_gaming/core/errors.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/entities/reward.dart';
 import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';

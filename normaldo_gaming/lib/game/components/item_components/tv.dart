@@ -10,7 +10,12 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 import 'package:normaldo_gaming/game/utils/overlays.dart';
 
 final class Tv extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<PullUpGame>, Item, CustomEffectItem {
+    with
+        CollisionCallbacks,
+        HasGameRef<PullUpGame>,
+        Item,
+        CustomEffectItem,
+        CleanScreenItem {
   @override
   ShapeHitbox get hitbox => RectangleHitbox.relative(
         Vector2.all(0.9),
@@ -29,14 +34,13 @@ final class Tv extends SpriteComponent
       removeFromParent();
       applyEffect(() {
         gameRef.pauseEngine();
+        cleanScreen();
         gameRef.adsCubit.showAd(
             type: AdType.interstitial,
             reward: const AdReward.bucksInGame(15),
             onComplete: () {
               gameRef.overlays.remove(Overlays.pauseMenu.name);
-              Future.delayed(const Duration(seconds: 1)).whenComplete(
-                () => gameRef.gameSessionCubit.togglePause(),
-              );
+              gameRef.gameSessionCubit.togglePause();
             });
       });
     }
