@@ -407,10 +407,10 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
       LeatherheadTailAttack(side: TailSide.bottom, speed: 400),
       LeatherheadTailAttack(side: TailSide.top, speed: 400),
       LeatherheadBuckshot(),
-      LeatherheadTailAttack(side: TailSide.bottom, speed: 200),
-      LeatherheadTailAttack(side: TailSide.top, speed: 300),
-      LeatherheadTailAttack(side: TailSide.bottom, speed: 400),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 300),
       LeatherheadTailAttack(side: TailSide.top, speed: 400),
+      LeatherheadTailAttack(side: TailSide.bottom, speed: 500),
+      LeatherheadTailAttack(side: TailSide.top, speed: 600),
       LeatherheadBuckshot(),
     ];
     return super.onLoad();
