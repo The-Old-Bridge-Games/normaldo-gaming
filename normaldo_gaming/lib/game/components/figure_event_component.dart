@@ -122,7 +122,7 @@ class FigureEventComponent extends PositionComponent
                   Items.cone,
                   Items.trashBin,
                   Items.bird,
-                  Items.policeAlarm,
+                  Items.stone,
                 ].random(),
                 line: Random().nextInt(3))
           ],

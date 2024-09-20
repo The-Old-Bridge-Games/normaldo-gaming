@@ -132,7 +132,7 @@ class PullUpGame extends FlameGame
               e == Items.bird ||
               e == Items.bubbles ||
               e == Items.cone ||
-              e == Items.policeAlarm ||
+              // e == Items.policeAlarm ||
               e == Items.snake ||
               e == Items.spadesCard ||
               e == Items.stone ||
