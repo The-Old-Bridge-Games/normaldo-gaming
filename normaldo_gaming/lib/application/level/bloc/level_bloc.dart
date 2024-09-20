@@ -72,7 +72,8 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
     List<ItemEffect> effects,
     Emitter<LevelState> emit,
   ) {
-    print('SPEED: ${speed(level, effects)}\nLEVEL:${state.level.index}');
+    print(
+        'LEVEL:${state.level.index}\nSPEED: ${speed(level, effects)}\nFREQ: ${frequency(level)}');
     emit(state.copyWith(
         level: LinearLevel(
       index: level,
