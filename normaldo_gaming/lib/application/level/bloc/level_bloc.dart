@@ -21,7 +21,13 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
           startFigure: (figure) => _startFigure(figure, emit),
           changeSpeed: (multiplier, effects) =>
               _onChangeSpeed(multiplier, effects, emit),
-          startRandomFigure: (_) => _startRandomFigure(emit),
+          startRandomFigure: (_, slowMoItem, punch, guard) =>
+              _startRandomFigure(
+            emit,
+            slowMoItem: slowMoItem,
+            punch: punch,
+            guard: guard,
+          ),
           finishFigure: () => _onFigureFinished(emit),
           startMiniGame: (game) => _onStartMiniGame(game, emit),
           finishMiniGame: () {
@@ -85,10 +91,22 @@ class LevelBloc extends Bloc<LevelEvent, LevelState> {
   }
 
   void _startRandomFigure(
-    Emitter<LevelState> emit,
-  ) {
+    Emitter<LevelState> emit, {
+    required Items? slowMoItem,
+    required Items? punch,
+    required Items? guard,
+  }) {
     if (_figuresPool.isEmpty) {
-      _figuresPool = FigureEvent.values;
+      _figuresPool = [
+        const FigureEvent.bigBuddyBin(),
+        if (guard != null) FigureEvent.cursedPath(guard: guard),
+        const FigureEvent.trashWall(),
+        if (guard != null) FigureEvent.guardedPizza(guard: guard),
+        FigureEvent.punchWave(punchItem: punch ?? Items.punch),
+        const FigureEvent.unreachablePizza(),
+        FigureEvent.only2Lines(guard: guard ?? Items.cone),
+        if (slowMoItem != null) FigureEvent.slowMo(slowMoItem: slowMoItem),
+      ];
     }
     final figure = _figuresPool.removeAt(_random.nextInt(_figuresPool.length));
     emit(state.copyWith(figure: figure));

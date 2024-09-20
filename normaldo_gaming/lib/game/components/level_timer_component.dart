@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:normaldo_gaming/application/level/bloc/level_bloc.dart';
 import 'package:normaldo_gaming/game/pull_up_game.dart';
@@ -19,9 +20,19 @@ class LevelTimerComponent extends TimerComponent
     if (!gameRef.userCubit.state.educated) return;
     if (bloc.state.miniGame != null) return;
     if (bloc.state.figure == null && !gameRef.bossInProgress) {
+      final slowMoItems = gameRef.currentLevelSlowMoItems();
+      final punchItems = gameRef.currentLevelPunchItems();
+      final guardItems = gameRef.currentLevelGuardItems();
+      final slowMoItem = slowMoItems.isEmpty ? null : slowMoItems.random();
+      final punchItem = punchItems.isEmpty ? null : punchItems.random();
+      final guardItem = guardItems.isEmpty ? null : guardItems.random();
       bloc.add(
         // const LevelEvent.startFigure(figure: FigureEvent.punchWave()),
-        const LevelEvent.startRandomFigure(),
+        LevelEvent.startRandomFigure(
+          slowMoItem: slowMoItem,
+          punch: punchItem,
+          guard: guardItem,
+        ),
       );
     }
     add(TimerComponent(

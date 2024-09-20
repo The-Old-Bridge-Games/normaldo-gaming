@@ -50,23 +50,23 @@ class FigureEventComponent extends PositionComponent
           const LineItem(item: Items.tv, line: 4),
         ]
       ],
-      guardedPizza: () {
+      guardedPizza: (guard) {
         final firstLine = Random().nextInt(linesCentersY.length - 2) + 1;
         return [
-          [LineItem(item: Items.cone, line: firstLine)],
+          [LineItem(item: guard, line: firstLine)],
           [
-            LineItem(item: Items.cone, line: firstLine - 1),
+            LineItem(item: guard, line: firstLine - 1),
             LineItem(item: Items.fatPizza, line: firstLine),
-            LineItem(item: Items.cone, line: firstLine + 1),
+            LineItem(item: guard, line: firstLine + 1),
           ],
           [
-            LineItem(item: Items.cone, line: firstLine - 1),
-            LineItem(item: Items.cone, line: firstLine),
-            LineItem(item: Items.cone, line: firstLine + 1),
+            LineItem(item: guard, line: firstLine - 1),
+            LineItem(item: guard, line: firstLine),
+            LineItem(item: guard, line: firstLine + 1),
           ],
         ];
       },
-      cursedPath: () {
+      cursedPath: (guard) {
         final random = Random();
         final eventLength = random.nextInt(6) + 5;
         var livingIndex = random.nextInt(Utils.linesCount);
@@ -89,7 +89,7 @@ class FigureEventComponent extends PositionComponent
             livingPath.length,
             (columnIndex) => List.generate(Utils.linesCount, (index) {
                   if (index != livingPath[columnIndex]) {
-                    return LineItem(item: Items.cone, line: index);
+                    return LineItem(item: guard, line: index);
                   }
                   if (columnIndex != eventLength - 1) {
                     return LineItem(item: Items.pizza, line: index);
@@ -98,7 +98,7 @@ class FigureEventComponent extends PositionComponent
                   }
                 }));
       },
-      punchWave: () {
+      punchWave: (punch) {
         final alreadyUsed = <int>[];
         return List.generate(3, (index) {
           var excludedLine = Random().nextInt(Utils.linesCount);
@@ -109,7 +109,7 @@ class FigureEventComponent extends PositionComponent
           return List.generate(
               Utils.linesCount - 1,
               (index) => LineItem(
-                    item: Items.punch,
+                    item: punch,
                     line: index >= excludedLine ? index + 1 : index,
                   ));
         });
@@ -128,7 +128,7 @@ class FigureEventComponent extends PositionComponent
           ],
         ];
       },
-      only2Lines: () {
+      only2Lines: (guard) {
         final List<int> usedIndexes = [];
         int getLineYIndex({List<int>? exclude}) {
           final indexes = List.generate(Utils.linesCount, (index) => index);
@@ -152,7 +152,7 @@ class FigureEventComponent extends PositionComponent
           final list = List.generate(
               Utils.linesCount,
               (index) => LineItem(
-                    item: Items.cone,
+                    item: guard,
                     line: index,
                   ));
           list.removeWhere((e) {
@@ -181,10 +181,10 @@ class FigureEventComponent extends PositionComponent
           ],
         ];
       },
-      slowMo: () {
+      slowMo: (slowItem) {
         return [
           List.generate(Utils.linesCount,
-              (index) => LineItem(item: Items.cocktail, line: index)),
+              (index) => LineItem(item: slowItem, line: index)),
           ...List.generate(
               Random().nextInt(6) + 5,
               (index) => List.generate(Utils.linesCount,
@@ -315,7 +315,7 @@ class FigureEventComponent extends PositionComponent
         }
         _initiated = true;
       },
-      guardedPizza: () {
+      guardedPizza: (_) {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
@@ -328,7 +328,7 @@ class FigureEventComponent extends PositionComponent
         }
         _initiated = true;
       },
-      cursedPath: () {
+      cursedPath: (item) {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
@@ -336,13 +336,13 @@ class FigureEventComponent extends PositionComponent
             grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
-                  size.x * 1.3 + (xOffset * Items.cone.getSize(lineSize).x * 3),
+                  size.x * 1.3 + (xOffset * item.item.getSize(lineSize).x * 3),
                   linesCentersY[item.line ?? 0]));
           }
         }
         _initiated = true;
       },
-      punchWave: () async {
+      punchWave: (punch) async {
         grid.stopAllLines();
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
@@ -355,8 +355,7 @@ class FigureEventComponent extends PositionComponent
                 gameRef.grid.resumeLines();
                 grid.add(item.item.component()
                   ..size = itemSize
-                  ..position = Vector2(
-                      (size.x) + Items.punch.getSize(lineSize).x,
+                  ..position = Vector2((size.x) + punch.getSize(lineSize).x,
                       linesCentersY[item.line ?? 0]));
               }
               if (matrix.indexOf(column) == matrix.length - 1) {
@@ -387,11 +386,11 @@ class FigureEventComponent extends PositionComponent
         component.strength = 10;
         _initiated = true;
       },
-      only2Lines: () {
+      only2Lines: (guard) {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
-            final itemSize = Items.cone.getSize(lineSize);
+            final itemSize = guard.getSize(lineSize);
             grid.add(item.item.component()
               ..size = itemSize
               ..speedMultiplier = 1.5
@@ -401,7 +400,7 @@ class FigureEventComponent extends PositionComponent
         }
         _initiated = true;
       },
-      slowMo: () {
+      slowMo: (slowItem) {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {

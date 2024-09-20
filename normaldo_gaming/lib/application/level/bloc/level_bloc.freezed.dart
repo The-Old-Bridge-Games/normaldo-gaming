@@ -22,7 +22,9 @@ mixin _$LevelEvent {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -34,7 +36,9 @@ mixin _$LevelEvent {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) =>
@@ -45,7 +49,9 @@ mixin _$LevelEvent {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -189,7 +195,9 @@ class _$ChangeLevelImpl implements _ChangeLevel {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -204,7 +212,9 @@ class _$ChangeLevelImpl implements _ChangeLevel {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -218,7 +228,9 @@ class _$ChangeLevelImpl implements _ChangeLevel {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -366,7 +378,9 @@ class _$StartFigureImpl implements _StartFigure {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -381,7 +395,9 @@ class _$StartFigureImpl implements _StartFigure {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -395,7 +411,9 @@ class _$StartFigureImpl implements _StartFigure {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -541,7 +559,9 @@ class _$StartMiniGameImpl implements _StartMiniGame {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -556,7 +576,9 @@ class _$StartMiniGameImpl implements _StartMiniGame {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -570,7 +592,9 @@ class _$StartMiniGameImpl implements _StartMiniGame {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -680,7 +704,9 @@ class _$FinishMiniGameImpl implements _FinishMiniGame {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -695,7 +721,9 @@ class _$FinishMiniGameImpl implements _FinishMiniGame {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -709,7 +737,9 @@ class _$FinishMiniGameImpl implements _FinishMiniGame {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -777,7 +807,11 @@ abstract class _$$StartRandomFigureImplCopyWith<$Res> {
           $Res Function(_$StartRandomFigureImpl) then) =
       __$$StartRandomFigureImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FigureEvent>? figures});
+  $Res call(
+      {List<FigureEvent>? figures,
+      Items? slowMoItem,
+      Items? punch,
+      Items? guard});
 }
 
 /// @nodoc
@@ -792,12 +826,27 @@ class __$$StartRandomFigureImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? figures = freezed,
+    Object? slowMoItem = freezed,
+    Object? punch = freezed,
+    Object? guard = freezed,
   }) {
     return _then(_$StartRandomFigureImpl(
       figures: freezed == figures
           ? _value._figures
           : figures // ignore: cast_nullable_to_non_nullable
               as List<FigureEvent>?,
+      slowMoItem: freezed == slowMoItem
+          ? _value.slowMoItem
+          : slowMoItem // ignore: cast_nullable_to_non_nullable
+              as Items?,
+      punch: freezed == punch
+          ? _value.punch
+          : punch // ignore: cast_nullable_to_non_nullable
+              as Items?,
+      guard: freezed == guard
+          ? _value.guard
+          : guard // ignore: cast_nullable_to_non_nullable
+              as Items?,
     ));
   }
 }
@@ -805,7 +854,11 @@ class __$$StartRandomFigureImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StartRandomFigureImpl implements _StartRandomFigure {
-  const _$StartRandomFigureImpl({final List<FigureEvent>? figures})
+  const _$StartRandomFigureImpl(
+      {final List<FigureEvent>? figures,
+      required this.slowMoItem,
+      required this.punch,
+      required this.guard})
       : _figures = figures;
 
   final List<FigureEvent>? _figures;
@@ -819,8 +872,15 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
   }
 
   @override
+  final Items? slowMoItem;
+  @override
+  final Items? punch;
+  @override
+  final Items? guard;
+
+  @override
   String toString() {
-    return 'LevelEvent.startRandomFigure(figures: $figures)';
+    return 'LevelEvent.startRandomFigure(figures: $figures, slowMoItem: $slowMoItem, punch: $punch, guard: $guard)';
   }
 
   @override
@@ -828,12 +888,16 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StartRandomFigureImpl &&
-            const DeepCollectionEquality().equals(other._figures, _figures));
+            const DeepCollectionEquality().equals(other._figures, _figures) &&
+            (identical(other.slowMoItem, slowMoItem) ||
+                other.slowMoItem == slowMoItem) &&
+            (identical(other.punch, punch) || other.punch == punch) &&
+            (identical(other.guard, guard) || other.guard == guard));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_figures));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_figures), slowMoItem, punch, guard);
 
   @JsonKey(ignore: true)
   @override
@@ -849,12 +913,14 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
   }) {
-    return startRandomFigure(figures);
+    return startRandomFigure(figures, slowMoItem, punch, guard);
   }
 
   @override
@@ -864,11 +930,13 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
-    return startRandomFigure?.call(figures);
+    return startRandomFigure?.call(figures, slowMoItem, punch, guard);
   }
 
   @override
@@ -878,13 +946,15 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
   }) {
     if (startRandomFigure != null) {
-      return startRandomFigure(figures);
+      return startRandomFigure(figures, slowMoItem, punch, guard);
     }
     return orElse();
   }
@@ -937,10 +1007,16 @@ class _$StartRandomFigureImpl implements _StartRandomFigure {
 }
 
 abstract class _StartRandomFigure implements LevelEvent {
-  const factory _StartRandomFigure({final List<FigureEvent>? figures}) =
-      _$StartRandomFigureImpl;
+  const factory _StartRandomFigure(
+      {final List<FigureEvent>? figures,
+      required final Items? slowMoItem,
+      required final Items? punch,
+      required final Items? guard}) = _$StartRandomFigureImpl;
 
   List<FigureEvent>? get figures;
+  Items? get slowMoItem;
+  Items? get punch;
+  Items? get guard;
   @JsonKey(ignore: true)
   _$$StartRandomFigureImplCopyWith<_$StartRandomFigureImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1030,7 +1106,9 @@ class _$ChangeSpeedImpl implements _ChangeSpeed {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -1045,7 +1123,9 @@ class _$ChangeSpeedImpl implements _ChangeSpeed {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -1059,7 +1139,9 @@ class _$ChangeSpeedImpl implements _ChangeSpeed {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -1171,7 +1253,9 @@ class _$FinishFigureImpl implements _FinishFigure {
     required TResult Function(FigureEvent figure) startFigure,
     required TResult Function(MiniGame game) startMiniGame,
     required TResult Function() finishMiniGame,
-    required TResult Function(List<FigureEvent>? figures) startRandomFigure,
+    required TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)
+        startRandomFigure,
     required TResult Function(double speed, List<ItemEffect> effects)
         changeSpeed,
     required TResult Function() finishFigure,
@@ -1186,7 +1270,9 @@ class _$FinishFigureImpl implements _FinishFigure {
     TResult? Function(FigureEvent figure)? startFigure,
     TResult? Function(MiniGame game)? startMiniGame,
     TResult? Function()? finishMiniGame,
-    TResult? Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult? Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult? Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult? Function()? finishFigure,
   }) {
@@ -1200,7 +1286,9 @@ class _$FinishFigureImpl implements _FinishFigure {
     TResult Function(FigureEvent figure)? startFigure,
     TResult Function(MiniGame game)? startMiniGame,
     TResult Function()? finishMiniGame,
-    TResult Function(List<FigureEvent>? figures)? startRandomFigure,
+    TResult Function(List<FigureEvent>? figures, Items? slowMoItem,
+            Items? punch, Items? guard)?
+        startRandomFigure,
     TResult Function(double speed, List<ItemEffect> effects)? changeSpeed,
     TResult Function()? finishFigure,
     required TResult orElse(),
@@ -1267,39 +1355,39 @@ mixin _$FigureEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) =>
@@ -1403,13 +1491,13 @@ class _$TrashWallImpl implements _TrashWall {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
     return trashWall();
@@ -1419,13 +1507,13 @@ class _$TrashWallImpl implements _TrashWall {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
     return trashWall?.call();
@@ -1435,13 +1523,13 @@ class _$TrashWallImpl implements _TrashWall {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
@@ -1513,6 +1601,8 @@ abstract class _$$GuardedPizzaImplCopyWith<$Res> {
   factory _$$GuardedPizzaImplCopyWith(
           _$GuardedPizzaImpl value, $Res Function(_$GuardedPizzaImpl) then) =
       __$$GuardedPizzaImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items guard});
 }
 
 /// @nodoc
@@ -1522,75 +1612,99 @@ class __$$GuardedPizzaImplCopyWithImpl<$Res>
   __$$GuardedPizzaImplCopyWithImpl(
       _$GuardedPizzaImpl _value, $Res Function(_$GuardedPizzaImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? guard = null,
+  }) {
+    return _then(_$GuardedPizzaImpl(
+      guard: null == guard
+          ? _value.guard
+          : guard // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$GuardedPizzaImpl implements _GuardedPizza {
-  const _$GuardedPizzaImpl();
+  const _$GuardedPizzaImpl({required this.guard});
+
+  @override
+  final Items guard;
 
   @override
   String toString() {
-    return 'FigureEvent.guardedPizza()';
+    return 'FigureEvent.guardedPizza(guard: $guard)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GuardedPizzaImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GuardedPizzaImpl &&
+            (identical(other.guard, guard) || other.guard == guard));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, guard);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GuardedPizzaImplCopyWith<_$GuardedPizzaImpl> get copyWith =>
+      __$$GuardedPizzaImplCopyWithImpl<_$GuardedPizzaImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
-    return guardedPizza();
+    return guardedPizza(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
-    return guardedPizza?.call();
+    return guardedPizza?.call(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (guardedPizza != null) {
-      return guardedPizza();
+      return guardedPizza(guard);
     }
     return orElse();
   }
@@ -1649,7 +1763,13 @@ class _$GuardedPizzaImpl implements _GuardedPizza {
 }
 
 abstract class _GuardedPizza implements FigureEvent {
-  const factory _GuardedPizza() = _$GuardedPizzaImpl;
+  const factory _GuardedPizza({required final Items guard}) =
+      _$GuardedPizzaImpl;
+
+  Items get guard;
+  @JsonKey(ignore: true)
+  _$$GuardedPizzaImplCopyWith<_$GuardedPizzaImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1657,6 +1777,8 @@ abstract class _$$CursedPathImplCopyWith<$Res> {
   factory _$$CursedPathImplCopyWith(
           _$CursedPathImpl value, $Res Function(_$CursedPathImpl) then) =
       __$$CursedPathImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items guard});
 }
 
 /// @nodoc
@@ -1666,75 +1788,99 @@ class __$$CursedPathImplCopyWithImpl<$Res>
   __$$CursedPathImplCopyWithImpl(
       _$CursedPathImpl _value, $Res Function(_$CursedPathImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? guard = null,
+  }) {
+    return _then(_$CursedPathImpl(
+      guard: null == guard
+          ? _value.guard
+          : guard // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$CursedPathImpl implements _CursedPath {
-  const _$CursedPathImpl();
+  const _$CursedPathImpl({required this.guard});
+
+  @override
+  final Items guard;
 
   @override
   String toString() {
-    return 'FigureEvent.cursedPath()';
+    return 'FigureEvent.cursedPath(guard: $guard)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CursedPathImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$CursedPathImpl &&
+            (identical(other.guard, guard) || other.guard == guard));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, guard);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CursedPathImplCopyWith<_$CursedPathImpl> get copyWith =>
+      __$$CursedPathImplCopyWithImpl<_$CursedPathImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
-    return cursedPath();
+    return cursedPath(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
-    return cursedPath?.call();
+    return cursedPath?.call(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (cursedPath != null) {
-      return cursedPath();
+      return cursedPath(guard);
     }
     return orElse();
   }
@@ -1793,7 +1939,12 @@ class _$CursedPathImpl implements _CursedPath {
 }
 
 abstract class _CursedPath implements FigureEvent {
-  const factory _CursedPath() = _$CursedPathImpl;
+  const factory _CursedPath({required final Items guard}) = _$CursedPathImpl;
+
+  Items get guard;
+  @JsonKey(ignore: true)
+  _$$CursedPathImplCopyWith<_$CursedPathImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1801,6 +1952,8 @@ abstract class _$$PunchWaveImplCopyWith<$Res> {
   factory _$$PunchWaveImplCopyWith(
           _$PunchWaveImpl value, $Res Function(_$PunchWaveImpl) then) =
       __$$PunchWaveImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items punchItem});
 }
 
 /// @nodoc
@@ -1810,75 +1963,100 @@ class __$$PunchWaveImplCopyWithImpl<$Res>
   __$$PunchWaveImplCopyWithImpl(
       _$PunchWaveImpl _value, $Res Function(_$PunchWaveImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? punchItem = null,
+  }) {
+    return _then(_$PunchWaveImpl(
+      punchItem: null == punchItem
+          ? _value.punchItem
+          : punchItem // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$PunchWaveImpl implements _PunchWave {
-  const _$PunchWaveImpl();
+  const _$PunchWaveImpl({required this.punchItem});
+
+  @override
+  final Items punchItem;
 
   @override
   String toString() {
-    return 'FigureEvent.punchWave()';
+    return 'FigureEvent.punchWave(punchItem: $punchItem)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PunchWaveImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$PunchWaveImpl &&
+            (identical(other.punchItem, punchItem) ||
+                other.punchItem == punchItem));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, punchItem);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PunchWaveImplCopyWith<_$PunchWaveImpl> get copyWith =>
+      __$$PunchWaveImplCopyWithImpl<_$PunchWaveImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
-    return punchWave();
+    return punchWave(punchItem);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
-    return punchWave?.call();
+    return punchWave?.call(punchItem);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (punchWave != null) {
-      return punchWave();
+      return punchWave(punchItem);
     }
     return orElse();
   }
@@ -1937,7 +2115,12 @@ class _$PunchWaveImpl implements _PunchWave {
 }
 
 abstract class _PunchWave implements FigureEvent {
-  const factory _PunchWave() = _$PunchWaveImpl;
+  const factory _PunchWave({required final Items punchItem}) = _$PunchWaveImpl;
+
+  Items get punchItem;
+  @JsonKey(ignore: true)
+  _$$PunchWaveImplCopyWith<_$PunchWaveImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1979,13 +2162,13 @@ class _$BigBuddyBinImpl implements _BigBuddyBin {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
     return bigBuddyBin();
@@ -1995,13 +2178,13 @@ class _$BigBuddyBinImpl implements _BigBuddyBin {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
     return bigBuddyBin?.call();
@@ -2011,13 +2194,13 @@ class _$BigBuddyBinImpl implements _BigBuddyBin {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
@@ -2123,13 +2306,13 @@ class _$UnreachablePizzaImpl implements _UnreachablePizza {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
     return unreachablePizza();
@@ -2139,13 +2322,13 @@ class _$UnreachablePizzaImpl implements _UnreachablePizza {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
     return unreachablePizza?.call();
@@ -2155,13 +2338,13 @@ class _$UnreachablePizzaImpl implements _UnreachablePizza {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
@@ -2233,6 +2416,8 @@ abstract class _$$Only2TimesImplCopyWith<$Res> {
   factory _$$Only2TimesImplCopyWith(
           _$Only2TimesImpl value, $Res Function(_$Only2TimesImpl) then) =
       __$$Only2TimesImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items guard});
 }
 
 /// @nodoc
@@ -2242,75 +2427,99 @@ class __$$Only2TimesImplCopyWithImpl<$Res>
   __$$Only2TimesImplCopyWithImpl(
       _$Only2TimesImpl _value, $Res Function(_$Only2TimesImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? guard = null,
+  }) {
+    return _then(_$Only2TimesImpl(
+      guard: null == guard
+          ? _value.guard
+          : guard // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Only2TimesImpl implements _Only2Times {
-  const _$Only2TimesImpl();
+  const _$Only2TimesImpl({required this.guard});
+
+  @override
+  final Items guard;
 
   @override
   String toString() {
-    return 'FigureEvent.only2Lines()';
+    return 'FigureEvent.only2Lines(guard: $guard)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Only2TimesImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$Only2TimesImpl &&
+            (identical(other.guard, guard) || other.guard == guard));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, guard);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$Only2TimesImplCopyWith<_$Only2TimesImpl> get copyWith =>
+      __$$Only2TimesImplCopyWithImpl<_$Only2TimesImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
-    return only2Lines();
+    return only2Lines(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
-    return only2Lines?.call();
+    return only2Lines?.call(guard);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (only2Lines != null) {
-      return only2Lines();
+      return only2Lines(guard);
     }
     return orElse();
   }
@@ -2369,7 +2578,12 @@ class _$Only2TimesImpl implements _Only2Times {
 }
 
 abstract class _Only2Times implements FigureEvent {
-  const factory _Only2Times() = _$Only2TimesImpl;
+  const factory _Only2Times({required final Items guard}) = _$Only2TimesImpl;
+
+  Items get guard;
+  @JsonKey(ignore: true)
+  _$$Only2TimesImplCopyWith<_$Only2TimesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -2377,6 +2591,8 @@ abstract class _$$SlowMoImplCopyWith<$Res> {
   factory _$$SlowMoImplCopyWith(
           _$SlowMoImpl value, $Res Function(_$SlowMoImpl) then) =
       __$$SlowMoImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Items slowMoItem});
 }
 
 /// @nodoc
@@ -2386,75 +2602,100 @@ class __$$SlowMoImplCopyWithImpl<$Res>
   __$$SlowMoImplCopyWithImpl(
       _$SlowMoImpl _value, $Res Function(_$SlowMoImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? slowMoItem = null,
+  }) {
+    return _then(_$SlowMoImpl(
+      slowMoItem: null == slowMoItem
+          ? _value.slowMoItem
+          : slowMoItem // ignore: cast_nullable_to_non_nullable
+              as Items,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SlowMoImpl implements _SlowMo {
-  const _$SlowMoImpl();
+  const _$SlowMoImpl({required this.slowMoItem});
+
+  @override
+  final Items slowMoItem;
 
   @override
   String toString() {
-    return 'FigureEvent.slowMo()';
+    return 'FigureEvent.slowMo(slowMoItem: $slowMoItem)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SlowMoImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SlowMoImpl &&
+            (identical(other.slowMoItem, slowMoItem) ||
+                other.slowMoItem == slowMoItem));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, slowMoItem);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SlowMoImplCopyWith<_$SlowMoImpl> get copyWith =>
+      __$$SlowMoImplCopyWithImpl<_$SlowMoImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
-    return slowMo();
+    return slowMo(slowMoItem);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
-    return slowMo?.call();
+    return slowMo?.call(slowMoItem);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {
     if (slowMo != null) {
-      return slowMo();
+      return slowMo(slowMoItem);
     }
     return orElse();
   }
@@ -2513,7 +2754,12 @@ class _$SlowMoImpl implements _SlowMo {
 }
 
 abstract class _SlowMo implements FigureEvent {
-  const factory _SlowMo() = _$SlowMoImpl;
+  const factory _SlowMo({required final Items slowMoItem}) = _$SlowMoImpl;
+
+  Items get slowMoItem;
+  @JsonKey(ignore: true)
+  _$$SlowMoImplCopyWith<_$SlowMoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -2581,13 +2827,13 @@ class _$WinLabelImpl implements _WinLabel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() trashWall,
-    required TResult Function() guardedPizza,
-    required TResult Function() cursedPath,
-    required TResult Function() punchWave,
+    required TResult Function(Items guard) guardedPizza,
+    required TResult Function(Items guard) cursedPath,
+    required TResult Function(Items punchItem) punchWave,
     required TResult Function() bigBuddyBin,
     required TResult Function() unreachablePizza,
-    required TResult Function() only2Lines,
-    required TResult Function() slowMo,
+    required TResult Function(Items guard) only2Lines,
+    required TResult Function(Items slowMoItem) slowMo,
     required TResult Function(Items item) winLabel,
   }) {
     return winLabel(item);
@@ -2597,13 +2843,13 @@ class _$WinLabelImpl implements _WinLabel {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? trashWall,
-    TResult? Function()? guardedPizza,
-    TResult? Function()? cursedPath,
-    TResult? Function()? punchWave,
+    TResult? Function(Items guard)? guardedPizza,
+    TResult? Function(Items guard)? cursedPath,
+    TResult? Function(Items punchItem)? punchWave,
     TResult? Function()? bigBuddyBin,
     TResult? Function()? unreachablePizza,
-    TResult? Function()? only2Lines,
-    TResult? Function()? slowMo,
+    TResult? Function(Items guard)? only2Lines,
+    TResult? Function(Items slowMoItem)? slowMo,
     TResult? Function(Items item)? winLabel,
   }) {
     return winLabel?.call(item);
@@ -2613,13 +2859,13 @@ class _$WinLabelImpl implements _WinLabel {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? trashWall,
-    TResult Function()? guardedPizza,
-    TResult Function()? cursedPath,
-    TResult Function()? punchWave,
+    TResult Function(Items guard)? guardedPizza,
+    TResult Function(Items guard)? cursedPath,
+    TResult Function(Items punchItem)? punchWave,
     TResult Function()? bigBuddyBin,
     TResult Function()? unreachablePizza,
-    TResult Function()? only2Lines,
-    TResult Function()? slowMo,
+    TResult Function(Items guard)? only2Lines,
+    TResult Function(Items slowMoItem)? slowMo,
     TResult Function(Items item)? winLabel,
     required TResult orElse(),
   }) {

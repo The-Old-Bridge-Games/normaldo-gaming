@@ -107,6 +107,54 @@ class PullUpGame extends FlameGame
     super.onRemove();
   }
 
+  List<Items> currentLevelSlowMoItems() {
+    final items = _itemsByLevel[levelBloc.state.level.index]?.items;
+    if (items != null) {
+      return items
+          .where((e) =>
+              e == Items.bananaPeel ||
+              e == Items.beer ||
+              e == Items.cocktail ||
+              e == Items.girl ||
+              e == Items.greenPoison ||
+              e == Items.letterBottle)
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+  List<Items> currentLevelGuardItems() {
+    final items = _itemsByLevel[levelBloc.state.level.index]?.items;
+    if (items != null) {
+      return items
+          .where((e) =>
+              e == Items.bird ||
+              e == Items.bubbles ||
+              e == Items.cone ||
+              e == Items.policeAlarm ||
+              e == Items.snake ||
+              e == Items.spadesCard ||
+              e == Items.stone ||
+              e == Items.tire ||
+              e == Items.umbrella)
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+  List<Items> currentLevelPunchItems() {
+    final items = _itemsByLevel[levelBloc.state.level.index]?.items;
+    if (items != null) {
+      return items
+          .where((e) => e == Items.punch || e == Items.angryDog)
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
   final Map<int, Roller<Items>> _itemsByLevel = {
     0: Roller<Items>([
       ..._allLevelItems,

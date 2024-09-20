@@ -15,6 +15,9 @@ abstract class LevelEvent with _$LevelEvent {
   const factory LevelEvent.finishMiniGame() = _FinishMiniGame;
   const factory LevelEvent.startRandomFigure({
     List<FigureEvent>? figures,
+    required Items? slowMoItem,
+    required Items? punch,
+    required Items? guard,
   }) = _StartRandomFigure;
   const factory LevelEvent.changeSpeed({
     required double speed,
@@ -28,23 +31,13 @@ class FigureEvent with _$FigureEvent {
   static const double speedMultiplier = 1.5;
 
   const factory FigureEvent.trashWall() = _TrashWall;
-  const factory FigureEvent.guardedPizza() = _GuardedPizza;
-  const factory FigureEvent.cursedPath() = _CursedPath;
-  const factory FigureEvent.punchWave() = _PunchWave;
+  const factory FigureEvent.guardedPizza({required Items guard}) =
+      _GuardedPizza;
+  const factory FigureEvent.cursedPath({required Items guard}) = _CursedPath;
+  const factory FigureEvent.punchWave({required Items punchItem}) = _PunchWave;
   const factory FigureEvent.bigBuddyBin() = _BigBuddyBin;
   const factory FigureEvent.unreachablePizza() = _UnreachablePizza;
-  const factory FigureEvent.only2Lines() = _Only2Times;
-  const factory FigureEvent.slowMo() = _SlowMo;
+  const factory FigureEvent.only2Lines({required Items guard}) = _Only2Times;
+  const factory FigureEvent.slowMo({required Items slowMoItem}) = _SlowMo;
   const factory FigureEvent.winLabel({required Items item}) = _WinLabel;
-
-  static List<FigureEvent> get values => [
-        const FigureEvent.trashWall(),
-        const FigureEvent.guardedPizza(),
-        const FigureEvent.cursedPath(),
-        const FigureEvent.punchWave(),
-        const FigureEvent.bigBuddyBin(),
-        const FigureEvent.unreachablePizza(),
-        const FigureEvent.only2Lines(),
-        const FigureEvent.slowMo(),
-      ];
 }
