@@ -381,7 +381,7 @@ class PullUpGame extends FlameGame
       } else {
         if (!state.paused && (state.revived || state.revivedWithAd)) {
           overlays.remove(Overlays.deathScreen.name);
-          await audio.resumeBgm();
+          await audio.resumeAssetBgm();
           resumeEngine();
         }
       }
