@@ -9,8 +9,13 @@ import 'package:normaldo_gaming/application/game_session/cubit/cubit/game_sessio
 import 'package:normaldo_gaming/application/user/cubit/user_cubit.dart';
 import 'package:normaldo_gaming/core/theme.dart';
 import 'package:normaldo_gaming/data/pull_up_game/mixins/has_audio.dart';
+import 'package:normaldo_gaming/domain/pull_up_game/level_manager.dart';
+import 'package:normaldo_gaming/domain/skins/skins_repository.dart';
+import 'package:normaldo_gaming/injection/injection.dart';
+import 'package:normaldo_gaming/ui/main_screen/widgets/user_level_bar.dart';
 import 'package:normaldo_gaming/ui/missions/missions_list.dart';
 import 'package:normaldo_gaming/ui/pull_up_game/widgets/sound_volume_widget.dart';
+import 'package:normaldo_gaming/ui/shop/skin_info_screen.dart';
 import 'package:normaldo_gaming/ui/widgets/bouncing_button.dart';
 import 'package:normaldo_gaming/ui/widgets/ng_button.dart';
 
@@ -24,6 +29,8 @@ class PauseMenu extends StatefulWidget {
 class _PauseMenuState extends State<PauseMenu> with HasNgAudio {
   bool _unpausing = false;
   Timer? _timer;
+
+  final _levelManager = injector.get<LevelManager>();
 
   void _unpause() {
     setState(() => _unpausing = true);
@@ -116,12 +123,58 @@ class _PauseMenuState extends State<PauseMenu> with HasNgAudio {
               child: Row(
                 children: [
                   if (context.read<UserCubit>().state.educated)
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: 60),
-                          MissionsList(
+                          const SizedBox(height: 60),
+                          BlocBuilder<UserCubit, UserState>(
+                              builder: (context, state) {
+                            return Card(
+                              margin: const EdgeInsets.only(bottom: 8.0),
+                              color: NGTheme.purple2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  side: const BorderSide(
+                                    color: NGTheme.purple3,
+                                    width: 4,
+                                  )),
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(child: _buildSkin(state.skin)),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            '${state.user.name} ${_levelManager.rank(state.user).tr()}',
+                                            style: textTheme.displaySmall,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          UserLevelBar(
+                                            levelManager:
+                                                injector.get<LevelManager>(),
+                                            barWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.18,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            barHeight: 20,
+                                            includeRank: false,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                          const MissionsList(
                             disabled: true,
                             showProgress: true,
                           ),
@@ -178,6 +231,56 @@ class _PauseMenuState extends State<PauseMenu> with HasNgAudio {
                 ],
               ),
             ),
+    );
+  }
+
+  GestureDetector _buildSkin(Skin skin) {
+    const dimension = 80.0;
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(PageRouteBuilder(
+          opaque: false,
+          barrierColor: Colors.black87,
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              FadeTransition(
+            opacity: animation,
+            child: SkinInfoScreen(skin: skin, fromShop: false),
+          ),
+        ));
+      },
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                clipBehavior: Clip.none,
+                height: dimension,
+                width: dimension,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      radius: 0.5,
+                      colors: [
+                        NGTheme.colorOf(skin.rarity),
+                        NGTheme.purple2,
+                      ],
+                    )),
+              ),
+              Container(
+                width: dimension * 0.8,
+                height: dimension * 0.8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/${skin.assets.mask}'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
