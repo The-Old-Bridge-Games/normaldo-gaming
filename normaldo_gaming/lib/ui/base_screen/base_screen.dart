@@ -25,7 +25,6 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   void initState() {
-    context.read<UserCubit>().addExtraLife(10);
     super.initState();
   }
 
