@@ -25,6 +25,9 @@ final class LetterBottle extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
+      if (!other.skin.resistanceToItems.contains(item)) {
+        gameRef.sfxPools.playSfx(item);
+      }
       slow();
     }
     super.onCollisionStart(intersectionPoints, other);

@@ -23,7 +23,7 @@ final class Handcuffs extends SpriteComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Normaldo && !other.immortal) {
-      kill();
+      kill(other);
       removeFromParent();
     }
     super.onCollisionStart(intersectionPoints, other);

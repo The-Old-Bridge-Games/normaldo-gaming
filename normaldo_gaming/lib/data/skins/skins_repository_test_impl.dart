@@ -313,7 +313,7 @@ final class SkinsRepositoryTestImpl implements SkinsRepository {
               Items.compass,
               Items.gun,
             ],
-            uniqueSkill: 'accidentally takes x3 dollars or pizza'),
+            uniqueSkill: 'accidentally takes x3 dollars'),
         const Skin(
           uniqueId: 'spider-man',
           name: "THE HUMAN SPIDER \nMASK",

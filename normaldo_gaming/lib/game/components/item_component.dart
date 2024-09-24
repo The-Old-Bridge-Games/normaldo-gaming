@@ -195,11 +195,13 @@ mixin CleanScreenItem on Item {
 
 // ✅
 mixin KillingItem on Item {
-  void kill() {
-    game.gameSessionCubit.die(
-      gameRef.missionCubit,
-      gameRef.scene.currentLocationIndex,
-    );
+  void kill(PositionComponent other) {
+    if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      game.gameSessionCubit.die(
+        gameRef.missionCubit,
+        gameRef.scene.currentLocationIndex,
+      );
+    }
   }
 }
 

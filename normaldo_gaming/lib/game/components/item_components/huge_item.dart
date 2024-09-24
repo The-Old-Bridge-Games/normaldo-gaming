@@ -48,7 +48,7 @@ final class HugeItem extends SpriteComponent
     if (other is Normaldo && !other.immortal) {
       cleanScreen();
       removeFromParent();
-      kill();
+      kill(other);
     }
   }
 

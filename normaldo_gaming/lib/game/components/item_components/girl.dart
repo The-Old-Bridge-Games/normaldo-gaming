@@ -29,7 +29,9 @@ final class Girl extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
-      gameRef.sfxPools.playSfx(item);
+      if (!other.skin.resistanceToItems.contains(item)) {
+        gameRef.sfxPools.playSfx(item);
+      }
       slow();
     }
     super.onCollisionStart(intersectionPoints, other);

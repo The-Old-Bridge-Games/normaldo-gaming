@@ -11,7 +11,7 @@ import 'package:normaldo_gaming/game/pull_up_game.dart';
 final class ShipPart extends SpriteComponent
     with HasGameRef<PullUpGame>, CollisionCallbacks, Item, AttackingItem {
   @override
-  Items get item => Items.trashBin;
+  Items get item => Items.shipPart;
 
   @override
   int get damage => 2;

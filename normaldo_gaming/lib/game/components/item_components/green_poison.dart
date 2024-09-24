@@ -25,7 +25,9 @@ final class GreenPoison extends SpriteComponent
     PositionComponent other,
   ) {
     if (other is Normaldo && !other.immortal) {
-      gameRef.sfxPools.playSfx(Items.cocktail);
+      if (!other.skin.resistanceToItems.contains(item)) {
+        gameRef.sfxPools.playSfx(Items.cocktail);
+      }
       slow();
     }
     super.onCollisionStart(intersectionPoints, other);
