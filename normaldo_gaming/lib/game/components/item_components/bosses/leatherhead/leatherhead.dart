@@ -413,9 +413,6 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
       position: center,
     ));
     attacks = [
-      LeatherheadBuckshot(),
-      LeatherheadBuckshot(),
-      LeatherheadBuckshot(),
       LeatherheadHunting(),
       LeatherheadTailAttack(side: TailSide.bottom, speed: 200),
       LeatherheadTailAttack(side: TailSide.top, speed: 300),
