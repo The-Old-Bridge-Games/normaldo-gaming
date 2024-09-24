@@ -322,9 +322,7 @@ class Normaldo extends PositionComponent
         if (nextFat != nComponent.current) {
           if (nextFat == NormaldoFatState.uberFat) {
             _maxFatSfxPool.start(volume: gameRef.audio.sfxVolume);
-            print("MAX FAT SFX POOl");
           } else {
-            print("FAT SFX POOl");
             _fatUpSfxPools.random().start(volume: gameRef.audio.sfxVolume);
           }
           return nextFat;
@@ -336,6 +334,11 @@ class Normaldo extends PositionComponent
     if (indexOfCurrent + 1 == NormaldoFatState.onlyIdle.length) {
       return nComponent.current!;
     } else {
+      if (indexOfCurrent + 1 == NormaldoFatState.uberFat.index) {
+        _maxFatSfxPool.start(volume: gameRef.audio.sfxVolume);
+      } else {
+        _fatUpSfxPools.random().start(volume: gameRef.audio.sfxVolume);
+      }
       return NormaldoFatState.onlyIdle[indexOfCurrent + 1];
     }
   }
