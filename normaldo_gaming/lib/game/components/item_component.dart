@@ -197,6 +197,14 @@ mixin CleanScreenItem on Item {
 mixin KillingItem on Item {
   void kill(PositionComponent other) {
     if (other is Normaldo && other.skin.resistanceToItems.contains(item)) {
+      gameRef.grid.showCollisionComics(
+        type: ComicsType.resist,
+        position: position,
+        size: size,
+      );
+      return;
+    }
+    if (other is Normaldo && !other.skin.resistanceToItems.contains(item)) {
       game.gameSessionCubit.die(
         gameRef.missionCubit,
         gameRef.scene.currentLocationIndex,

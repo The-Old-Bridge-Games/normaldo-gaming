@@ -294,7 +294,6 @@ class FigureEventComponent extends PositionComponent
   }
 
   void _addLineItemsFromMatrix(List<List<LineItem>> matrix) {
-    gameRef.grid.resumeLines();
     gameRef.grid.removeWhere((component) =>
         component is Item && component.position.x > gameRef.size.x);
     figure.when(
