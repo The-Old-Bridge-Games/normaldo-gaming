@@ -156,12 +156,6 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
             Vector2(size.x * 3, 0),
             EffectController(duration: moveFromRightSideDur),
           ));
-          game.camera.moveTo(game.size / 2, speed: 500);
-          // game.camera.viewfinder.add(ScaleEffect.to(
-          //     Vector2.all(1),
-          //     EffectController(
-          //       duration: 0.5,
-          //     )));
         }));
       })
     ]);
@@ -191,7 +185,6 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
           attacks.first.start(this, gameRef.grid);
         }
       } else {
-        gameRef.grid.resumeLines();
         gameRef.bossInProgress = false;
         gameRef.levelBloc.add(LevelEvent.startFigure(
             figure: FigureEvent.winLabel(
@@ -238,11 +231,6 @@ final class ClubBoss extends SpriteAnimationGroupComponent<ClubBossState>
 
   @override
   FutureOr<void> onLoad() async {
-    // game.camera.viewfinder.add(ScaleEffect.to(
-    //     Vector2.all(0.5),
-    //     EffectController(
-    //       duration: 0.1,
-    //     )));
     phoneSprite = await Sprite.load('bosses/club_boss_phone.png');
     knuckleSprite = await Sprite.load('bosses/club_boss_knuckle.png');
     final idleSprite1 = await Sprite.load('bosses/club_boss1.png');

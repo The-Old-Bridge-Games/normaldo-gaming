@@ -283,7 +283,6 @@ final class Leatherhead extends SpriteAnimationGroupComponent<LeatherheadState>
           attacks.first.start(this, gameRef.grid);
         }
       } else {
-        gameRef.grid.resumeLines();
         gameRef.bossInProgress = false;
         gameRef.levelBloc.add(LevelEvent.startFigure(
             figure: FigureEvent.winLabel(

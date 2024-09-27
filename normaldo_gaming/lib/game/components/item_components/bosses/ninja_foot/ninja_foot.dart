@@ -76,12 +76,6 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
             Vector2(size.x * 3, 0),
             EffectController(duration: moveFromRightSideDur),
           ));
-          game.camera.moveTo(game.size / 2, speed: 500);
-          game.camera.viewfinder.add(ScaleEffect.to(
-              Vector2.all(1),
-              EffectController(
-                duration: 0.5,
-              )));
         }));
       })
     ]);
@@ -105,7 +99,6 @@ final class NinjaFoot extends SpriteAnimationGroupComponent<NinjaFootState>
           attacks.first.start(this, gameRef.grid);
         }
       } else {
-        gameRef.grid.resumeLines();
         gameRef.bossInProgress = false;
         gameRef.levelBloc.add(LevelEvent.startFigure(
             figure: FigureEvent.winLabel(
