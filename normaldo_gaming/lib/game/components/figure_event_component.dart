@@ -328,7 +328,7 @@ class FigureEventComponent extends PositionComponent
         }
         _initiated = true;
       },
-      cursedPath: (item) {
+      cursedPath: (guard) {
         for (final column in matrix) {
           final xOffset = matrix.indexOf(column);
           for (final item in column) {
@@ -336,7 +336,7 @@ class FigureEventComponent extends PositionComponent
             grid.add(item.item.component()
               ..size = itemSize
               ..position = Vector2(
-                  size.x * 1.3 + (xOffset * item.item.getSize(lineSize).x * 3),
+                  size.x * 1.3 + (xOffset * guard.getSize(lineSize).x * 3),
                   linesCentersY[item.line ?? 0]));
           }
         }
