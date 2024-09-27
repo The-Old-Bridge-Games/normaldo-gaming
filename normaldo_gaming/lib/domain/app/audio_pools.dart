@@ -266,6 +266,24 @@ final class AudioPools {
             maxPlayers: 5,
           ),
         ],
+        Items.angryDog: [
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/DOG BOWWOW.mp3',
+            maxPlayers: 1,
+          ),
+        ],
+        Items.beer: [
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/beer ffx.mp3',
+            maxPlayers: 1,
+          ),
+        ],
+        Items.letterBottle: [
+          await AudioPool.createFromAsset(
+            path: 'audio/sfx/BOTLEee.mp3',
+            maxPlayers: 1,
+          ),
+        ],
         Items.cocktail: [
           await AudioPool.createFromAsset(
             path: 'audio/sfx/drink.mp3',
@@ -275,7 +293,7 @@ final class AudioPools {
             path: 'audio/sfx/drink2.mp3',
             maxPlayers: 1,
           ),
-        ]
+        ],
       };
       final skinBiteSfx = skin.assets.sfx['bite'];
       if (skinBiteSfx != null) {

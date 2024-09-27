@@ -61,7 +61,7 @@ final class AngryDog extends SpriteComponent
     if (_hitting) return;
     final grid = game.grid;
     if (position.x <= grid.size.x - (size.x / 2)) {
-      // audio.playSfx(Sfx.roundBox);
+      gameRef.sfxPools.playSfx(item);
       _hitting = true;
       add(TimerComponent(
           period: 1,
