@@ -316,22 +316,22 @@ class Grid extends PositionComponent
 
   @override
   void update(double dt) {
-    final rightSideX = normaldo.position.x + normaldo.size.x / 2;
-    final bottomSideY = normaldo.position.y + normaldo.size.y / 2;
-    final leftSideX = normaldo.position.x - normaldo.size.x / 2;
-    final topSideY = normaldo.position.y - normaldo.size.x / 2;
+    final rightSideX = normaldo.position.x + normaldo.hitbox.size.x / 2;
+    final bottomSideY = normaldo.position.y + normaldo.hitbox.size.y / 2;
+    final leftSideX = normaldo.position.x - normaldo.hitbox.size.x / 2;
+    final topSideY = normaldo.position.y - normaldo.hitbox.size.x / 2;
 
     if (rightSideX > size.x) {
-      normaldo.position.x = size.x - normaldo.size.x / 2;
+      normaldo.position.x = size.x - normaldo.hitbox.size.x / 2;
     }
     if (bottomSideY > size.y) {
-      normaldo.position.y = size.y - normaldo.size.y / 2;
+      normaldo.position.y = size.y - normaldo.hitbox.size.y / 2;
     }
     if (leftSideX < 0) {
-      normaldo.position.x = normaldo.size.x / 2;
+      normaldo.position.x = normaldo.hitbox.size.x / 2;
     }
     if (topSideY < 0) {
-      normaldo.position.y = normaldo.size.y / 2;
+      normaldo.position.y = normaldo.hitbox.size.y / 2;
     }
   }
 
