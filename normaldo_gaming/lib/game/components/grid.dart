@@ -156,7 +156,9 @@ class Grid extends PositionComponent
     component.position = Vector2(
         lastItemPositionX + lastItemSizeX + component.size.x,
         _linesCentersY[Random().nextInt(_linesCentersY.length)]);
-    if (_stoppedLines.values.contains(component.position.y)) return;
+    if (_stoppedLines.values.contains(component.position.y)) {
+      return;
+    }
 
     add(component);
   }
@@ -292,6 +294,7 @@ class Grid extends PositionComponent
               linesCentersY: linesCentersY,
               onFinish: () {
                 bloc.add(const LevelEvent.finishFigure());
+                gameRef.grid.resumeLines();
               },
             )
               ..position = Vector2(0, 0)
